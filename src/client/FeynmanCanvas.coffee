@@ -9,7 +9,7 @@ _ = require('underscore')
 # local imports
 Anchor = require('./Anchor')
 Line = require('./Line')
-UndoEntry = require('UndoEntry')
+UndoEntry = require('./UndoEntry')
 UndoMulti = require('./UndoMulti')
 
 class FeynmanCanvas

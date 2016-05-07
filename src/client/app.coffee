@@ -7,7 +7,7 @@ $ = require('jquery')
 _ = require('underscore')
 Cookie = require('js-cookie')
 # local imports
-require('./feynmanColorpicker')
+require('./FeynmanColorpicker')
 require('./undo')
 require('./lib/angular-slider/slider.js')
 require('./svgDataURL')

@@ -23,11 +23,15 @@ module.exports = {
                 test: /\.(png|jpg|ttf)$/,
                 loader: 'url',
                 query: {limit: 10000000},
-            },
+            }, {
+                test: /\.coffee$/,
+                loader: 'coffee',
+            }
+
         ],
     },
     resolve: {
-        extensions: ['', '.jsx', '.js'],
+        extensions: ['', '.jsx', '.js', '.coffee'],
         root: [
             projectPaths.sourceDir,
             projectPaths.rootDir,
