@@ -3,6 +3,9 @@
 #
 # author: alec aivazis
 
+# external imports
+$ = require('jquery')
+
 class UndoEntry
 
   # take an object as the argument and uses that for data then automatically
@@ -17,4 +20,5 @@ class UndoEntry
     # add the entry to the undo stack
     $(document).trigger 'addEntryToUndo', [transparent, this]
 
+module.exports = UndoEntry
 # end of file

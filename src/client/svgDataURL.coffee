@@ -40,6 +40,10 @@
     ¹ http://svgopen.org/2010/papers/62-From_SVG_to_Canvas_and_Back/#svg_to_canvas
 ###
 
+
+$ = require('jquery')
+_ = require('underscore')
+
 # redefine original function as a jquery plugin
 ( ($) ->
 

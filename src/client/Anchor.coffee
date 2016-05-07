@@ -3,6 +3,13 @@
 #
 # author: alec aivazis
 
+# external imports
+$ = require('jquery')
+_ = require('underscore')
+# local imports
+Line = require('./Line')
+UndoEntry = require('./UndoEntry')
+
 class Anchor
 
   element = null
@@ -590,4 +597,5 @@ class Anchor
       y: @y
 
 
+module.exports = Anchor
 # end of file

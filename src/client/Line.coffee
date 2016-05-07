@@ -2,6 +2,13 @@
 #
 # author: alec aivazis
 
+# external impotrs
+$ = require('jquery')
+_ = require('underscore')
+# local imports
+Anchor = require('./Anchor')
+UndoEntry = require('./UndoEntry')
+
 class Line
 
   element = null
@@ -1014,4 +1021,5 @@ class Line
       # add the selected class to it
       @arrow.addClass('selectedArrow')
 
+module.exports = Line
 # end of file

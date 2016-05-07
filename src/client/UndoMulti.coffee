@@ -3,6 +3,10 @@
 #
 # author: alec aivazis
 
+# external imports
+$ = require('jquery')
+_ = require('underscore')
+
 class UndoMulti
 
 
@@ -52,4 +56,5 @@ class UndoMulti
     return @forwardStack.length > 0 and @backwardStack.length > 0
 
 
+module.exports = UndoMulti
 # end of file

@@ -4,6 +4,13 @@
 #
 # author: alec aivazis
 
+# external imports
+$ = require('jquery')
+_ = require('underscore')
+# local imports
+Anchor = require('./Anchor')
+UndoEntry = require('./UndoEntry')
+
 class CircularConstraint
 
   constructor: (@paper, @x, @y, @radius) ->
@@ -444,5 +451,7 @@ class CircularConstraint
     @y = y
     @draw()
 
+
+module.export = CircularConstraint
 
 # end of file

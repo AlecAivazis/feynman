@@ -3,9 +3,21 @@
 #
 # author: alec aivazis
 
+# external imports
+angular = require('angular')
+$ = require('jquery')
+_ = require('underscore')
+# local imports
+Anchor = require('./Anchor')
+CircularConstraint = require('./CircularConstraint')
+Line = require('./Line')
+Text = require('./Text')
+UndoEntry = require('./UndoEntry')
+UndoMulti = require('./UndoMulti')
+overlay = require('./overlay').overlay
+
 # create the angular module 
 app = angular.module 'feynman', [ 'ui.slider', 'undo', 'feynman.colorpicker']
-
 
 # define the controller for the properties menu
 app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootScope, $timeout, $cookies) ->
@@ -896,5 +908,5 @@ dataURLtoBlob = (dataURL) ->
     return new Blob([uInt8Array], {type: contentType});
 
 
-
+module.exports = toolbar
 # end of file

@@ -2,6 +2,9 @@
 #
 # author: alec aivazis
 
+angular = require('angular')
+$ = require('jquery')
+
 angular.module('feynman.colorpicker', ['colorpicker.module'])
 
 .directive 'colorPicker', ->

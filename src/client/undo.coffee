@@ -2,6 +2,10 @@
 #
 # author: alec aivazis
 
+
+angular = require('angular')
+$ = require('jquery')
+
 # create the angular module
 undo = angular.module 'undo', []
 
@@ -87,5 +91,5 @@ undo.controller 'undoCtrl', [ '$scope', '$timeout', ($scope, $timeout) ->
 
 ]
 
-
+module.exports = undo
 # end of file

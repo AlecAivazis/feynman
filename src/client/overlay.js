@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 function overlay(content){
     
     $('#overlayGutter').remove();
@@ -42,5 +44,8 @@ function closeOverlay(){
     
     $(document).unbind('keypress');
 }
-    
-    
+
+export default {
+    overlay,
+    closeOverlay,
+}  

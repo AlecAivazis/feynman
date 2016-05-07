@@ -2,6 +2,11 @@
 #
 # author: alec aivazis
 
+# external imports
+$ = require('jquery')
+# local imports
+UndoEntry = require('./UndoEntry')
+
 class Text
 
   constructor: (@paper, @x, @y, @text) ->

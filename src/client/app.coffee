@@ -2,6 +2,19 @@
 #
 # author: alec aivazis
 
+# external imports
+$ = require('jquery')
+_ = require('underscore')
+Cookie = require('js-cookie')
+# local imports
+require('./feynmanColorpicker')
+require('./undo')
+require('./lib/angular-slider/slider.js')
+require('./svgDataURL')
+FeynmanCanvas = require('./FeynmanCanvas')
+overlay = require('./overlay').overlay
+closeOverlay = require('./overlay').closeOverlay
+
 # create a list of the patterns for the select template in a context obj
 patterns = [
   title: 'blank'
@@ -20,7 +33,7 @@ $(document).ready ->
   new FeynmanCanvas("#canvas", 'blank')
 
   # create a canvas out of the appropriate DOM element
-  cookieVal =  $.cookie('feynmanCanvas_showStartingPatterns')
+  cookieVal =  Cookie.get('feynmanCanvas_showStartingPatterns')
   # if the cookie has yet to be set or is true
   if cookieVal in [undefined, "true"]
     # show the patterns
@@ -38,7 +51,7 @@ toggleShowStartingPatterns = ->
   # grab the current value for the cookie
   showStartingPatterns = $.cookie('feynmanCanvas_showStartingPatterns') in ["true", undefined]
   # set its value to the correct boolean rep
-  $.cookie 'feynmanCanvas_showStartingPatterns', !showStartingPatterns
+  Cookie.set 'feynmanCanvas_showStartingPatterns', false
   # toggle the checkbox elements property
   $('#patternsOnStartup').prop('checked', !showStartingPatterns)
 

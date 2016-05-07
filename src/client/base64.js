@@ -1,3 +1,6 @@
+// external imports
+import _ from 'underscore'
+
 var Base64 = {
 
     // private property

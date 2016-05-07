@@ -3,6 +3,15 @@
 #
 # author: alec aivazis
 
+# external imports
+$ = require('jquery')
+_ = require('underscore')
+# local imports
+Anchor = require('./Anchor')
+Line = require('./Line')
+UndoEntry = require('UndoEntry')
+UndoMulti = require('./UndoMulti')
+
 class FeynmanCanvas
 
   # when a canvas is created
@@ -1051,4 +1060,5 @@ class FeynmanCanvas
       element.remove()
 
 
+module.export = FeynmanCanvas
 # end of file

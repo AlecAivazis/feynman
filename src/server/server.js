@@ -8,6 +8,7 @@ import {
     buildDir,
     assetsDir,
     templatesDir,
+    clientLibDir,
     favicon as faviconPath,
 } from 'config/projectPaths'
 
@@ -33,8 +34,7 @@ app.use(compression())
 /* Routing */
 
 // route static files to build and assets dirs
-app.use('/static', serveStatic(buildDir), serveStatic(assetsDir))
-
+app.use('/static', serveStatic(buildDir), serveStatic(assetsDir), serveStatic(clientLibDir))
 app.get('/latex', (req, res) => res.send('latex!'))
 app.get('/', (req, res) => res.render('index.jade'))
 
