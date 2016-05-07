@@ -18,6 +18,7 @@ module.exports = {
     output: {
         path: projectPaths.buildDir,
         filename: '[name].js',
+        library: ['feynman'],
     },
     module: {
         loaders: [

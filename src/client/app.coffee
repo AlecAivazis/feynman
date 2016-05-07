@@ -55,7 +55,7 @@ $(document).ready ->
   $('#patternsOnStartup').prop 'checked', cookieVal in ["true", undefined]
 
 
-toggleShowStartingPatterns = ->
+window.toggleShowStartingPatterns = ->
   # grab the current value for the cookie
   showStartingPatterns = Cookie.get('feynmanCanvas_showStartingPatterns') in ["true", undefined]
   # set its value to the correct boolean rep
@@ -65,7 +65,7 @@ toggleShowStartingPatterns = ->
 
 
 # render the canvas with the designated pattern and create the appropriate undo element
-renderPattern = (pattern="pap") ->
+window.renderPattern = (pattern="pap") ->
   # tell the current canvas to draw the right pattern
   $(document).attr('canvas').drawPattern(pattern)
   # close the overlay
@@ -73,7 +73,7 @@ renderPattern = (pattern="pap") ->
 
 
 # display the patterns in an overlay
-showPatterns = ->
+window.showPatterns = ->
   # render the template for the pattern select view
   template = Handlebars.compile $('#patternSelect_template').html()
   # display the result in an overlay
