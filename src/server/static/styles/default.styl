@@ -1,0 +1,512 @@
+// -*- Stylus -*-
+// -*- coding: utf-8 -*-
+//
+// Alec Aivazis <alec@aivazis.com>
+// 
+// (c) 2014-2015 all rights reserved
+//
+
+// this file describes the default style for feynman
+
+// imports
+@import 'axis'
+
+// color palette
+$blue = #0091ff
+$grey = #b8b8b8
+$light-grey = #e9e9e9
+$toolbarColor = rgba(50, 50, 50, .65)
+$red = #c85553
+
+// size variables
+$sidebarWidth = 210px
+$toolbarWidth = 170px
+$patternSelectRadius = 6px
+
+
+// styling
+
+body
+  font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif
+  width: 100%
+  margin: 0
+  height: 100%
+
+  color: #333333
+
+
+a
+  color: #00B7FF
+  
+
+#canvas
+  height: 100%
+  width: 100%
+  overflow: hidden
+  float: right
+  background: #f5f5f5
+
+
+#canvasTitle
+  position: fixed
+  top: 20px
+  left: $sidebarWidth + 40px
+  right: $toolbarWidth + 50px
+  text-align: center  
+  z-index: 50
+  font-size: 25px
+
+
+svg
+  position: fixed
+  left: 250px
+  right: 0
+  top: 0
+  bottom: 0
+
+
+#sidebar
+  z-index: 2
+  float: left
+  text-align: center
+  width: $sidebarWidth
+  height: 100%
+  text-align: center
+  overflow-y: auto
+
+  padding: 0 20px
+
+  box-shadow: 1px 0px 1px 0px rgba(214,214,214,1)
+
+
+#sidebar > div
+  border-bottom: 1px solid #eeeeee
+  padding-top: 10px
+
+
+.groupTitle
+  padding: 10px
+  text-transform: uppercase
+  font-weight: bold
+
+
+#toolbar
+  position: fixed
+  top: 0
+  right: 0
+  height: 100%
+
+  padding: 25px
+
+  z-index: 20
+  color: white
+
+  background: $toolbarColor
+  width: $toolbarWidth
+  text-align: center
+  height: 100%
+
+.diagramProperty  
+  margin-bottom: 10px   
+  text-align: center
+
+  .label
+    text-align: left
+    margin-bottom: 10px
+
+  input
+    width: 100%
+
+
+#toolbar .property
+  margin-bottom: 15px
+
+
+#toolbar .label
+  width: 60px
+
+
+#historyContent
+  max-height: 100px
+  overflow: auto
+  padding-bottom: 10px
+
+
+#historyTitle
+  margin-bottom: 10px
+
+
+.bubble .value 
+  display: none
+
+
+.property
+  margin-bottom: 15px
+  text-align: left
+  width: 175px
+
+.button 
+  cursor: pointer
+  glossy-button: $light-grey
+  height: 15px
+  border: 1px solid #bbbbbb
+  text-transform: capitalize
+  font-weight: bold
+  padding: 5px 10px
+  text-align: center
+  box-shadow: 0px 1px 5px 0px rgba(50, 50, 50, 0.24)
+  color: #1c83ce
+
+  font-size: 11px
+
+  &:hover
+    color: #1c83ce
+
+  &.disabled
+    color: #bf5352
+
+  &.delete
+    glossy-button: $red
+    width: 170px
+    height: 30px
+    padding: 5px 10px
+    box-sizing: border-box
+    color: white
+
+    &:hover
+      color: white
+
+
+input , select
+  text-align: left
+  height: 27px
+  width: 170px
+  border: none
+  background: white
+
+  border-radius: 3px 
+  box-shadow: inset 1px 1px 1px 0px #000000
+
+  text-indent: 10px
+
+
+.colorpicker
+  background: white
+  border: 1px solid black
+  border-radius: 2px
+
+
+.fixed 
+  fill: #b3b3b3
+
+
+.partonLines
+  stroke: $grey
+
+
+.selectedPattern
+  stroke: $blue
+
+
+.selectionRectangle
+  stroke: $blue
+  // fill: rgba(233, 240, 246, .9)
+  fill: transparent
+  strokeWidth: 2
+
+
+.selectedElement
+  stroke: $blue
+
+  &.anchor
+    fill: $blue
+  &.text
+    border: 1px solid #009aff
+
+
+.selectedArrow
+  fill: $blue
+
+
+.gridLine
+  stroke: #e5e5e5
+
+
+.historyItem
+  color: black
+  vertical-align: top
+  cursor: pointer
+  text-align: left
+  display: inline-block
+  width: 100%
+
+  .id 
+    width: 12%
+    overflow: hidden
+    text-align: right
+    display: inline-block
+  .title
+    width: 87%
+    text-align: left
+    float: right
+    overflow: hidden
+    display: inline-block
+  
+  &.current
+    color: #1c8ed6
+  &.disabled
+    color: black
+
+
+.lineDecoration
+  fill: black
+
+
+.hidden
+  display: none
+
+
+.anchor 
+  z-index: 5
+
+
+.colorContainer
+  width: 30px
+  height: 31px
+  display: inline-block
+  background: #dddddd
+  text-align: center
+  margin-top: 1px
+  float: left
+    
+  div
+    display: inline-block
+    width: 15px
+    height: 15px
+    margin-top: 7px
+    margin-left: 8px
+    float: left
+
+
+.colorInput
+  width: 137px
+  margin-right: -3px
+  display: inline-block
+  border-radius(0px)
+  border: none
+
+
+#mainContent
+  z-index: 1
+  position: absolute
+  left: $sidebarWidth+40px
+  right: 0
+  bottom: 0
+  top: 0
+
+
+#footer 
+  text-align: left
+  padding-bottom: 10px
+  overflow-y: auto
+
+
+.panelTitle, .diagramProperty .label
+  text-align: left
+  font-weight: bold
+  text-transform: capitalize
+
+
+.diagramProperty input
+  background: #fafafa
+  border: 1px solid #bbbbbb
+  width: $sidebarWidth
+  box-shadow: none
+
+
+.propertyValue
+  float: right
+  font-weight: normal
+  color: #8d8d8d
+  font-weight: bold
+
+
+.hidePanel, .showPanel
+  float: right
+  cursor: pointer
+  color: #2d89d3
+
+
+.hotkey
+  padding: 7px
+  color: #8d8d8d
+
+  .hotkeyTitle
+    font-weight: bold
+
+  .hotkeyDescription
+    margin-left: 5px
+
+
+#paletteTitle
+  color: white
+  text-transform: uppercase
+  font-weight: bold
+  margin-bottom: 10px
+
+
+#paletteBody
+  color: #959595
+  font-weight: bold
+  margin-bottom: 10px
+
+
+#paletteItems
+        
+  td
+    padding: 15px
+    height: 45px
+    width: 45px
+    border-radius: 2px
+    gradient: (rgba(153, 153, 153, .8) rgba(137, 137, 137, .8))
+  
+    box-shadow: inset 1px 1px 5px 0px rgba(204,204,204,.2), 0px 2px 1px 0px rgba(50, 50, 50, 0.3)
+
+
+.paletteItem
+  cursor: pointer
+
+
+.pattern
+  width: 29.1%
+  height: @width
+  float: left
+  display: inline-block
+  margin: 1.5%
+  border-radius: $patternSelectRadius
+  cursor: pointer
+  background: white
+
+  box-shadow: 0px 2px 5px 0px rgba(208, 208, 208, 0.75)
+
+  box-sizing: border-box
+
+  &:hover
+    border: 2px solid #078fff
+
+  img
+    width: 100%
+
+  .title
+    background: white
+    border-bottom: 1px solid #dddddd
+    padding: 10px
+    border-radius: $patternSelectRadius $patternSelectRadius 0 0 
+    color: #333333
+    text-transform: capitalize
+    font-size: 14px
+
+
+.modalTitle
+  padding: 2%
+  border-radius: $patternSelectRadius $patternSelectRadius 0 0
+  background:#5a768e  
+  width: 100%
+  font-size: 18px
+  color: white
+  font-weight: bold
+
+  box-sizing: border-box
+
+  input
+    margin: 0 5px 5px 0
+    padding: 0px
+    width: auto
+    display: inline
+
+
+.modalBody
+  background: #eeeeee
+  float: left
+  width: 97%
+  text-align: center
+  padding: 1.5%
+  border-radius: 0 0 $patternSelectRadius $patternSelectRadius
+
+
+.modalFooter
+  padding: 10px
+  text-align: right
+  float: right
+
+
+.closeModal
+  float: left
+  margin-left: 5px
+  text-transform: uppercase
+  cursor: pointer
+
+#latexExport
+
+  .modalBody
+    text-align: left
+  
+  .toolbar
+    padding: 5px 0
+    text-align: center
+
+  .step
+    margin: 5px 5px 10px 5px
+    overlay: auto
+    font-size: 14px
+
+    .title
+      font-size: 16px
+      margin: 5px 0
+
+    .body
+      background: white
+      border-radius: $patternSelectRadius
+      margin: 5px
+      padding: 10px
+      font-family: monaco,Consolas,Lucida Console,monospace
+
+
+.exportLine
+  overflow: hidden
+  width: 100%
+  height: 20px
+  word-break: break-all
+
+
+#showStartingPatterns
+  text-transform: uppercase
+  font-weight: bold
+  margin: 20px 0px
+  width: 159px  
+
+
+#togglePatternsOnStartup
+  float: right
+  cursor: pointer
+  font-size: 14px
+  margin-top: 5px
+
+  input
+    height: 15px
+    margin-left: 10px
+
+
+#credit
+  position: absolute
+  bottom: 50px 
+  right: 25px
+  width: 150px
+  text-align: center
+  font-size: 14px
+
+  a
+    text-decoration: none
+
+
+// end of file

@@ -11,11 +11,14 @@ var rootDir = path.join(__dirname, '..')
 var configDir = path.join(rootDir, 'config')
 var buildDir = path.join(rootDir, 'build')
 var sourceDir = path.join(rootDir, 'src')
-var assetsDir = path.join(sourceDir, 'assets')
-var templatesDir = path.join(sourceDir, 'templates')
+var clientDir = path.join(sourceDir, 'client')
+var serverDir = path.join(sourceDir, 'client')
 var webpackDir = path.join(configDir, 'webpack')
-var clientEntry = path.join(sourceDir, 'client.jsx')
-var serverEntry = path.join(sourceDir, 'index.js')
+var clientEntry = path.join(clientDir, 'index.js')
+var clientLibDir = path.join(clientDir, 'lib')
+var assetsDir = path.join(serverDir, 'assets')
+var templatesDir = path.join(serverDir, 'templates')
+var serverEntry = path.join(serverDir, 'index.js')
 var clientBuild = path.join(buildDir, 'client.js')
 var serverBuild = path.join(buildDir, 'server.js')
 var imagesDir = path.join(assetsDir, 'images')
@@ -28,6 +31,7 @@ module.exports = {
     buildDir: buildDir,
     templatesDir: templatesDir,
     assetsDir: assetsDir,
+    clientLibDir: clientLibDir,
     // entry points
     clientEntry: clientEntry,
     serverEntry: serverEntry,

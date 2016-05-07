@@ -35,7 +35,7 @@ app.use(compression())
 // route static files to build and assets dirs
 app.use('/static', serveStatic(buildDir), serveStatic(assetsDir))
 
-// route all surviving requests to the frontend
-app.all('*', (req, res) => res.render('index.jade'))
+app.get('/latex', (req, res) => res.send('latex!'))
+app.get('/', (req, res) => res.render('index.jade'))
 
 export default app
