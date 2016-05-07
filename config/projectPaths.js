@@ -17,6 +17,7 @@ var webpackDir = path.join(configDir, 'webpack')
 var clientEntry = path.join(clientDir, 'app.coffee')
 var clientLibDir = path.join(clientDir, 'lib')
 var assetsDir = path.join(serverDir, 'static')
+var styleDir = path.join(assetsDir, 'styles')
 var templatesDir = path.join(serverDir, 'templates')
 var serverEntry = path.join(serverDir, 'index.js')
 var clientBuild = path.join(buildDir, 'client.js')
@@ -35,6 +36,9 @@ module.exports = {
     // entry points
     clientEntry: clientEntry,
     serverEntry: serverEntry,
+    // style files
+    defaultStyle: path.join(styleDir, 'default.styl'),
+    overlayStyle: path.join(styleDir, 'overlay.styl'),
     // built files
     clientBuild: clientBuild,
     serverBuild: serverBuild,

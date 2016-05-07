@@ -1,7 +1,9 @@
 // webpack imports
 var webpack = require('webpack')
+var axis = require('axis')
 // local imports
 var projectPaths = require('../projectPaths')
+
 
 
 // default to using development configuration
@@ -14,7 +16,8 @@ module.exports = {
         client: projectPaths.clientEntry,
     },
     output: {
-        filename: projectPaths.clientBuild,
+        path: projectPaths.buildDir,
+        filename: '[name].js',
     },
     module: {
         loaders: [
@@ -32,6 +35,9 @@ module.exports = {
             }, {
                 test: /\.coffee$/,
                 loader: 'coffee',
+            }, {
+                test: /\.styl$/,
+                loader: 'style!css!stylus?paths=node_modules',
             }
 
         ],
@@ -47,6 +53,9 @@ module.exports = {
         configFile: projectPaths.eslintConfig,
         failOnError: true,
     },
+    stylus: {
+      use: [axis()]
+    }
 }
 
 

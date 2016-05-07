@@ -7,12 +7,18 @@ $ = require('jquery')
 _ = require('underscore')
 Cookie = require('js-cookie')
 Handlebars = require('handlebars')
-# local imports
+
+# inject modules into package first
 require('./FeynmanColorpicker')
 require('./undo')
 require('./lib/angular-slider/slider.coffee')
 require('./svgDataURL')
 require('./toolbar')
+# add styling to the page
+require('server/static/styles/default.styl')
+require('server/static/styles/overlay.styl')
+
+# local imports
 FeynmanCanvas = require('./FeynmanCanvas')
 overlay = require('./overlay').overlay
 closeOverlay = require('./overlay').closeOverlay
