@@ -4,6 +4,7 @@
 
 # external imports
 $ = require('jquery')
+require('jquery-ui')
 _ = require('underscore')
 Cookie = require('js-cookie')
 Handlebars = require('handlebars')
@@ -97,5 +98,10 @@ Handlebars.registerHelper 'pattern', ->
   # return the string in a handlebar safe manner
   return new Handlebars.SafeString(element)
 
+
+# tell the angular app to load the canvas properties
+$(document).on 'handlers-assigned', ->
+  console.log("triggering")
+  $(document).trigger 'doneWithInit'
 
 # end of file

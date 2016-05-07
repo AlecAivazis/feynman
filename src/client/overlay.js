@@ -45,6 +45,8 @@ function closeOverlay(){
     $(document).unbind('keypress');
 }
 
+window.closeOverlay = closeOverlay
+
 export default {
     overlay,
     closeOverlay,

@@ -8,6 +8,7 @@ angular = require('angular')
 $ = require('jquery')
 _ = require('underscore')
 Cookie = require('js-cookie')
+Handlebars = require("handlebars")
 # local imports
 Anchor = require('./Anchor')
 CircularConstraint = require('./CircularConstraint')
@@ -101,9 +102,10 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
   # store an object for the palette data
   paletteData = {}
     
-    
+  console.log('assinging')
   # load the canvas atrributes when snap is done loading
   $(document).on 'doneWithInit', ->
+    console.log('done with init')
     canvas = $(document).attr 'canvas'
     $scope.gridSize = canvas.gridSize
     $scope.snapToGrid = canvas.snapToGrid
@@ -113,6 +115,8 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     $rootScope.title = canvas.title
 
     refreshCanvas()
+
+    console.log('should be draggable')
 
     # add the drag handlers to the items on the pallet
     $('.paletteItem').draggable
@@ -347,6 +351,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     $scope.$apply()
 
 
+
   # perform the necessary actions to merge an anchor and add them to an instance of UndoMulti
   performAnchorMergesFromPalette = (anchor, undo) ->
     # save a reference to the canvas
@@ -451,6 +456,9 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     $scope.type = undefined
     # apply the changes to the angular application
     $scope.$apply()
+
+  console.log('handlers-assigned')
+  $(document).trigger('handlers-assigned')
 
 
   # align event element in the selected group align the given direction

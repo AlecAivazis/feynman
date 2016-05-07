@@ -105,5 +105,5 @@ class Text
         backwards: ->
           @data.element.handleMove(@data.origin.x, @data.origin.y)
 
-
+module.exports = Text
 # end of file

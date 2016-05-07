@@ -102,6 +102,7 @@ class FeynmanCanvas
     $(document).on 'finalizeMove', (event) =>
       @finalizeMove(event)
 
+    console.log("triggering")
     # tell the angular app to load the canvas properties
     $(document).trigger 'doneWithInit'
 

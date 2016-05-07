@@ -33,6 +33,7 @@ module.exports = {
     templatesDir: templatesDir,
     assetsDir: assetsDir,
     clientLibDir: clientLibDir,
+    clientDir: clientDir,
     // entry points
     clientEntry: clientEntry,
     serverEntry: serverEntry,
