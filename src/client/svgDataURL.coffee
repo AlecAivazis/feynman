@@ -41,7 +41,7 @@
 ###
 
 
-$ = require('jquery')
+jQuery = require('jquery')
 _ = require('underscore')
 
 # redefine original function as a jquery plugin

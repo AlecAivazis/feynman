@@ -1060,5 +1060,5 @@ class FeynmanCanvas
       element.remove()
 
 
-module.export = FeynmanCanvas
+module.exports = FeynmanCanvas
 # end of file

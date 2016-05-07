@@ -5,11 +5,17 @@ var projectPaths = require('../projectPaths')
 
 
 // default to using development configuration
-var devtool = 'source-map'
+// var devtool = 'source-map'
 var plugins = []
 
 // export webpack configuration object
 module.exports = {
+    entry: {
+        client: projectPaths.clientEntry,
+    },
+    output: {
+        filename: projectPaths.clientBuild,
+    },
     module: {
         loaders: [
             {
@@ -41,7 +47,6 @@ module.exports = {
         configFile: projectPaths.eslintConfig,
         failOnError: true,
     },
-    devtool: devtool,
 }
 
 

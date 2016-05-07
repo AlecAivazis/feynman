@@ -7,6 +7,7 @@
 angular = require('angular')
 $ = require('jquery')
 _ = require('underscore')
+Cookie = require('js-cookie')
 # local imports
 Anchor = require('./Anchor')
 CircularConstraint = require('./CircularConstraint')
@@ -23,7 +24,7 @@ app = angular.module 'feynman', [ 'ui.slider', 'undo', 'feynman.colorpicker']
 app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootScope, $timeout, $cookies) ->
 
   # load the cookie value
-  $rootScope.showStartingPatterns = $.cookie('feynmanCanvas_showStartingPatterns') == "true"
+  $rootScope.showStartingPatterns = Cookie.get('feynmanCanvas_showStartingPatterns') == "true"
 
   # add event handler for element selection
   $(document).on 'selectedElement', (event, element) ->
@@ -712,7 +713,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
       $(document).attr('canvas').title = newVal
 
   $rootScope.$watch 'showStartingPatterns', (newVal, oldVal) ->
-    $.cookie.feynmanCanvas_showStartingPatterns = newVal
+    Cookie.set('feynmanCanvas_showStartingPatterns', newVal)
 
   $scope.$watch 'snapToGrid', (newVal, oldVal) ->
     # grab the canvas

@@ -12,6 +12,7 @@ append js
 
   script(src="http://gabelerner.github.io/canvg/rgbcolor.js" type="text/javascript")
   script(src="http://gabelerner.github.io/canvg/canvg.js" type="text/javascript")
+  script(src="/static/lib/snap/dist/snap.svg-min.js" type="text/javascript")
   script(src="/static/client.js" type="text/javascript")
   
 
@@ -25,7 +26,6 @@ append css
 
 block content
 
-  {% verbatim %}
   #canvasTitle(ng-cloak)
     | {{title}}
 
@@ -368,10 +368,6 @@ block content
           a(href="/static/misc/feynman.sty")
             span.button
               | Download LaTeX package
-
-  {% endverbatim %}
-
-              
 
 
 //- end of file

@@ -452,6 +452,6 @@ class CircularConstraint
     @draw()
 
 
-module.export = CircularConstraint
+module.exports = CircularConstraint
 
 # end of file

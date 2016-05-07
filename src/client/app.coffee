@@ -6,11 +6,13 @@
 $ = require('jquery')
 _ = require('underscore')
 Cookie = require('js-cookie')
+Handlebars = require('handlebars')
 # local imports
 require('./FeynmanColorpicker')
 require('./undo')
-require('./lib/angular-slider/slider.js')
+require('./lib/angular-slider/slider.coffee')
 require('./svgDataURL')
+require('./toolbar')
 FeynmanCanvas = require('./FeynmanCanvas')
 overlay = require('./overlay').overlay
 closeOverlay = require('./overlay').closeOverlay
@@ -49,7 +51,7 @@ $(document).ready ->
 
 toggleShowStartingPatterns = ->
   # grab the current value for the cookie
-  showStartingPatterns = $.cookie('feynmanCanvas_showStartingPatterns') in ["true", undefined]
+  showStartingPatterns = Cookie.get('feynmanCanvas_showStartingPatterns') in ["true", undefined]
   # set its value to the correct boolean rep
   Cookie.set 'feynmanCanvas_showStartingPatterns', false
   # toggle the checkbox elements property

@@ -2,8 +2,12 @@
 #
 # author: alec aivazis
 
+# external imports
 angular = require('angular')
 $ = require('jquery')
+colorpicker = require('angular-bootstrap-colorpicker')
+
+console.log colorpicker
 
 angular.module('feynman.colorpicker', ['colorpicker.module'])
 
