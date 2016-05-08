@@ -67,7 +67,6 @@ export default (req, res) => {
                 if (code !== 0) {
                     console.log(`ps process exited with code ${code}`)
                 }
-                console.log('hello?')
                 // otherwise the process ended normally
                 imagemagick.convert([
                     '-density', 
@@ -96,13 +95,7 @@ export default (req, res) => {
             pdflatex.stderr.on('data', (data) => {
                 console.log(`pdflatex stderr: ${data}`)
             })
-
-            pdflatex.stdout.on('data', (data) => {
-                console.log(data.toString())
-            })
-
         })
-
     }
 
     try {
