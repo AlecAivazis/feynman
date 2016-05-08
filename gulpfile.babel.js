@@ -8,6 +8,7 @@ import shell from 'gulp-shell'
 import minifyCSS from 'gulp-minify-css'
 import concat from 'gulp-concat'
 import karma from 'karma'
+import {argv} from 'yargs'
 // local imports
 import {
     buildDir,
@@ -25,6 +26,8 @@ const webpackClientConfig = require(webpackClientConfigPath)
 const webpackServerConfig = require(webpackServerConfigPath)
 
 
+
+
 /**
  * Default to watching client and server, and runing server.
  */
@@ -34,7 +37,8 @@ gulp.task('default', ['watch-client', 'watch-server', 'runserver'])
 /**
  * Run the development server.
  */
-gulp.task('runserver', shell.task(`node_modules/.bin/nodemon ${serverBuild} 4000`))
+const port = argv.port || 4000
+gulp.task('runserver', shell.task(`node_modules/.bin/nodemon ${serverBuild} --port ${port}`))
 
 
 /**

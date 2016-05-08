@@ -1,6 +1,5 @@
 FROM phusion/baseimage
 
-RUN apt-get autoclean
 RUN apt-get update
 RUN apt-get upgrade -y
 
@@ -11,11 +10,15 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
-
 RUN npm install
 COPY . /usr/src/app
 
 RUN npm run build-production
 
 expose 4000
-CMD [ "npm", "start" ]
+CMD [
+    "node_modules/gulp/bin/gulp.js", 
+    "runserver", 
+    "--port", 
+    "4000"
+]

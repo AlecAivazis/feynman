@@ -2,12 +2,13 @@
 import 'babel-polyfill'
 // node imports
 import process from 'process'
+import {argv} from 'yargs'
 // local imports
 import app from './server'
 
 
 // interpret first arg from command line as port number
-const portArg = parseInt(process.argv[2], 10)
+const portArg = parseInt(argv.port || 8000)
 // port to listen on
 const port = isValidPort(portArg) ? portArg : 8000
 
