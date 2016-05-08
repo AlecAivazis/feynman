@@ -5,10 +5,12 @@
   "private": true,
   "main": "gulpfile.babel.js",
   "scripts": {
-    "test": "node_modules/gulp/bin/gulp.js test",
-    "start": "node_modules/gulp/bin/gulp.js runserver",
+    "build": "node_modules/gulp/bin/gulp.js build",
+    "build-production": "node_modules/gulp/bin/gulp.js build-production",
+    "clean": "node_modules/gulp/bin/gulp.js clean",
     "dev": "node_modules/gulp/bin/gulp.js",
-    "build-client": "node_modules/gulp/bin/gulp.js build-client"
+    "start": "node_modules/gulp/bin/gulp.js runserver",
+    "test": "node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
     "type": "git",

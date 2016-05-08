@@ -60,6 +60,17 @@ gulp.task('build-server', ['clean-server'], () => {
 
 
 /**
+ * Build both server and client files
+ */
+gulp.task('build', ['build-server', 'build-client'])
+
+
+/**
+ * Build both server and client files for production
+ */
+gulp.task('build-production', ['build-server-production', 'build-client-production'])
+
+/**
  * Watch client entry point.
  */
 gulp.task('watch-client', ['clean-client'], () => {

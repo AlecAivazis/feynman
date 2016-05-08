@@ -10,7 +10,7 @@ Cookie = require('js-cookie')
 Handlebars = require('handlebars')
 
 # inject modules into package first
-require('./FeynmanColorpicker')
+require('./feynmanColorpicker')
 require('./undo')
 require('./lib/angular-slider/slider.coffee')
 require('./svgDataURL')

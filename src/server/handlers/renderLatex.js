@@ -34,9 +34,9 @@ export default (req, res) => {
 
     // this function will render the given template through pdflatex and 
     // reply with an image
-    function renderTemplateAsLaTeX(path, extraContext) {
+    function renderTemplateAsLaTeX(templatePath, extraContext) {
         // render the template
-        const renderedTemplate = template.render(path, {
+        const renderedTemplate = template.render(templatePath, {
             ...context,
             ...extraContext,
         })
