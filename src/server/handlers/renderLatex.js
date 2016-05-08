@@ -48,9 +48,9 @@ export default (req, res) => {
         temp.mkdir('feynman', (err, tempDir) => {
 
             // the filepath of the tex equation
-            const texSource = tempDir + '/equation.tex'
-            const equationPDF = tempDir + '/equation.pdf'
-            const equationPNG = tempDir + '/equation.png'
+            const texSource = path.join(tempDir, 'equation.tex')
+            const equationPDF = path.join(tempDir, 'equation.pdf')
+            const equationPNG = path.join(tempDir, 'equation.png')
 
             // exec(`pdflatex -output-directory ${tempDir} -jobname tex`)
             fs.writeFileSync(texSource, renderedTemplate)
@@ -75,6 +75,7 @@ export default (req, res) => {
                     '-quality', 
                     '90', 
                     equationPNG
+                // when the process is done converting the file
                 ], (error, stdout) => {
                     // if there was an error converting the pdf to an image
                     if (error) {
