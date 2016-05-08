@@ -34,7 +34,7 @@ gulp.task('default', ['watch-client', 'watch-server', 'runserver'])
 /**
  * Run the development server.
  */
-gulp.task('runserver', shell.task(`nodemon ${serverBuild} 4000`))
+gulp.task('runserver', shell.task(`node_modules/.bin/nodemon ${serverBuild} 4000`))
 
 
 /**
