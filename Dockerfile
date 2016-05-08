@@ -17,8 +17,7 @@ COPY package.json /usr/src/app/
 RUN npm install
 COPY . /usr/src/app
 
-RUN gulp build-server-production
-RUN gulp build-client-production
+RUN gulp build-production
 
 expose 4000
 CMD [ "npm", "start" ]

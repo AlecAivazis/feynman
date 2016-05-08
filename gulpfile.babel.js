@@ -68,7 +68,7 @@ gulp.task('build', ['build-server', 'build-client'])
 /**
  * Build both server and client files for production
  */
-gulp.task('build-production', ['build-server-production', 'build-client-production'])
+gulp.task('build-production', ['build-client-production', 'build-server-production'])
 
 /**
  * Watch client entry point.
