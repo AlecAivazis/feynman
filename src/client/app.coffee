@@ -58,11 +58,11 @@ $(document).ready ->
 
 window.toggleShowStartingPatterns = ->
   # grab the current value for the cookie
-  showStartingPatterns = Cookie.get('feynmanCanvas_showStartingPatterns') in ["true", undefined]
+  newVal = !(Cookie.get('feynmanCanvas_showStartingPatterns') in ["true", undefined])
   # set its value to the correct boolean rep
-  Cookie.set 'feynmanCanvas_showStartingPatterns', false
+  Cookie.set 'feynmanCanvas_showStartingPatterns', newVal
   # toggle the checkbox elements property
-  $('#patternsOnStartup').prop('checked', !showStartingPatterns)
+  $('#patternsOnStartup').prop('checked', newVal)
 
 
 # render the canvas with the designated pattern and create the appropriate undo element
