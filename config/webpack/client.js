@@ -5,6 +5,9 @@ var baseConfig = require(projectPaths.webpackBaseConfig)
 
 module.exports = Object.assign({}, baseConfig, {
     // additional client configuration goes here
+    entry: {
+        client: projectPaths.clientEntry
+    },
 })
 
 

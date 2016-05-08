@@ -25,6 +25,9 @@ var nodeModules = fs.readdirSync('node_modules')
 
 
 module.exports = Object.assign({}, baseConfig, {
+    entry: {
+        server: projectPaths.serverEntry
+    },
     target: 'node',
     // don't bundle node modules
     externals: nodeModules,

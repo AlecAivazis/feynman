@@ -11,6 +11,7 @@ import {
     clientLibDir,
     favicon as faviconPath,
 } from 'config/projectPaths'
+import {renderLaTeX} from './handlers'
 
 
 const app = express()
@@ -35,7 +36,7 @@ app.use(compression())
 
 // route static files to build and assets dirs
 app.use('/static', serveStatic(buildDir), serveStatic(assetsDir), serveStatic(clientLibDir))
-app.get('/latex', (req, res) => res.send('latex!'))
+app.get('/latex', renderLaTeX)
 app.get('/', (req, res) => res.render('index.jade'))
 
 export default app

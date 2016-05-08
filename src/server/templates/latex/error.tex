@@ -1,13 +1,12 @@
 % this file describes an error message that appears when the requested string fails to generate
 % author: alec aivazis
 
-{% extends "latex/base.tex" %}
-
-{% load braces %}
+{% extends "base.tex" %}
 
 {% block content %}
-    error!
-{%endblock%}
+    error! 
+    {{error}}
+{% endblock %}
 
 
 % end of file

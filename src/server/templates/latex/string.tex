@@ -1,0 +1,11 @@
+% this file describes the template necessary to display a customizable string in LaTeX
+% author: alec aivazis
+
+{% extends "base.tex" %}
+
+{% block content %}
+\fontsize{{fontSize|add_braces}}{{baseLine|add_braces}}
+\textcolor{{color|add_braces}}{ {% if isMath %}${% endif %}{{equation}}{% if isMath %}${% endif %}}
+{%endblock%}
+
+% end of file

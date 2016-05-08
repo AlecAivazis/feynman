@@ -12,9 +12,6 @@ var plugins = []
 
 // export webpack configuration object
 module.exports = {
-    entry: {
-        client: projectPaths.clientEntry
-    },
     output: {
         path: projectPaths.buildDir,
         filename: '[name].js',

@@ -23,6 +23,7 @@ var serverEntry = path.join(serverDir, 'index.js')
 var clientBuild = path.join(buildDir, 'client.js')
 var serverBuild = path.join(buildDir, 'server.js')
 var imagesDir = path.join(assetsDir, 'images')
+var latexTemplateDir = path.join(templatesDir, 'latex')
 
 
 module.exports = {
@@ -47,6 +48,8 @@ module.exports = {
     // globs
     clientBuildGlob: path.join(clientBuild, '*'),
     serverBuildGlob: path.join(serverBuild, '*'),
+    equationTemplatePath: path.join(latexTemplateDir, 'string.tex'),
+    errorTemplatePath: path.join(latexTemplateDir, 'string.tex'),
     // configuration files
     eslintConfig: path.join(configDir, 'eslint.json'),
     karmaConfig: path.join(configDir, 'karma.js'),
