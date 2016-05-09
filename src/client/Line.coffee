@@ -584,7 +584,8 @@ class Line
     if isSelected
       @element.addClass('selectedElement')
 
-    @element.addClass('fermion')
+    # add the default line class
+    @element.addClass('line')
 
     # on drag move
     @element.drag @onDrag, @dragStart, @dragEnd
