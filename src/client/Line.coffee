@@ -986,7 +986,8 @@ class Line
         anchorY = ( m * ( x + m * y ) - (m * @anchor1.x - @anchor1.y) ) / (m*m + 1)
     
     # create the new elements
-    anch = new Anchor(@paper, anchorX, anchorY)
+    AnchorClass = require("./Anchor")
+    anch = new AnchorClass(@paper, anchorX, anchorY)
     # l = new Line(@paper, anch, @anchor1) # anchor1 is arbitrary
     l = @clone(anch, @anchor1) # anchor1 is arbitrary
     # remove this line from anchor1
@@ -1020,6 +1021,7 @@ class Line
     if @arrow
       # add the selected class to it
       @arrow.addClass('selectedArrow')
+
 
 module.exports = Line
 # end of file
