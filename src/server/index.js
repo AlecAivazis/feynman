@@ -1,7 +1,6 @@
 // fix node land
 import 'babel-polyfill'
-// node imports
-import process from 'process'
+// external imports
 import {argv} from 'yargs'
 // local imports
 import app from './server'
