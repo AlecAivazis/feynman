@@ -71,6 +71,8 @@
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.0.0",
-    "underscore": "^1.6.0"
+    "temp": "^0.8.3",
+    "underscore": "^1.6.0",
+    "yargs": "^4.7.0"
   }
 }
