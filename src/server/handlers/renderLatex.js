@@ -26,11 +26,17 @@ export default (req, res) => {
         color: 'black',
         fontSize: 5,
         isMath: true,
-        equation: ' ',
+        equation: '',
         ...req.query,
     }
     // set the baseline from the fontsize
     context['baseLine'] = 1.2 * parseInt(context.fontSize)
+
+    // if there isn't a valid equation to render
+    if !(context.equation) {
+        // yell loudly
+        return res.status(500).send("invalid equation!")
+    }
 
     // this function will render the given template through pdflatex and 
     // reply with an image
