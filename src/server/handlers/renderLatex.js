@@ -33,7 +33,7 @@ export default (req, res) => {
     context['baseLine'] = 1.2 * parseInt(context.fontSize)
 
     // if there isn't a valid equation to render
-    if !(context.equation) {
+    if (!context.equation) {
         // yell loudly
         return res.status(500).send("invalid equation!")
     }
