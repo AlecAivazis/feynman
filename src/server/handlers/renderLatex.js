@@ -87,6 +87,7 @@ export default (req, res) => {
                     if (error) {
                         // log it
                         console.log("ERROR: " + error)
+                        res.status(500).send("could not generate pdf")
                     // otherwise the image was created successfully
                     } else {
                         // open the image
@@ -96,6 +97,8 @@ export default (req, res) => {
                         // close the response with the image
                         res.end(img, 'binary')
                     }
+                    // clean up regardless of response
+                    temp.cleanupSync()
                 })
             })
 
