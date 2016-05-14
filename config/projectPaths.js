@@ -9,7 +9,6 @@ var path = require('path')
 
 var rootDir = path.join(__dirname, '..')
 var configDir = path.join(rootDir, 'config')
-var buildDir = path.join(rootDir, 'build')
 var sourceDir = path.join(rootDir, 'src')
 var clientDir = path.join(sourceDir, 'client')
 var serverDir = path.join(sourceDir, 'server')
@@ -17,6 +16,7 @@ var webpackDir = path.join(configDir, 'webpack')
 var clientEntry = path.join(clientDir, 'app.coffee')
 var clientLibDir = path.join(clientDir, 'lib')
 var assetsDir = path.join(serverDir, 'static')
+var buildDir = assetsDir
 var styleDir = path.join(assetsDir, 'styles')
 var templatesDir = path.join(serverDir, 'templates')
 var serverEntry = path.join(serverDir, 'index.js')
@@ -53,7 +53,5 @@ module.exports = {
     // configuration files
     eslintConfig: path.join(configDir, 'eslint.json'),
     karmaConfig: path.join(configDir, 'karma.js'),
-    webpackBaseConfig: path.join(webpackDir, 'base.js'),
-    webpackClientConfig: path.join(webpackDir, 'client.js'),
-    webpackServerConfig: path.join(webpackDir, 'server.js'),
+    webpackConfig: path.join(configDir, 'webpack.js'),
 }

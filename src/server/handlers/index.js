@@ -1,1 +1,0 @@
-export renderLaTeX from './renderLatex'

@@ -2,7 +2,7 @@
 //- -*- coding: utf-8 -*-
 //-
 //- Alec Aivazis <alec@aivazis.com>
-//- 
+//-
 //- (c) 2014-2015 all rights reserved
 //-
 
@@ -16,20 +16,22 @@ append js
   script(src="/static/lib/FileSaver.js" type="text/javascript")
   script(src="/static/client.js" type="text/javascript")
 
-  
+
 
 append css
-  link(href="/static/angular-bootstrap-colorpicker.css" rel="stylesheet")
-  link(href="/static/angular-slider/slider.css" rel="stylesheet")
+  link(href="/static/styles/angular-bootstrap-colorpicker.css" rel="stylesheet")
+  link(href="/static/styles/angular-slider.css" rel="stylesheet")
 
 
 block content
+
+  {% raw %}
 
   #canvasTitle(ng-cloak)
     | {{title}}
 
   #sidebar(ng-controller="sidebar" ng-cloak)
-    
+
     #diagramProperties
       .diagramProperty
         .label title
@@ -38,7 +40,7 @@ block content
 
       .diagramProperty
         .label
-          | grid 
+          | grid
           span.propertyValue(ng-hide="gridSize == 0")
             | {{gridSize}}
           span.propertyValue(ng-show="gridSize == 0")
@@ -60,14 +62,14 @@ block content
           | show anchors
 
       .diagramProperty
-          span.button.enabled(style="text-transform: none", ng-click="exportDiagram('png')") 
+          span.button.enabled(style="text-transform: none", ng-click="exportDiagram('png')")
             | Export PNG
-          //span.button.enabled(style="text-transform: none", ng-click="exportDiagram('svg')") 
+          //span.button.enabled(style="text-transform: none", ng-click="exportDiagram('svg')")
           //  | SVG
-          span.button.enabled(style="text-transform: none", ng-click="exportDiagram('latex')") 
+          span.button.enabled(style="text-transform: none", ng-click="exportDiagram('latex')")
             | LaTeX
 
-    
+
     // WARNING: this id can't change without reflecting it in the javascript
     #undoHistory(ng-controller="undoCtrl", current="{{current}}")
 
@@ -75,20 +77,20 @@ block content
         | History
         span.hidePanel(ng-show="showHistory == true", ng-click="showHistory = false")
           | hide
-        span.showPanel(ng-show="showHistory == false", ng-click="showHistory = true") 
+        span.showPanel(ng-show="showHistory == false", ng-click="showHistory = true")
           | show
 
       #historyContent(ng-show="showHistory == true", ng-init="showHistory = false")
         .historyItem(ng-repeat="event in queue | reverse", ng-click="goTo(event.id)",
                      ng-class="{current : event.id == current, disabled: event.id > current}")
-          span.id 
+          span.id
             | {{event.id}} :
-          span.title 
+          span.title
             | {{event.title}}
-   
+
     #toolbar(ng-cloak)
 
-      #palette(ng-hide="selectedElements != false || selectedElement != false", 
+      #palette(ng-hide="selectedElements != false || selectedElement != false",
                ng-init="selectedElement=false")
         #paletteTitle
           | item palette
@@ -112,16 +114,16 @@ block content
               img.paletteItem(element="text", src="/static/images/text.png")
         #showStartingPatterns.button(onclick="showPatterns()") patterns...
         #credit
-          | by 
+          | by
           a(href="http://alec.aivazis.com" target="_blank")
             | Alec Aivazis
           br
           br
           | Found a bug?
           br
-          | File an issue on 
-          a(href="https://www.github.com/AlecAivazis/feynman/issues") 
-            | GitHub            
+          | File an issue on
+          a(href="https://www.github.com/AlecAivazis/feynman/issues")
+            | GitHub
 
       #selectedElementProperties(ng-show="selectedElement != false")
 
@@ -129,9 +131,9 @@ block content
           .property
             color-picker(model="color")
           .property
-            slider(floor="1.0", ceiling="10", step="1", precision="1",  ng-model="radius", 
+            slider(floor="1.0", ceiling="10", step="1", precision="1",  ng-model="radius",
                    style="width: 82%")
-            | &nbsp; {{radius}}
+            | {{radius}}
           .property
             span.button(ng-click="selectedElement.fixed = true", style="width: 148px",
                         ng-show="selectedElement.fixed == false")
@@ -146,8 +148,7 @@ block content
         #lineProperties.propertiesMenu(ng-show="type == 'line'" )
 
           .property
-            input(type="text", ng-model="selectedElement.label", name="label",
-                  placeholder="Enter a label")
+            input(type="text", ng-model="selectedElement.label", name="label", placeholder="Enter a label")
 
           .property.colorPicker
             color-picker(model="color")
@@ -169,13 +170,13 @@ block content
           .property(ng-show="selectedElement.style == 'fermion' || selectedElement.style == 'dashed'")
             span.button(ng-click="selectedElement.drawArrow = true", ng-show="selectedElement.drawArrow == false", style="width: 149px")
               | show arrow
-            span.button.disabled(ng-click="selectedElement.drawArrow = false", 
+            span.button.disabled(ng-click="selectedElement.drawArrow = false",
                         ng-show="selectedElement.drawArrow == true", style="margin-right: 10px")
               | hide arrow
             span.button(ng-click="selectedElement.flipArrow = !selectedElement.flipArrow",
                         ng-show="selectedElement.drawArrow == true", style="width: 58px")
               | flip
-          
+
           .property(ng-show="selectedElement.style == 'gluon' || selectedElement.style == 'electroweak' || selectedElement.style == 'gluino'  || selectedElement.style == 'sfermion'")
             span.button(ng-click="selectedElement.loopDirection = 0 - selectedElement.loopDirection",
                         style="width: 150px", ng-show="selectedElement.style == 'gluon' || selectedElement.style =='gluino'")
@@ -188,7 +189,7 @@ block content
             span.button.disabled(ng-show="selectedElement.drawEndCaps == true",
                         ng-click="selectedElement.drawEndCaps = false", style="width: 150px")
               | hide end caps
-            span.button(ng-show="selectedElement.drawEndCaps == false", 
+            span.button(ng-show="selectedElement.drawEndCaps == false",
                         ng-click="selectedElement.drawEndCaps = true", style="width: 150px")
               | draw end caps
 
@@ -200,9 +201,9 @@ block content
       #circleProperties.propertiesMenu(ng-show="type == 'circle'")
         .property
           color-picker(model="color")
-        
+
         .property
-          slider(floor="0", ceiling="100", step="5", precision="0",  ng-model="radius", 
+          slider(floor="0", ceiling="100", step="5", precision="0",  ng-model="radius",
                  style="width: 80%")
           |  &nbsp; {{radius}}
 
@@ -213,10 +214,10 @@ block content
         .property
           span.button.delete(ng-click="removeSelectedElements()")
             | delete this constraint
-      
+
       #textProperties.propertiesMenu(ng-show="type == 'text'")
         .property
-          input(type="text", ng-model="selectedElement.text", name="label" placeholder="text!")
+          input(type="text", ng-model="selectedElement.text", name="label", placeholder="text!")
 
         .property
           span.button.delete(ng-click="removeSelectedElements()")
@@ -233,11 +234,11 @@ block content
             color-picker(model="groupAnchorColor")
 
           .property
-            slider(floor="1.0", ceiling="10", step=".2", precision="1",  ng-model="groupAnchorRadius", 
+            slider(floor="1.0", ceiling="10", step=".2", precision="1",  ng-model="groupAnchorRadius",
                    style="width: 75%", ng-init="groupAnchorRadius = -1")
             span(ng-hide="groupAnchorRadius == -1")
               | &nbsp; {{groupAnchorRadius}}
-          
+
           .property(ng-show="selectedElements.anchor.length > 1")
             span.button(ng-click="alignGroup('vertical')", style="width: 150px")
               | align vertically
@@ -256,23 +257,23 @@ block content
             color-picker(model="groupLineColor")
 
           .property
-            slider(floor="1.0", ceiling="10", step=".2", precision="1",  ng-model="groupSize", 
+            slider(floor="1.0", ceiling="10", step=".2", precision="1",  ng-model="groupSize",
                    style="width: 75%", ng-init="groupSize = -1")
             span(ng-show="groupSize != -1")
               | &nbsp; {{groupSize}}
-            
+
 
         #constraintGroup(ng-show="selectedElements.circle.length > 0")
           .groupTitle(ng-show="selectedElements.circle.length > 1")
             | {{selectedElements.circle.length}} circles selected
           .groupTitle(ng-show="selectedElements.circle.length == 1")
             | {{selectedElements.circle.length}} circle selected
-          
+
           .property.colorPicker
             color-picker(model="groupCircleColor")
 
           .property
-            slider(floor="0", ceiling="100", step="5", precision="0",  ng-model="groupCircleRadius", 
+            slider(floor="0", ceiling="100", step="5", precision="0",  ng-model="groupCircleRadius",
                    style="width: 75%", ng-init="groupSize = -1")
             span(ng-show="groupCircleRadius != -1")
               | &nbsp; {{groupCircleRadius}}
@@ -323,12 +324,12 @@ block content
           span.hotkeyTitle Zoom:
           span.hotkeyDescription scroll wheel
 
-      // alt dragging moving the window instead 
+      // alt dragging moving the window instead
       // gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier "<Super>"
 
   #mainContent
     svg#canvas
-    
+
   // the template for the starting pattern select window
   script#patternSelect_template(type="text/x-handlebars-template")
     #patternSelect
@@ -339,7 +340,7 @@ block content
         span#togglePatternsOnStartup(onclick="toggleShowStartingPatterns()")
           | show at startup
           input#patternsOnStartup(type="checkbox")
-          
+
       .modalBody
         | {{#each patterns}}
         |   {{pattern}}
@@ -367,5 +368,6 @@ block content
             span.button
               | Download LaTeX package
 
+  {% endraw %}
 
 //- end of file
