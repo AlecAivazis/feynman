@@ -7,6 +7,7 @@ from subprocess import call, PIPE, Popen
 import tempfile
 from collections import defaultdict
 from flask import Flask, render_template, send_file, send_from_directory, request
+import click
 
 # define the app object
 app = Flask(__name__)
@@ -63,10 +64,6 @@ def latex():
         )
         # send pdflatex the latex string to be rendered
         out, err = process.communicate(latex)
-        if out:
-            print(out)
-        if err:
-            print(err)
 
         # save references to the location of the pdf and png outputs
         pdf = os.path.join(tempdir, 'tex.pdf')
@@ -78,7 +75,15 @@ def latex():
         return send_file(raster)
 
 
+@click.command()
+@click.option('--port', default=5000)
+@click.option('--debug', default=False)
+def run(port, debug):
+    # run the web application with the appropriate configuration
+    app.run(debug=debug, port=port)
+
+
 # if running the file from the command line
 if __name__ == '__main__':
-    # run the web application
-    app.run(debug=True)
+    # execute the cli
+    run()

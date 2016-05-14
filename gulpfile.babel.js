@@ -29,6 +29,8 @@ const webpackConfig = require(webpackConfigPath)
 gulp.task('default', ['watch-client'])
 
 
+const port = argv.port || 4000
+gulp.task('runserver', shell.task(`python3 src/server/app.py --port ${port}`))
 
 /**
  * Build client entry point.

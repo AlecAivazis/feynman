@@ -3,7 +3,7 @@ var webpack = require('webpack')
 var axis = require('axis')
 var process = require('process')
 // local imports
-var projectPaths = require('../projectPaths')
+var projectPaths = require('./projectPaths')
 
 
 
@@ -19,7 +19,6 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.optimize.DedupePlugin()
     )
 }
-console.log(process.env)
 
 // export webpack configuration object
 module.exports = {
