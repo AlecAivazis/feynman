@@ -19,12 +19,13 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.optimize.DedupePlugin()
     )
 }
-
+console.log(projectPaths.clientEntry)
 // export webpack configuration object
 module.exports = {
+    entry: projectPaths.clientEntry,
     output: {
         path: projectPaths.buildDir,
-        filename: '[name].js',
+        filename: 'client.js',
     },
     module: {
         loaders: [
