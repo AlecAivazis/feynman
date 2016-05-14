@@ -6,7 +6,7 @@ import os
 from subprocess import call, PIPE, Popen
 import tempfile
 from collections import defaultdict
-from flask import Flask, render_template, send_file, send_from_directory
+from flask import Flask, render_template, send_file, send_from_directory, request
 
 # define the app object
 app = Flask(__name__)
@@ -20,6 +20,10 @@ def index():
         The primary endpoint for the web application.
     """
     return render_template('index.jade')
+
+@app.template_filter()
+def add_braces(content):
+    return "{" + str(content) + "}"
 
 
 @app.route('/latex')
@@ -36,21 +40,19 @@ def latex():
     # default paramter values
     template_context = defaultdict(
         color='black',
-        fontsize=5,
+        fontSize=5,
         isMath=True,
         equation = ' '
     )
-
     # update the context with the request parameters
-    template_context.update(request.GET)
+    template_context.update(request.args.to_dict())
 
-    # create a context object from the dict
-    context = Context(template_context)
+    template_context['baseLine'] = 1.2 * template_context['fontSize']
 
-    # grab the string template
-    template = get_template(self.string_template)
     # render the template with the specfied context
-    latex = template.render(context).encode('utf-8')
+    latex = render_template(string_template, **template_context).encode('utf-8')
+
+    print(latex)
 
     # open a temporary directory where we can put the rendered latex
     with tempfile.TemporaryDirectory() as tempdir:
@@ -62,7 +64,11 @@ def latex():
             stdout = PIPE,
         )
         # send pdflatex the latex string to be rendered
-        process.communicate(latex)
+        out, err = process.communicate(latex)
+        if out:
+            print(out)
+        if err:
+            print(err)
 
         # save references to the location of the pdf and png outputs
         pdf = os.path.join(tempdir, 'tex.pdf')
@@ -71,7 +77,7 @@ def latex():
         call(['convert', '-density', '300', pdf, '-quality', '90', raster])
 
         # once the convert is done, send the file as the response
-        send_file(raster)
+        return send_file(raster)
 
 
 # if running the file from the command line
