@@ -52,8 +52,6 @@ def latex():
     # render the template with the specfied context
     latex = render_template(string_template, **template_context).encode('utf-8')
 
-    print(latex)
-
     # open a temporary directory where we can put the rendered latex
     with tempfile.TemporaryDirectory() as tempdir:
         # run pdflatex with the output directory pointing to the temporary loc
