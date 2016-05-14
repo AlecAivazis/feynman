@@ -110,12 +110,6 @@ gulp.task('watch-server', ['clean-server'], () => {
  * Build client entry point for production.
  */
 gulp.task('build-client-production', ['clean-client'], () => {
-    // set environment variable
-    env({
-        vars: {
-            NODE_ENV: 'production',
-        },
-    })
     // build client
     return gulp.src(clientEntry)
         .pipe(named())
