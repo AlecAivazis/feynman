@@ -139,24 +139,24 @@ class Line
     # set the arrow to the same color as the line
     @arrow.attr
       fill: @color
-  
+
     # add it to the diagram
     $(document).attr('canvas').addToDiagram @arrow
 
     # figure out the angle that this line needs to take
     # compute the alignment angle in degrees
-    angle = Math.atan(dy/dx) * 180/Math.PI 
+    angle = Math.atan(dy/dx) * 180/Math.PI
 
     # check if we need to flip the arrow for consistency
-    if dx >= 0 
+    if dx >= 0
       # if we do then flip it
       angle += 180
 
-    # add a little bit to accomodate the triangle's original orientation 
+    # add a little bit to accomodate the triangle's original orientation
     angle += 90
 
     # check if they want the arrow flipped
-    if @flipArrow 
+    if @flipArrow
       angle += 180
 
     # create a rotation matrix through that angle
@@ -172,7 +172,7 @@ class Line
       event.stopPropagation()
       $(document).trigger 'selectedElement', this
 
-    
+
   # calculate the location for the label and then draw it
   drawLabel: =>
 
@@ -186,8 +186,10 @@ class Line
 
     # grab the label coordinates
     labelCoords = @getLabelCoordinates()
+    # encode the label so we don't lose any characters
+    labelEncoded = encodeURIComponent(@label)
     # create the element
-    @labelElement = @paper.image("/latex?equation=#{@label}", labelCoords.x, labelCoords.y)
+    @labelElement = @paper.image("/latex?equation=#{labelEncoded}", labelCoords.x, labelCoords.y)
     # add it to the diagram
     $(document).attr('canvas').addToDiagram @labelElement
 
@@ -201,7 +203,7 @@ class Line
     event.stopPropagation()
     # get the coordinsteas for the label
     @labelOrigin = @getLabelCoordinates()
-      
+
 
   # move the label as you drag it around
   labelDrag: (deltaX, deltaY, x, y, event) =>
@@ -245,12 +247,12 @@ class Line
 
     # the distance to be from the line
     r = @labelDistance
-      
+
     # calculate the midpoint
     midx = x1 + @labelLocation * (x2 - x1)
     midy = y1 + @labelLocation * (y2 - y1)
 
-    # find the slope of the perpendicular line 
+    # find the slope of the perpendicular line
     # m' = -1/m
     m = -(x1 - x2)/(y1 - y2)
 
@@ -273,7 +275,7 @@ class Line
     if isNaN(labely)
       labely = midy - r
 
-    coords = 
+    coords =
       x: labelx
       y: labely
 
@@ -285,10 +287,10 @@ class Line
     # current x loc for path generation
     anchor1 = @anchor1.getLocation()
     x1 = anchor1.x
-    y1 = anchor1.y 
+    y1 = anchor1.y
     anchor2 = @anchor2.getLocation()
     x2 = anchor2.x
-    y2 = anchor2.y 
+    y2 = anchor2.y
 
     # compute the lengths between the anchors
     dx = x2 - x1
@@ -313,7 +315,7 @@ class Line
       @anchor1 = replaces
     else if @anchor2 == replaced
       @anchor2 = replaces
-    
+
 
   drawAsLine: =>
     # add the line to the dom
@@ -337,10 +339,10 @@ class Line
     # the coordinates of the anchors
     anchor1 = @anchor1.getLocation()
     x1 = anchor1.x
-    y1 = anchor1.y 
+    y1 = anchor1.y
     anchor2 = @anchor2.getLocation()
     x2 = anchor2.x
-    y2 = anchor2.y 
+    y2 = anchor2.y
     # compute the length of the line
     dx = x1 - x2
     dy = y1 - y2
@@ -352,7 +354,7 @@ class Line
     amplitude = if dx < 0 then scale else - scale
 
     # find the closest whole number of full periods
-    loops = Math.round(length / scale / 2) 
+    loops = Math.round(length / scale / 2)
     # compute the length of the chain
     # do not modify because its passed to align
     chainLength = 2 * scale * loops
@@ -361,7 +363,7 @@ class Line
     cx = x1
     cy = y1
     # the top and bottom limits for the pattern
-    ymin = cy 
+    ymin = cy
     ymax = cy - 2 * @loopDirection * amplitude
     # each segments advances the current location by this much
     dx = scale
@@ -405,10 +407,10 @@ class Line
     # the coordinates of the anchors
     anchor1 = @anchor1.getLocation()
     x1 = anchor1.x
-    y1 = anchor1.y 
+    y1 = anchor1.y
     anchor2 = @anchor2.getLocation()
     x2 = anchor2.x
-    y2 = anchor2.y 
+    y2 = anchor2.y
 
     # compute the length of the line
     dx = x1 - x2
@@ -498,7 +500,7 @@ class Line
     # a sfermion is an em propagator superimposed on a straight line
      @paper.group(@drawAsEW(), @drawAsLine())
 
-    
+
   drawAsEW: =>
     # the width of the pattern
     scale = 20
@@ -507,10 +509,10 @@ class Line
     # the coordinates of the anchors
     anchor1 = @anchor1.getLocation()
     x1 = anchor1.x
-    y1 = anchor1.y 
+    y1 = anchor1.y
     anchor2 = @anchor2.getLocation()
     x2 = anchor2.x
-    y2 = anchor2.y 
+    y2 = anchor2.y
     # compute the length of the line
     dx = x1 - x2
     dy = y1 - y2
@@ -533,7 +535,7 @@ class Line
     for i in [1...loops]
         cx += scale
         pathString += " S #{cx+scale/2} #{ymax} #{cx+scale} #{cy}"
-        
+
     # create the svg element
     element = @paper.path(pathString)
     # align along the line created by the anchors
@@ -545,7 +547,7 @@ class Line
     # if this element was previously selected
     if @element and @element.hasClass('selectedElement')
       isSelected = true
-  
+
     # if we're supposed to draw the arrow element
     if @drawArrow and @style in ['fermion', 'dashed']
       # do so
@@ -671,7 +673,7 @@ class Line
       # grab the line before we merge
       newLine = @newAnchor.lines[0]
 
-      # merge this anchor with 
+      # merge this anchor with
       onAnchor = $(document).attr('canvas').isAnchorOnAnchor(@newAnchor)
       # check if the new anchor was merged
       if onAnchor
@@ -685,7 +687,7 @@ class Line
         otherAnch = if otherLine.anchor1 == splitAnch then otherLine.anchor2 else otherLine.anchor1
         # get the anchor that is connected to this
         thisAnch = if this.anchor1 == splitAnch then this.anchor2 else this.anchor1
-        
+
         # register the internal branch with the undo stack
         new UndoEntry false,
           title: 'created internal propagator as a branch'
@@ -704,7 +706,7 @@ class Line
             @data[1].ressurect()
             # draw the new anchor
             @data[2].draw()
-    
+
           # the backwards action is to remove the line and undo the split
           backwards: ->
             # remove the elements that were created in the branch
@@ -715,7 +717,7 @@ class Line
             @data[5].replaceAnchor @data[2], @data[4]
             @data[4].addLine @data[5]
             @data[4].draw()
-            
+
       # otherwise it was not merged
       else
 
@@ -768,8 +770,8 @@ class Line
               @data.otherLine.ressurect()
               @data.newLine.ressurect()
               @data.splitAnchor.draw()
-              
-              
+
+
         else
           # check if the newAnchor was made on a line
           onLine = $(document).attr('canvas').isAnchorOnLine(@newAnchor)
@@ -779,7 +781,7 @@ class Line
             internalLine = @newAnchor.lines[0]
             # split the line at the anchor's location
             split = onLine.split(@newAnchor.x, @newAnchor.y)
-            # merge the newAnchor with the one created by the split 
+            # merge the newAnchor with the one created by the split
             splitAnchor = split.anchor.merge(@newAnchor)
             splitLine = split.line
 
@@ -821,20 +823,20 @@ class Line
                 @data.anchor2.splitAnchor.remove()
                 @data.anchor2.otherLine.remove()
                 @data.anchor2.otherAnchor.draw()
-  
+
               forwards: ->
                 # redo the split
                 @data.anchor1.splitAnchor.ressurect()
                 @data.anchor1.originalLine.replaceAnchor(@data.anchor1.otherAnchor,
                                                          @data.anchor1.splitAnchor)
                 @data.anchor1.splitAnchor.addLine(@data.anchor1.originalLine)
-                @data.anchor1.otherLine.ressurect() 
+                @data.anchor1.otherLine.ressurect()
                 # same thing for the second line
                 @data.anchor2.splitAnchor.ressurect()
                 @data.anchor2.originalLine.replaceAnchor(@data.anchor2.otherAnchor,
                                                          @data.anchor2.splitAnchor)
                 @data.anchor2.splitAnchor.addLine(@data.anchor2.originalLine)
-                @data.anchor2.otherLine.ressurect() 
+                @data.anchor2.otherLine.ressurect()
                 # bring the internal line back
                 @data.line.ressurect()
                 # draw the two anchors
@@ -937,7 +939,7 @@ class Line
         # register the move on the undo stack
         new UndoEntry false,
           title: 'moved propagator'
-          data: [@anchor1, @anchor1.x, @anchor1.origin_x, @anchor1.y, @anchor1.origin_y, 
+          data: [@anchor1, @anchor1.x, @anchor1.origin_x, @anchor1.y, @anchor1.origin_y,
                  @anchor2, @anchor2.x, @anchor2.origin_x, @anchor2.y, @anchor2.origin_y]
         # the forwards action is to move both anchors to the stored location
           forwards: ->
@@ -946,7 +948,7 @@ class Line
           backwards: ->
             @data[0].handleMove(@data[2], @data[4])
             @data[5].handleMove(@data[7], @data[9])
-            
+
     @newAnchor = undefined
 
 
@@ -959,7 +961,7 @@ class Line
     uppery = if @anchor1.y > @anchor2.y then @anchor1.y else @anchor2.y
 
     # check that the coordinates are within the bounds
-    if x < lowerx or x > upperx or y < lowery or y > uppery 
+    if x < lowerx or x > upperx or y < lowery or y > uppery
       return false
 
     # compute the slope of the line
@@ -972,20 +974,20 @@ class Line
     return distance <= @width + 3
 
 
-  # create an anchor at the given coordinates and 
+  # create an anchor at the given coordinates and
   split: (x, y, createAttachedNode = false, mergeAnchor = undefined) =>
 
     # if the line is vertical
     if @anchor1.x == @anchor2.x
-        anchorX = @anchor1.x 
+        anchorX = @anchor1.x
         anchorY = y
     # otherwise the line is not vertical
-    else 
+    else
         # find the closest point on the line to the requested point
         m = ( @anchor2.y - @anchor1.y ) / (@anchor2.x - @anchor1.x)
         anchorX = ( m * y + x + m * (m * @anchor1.x - @anchor1.y) ) / ( m*m + 1 )
         anchorY = ( m * ( x + m * y ) - (m * @anchor1.x - @anchor1.y) ) / (m*m + 1)
-    
+
     # create the new elements
     AnchorClass = require("./Anchor")
     anch = new AnchorClass(@paper, anchorX, anchorY)

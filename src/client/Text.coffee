@@ -1,4 +1,4 @@
-# this file describes a customizable text field 
+# this file describes a customizable text field
 #
 # author: alec aivazis
 
@@ -10,7 +10,7 @@ UndoEntry = require('./UndoEntry')
 class Text
 
   constructor: (@paper, @x, @y, @text) ->
-    
+
 
   draw: =>
     # if this element was previously selected
@@ -25,9 +25,11 @@ class Text
       if @border
         # remove it
         @border.remove()
-    
+
+    # encode the label so we don't lose any characters
+    textEncoded = encodeURIComponent(@text)
     # use an image from codecogs public api
-    @element = @paper.image("/latex?isMath=False&equation=#{@text}" , @x, @y)
+    @element = @paper.image("/latex?isMath=False&equation=#{textEncoded}" , @x, @y)
     # add it to the diagram group
     $(document).attr('canvas').addToDiagram(@element)
 
@@ -57,10 +59,10 @@ class Text
     # redraw
     @draw()
 
-  
+
   remove: =>
     # if an element has been created
-    if @element  
+    if @element
       # remove the element if it exists
       @element.remove()
 
@@ -93,7 +95,7 @@ class Text
     if @x != @origin.x and @y != @origin.y
       # register the drag with the undo stack
       new UndoEntry false,
-        title: "moved text" 
+        title: "moved text"
         data:
           element: this
           origin: @origin
