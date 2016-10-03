@@ -18,7 +18,7 @@ UndoEntry = require('./UndoEntry')
 UndoMulti = require('./UndoMulti')
 overlay = require('./overlay').overlay
 
-# create the angular module 
+# create the angular module
 app = angular.module 'feynman', [ 'ui.slider', 'undo', 'feynman.colorpicker']
 
 # define the controller for the properties menu
@@ -33,7 +33,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     $(document).trigger('clearSelection')
     # and add the class to the selected element
     element.element.addClass('selectedElement')
-  
+
     # figure out the type of the element
     if element.element.anchor
       type = 'anchor'
@@ -97,11 +97,11 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     if event.which == 32
       # then clear the state variable
       $(document).attr('canvas').spacebarPressed = false
-    
+
 
   # store an object for the palette data
   paletteData = {}
-    
+
   console.log('assinging')
   # load the canvas atrributes when snap is done loading
   $(document).on 'doneWithInit', ->
@@ -144,7 +144,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
             paper = $(document).attr('canvas').paper
             # compute the offset of the dragged element
             offset = paletteData.draggedElement.offset()
-            
+
             # handle each type independently
             switch paletteData.type
               # when it is a line style
@@ -165,7 +165,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
 
                 # make a line joining the two anchors with the appropriate style
                 line = new Line(paper, anchor1, anchor2, style: paletteData.type)
-              
+
                 # draw the second anchor
                 anchor2.draw()
 
@@ -194,7 +194,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
 
                 # select the object
                 $(document).trigger 'selectedElement', paletteData.selectedElement
-              
+
               when 'circle'
                 # compute the coordinates on the canvas
                 paletteData.origin = canvas.getCanvasCoordinates(
@@ -207,7 +207,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
                 paletteData.selectedElement.draw()
                 # select the object
                 $(document).trigger 'selectedElement', paletteData.selectedElement
-                
+
             # prevent future drags from creating new elements
             paletteData.placedElement = true
 
@@ -248,20 +248,20 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
             # clear the palette data associated with the created element
             paletteData.placedElement = false
             paletteData.selectedElement = undefined
-            # clear the selection 
+            # clear the selection
             $(document).trigger('clearSelection')
 
           # show the element from the toolbar
           paletteData.draggedElement.show()
-  
-          
+
+
       # the dragging of an element from the palette has stopped
       stop: (event) ->
         # if we let go with an element selected
         if paletteData.selectedElement
           # leave an appropriate undo element
           switch paletteData.type
-            # when it is a line 
+            # when it is a line
             when "fermion", "electroweak", "gluon", "dashed"
               # create an undo entry for this action
               undo = new UndoMulti('added line from palette')
@@ -273,12 +273,12 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
               performAnchorMergesFromPalette(selectedElement.anchor2, undo)
 
               # add the bits that happen regardless of potential merges
-    
+
               # forward stack ressurects the line and draws both anchors to update the diagram
               undo.addToForwards selectedElement, (line) ->
                 line.ressurect()
                 line.draw()
-      
+
               # backward stack removes the line and two anchors to finalize the undo
               undo.addToBackwards selectedElement , (line) ->
                 line.remove()
@@ -343,7 +343,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
                     @data.element.draw()
                   backwards: ->
                     @data.element.remove()
-        
+
         # clear the palette data so the next drag is fresh
         paletteData = {}
 
@@ -357,23 +357,23 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     # save a reference to the canvas
     canvas = $(document).attr('canvas')
     # check the anchor for merges
-    onAnchor = canvas.isAnchorOnAnchor(anchor) 
-    onLine = canvas.isAnchorOnLine(anchor) 
-    onConstraint = canvas.isAnchorOnConstraint(anchor) 
+    onAnchor = canvas.isAnchorOnAnchor(anchor)
+    onLine = canvas.isAnchorOnLine(anchor)
+    onConstraint = canvas.isAnchorOnConstraint(anchor)
 
     # if the anchor is not on a line (ie it was not replaced by something else)
     if not onLine
       # before we do anything else the forward action needs to ressurect the anchor
       undo.addToForwards anchor , (element) ->
         element.ressurect()
-  
+
     # go through the checks and apply the necessary actions
     #
     # these actions should include a backwards function that undoes the
     # specific action but does not remove the anchors themselves and a
     # forwards function that applies the action in an undo safe way
-              
-    # check for potential anchor merges first 
+
+    # check for potential anchor merges first
     if onAnchor
       # merge anchor1 onto the other
       anchor = anchor.merge(onAnchor)
@@ -405,7 +405,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
       # draw the anchor with the new constraint
       anchor.draw()
 
-      # the forwards action 
+      # the forwards action
       undo.addToForwards
         anchor: anchor
         constraint: onConstraint
@@ -415,17 +415,17 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
 
     # if the anchor was not replaced by one that already existed
     if not onAnchor
-      # the backwards action 
+      # the backwards action
       undo.addToBackwards anchor , (element) ->
         # removes the anchor from the canvas
         element.remove()
 
-    # the forwards action 
+    # the forwards action
     undo.addToForwards anchor, (element) ->
       # draws the anchor
       element.draw()
 
-  
+
   # clear the selection
   $scope.clearSelection = ->
     # find every selected element
@@ -448,7 +448,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     # deselect arrows
     _.each Snap.selectAll('.selectedArrow'), (element) ->
       element.removeClass('selectedArrow')
-      
+
     # clear the angular selection
     $scope.selectedElement = false
     $scope.selectedElements = false
@@ -571,7 +571,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
         undo.addToBackwards undoData, (data) ->
           # ressurect the constraint
           data.constraint.ressurect()
-          data.constraint.draw() 
+          data.constraint.draw()
 
           # go over all of the anchors
           _.each data.anchors, (anchor) ->
@@ -589,7 +589,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
             anchor.draw()
           # remove the constraint from the canvas
           data.constraint.remove()
-          
+
 
       # otherwise if its a line
       else if element.line
@@ -606,7 +606,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
         undo.addToBackwards line, (element) ->
           element.ressurect()
           element.draw()
-  
+
     # if the undo actually performs an action
     if undo.isValid()
       # apply it to the stack
@@ -635,6 +635,11 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     $(diagram).attr('x1', bb.x1)
     $(diagram).attr('y1', bb.y1)
 
+    console.log($(diagram))
+    console.log(bb.width)
+
+    $(diagram).find('.diagram')
+              .attr('transform', "translate(-#{bb.x1}, -#{bb.y1})")
 
     # export the diagram to the requested format
     switch format
@@ -642,14 +647,13 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
       when "png"
         # convert the diagram to a png data url
         $(diagram).toDataURL "image/png",
-          keepOutsideViewport: true
           callback: (data) ->
             # and save it as a named blob
             saveAs dataURLtoBlob(data), "diagram.png"
-      # if they asked for the latex 
+      # if they asked for the latex
       when "latex"
 
-        origin = 
+        origin =
           x: bb.x1
           y: bb.y1 + bb.height
 
@@ -661,21 +665,21 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
         # for each line in the diagram
         _.each $(document).attr('canvas').paper.lines, (line) ->
           # compute the location of anchor1 relative to the origin
-          anchor1 = 
+          anchor1 =
             x: (line.anchor1.x - origin.x)/50
             y: (line.anchor1.y - origin.y)/50
 
           # compute the location of anchor2 relative to the origin
-          anchor2 = 
+          anchor2 =
             x: (line.anchor2.x - origin.x)/50
             y: (line.anchor2.y - origin.y)/50
 
-          defaultUnit = 
+          defaultUnit =
             label: "in"
             pt_value: 72.27
 
           # create the configuration parameters
-          configuration = 
+          configuration =
             color: line.color.substring(1).toUpperCase()
             endcaps: line.drawEndCaps
             flip: line.loopDirection == -1
@@ -701,7 +705,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
         # display the result in an overlay
         overlay template(docString: doc)
 
-      # if they asked for an 
+      # if they asked for an
       when "svg"
         # convert the diagram to a png data url
         $(diagram).toDataURL "image/svg+xml",
@@ -712,7 +716,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
             #saveAs dataURLtoBlob(data), "diagram.svg"
 
 
-  # update the properties of the appropriate element when we change the selectedElements 
+  # update the properties of the appropriate element when we change the selectedElements
   # the only reason to do this is because some attributes are not settable with foo.bar = 2
   # or we need to call the appropriate draw after the variable is reset
 
@@ -747,7 +751,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
     if $(document).attr 'canvas'
       $(document).attr('canvas').hideAnchors = newVal
       $(document).attr('canvas').draw()
-    
+
   $scope.$watch 'hideGrid', (newVal, oldVal) ->
     if $(document).attr 'canvas'
       $(document).attr('canvas').hideGrid = newVal
@@ -781,7 +785,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
         element.width = parseInt(newVal)
         # draw the element
         element.draw()
-      
+
   $scope.$watch 'groupLineColor', (newVal, oldVal) ->
     if $scope.selectedElements.line
       # if its the default value
@@ -811,7 +815,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
       _.each $scope.selectedElements.circle, (element) ->
         element.radius = newVal
         element.draw()
-        
+
   $scope.$watch 'radius', (newVal, oldVal) ->
     if $scope.selectedElement and $scope.type in ['anchor' ,'circle']
       $scope.selectedElement.radius = newVal
@@ -838,7 +842,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
       $scope.selectedElement.draw()
 
   $scope.$watch 'selectedElement.label', (newVal, oldVal) ->
-    # we need to tell the element to redraw by hand to incorporate the new label 
+    # we need to tell the element to redraw by hand to incorporate the new label
     if $scope.selectedElement
       $scope.selectedElement.drawLabel()
 
@@ -879,7 +883,7 @@ app.controller 'sidebar', ['$scope',  '$rootScope', '$timeout', ($scope, $rootSc
   $scope.$watch 'selectedElement.fixed', (newVal, oldVal) ->
     if $scope.selectedElement and $scope.type == 'anchor'
       $scope.selectedElement.draw()
-    
+
 
 ]
 
@@ -889,7 +893,7 @@ dataURLtoBlob = (dataURL) ->
     # the string indicating base 64
     BASE64_MARKER = ';base64,'
     # if the dataURL is not in base64
-    if (dataURL.indexOf(BASE64_MARKER) == -1) 
+    if (dataURL.indexOf(BASE64_MARKER) == -1)
         # splite the url into the various parts
         parts = dataURL.split(',')
         # grab the content type
@@ -898,7 +902,7 @@ dataURLtoBlob = (dataURL) ->
         raw = decodeURIComponent(parts[1])
         # create a blob out of the data with thet appropriate content type
         return new Blob([raw], {type: contentType})
-    
+
     # grab the parts of the base64 string
     parts = dataURL.split(BASE64_MARKER)
     # save a reference to the content type

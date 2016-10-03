@@ -1,7 +1,7 @@
 ###
     The missing SVG.toDataURL library for your SVG elements.
     originally by Samuli Kaipiainen ; edited and translated to coffeescript by Alec Aivazis
-    
+
     Usage: SVGElement.toDataURL( type, { options } )
 
     Returns: the data URL, except when using native PNG renderer (needs callback).
@@ -16,7 +16,7 @@
             Callback function which is called when the data URL is ready.
             This is only necessary when using native PNG renderer.
             Default: undefined.
-        
+
         [the rest of the options only apply when type="image/png" or type="image/jpeg"]
 
         renderer: "native"|"canvg"
@@ -47,7 +47,7 @@ _ = require('underscore')
 # redefine original function as a jquery plugin
 ( ($) ->
 
-    # define the function to compute the data string 
+    # define the function to compute the data string
     $.fn.toDataURL = (type, options) ->
         # add the given options to the default ones
         options = $.extend {}, $.fn.toDataURL.defaults, options
@@ -87,19 +87,19 @@ _ = require('underscore')
 
         # serialze an svg element into xml
         XMLSerialize = (svg) ->
-            # define a helper function for IE9 where there is no XMLSerializer not 
+            # define a helper function for IE9 where there is no XMLSerializer not
             # appropriate helper in the svg element....
             XMLSerializerForIE = (element) ->
                 # the output
                 out = ""
                 # start the opening tag
-                out += "<#{element.nodeName}" 
-                
+                out += "<#{element.nodeName}"
+
                 # for each attribute of the element
                 for n in [0..element.attributes.length]
                     # add the necessary line to encode the attribute
                     out += " #{element.attributes[n].name}='#{element.attributes.value}'"
-                
+
                 # finish the opening tag
                 out += ">\n"
 
@@ -123,18 +123,17 @@ _ = require('underscore')
                 # serialize the svg element using the native serializer
                 return (new XMLSerializer()).serializeToString(svg)
             # otherwise the window does not know how to serialize the svg element
-            else 
+            else
                 # log that we are using our custom serializer
                 debug("using custom XMLSerializerForIE")
                 # serialize the svg element using the custom serializer
                 return XMLSerializerForIE(svg)
-            
+
 
         # encode a string in base64
         base64dataURLencode = (string) ->
-            console.log(string)
             # the output starts with the header for base64 images
-            b64 = "data:image/svg+xml;base64" 
+            b64 = "data:image/svg+xml;base64,"
 
             # if the window can do the conversion for us
             if window.btoa
@@ -158,10 +157,10 @@ _ = require('underscore')
             ctx = canvas.getContext('2d')
 
             # TODO: if (options.keepOutsideViewport), do some translation magic?
-            # create an image to store the svg 
+            # create an image to store the svg
             img = new Image()
             # serialize the svg
-            xml = XMLSerialize(_svg)
+            xml = new XMLSerializer().serializeToString(_svg)
             # set the source of the image to the serial xml
             img.src = base64dataURLencode(xml)
 
@@ -171,6 +170,7 @@ _ = require('underscore')
                 debug("exported image size: #{img.width}, #{img.height}")
                 canvas.width = img.width
                 canvas.height = img.height
+
                 ctx.drawImage(img, 0, 0)
 
                 # SECURITY_ERR WILL HAPPEN NOW
@@ -178,14 +178,14 @@ _ = require('underscore')
                 # register that it happened by displaying the length of the image
                 debug("#{type} length: #{dataurl.length}")
                 # if there is a callback, call it
-                if (options.callback) 
-                    options.callback( png_dataurl )
+                if (options.callback)
+                    options.callback( dataurl )
                 # otherwise tell them they just wasted our time
                 else error("WARNING: no callback set, so nothing happens.")
-            
-            
+
+
             # if there is an error
-            svg_img.onerror = ->
+            img.onerror = ->
                 console.log(
                     "Can't export! Maybe your browser doesn't support " +
                     "SVG in img element or SVG input for Canvas drawImage?\n" +
@@ -224,7 +224,7 @@ _ = require('underscore')
 
             # render the svg element using canvg
             # NOTE: this canvg call is synchronous and blocks
-            canvg canvas, xml, 
+            canvg canvas, xml,
                 ignoreMouse: true, ignoreAnimation: true
                 offsetX: if keepBB then -x1 else undefined
                 offsetY: if keepBB then -y1 else undefined
@@ -235,7 +235,7 @@ _ = require('underscore')
                     debug("exported image dimensions #{canvas.width}, #{canvas.height}")
                     png_dataurl = canvas.toDataURL(type)
                     debug("#{type} length: #{png_dataurl.length}")
-        
+
                     if (options.callback)
                         options.callback(png_dataurl)
 
@@ -245,12 +245,12 @@ _ = require('underscore')
 
         ## main
 
-        # if keepNonSafe is true then 
-        if (options.keepNonSafe) 
+        # if keepNonSafe is true then
+        if (options.keepNonSafe)
             # tell them its not supported
             debug("NOTE: keepNonSafe is NOT supported and will be ignored!")
         # if they set keepOutsideViewport to true
-        if (options.keepOutsideViewport) 
+        if (options.keepOutsideViewport)
             # warn that keepOutsideViewport is only supprted with canvg
             debug("NOTE: keepOutsideViewport is only supported with canvg exporter.")
 
@@ -264,13 +264,13 @@ _ = require('underscore')
                 # if there is no renderer designated
                 if not options.renderer
                     # use canvg if the window knows about it
-                    if (window.canvg) 
+                    if (window.canvg)
                         options.renderer = "canvg"
                     # otherwise use the native solutions
-                    else 
+                    else
                         options.renderer="native"
                 # perform the correct action depending on the designated renderer
-                switch options.renderer 
+                switch options.renderer
                     # if they specified canvg
                     when "canvg"
                         # log that we are using the canvg renderer to export the image
