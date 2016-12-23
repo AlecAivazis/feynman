@@ -8,18 +8,23 @@ var projectPaths = require('./projectPaths')
 
 
 // default to using development configuration
-// var devtool = 'source-map'
-var plugins = []
+var devtool = 'source-map'
 
+// the initial set of plugins
+var plugins = []
+// if we are building for production
 if (process.env.NODE_ENV === 'production') {
-    // use production configuration instead
+    // remove sourcemaps
+    devtool = ''
+
+    // use production plugins
     plugins.push(
         new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin()
     )
 }
-console.log(projectPaths.clientEntry)
+
 // export webpack configuration object
 module.exports = {
     entry: projectPaths.clientEntry,
@@ -33,6 +38,9 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: 'babel',
                 include: projectPaths.sourceDir,
+                query: {
+                    extends: projectPaths.babelConfig,
+                }
             }, {
                 test: /\.css$/,
                 loaders: ['style', 'css'],
@@ -40,9 +48,6 @@ module.exports = {
                 test: /\.(png|jpg|ttf)$/,
                 loader: 'url',
                 query: {limit: 10000000},
-            }, {
-                test: /\.coffee$/,
-                loader: 'coffee',
             }, {
                 test: /\.styl$/,
                 loader: 'style!css!stylus?paths=node_modules',
@@ -65,6 +70,7 @@ module.exports = {
       use: [axis()]
     },
     plugins: plugins,
+    devtool: devtool,
 }
 
 

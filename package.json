@@ -5,11 +5,11 @@
   "private": true,
   "main": "gulpfile.babel.js",
   "scripts": {
-    "build": "node_modules/gulp/bin/gulp.js build",
-    "build-production": "node_modules/gulp/bin/gulp.js build-production",
-    "clean": "node_modules/gulp/bin/gulp.js clean",
-    "dev": "node_modules/gulp/bin/gulp.js",
-    "start": "node_modules/gulp/bin/gulp.js runserver",
+    "build": "webpack --config config/webpack.js",
+    "build-production": "NODE_ENV=production webpack --config config/webpack.js",
+    "dev": "webpack --config config/webpack.js --watch & npm run start:debug",
+    "start": "python src/server/app.py",
+    "start:debug": "python src/server/app.py --debug true",
     "test": "node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
@@ -30,10 +30,6 @@
     "babel-preset-stage-0": "^6.5.0",
     "del": "^2.2.0",
     "file-loader": "^0.8.5",
-    "gulp-concat": "^2.6.0",
-    "gulp-env": "^0.4.0",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-shell": "^0.5.2",
     "karma": "^0.13.22",
     "nodemon": "^1.9.1",
     "style-loader": "^0.13.1",
@@ -43,26 +39,5 @@
     "webpack-stream": "^3.1.0"
   },
   "dependencies": {
-    "angular": "1.2.20",
-    "angular-bootstrap-colorpicker": "^3.0.25",
-    "axis": "^0.6.1",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-add-module-exports": "^0.2.0",
-    "babel-polyfill": "^6.7.4",
-    "bluebird": "^3.3.5",
-    "coffee-loader": "^0.7.2",
-    "coffee-script": "^1.10.0",
-    "css-loader": "^0.23.1",
-    "fs": "0.0.2",
-    "gulp": "^3.9.1",
-    "handlebars": "^2.0.0",
-    "jquery": "^2.1.1",
-    "jquery-ui": "^1.10.5",
-    "js-cookie": "^2.1.1",
-    "snapsvg": "^0.3.0",
-    "style-loader": "^0.13.1",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^2.0.0",
-    "underscore": "^1.6.0"
   }
 }

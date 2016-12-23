@@ -20,7 +20,7 @@ def index():
     """
         The primary endpoint for the web application.
     """
-    return render_template('index.jade')
+    return render_template('base.jade')
 
 @app.template_filter()
 def add_braces(content):

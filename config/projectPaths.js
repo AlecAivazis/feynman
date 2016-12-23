@@ -13,8 +13,7 @@ var sourceDir = path.join(rootDir, 'src')
 var clientDir = path.join(sourceDir, 'client')
 var serverDir = path.join(sourceDir, 'server')
 var webpackDir = path.join(configDir, 'webpack')
-var clientEntry = path.join(clientDir, 'app.coffee')
-var clientLibDir = path.join(clientDir, 'lib')
+var clientEntry = path.join(clientDir, 'index.js')
 var assetsDir = path.join(serverDir, 'static')
 var buildDir = assetsDir
 var styleDir = path.join(assetsDir, 'styles')
@@ -33,7 +32,6 @@ module.exports = {
     buildDir: buildDir,
     templatesDir: templatesDir,
     assetsDir: assetsDir,
-    clientLibDir: clientLibDir,
     clientDir: clientDir,
     // entry points
     clientEntry: clientEntry,
@@ -54,4 +52,5 @@ module.exports = {
     eslintConfig: path.join(configDir, 'eslint.json'),
     karmaConfig: path.join(configDir, 'karma.js'),
     webpackConfig: path.join(configDir, 'webpack.js'),
+    babelConfig: path.join(configDir, 'babelrc.json'),
 }
