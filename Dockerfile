@@ -16,4 +16,4 @@ COPY . /usr/src/app
 RUN npm run build-production
 
 expose 4000
-CMD node_modules/gulp/bin/gulp.js runserver --port 4000
+CMD npm start --port 4000

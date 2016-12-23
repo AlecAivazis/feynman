@@ -1,6 +1,5 @@
 // webpack imports
 var webpack = require('webpack')
-var axis = require('axis')
 var process = require('process')
 // local imports
 var projectPaths = require('./projectPaths')
@@ -35,12 +34,12 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.jsx?$/,
-                loader: 'babel',
+                test: /\.tsx?$/,
+                loaders: [
+                    'babel?extends='+projectPaths.babelConfig,
+                    'ts',
+                ],
                 include: projectPaths.sourceDir,
-                query: {
-                    extends: projectPaths.babelConfig,
-                }
             }, {
                 test: /\.css$/,
                 loaders: ['style', 'css'],
@@ -48,15 +47,12 @@ module.exports = {
                 test: /\.(png|jpg|ttf)$/,
                 loader: 'url',
                 query: {limit: 10000000},
-            }, {
-                test: /\.styl$/,
-                loader: 'style!css!stylus?paths=node_modules',
-            }
+            },
 
         ],
     },
     resolve: {
-        extensions: ['', '.jsx', '.js', '.coffee'],
+        extensions: ['', '.jsx', '.js', ".ts", ".tsx"],
         root: [
             projectPaths.sourceDir,
             projectPaths.rootDir,
@@ -66,8 +62,8 @@ module.exports = {
         configFile: projectPaths.eslintConfig,
         failOnError: true,
     },
-    stylus: {
-      use: [axis()]
+    ts: {
+        configFileName: projectPaths.tsConfig,
     },
     plugins: plugins,
     devtool: devtool,

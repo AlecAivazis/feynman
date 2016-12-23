@@ -13,7 +13,7 @@ var sourceDir = path.join(rootDir, 'src')
 var clientDir = path.join(sourceDir, 'client')
 var serverDir = path.join(sourceDir, 'server')
 var webpackDir = path.join(configDir, 'webpack')
-var clientEntry = path.join(clientDir, 'index.js')
+var clientEntry = path.join(clientDir, 'index.tsx')
 var assetsDir = path.join(serverDir, 'static')
 var buildDir = assetsDir
 var styleDir = path.join(assetsDir, 'styles')
@@ -53,4 +53,5 @@ module.exports = {
     karmaConfig: path.join(configDir, 'karma.js'),
     webpackConfig: path.join(configDir, 'webpack.js'),
     babelConfig: path.join(configDir, 'babel.json'),
+    tsConfig: path.join(configDir, 'tsconfig.json'),
 }
