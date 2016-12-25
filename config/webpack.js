@@ -1,16 +1,19 @@
 // webpack imports
 var webpack = require('webpack')
 var process = require('process')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 // local imports
 var projectPaths = require('./projectPaths')
 
-
-
 // default to using development configuration
-var devtool = 'source-map'
+var devtool = 'inline-source-map'
 
 // the initial set of plugins
-var plugins = []
+var plugins = [
+    new HtmlWebpackPlugin({
+        template: 'src/index.html'
+    })
+]
 // if we are building for production
 if (process.env.NODE_ENV === 'production') {
     // remove sourcemaps

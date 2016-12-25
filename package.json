@@ -6,11 +6,8 @@
   "main": "gulpfile.babel.js",
   "scripts": {
     "build": "webpack --config config/webpack.js",
-    "build-production": "NODE_ENV=production webpack --config config/webpack.js",
-    "dev": "webpack --config config/webpack.js --watch & npm run start:debug",
-    "start": "python src/server/app.py",
-    "start:debug": "python src/server/app.py --debug true",
-    "test": "node_modules/gulp/bin/gulp.js test"
+    "build-production": "NODE_ENV=production npm run build",
+    "dev": "webpack --config config/webpack.js --watch"
   },
   "repository": {
     "type": "git",
@@ -38,6 +35,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "del": "^2.2.0",
     "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.24.1",
     "karma": "^0.13.22",
     "nodemon": "^1.9.1",
     "style-loader": "^0.13.1",
@@ -45,6 +43,7 @@
     "url-loader": "^0.5.7",
     "vinyl-named": "^1.1.0",
     "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.16.2",
     "webpack-stream": "^3.1.0"
   }
 }
