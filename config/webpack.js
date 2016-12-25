@@ -6,7 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var projectPaths = require('./projectPaths')
 
 // default to using development configuration
-var devtool = 'inline-source-map'
+var devtool = ''
 
 var entry = [projectPaths.clientEntry]
 
@@ -18,9 +18,6 @@ var plugins = [
 ]
 // if we are building for production
 if (process.env.NODE_ENV === 'production') {
-    // remove sourcemaps
-    devtool = ''
-
     // use production plugins
     plugins.push(
         new webpack.optimize.UglifyJsPlugin(),
@@ -28,6 +25,10 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.optimize.DedupePlugin()
     )
 } else {
+    // use source maps
+    devtool = 'inline-source-map'
+
+    // add the webpack dev server config
     entry = [
         'webpack-dev-server/client?http://0.0.0.0:8080',
         'webpack/hot/only-dev-server',
