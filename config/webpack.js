@@ -8,6 +8,8 @@ var projectPaths = require('./projectPaths')
 // default to using development configuration
 var devtool = 'inline-source-map'
 
+var entry = [projectPaths.clientEntry]
+
 // the initial set of plugins
 var plugins = [
     new HtmlWebpackPlugin({
@@ -25,11 +27,16 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin()
     )
+} else {
+    entry = [
+        'webpack-dev-server/client?http://0.0.0.0:8080',
+        'webpack/hot/only-dev-server',
+    ].concat(entry)
 }
 
 // export webpack configuration object
 module.exports = {
-    entry: projectPaths.clientEntry,
+    entry: entry,
     output: {
         path: projectPaths.buildDir,
         filename: 'client.js',

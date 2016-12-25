@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --config config/webpack.js",
     "build-production": "NODE_ENV=production npm run build",
-    "dev": "webpack --config config/webpack.js --watch"
+    "dev": "webpack-dev-server --inline --hot --config config/webpack.js --content-base build/"
   },
   "repository": {
     "type": "git",
