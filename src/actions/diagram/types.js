@@ -1,0 +1,2 @@
+export const SET_TITLE = '@feynamn/SET_TITLE'
+export const TOGGLE_GRID = '@feynman/TOGGLE_GRID'
