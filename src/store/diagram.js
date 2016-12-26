@@ -1,10 +1,11 @@
 // local imports
-import { SET_TITLE, TOGGLE_GRID } from 'actions/diagram'
+import { SET_TITLE, TOGGLE_GRID, SET_GRID_SIZE } from 'actions/diagram'
 
 // the default state
 export const initialState = {
     title: 'An Example Diagram',
     showGrid: true,
+    gridSize: 50,
 }
 
 // return the diagram reducer
@@ -25,6 +26,15 @@ export default (state = initialState, {type, payload}) => {
         return {
             ...state,
             title: payload,
+        }
+    }
+
+    // if the action indicates a change in grid size
+    if (type === SET_GRID_SIZE) {
+        /// change the grid size
+        return {
+            ...state,
+            gridSize: payload
         }
     }
 

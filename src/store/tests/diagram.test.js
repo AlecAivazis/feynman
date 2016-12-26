@@ -5,6 +5,7 @@ import diagramReducer, { initialState } from '../diagram'
 import {
     SET_TITLE, setDiagramTitle,
     TOGGLE_GRID, toggleGrid,
+    SET_GRID_SIZE, setGridSize,
 } from 'actions/diagram'
 
 describe('diagram reducer', function() {
@@ -25,11 +26,21 @@ describe('diagram reducer', function() {
     })
 
     it('responds to the TOGGLE_GRID action', function() {
-        // create an action corresponding to changing the title
+        // create an action corresponding to toggling the grid
         const action = toggleGrid()
-        // get the mutated state after changing the title
+        // get the mutated state after toggling the grid
         const state = diagramReducer(undefined, action)
         // make sure the title matches the expectation
         expect(state.showGrid).to.equal(!initialState.showGrid)
+    })
+
+    it('responds to the SET_GRID_SIZE action', function() {
+        // create an action corresponding to the set grid size
+        const action = setGridSize(20)
+        // get the mutated state after changing the grid size
+        const state = diagramReducer(undefined, action)
+        // make sure the title matches the expectation
+        expect(state.gridSize).to.equal(20)
+
     })
 })
