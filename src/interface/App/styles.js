@@ -3,6 +3,7 @@ export default {
         display: 'flex',
         flexDirection: 'row',
         flexGrow: 1,
+        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
     },
     overlay: {
         zIndex: 5,
