@@ -8,3 +8,5 @@ const Label = ({children, ...unusedProps}) => (
     {children}
   </label>
 )
+
+export default Label

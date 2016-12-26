@@ -1,3 +1,3 @@
-export {default as App} from './App'
-export {default as Diagram} from './Diagram'
-export {default as Sidebar} from './Sidebar'
+export App from './App'
+export Diagram from './Diagram'
+export Sidebar from './Sidebar'

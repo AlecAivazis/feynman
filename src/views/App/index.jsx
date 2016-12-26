@@ -1,5 +1,5 @@
 // external imports
-import * as React from 'react'
+import React from 'react'
 // local imports
 import './reset.css'
 import styles from './styles'
