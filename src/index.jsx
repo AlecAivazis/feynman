@@ -3,7 +3,7 @@ import * as React from "react"
 import * as ReactDOM from "react-dom"
 import { Provider } from 'react-redux'
 // local imports
-import { App } from './views'
+import App from './interface'
 import store from './store'
 
 ReactDOM.render((
