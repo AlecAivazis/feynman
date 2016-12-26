@@ -1,11 +1,12 @@
 // external
 import React from 'react'
 // local imports
+import {Label} from 'components'
 import styles from './styles'
 
 const Diagram = ({style}) => (
     <aside style={{...styles.container, ...style}}>
-        sidebar
+        <Label>sidebar</Label>
     </aside>
 )
 

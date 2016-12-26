@@ -11,7 +11,7 @@ var webpackConfig = require(projectPaths.webpackConfig)
 
 // annoying hack to be able to dynamically set keys on object
 var preprocessors = {}
-preprocessors[projectPaths.testsGlob] = ['webpack', 'sourcemap']
+preprocessors[projectPaths.testGlob] = ['webpack', 'sourcemap']
 
 
 module.exports = function (config) {
@@ -28,7 +28,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            projectPaths.testsGlob,
+            projectPaths.testGlob,
         ],
 
         // // list of files to exclude
@@ -40,13 +40,7 @@ module.exports = function (config) {
         preprocessors: preprocessors,
 
         // configure webpack using settings from development webpack config
-        webpack: {
-            module: {
-                loaders: webpackConfig.module.loaders
-            },
-            resolve: webpackConfig.resolve,
-            devtool: 'inline-source-map',
-        },
+        webpack: webpackConfig,
 
         webpackMiddleware: {
             noInfo: true,
@@ -68,7 +62,7 @@ module.exports = function (config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
             // 'Chrome',
-            'Firefox',
+            'PhantomJS',
             // 'Safari',
         ],
     })
