@@ -7,7 +7,7 @@ export const initialState = {
     showGrid: true,
 }
 
-//
+// return the diagram reducer
 export default (state = initialState, {type, payload}) => {
 
     // if the action means we should toggle the grid
