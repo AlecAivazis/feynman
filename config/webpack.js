@@ -45,12 +45,12 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.tsx?$/,
-                loaders: [
-                    'babel?extends='+projectPaths.babelConfig,
-                    'ts',
-                ],
+                test: /\.jsx?$/,
+                loader: 'babel',
                 include: projectPaths.sourceDir,
+                query: {
+                    extends: projectPaths.babelConfig
+                }
             }, {
                 test: /\.css$/,
                 loaders: ['style', 'css'],
