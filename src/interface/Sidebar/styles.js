@@ -1,7 +1,9 @@
+export const sidebarWidth = 250
+
 export default {
     container: {
         display: 'flex',
-        width: 250,
+        width: sidebarWidth,
         backgroundColor: 'white',
         flexDirection: 'column',
         padding: 20,

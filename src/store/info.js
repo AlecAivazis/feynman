@@ -1,5 +1,5 @@
 // local imports
-import { SET_TITLE, TOGGLE_GRID, SET_GRID_SIZE } from 'actions/diagram'
+import { SET_TITLE, TOGGLE_GRID, SET_GRID_SIZE } from 'actions/info'
 
 // the default state
 export const initialState = {

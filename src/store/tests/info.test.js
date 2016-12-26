@@ -8,7 +8,7 @@ import {
     SET_GRID_SIZE, setGridSize,
 } from 'actions/info'
 
-describe('diagram reducer', function() {
+describe('info reducer', function() {
     it('has a reasonable default', function() {
         // pass an undefined current state
         const val = diagramReducer(undefined, {type: "init"})

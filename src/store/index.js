@@ -1,11 +1,11 @@
 // externals
 import { createStore, combineReducers } from 'redux'
 // locals
-import diagram from './diagram'
+import info from './info'
 
 // create the reducer
 const reducer = combineReducers({
-    diagram,
+    info,
 })
 
 // create the store from the reducer

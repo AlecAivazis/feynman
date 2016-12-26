@@ -3,8 +3,7 @@ export default {
         display: 'flex',
         flexGrow: 1,
         flexDirection: 'column',
+        position: 'relative',
+        backgroundColor: 'red',
     },
-    diagramTitle: {
-       alignSelf: 'center',
-    }
 }
