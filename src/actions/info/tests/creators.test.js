@@ -3,10 +3,10 @@ import {
     setDiagramTitle, SET_TITLE,
     toggleGrid, TOGGLE_GRID,
     setGridSize, SET_GRID_SIZE,
-} from 'actions/diagram'
+} from 'actions/info'
 
 
-describe('diagram action creators', function() {
+describe('info action creators', function() {
     it('change diagram title', function() {
         // the title to change the diagram to
         const title = 'hello'

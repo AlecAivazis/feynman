@@ -1,12 +1,12 @@
 // external imports
 import {combineReducers, createStore} from 'redux'
 // local imports
-import diagramReducer, { initialState } from '../diagram'
+import diagramReducer, { initialState } from '../info'
 import {
     SET_TITLE, setDiagramTitle,
     TOGGLE_GRID, toggleGrid,
     SET_GRID_SIZE, setGridSize,
-} from 'actions/diagram'
+} from 'actions/info'
 
 describe('diagram reducer', function() {
     it('has a reasonable default', function() {
