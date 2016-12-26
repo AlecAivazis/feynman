@@ -8,5 +8,6 @@ export default {
         top: 80,
         left: sidebarWidth,
         right: 170,
+        textAlign: 'center',
     }
 }
