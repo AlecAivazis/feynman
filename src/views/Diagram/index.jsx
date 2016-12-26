@@ -1,11 +1,16 @@
-// external
+// external imports
 import React from 'react'
+import { connect } from 'react-redux'
+// local imports
 import styles from './styles'
 
-const Diagram = ({style}) => (
+const Diagram = ({style, diagram}) => (
     <section style={{...styles.container, ...style}}>
-        the diagram
+        <h1 style={styles.diagramTitle}>
+            {diagram.title}
+        </h1>
     </section>
 )
 
-export default Diagram
+const selector = ({diagram}) => ({diagram})
+export default connect(selector)(Diagram)

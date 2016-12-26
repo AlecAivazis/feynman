@@ -5,5 +5,9 @@ export default {
         backgroundColor: 'white',
         flexDirection: 'column',
         padding: 20,
+    },
+    sidebarContainer: {
+        display: 'flex',
+        flexDirection: 'column',
     }
 }
