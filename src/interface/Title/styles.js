@@ -5,7 +5,7 @@ import { sidebarWidth } from '../Sidebar/styles'
 export default {
     container: {
         position: 'absolute',
-        top: 80,
+        top: 20,
         left: sidebarWidth,
         right: 170,
         textAlign: 'center',

@@ -1,4 +1,4 @@
-export const toolbarWidth = 170
+export const toolbarWidth = 220
 
 export default {
     container: {
