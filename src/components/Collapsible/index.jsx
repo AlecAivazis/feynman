@@ -5,18 +5,18 @@ import liftC, { toggleState } from 'react-liftc'
 import styles from './styles'
 import { Label } from 'components'
 
-const Collapsible = ({state:inactive, toggle, children, title, style, ...unusedProps}) => (
-    <div style={{...styles.container, style}} {...unusedProps}>
+const Collapsible = ({active, toggle, children, title, style, ...unusedProps}) => (
+    <div style={{...styles.container, ...style}} {...unusedProps}>
         <div style={styles.header}>
             <div style={styles.title}>
                 {title}
             </div>
             <div style={styles.toggle} onClick={toggle}>
-                {!inactive ? 'hide' : 'show'}
+                {active ? 'hide' : 'show'}
             </div>
         </div>
-        {!inactive && children}
+        {active && children}
     </div>
 )
 
-export default liftC(toggleState)(Collapsible)
+export default Collapsible

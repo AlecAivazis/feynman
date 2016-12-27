@@ -1,9 +1,9 @@
-export const sidebarWidth = 250
+// local imports
+import { yagLGrey } from 'colors'
 
-// to be imported in children for consistency
-export const element = {
-    marginBottom: 10,
-}
+// dimentions
+export const sidebarWidth = 250
+export const elementSpacing = 10
 
 export default {
     container: {
@@ -11,12 +11,18 @@ export default {
         width: sidebarWidth,
         backgroundColor: 'white',
         flexDirection: 'column',
-        padding: '10px 20px',
+        padding: '0 10px',
     },
     sidebarContainer: {
         display: 'flex',
         flexDirection: 'column',
-        marginBottom: 10,
     },
-    element,
+    element: {
+        padding: elementSpacing,
+        paddingBottom: 0,
+    },
+    elementWithBorder: {
+        padding: elementSpacing,
+        borderBottom: `1px solid ${yagLGrey}`,
+    }
 }

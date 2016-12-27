@@ -11,10 +11,10 @@ import HotkeySummary from './HotkeySummary'
 
 const Sidebar = ({style, dispatch, info}) => (
     <aside style={{...styles.container, ...style}}>
-        <TitleControl />
-        <GridSizeControl style={styles.element}/>
-        <Label style={styles.element}>history</Label>
-        <HotkeySummary />
+        <TitleControl style={styles.element} />
+        <GridSizeControl style={styles.elementWithBorder}/>
+        <Label style={styles.elementWithBorder}>history</Label>
+        <HotkeySummary style={styles.elementWithBorder} />
     </aside>
 )
 

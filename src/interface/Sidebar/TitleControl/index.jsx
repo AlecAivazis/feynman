@@ -5,13 +5,12 @@ import { connect } from 'react-redux'
 import { Label, Input } from 'components'
 import styles from './styles'
 import { setDiagramTitle } from 'actions/info'
-import { element as elementStyle } from '../styles'
 
 const TitleControl = ({style, info, dispatch, ...unusedProps}) => (
     <div style={{...styles.container, ...style}}>
-        <Label style={elementStyle}>title</Label>
+        <Label style={styles.label}>title</Label>
         <Input
-            style={elementStyle}
+            style={styles.input}
             value={info.title}
             onChange={({target}) => dispatch(setDiagramTitle(target.value))}
         />

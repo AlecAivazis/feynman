@@ -3,9 +3,10 @@ import {combineReducers, createStore} from 'redux'
 // local imports
 import diagramReducer, { initialState } from '../info'
 import {
-    SET_TITLE, setDiagramTitle,
-    TOGGLE_GRID, toggleGrid,
-    SET_GRID_SIZE, setGridSize,
+    setDiagramTitle,
+    toggleGrid,
+    setGridSize,
+    toggleHotkeys,
 } from 'actions/info'
 
 describe('info reducer', function() {
@@ -42,5 +43,14 @@ describe('info reducer', function() {
         // make sure the title matches the expectation
         expect(state.gridSize).to.equal(20)
 
+    })
+
+    it('responds to the TOGGLE_HOTKEYS action', function() {
+        // create an action corresponding to toggling the grid
+        const action = toggleHotkeys()
+        // get the mutated state after toggling the grid
+        const state = diagramReducer(undefined, action)
+        // make sure the title matches the expectation
+        expect(state.showHotkeys).to.equal(!initialState.showHotkeys)
     })
 })

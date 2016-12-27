@@ -8,7 +8,6 @@ import './slider.css'
 import styles from './styles'
 import { Label } from 'components'
 import { setGridSize } from 'actions/info'
-import { element as elementStyle } from '../styles'
 
 // this had to be a class-based component for slider (attaches a ref)
 class SliderHandle extends React.Component {
@@ -27,7 +26,7 @@ class SliderHandle extends React.Component {
 
 const GridSizeControl = ({info, dispatch, style, ...unusedProps}) => (
     <div style={{...styles.container, ...style}} {...unusedProps}>
-        <div style={{...elementStyle, ...styles.header}}>
+        <div style={styles.header}>
             <Label>grid</Label>
             <span style={styles.sizeIndicator}>
                 {info.gridSize}

@@ -3,6 +3,7 @@ import {
     setDiagramTitle, SET_TITLE,
     toggleGrid, TOGGLE_GRID,
     setGridSize, SET_GRID_SIZE,
+    toggleHotkeys, TOGGLE_HOTKEYS,
 } from 'actions/info'
 
 
@@ -33,6 +34,13 @@ describe('info action creators', function() {
         expect(setGridSize(size)).to.deep.equal({
             type: SET_GRID_SIZE,
             payload: size
+        })
+    })
+
+    it('toggle the hotkeys', function() {
+        // all we care about is the type
+        expect(toggleHotkeys()).to.deep.equal({
+            type: TOGGLE_HOTKEYS,
         })
     })
 })

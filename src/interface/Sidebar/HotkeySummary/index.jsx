@@ -1,13 +1,21 @@
 // external imports
 import React from 'react'
+import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
+import { toggleHotkeys } from 'actions/info'
 import { Collapsible } from 'components'
 import Hotkey from './Hotkey'
 
-const HotkeySummary = ({style, ...unusedProps}) => (
-    <Collapsible title="Hotkeys">
-        <div style={{...styles.container, ...style}}>
+const HotkeySummary = ({style, info, dispatch, ...unusedProps}) => (
+    <Collapsible
+        title="Hotkeys"
+        active={info.showHotkeys}
+        toggle={() => dispatch(toggleHotkeys())}
+        style={style}
+        {...unusedProps}
+    >
+        <div style={styles.container}>
             <Hotkey
                 trigger="Left click"
                 action="Select element"
@@ -72,4 +80,5 @@ const HotkeySummary = ({style, ...unusedProps}) => (
     </Collapsible>
 )
 
-export default HotkeySummary
+const selector = ({info}) => ({info})
+export default connect(selector)(HotkeySummary)

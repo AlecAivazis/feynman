@@ -1,3 +1,4 @@
+// local imports
 import { grey, darkGrey, mediumGrey } from 'colors'
 
 export default {
@@ -21,13 +22,14 @@ export default {
         backgroundColor: '#646464',
         borderRadius: '100%',
         width: 10,
-        height:10,
+        height: 10,
     },
     header: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginBottom: 5,
     },
     sizeIndicator: {
         fontSize: 12,
@@ -35,5 +37,6 @@ export default {
     },
     sliderContainer: {
         padding: '0 5px',
+        marginBottom: 3,
     }
 }
