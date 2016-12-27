@@ -15,7 +15,7 @@ const Sidebar = ({style, dispatch, info}) => (
         <TitleControl style={styles.element} />
         <GridSizeControl style={styles.elementWithBorder}/>
         <HistorySummary style={styles.elementWithBorder} />
-        <HotkeySummary style={styles.elementWithBorder} />
+        <HotkeySummary style={styles.element} />
     </aside>
 )
 
