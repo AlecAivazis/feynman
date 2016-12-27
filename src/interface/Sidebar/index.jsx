@@ -3,9 +3,10 @@ import React from 'react'
 // local imports
 import { setDiagramTitle } from 'actions/info'
 import { Label, Input } from 'components'
+import styles from './styles'
 import TitleControl from './TitleControl'
 import GridSizeControl from './GridSizeControl'
-import styles from './styles'
+import HotkeySummary from './HotkeySummary'
 
 
 const Sidebar = ({style, dispatch, info}) => (
@@ -13,7 +14,7 @@ const Sidebar = ({style, dispatch, info}) => (
         <TitleControl />
         <GridSizeControl style={styles.element}/>
         <Label style={styles.element}>history</Label>
-        <Label style={styles.element}>hostkeys</Label>
+        <HotkeySummary />
     </aside>
 )
 
