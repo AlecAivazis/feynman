@@ -4008,6 +4008,10 @@ react-dom:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-liftc:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-liftc/-/react-liftc-0.0.6.tgz#f57dcfa8a50f7be4fc589989a1ab16c15ddb0537"
+
 react-redux:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.1.tgz#84a41bd4cdd180452bb6922bc79ad25bd5abb7c4"
