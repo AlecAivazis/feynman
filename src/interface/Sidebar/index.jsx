@@ -7,13 +7,14 @@ import styles from './styles'
 import TitleControl from './TitleControl'
 import GridSizeControl from './GridSizeControl'
 import HotkeySummary from './HotkeySummary'
+import HistorySummary from './HistorySummary'
 
 
 const Sidebar = ({style, dispatch, info}) => (
     <aside style={{...styles.container, ...style}}>
         <TitleControl style={styles.element} />
         <GridSizeControl style={styles.elementWithBorder}/>
-        <Label style={styles.elementWithBorder}>history</Label>
+        <HistorySummary style={styles.elementWithBorder} />
         <HotkeySummary style={styles.elementWithBorder} />
     </aside>
 )
