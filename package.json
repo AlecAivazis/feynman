@@ -24,12 +24,14 @@
     "@types/react": "^0.14.55",
     "@types/react-dom": "^0.14.19",
     "@types/react-redux": "^4.4.35",
+    "babel-polyfill": "^6.20.0",
     "rc-slider": "^5.4.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-liftc": "^0.0.6",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",
+    "redux-responsive": "^4.1.0",
     "redux-undo": "beta"
   },
   "devDependencies": {

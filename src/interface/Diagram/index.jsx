@@ -2,11 +2,12 @@
 import React from 'react'
 // local imports
 import styles from './styles'
+import Grid from './Grid'
 
 const Diagram = ({style}) => (
-    <section style={{...styles.container, ...style}}>
-
-    </section>
+    <svg style={{...styles.container, ...style}}>
+        <Grid/>
+    </svg>
 )
 
 export default Diagram
