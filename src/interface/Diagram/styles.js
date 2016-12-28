@@ -1,6 +1,17 @@
+// local imports
+import { grey } from 'colors'
+
+const container = {
+    display: 'flex',
+    flexGrow: 1,
+}
+
 export default {
-    container: {
-        display: 'flex',
-        flexGrow: 1,
+    containerWithGrid: {
+        ...container,
+        backgroundColor: grey,
     },
+    containerWithoutGrid: {
+        ...container,
+    }
 }

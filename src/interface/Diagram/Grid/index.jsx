@@ -6,7 +6,7 @@ import { range } from 'utils'
 import styles from './styles'
 import { sidebarWidth } from 'interface/Sidebar/styles'
 
-const Grid = ({ style, browser, info, ...unusedProps }) => {
+const Grid = ({ style, browser, info }) => {
     // the number of vertical grid lines
     const nVertical = Math.floor((browser.width - sidebarWidth) / info.gridSize)*info.gridSize
     // the number of horizontal lines
