@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 import { ToggleButton } from 'components'
-import { toggleGrid } from 'actions/info'
+import { toggleGrid, toggleAnchors } from 'actions/info'
 
 const ButtonGrid = ({ style, info, dispatch, ...unusedProps }) => (
     <div style={{...styles.container, ...style}}>
@@ -15,9 +15,10 @@ const ButtonGrid = ({ style, info, dispatch, ...unusedProps }) => (
             onClick={() => dispatch(toggleGrid())}
         />
         <ToggleButton
-            active={true}
+            active={info.showAnchors}
             activeText="Hide Anchors"
             inactiveText="Show Anchors"
+            onClick={() => dispatch(toggleAnchors())}
         />
     </div>
 )

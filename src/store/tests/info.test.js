@@ -7,6 +7,7 @@ import {
     toggleGrid,
     setGridSize,
     toggleHotkeys,
+    toggleAnchors,
 } from 'actions/info'
 
 describe('info reducer', function() {
@@ -52,5 +53,14 @@ describe('info reducer', function() {
         const state = diagramReducer(undefined, action)
         // make sure the title matches the expectation
         expect(state.showHotkeys).to.equal(!initialState.showHotkeys)
+    })
+
+    it('responds to the TOGGLE_ANCHORS action', function(){
+        // create an action corresponding to toggling the grid
+        const action = toggleAnchors()
+        // get the mutated state after toggling the grid
+        const state = diagramReducer(undefined, action)
+        // make sure the title matches the expectation
+        expect(state.showAnchors).to.equal(!initialState.showAnchors)
     })
 })

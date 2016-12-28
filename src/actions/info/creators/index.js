@@ -1,4 +1,5 @@
 export setDiagramTitle from './setDiagramTitle'
 export toggleGrid from './toggleGrid'
+export toggleAnchors from './toggleAnchors'
 export toggleHotkeys from './toggleHotkeys'
 export setGridSize from './setGridSize'

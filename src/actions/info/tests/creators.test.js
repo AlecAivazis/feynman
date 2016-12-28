@@ -4,6 +4,7 @@ import {
     toggleGrid, TOGGLE_GRID,
     setGridSize, SET_GRID_SIZE,
     toggleHotkeys, TOGGLE_HOTKEYS,
+    toggleAnchors, TOGGLE_ANCHORS,
 } from 'actions/info'
 
 
@@ -41,6 +42,13 @@ describe('info action creators', function() {
         // all we care about is the type
         expect(toggleHotkeys()).to.deep.equal({
             type: TOGGLE_HOTKEYS,
+        })
+    })
+
+    it('toggle the anchors', function() {
+        // all we care about is the type
+        expect(toggleAnchors()).to.deep.equal({
+            type: TOGGLE_ANCHORS,
         })
     })
 })

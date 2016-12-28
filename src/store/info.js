@@ -3,7 +3,8 @@ import {
     SET_TITLE,
     TOGGLE_GRID,
     SET_GRID_SIZE,
-    TOGGLE_HOTKEYS
+    TOGGLE_HOTKEYS,
+    TOGGLE_ANCHORS,
 } from 'actions/info'
 
 // the default state
@@ -11,8 +12,9 @@ export const initialState = {
     title: 'An Example Diagram',
     showGrid: true,
     gridSize: 50,
-    showHotkeys: true,
+    showAnchors: true,
     showHistory: false,
+    showHotkeys: true,
 }
 
 // return the diagram reducer
@@ -51,6 +53,15 @@ export default (state = initialState, {type, payload}) => {
         return {
             ...state,
             showHotkeys: !state.showHotkeys
+        }
+    }
+
+    // if the action indicates we should toggle the anchors
+    if (type === TOGGLE_ANCHORS) {
+        // invert the anchor visibility
+        return {
+            ...state,
+            showAnchors: !state.showAnchors,
         }
     }
 
