@@ -7,10 +7,10 @@ import styles from './styles'
 import { sidebarWidth } from 'interface/Sidebar/styles'
 
 const Grid = ({ style, browser, info }) => {
-    // the number of vertical grid lines
-    const nVertical = Math.floor((browser.width - sidebarWidth) / info.gridSize)*info.gridSize
-    // the number of horizontal lines
-    const nHorizontal = Math.floor(browser.height / info.gridSize)*info.gridSize
+    // the number of vertical grid lines (add one to cover the remainder)
+    const nVertical = Math.floor((browser.width - sidebarWidth) / info.gridSize) + 1
+    // the number of horizontal lines (add one to cover the remainder)
+    const nHorizontal = Math.floor(browser.height / info.gridSize) + 1
 
     // render the actual dom structure
     return (
