@@ -14,16 +14,18 @@ const Grid = ({ style, browser, info, ...unusedProps }) => {
 
     // render the actual dom structure
     return (
-        <g style={{...styles.container, ...style}}>
+        <g {...{...styles.container, ...style}}>
             {range(nVertical).map(i => (
                 <path
                     {...styles.gridLine}
+                    key={`${i*info.gridSize} -50`}
                     d={`M ${i*info.gridSize} -50 L ${i*info.gridSize} ${browser.height}`}
                 />
             ))}
             {range(nHorizontal).map(i => (
                 <path
                     {...styles.gridLine}
+                    key={`-50 ${i*info.gridSize}`}
                     d={`M -50 ${i*info.gridSize}  L ${browser.width} ${i*info.gridSize} `}
                 />
             ))}
