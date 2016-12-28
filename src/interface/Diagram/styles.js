@@ -9,7 +9,7 @@ const container = {
 export default {
     containerWithGrid: {
         ...container,
-        backgroundColor: grey,
+        backgroundColor: "rgb(245, 245, 245)",
     },
     containerWithoutGrid: {
         ...container,
