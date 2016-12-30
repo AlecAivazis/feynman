@@ -1,5 +1,5 @@
 // externals
-import { createStore, combineReducers } from 'redux'
+import { createStore as createReduxStore, combineReducers } from 'redux'
 import { responsiveStoreEnhancer, calculateResponsiveState } from 'redux-responsive'
 // locals
 import info from './info'
@@ -13,6 +13,7 @@ const reducer = combineReducers({
     elements,
 })
 
+export const createStore = () => createReduxStore(reducer, responsiveStoreEnhancer)
 // create the store from the reducer
 const store = createStore(reducer, responsiveStoreEnhancer)
 
