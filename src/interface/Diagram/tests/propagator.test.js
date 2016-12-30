@@ -2,7 +2,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 // local imports
-import DiagramElement from '../element'
+import Propagator from '../propagator'
 import Fermion from '../Fermion'
 import ElectroWeak from '../ElectroWeak'
 
@@ -11,14 +11,14 @@ describe('Interface Components', function() {
 
         it('renders an ElectroWeak', function() {
             // render a fermion through the diagram element
-            const wrapper = shallow(<DiagramElement type="em" />)
+            const wrapper = shallow(<Propagator type="em" />)
             // make sure there is a fermion
             expect(wrapper.find(ElectroWeak)).to.have.length(1)
         })
 
         it('renders a Fermion', function() {
             // render a fermion through the diagram element
-            const wrapper = shallow(<DiagramElement type="fermion" />)
+            const wrapper = shallow(<Propagator type="fermion" />)
             // make sure there is a fermion
             expect(wrapper.find(Fermion)).to.have.length(1)
         })

@@ -4,7 +4,7 @@ import React from 'react'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 
-const DiagramElement = ({type, ...element}) => {
+const Propagator = ({type, ...element}) => {
     // a mapping of element type to component
     const Component = {
         fermion: Fermion,
@@ -19,4 +19,4 @@ const DiagramElement = ({type, ...element}) => {
     return <Component {...element} />
 }
 
-export default DiagramElement
+export default Propagator

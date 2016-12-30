@@ -7,7 +7,7 @@ import { createStore } from 'store'
 import { toggleGrid } from 'actions/info'
 import { addPropagators } from 'actions/elements'
 import Diagram from '..'
-import DiagramElement from '../element'
+import Propagator from '../propagator'
 import Grid from '../Grid'
 
 describe('Interface Components', function() {
@@ -54,7 +54,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Grid)).to.have.length(0)
         })
 
-        it('produces a diagram element for each element', function() {
+        it('produces a propagator for each propgator in the store', function() {
             // create a store to test with
             const store = createStore()
 
@@ -79,7 +79,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there are two fermions in the diagram
-            expect(wrapper.find(DiagramElement)).to.have.length(2)
+            expect(wrapper.find(Propagator)).to.have.length(2)
         })
     })
 })

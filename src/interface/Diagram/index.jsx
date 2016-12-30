@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
-import DiagramElement from './element'
+import Propagator from './propagator'
 
 const Diagram = ({info, elements, style}) => {
     // figure out if we need to style to fit the grid or not
@@ -14,7 +14,7 @@ const Diagram = ({info, elements, style}) => {
     return (
         <svg style={{...elementStyle, ...style}}>
             {info.showGrid && <Grid/>}
-            {elements.propagators.map((element, i) => <DiagramElement {...element} key={i}/>)}
+            {elements.propagators.map((element, i) => <Propagator {...element} key={i}/>)}
         </svg>
     )
 }
