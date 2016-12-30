@@ -12,7 +12,7 @@ describe('Diagram Components', function() {
 
     describe('Diagram', function() {
 
-        it('Shows the grid when the store says so', function() {
+        it('shows the grid when the store says so', function() {
             // create a verion of the store
             const store = createStore()
             // if the grid is supposed to be hidden
@@ -32,7 +32,7 @@ describe('Diagram Components', function() {
             expect(wrapper.find(Grid)).to.have.length(1)
         })
 
-        it('Hides the grid when the store says so', function() {
+        it('hides the grid when the store says so', function() {
             // create a verion of the store
             const store = createStore()
             // if the grid is supposed to be hidden
@@ -52,10 +52,6 @@ describe('Diagram Components', function() {
             expect(wrapper.find(Grid)).to.have.length(0)
         })
 
-        it('Produces a diagram element for each element', function() {
-            // create a verion of the store
-            const store = createStore()
-
-        })
+        it('produces a diagram element for each element')
     })
 })

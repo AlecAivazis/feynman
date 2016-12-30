@@ -2,7 +2,7 @@
 import round from '../round'
 import 'babel-polyfill'
 
-describe('round util', function() {
+describe('Round util', function() {
     it('returns correct value', function () {
         // the table of test cases
         const table = [

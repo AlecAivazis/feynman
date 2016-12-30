@@ -4,7 +4,7 @@ import {combineReducers, createStore} from 'redux'
 import reducer, { initialState } from '../elements'
 
 
-describe('elements reducer', function() {
+describe('Elements reducer', function() {
     it('has a reasonable default', function() {
         // pass an undefined current state
         const val = reducer(undefined, {type: "init"})

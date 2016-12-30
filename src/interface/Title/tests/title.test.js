@@ -10,7 +10,7 @@ import { setDiagramTitle } from 'actions/info'
 describe('Diagram Components', function() {
 
     describe('Title Component', function() {
-        it('Shows the title of the diagram', function() {
+        it('shows the title of the diagram', function() {
             // create a store to test with
             const store = createStore()
             // the title of the diagram

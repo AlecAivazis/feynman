@@ -10,7 +10,7 @@ import {
     toggleAnchors,
 } from 'actions/info'
 
-describe('info reducer', function() {
+describe('Info reducer', function() {
     it('has a reasonable default', function() {
         // pass an undefined current state
         const val = diagramReducer(undefined, {type: "init"})
