@@ -7,7 +7,7 @@ import { createStore } from 'store'
 import { toggleGrid } from 'actions/info'
 import { addElements } from 'actions/elements'
 import Diagram from '..'
-import Fermion from '../Fermion'
+import DiagramElement from '../element'
 import Grid from '../Grid'
 
 describe('Interface Components', function() {
@@ -61,18 +61,10 @@ describe('Interface Components', function() {
             // the elements to add
             const elements = [
                 {
-                    type: 'fermion',
-                    x1: 0,
-                    y1: 0,
-                    x2: 50,
-                    y2: 100,
+                    type: 'invalid1',
                 },
                 {
-                    type: 'fermion',
-                    x1: 100,
-                    y1: 1000,
-                    x2: 150,
-                    y2: 200,
+                    type: 'invalid2',
                 },
             ]
 
@@ -87,7 +79,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there are two fermions in the diagram
-            expect(wrapper.find(Fermion)).to.have.length(2)
+            expect(wrapper.find(DiagramElement)).to.have.length(2)
         })
     })
 })
