@@ -14,7 +14,7 @@ const Diagram = ({info, elements, style}) => {
     return (
         <svg style={{...elementStyle, ...style}}>
             {info.showGrid && <Grid/>}
-            {elements.map(element => <DiagramElement {...element} />)}
+            {elements.map((element, i) => <DiagramElement {...element} key={i}/>)}
         </svg>
     )
 }
