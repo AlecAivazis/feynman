@@ -1,1 +1,1 @@
-export addElements from './addElements'
+export addPropagators from './addPropagators'

@@ -1,7 +1,7 @@
 // local imports
-import { ADD_ELEMENT } from 'actions/elements'
+import { ADD_PROPAGATOR } from 'actions/elements'
 
 export default (...configs) => ({
-    type: ADD_ELEMENT,
+    type: ADD_PROPAGATOR,
     payload: configs,
 })

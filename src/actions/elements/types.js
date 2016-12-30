@@ -1,1 +1,1 @@
-export const ADD_ELEMENT = '@feynman/ADD_ELEMENT'
+export const ADD_PROPAGATOR = '@feynman/ADD_PROPAGATOR'

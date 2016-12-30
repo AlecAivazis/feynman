@@ -5,7 +5,7 @@ import { mount } from 'enzyme'
 // local imports
 import { createStore } from 'store'
 import { toggleGrid } from 'actions/info'
-import { addElements } from 'actions/elements'
+import { addPropagators } from 'actions/elements'
 import Diagram from '..'
 import DiagramElement from '../element'
 import Grid from '../Grid'
@@ -69,7 +69,7 @@ describe('Interface Components', function() {
             ]
 
             // add an element to the store
-            store.dispatch(addElements(...elements))
+            store.dispatch(addPropagators(...elements))
 
             // render the diagram in the wrapper
             const wrapper = mount(

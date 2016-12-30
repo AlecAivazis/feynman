@@ -1,19 +1,19 @@
 // local imports
-import { addElements, ADD_ELEMENT } from '..'
+import { addPropagators, ADD_PROPAGATOR } from '..'
 
 describe('Action Creators', function() {
-    describe('Element action creators', function() {
+    describe('Propagator action creators', function() {
         it('add single element', function() {
             // the configuration for the element
             const config = {
                 foo: 'bar'
             }
             // generate the action
-            const action = addElements(config)
+            const action = addPropagators(config)
 
             // make sure the structure matches the expectation
             expect(action).to.deep.equal({
-                type: ADD_ELEMENT,
+                type: ADD_PROPAGATOR,
                 payload: [config],
             })
         })
@@ -29,11 +29,11 @@ describe('Action Creators', function() {
                 }
             ]
             // generate the action
-            const action = addElements(...configs)
+            const action = addPropagators(...configs)
 
             // make sure the structure matches the expectation
             expect(action).to.deep.equal({
-                type: ADD_ELEMENT,
+                type: ADD_PROPAGATOR,
                 payload: configs,
             })
         })
