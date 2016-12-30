@@ -6,7 +6,7 @@ import DiagramElement from '../element'
 import Fermion from '../Fermion'
 import ElectroWeak from '../ElectroWeak'
 
-describe('Diagram Components', function() {
+describe('Interface Components', function() {
     describe('Diagram Element', function() {
 
         it('can render a Fermion', function() {

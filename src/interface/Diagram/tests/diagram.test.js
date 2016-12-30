@@ -8,7 +8,7 @@ import { toggleGrid } from 'actions/info'
 import Diagram from '..'
 import Grid from '../Grid'
 
-describe('Diagram Components', function() {
+describe('Interface Components', function() {
 
     describe('Diagram', function() {
 

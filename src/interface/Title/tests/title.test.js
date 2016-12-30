@@ -7,7 +7,7 @@ import Title from '..'
 import { createStore } from 'store'
 import { setDiagramTitle } from 'actions/info'
 
-describe('Diagram Components', function() {
+describe('Interface Components', function() {
 
     describe('Title Component', function() {
         it('shows the title of the diagram', function() {
