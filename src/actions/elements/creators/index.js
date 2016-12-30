@@ -1,1 +1,1 @@
-export addElement from './addElement'
+export addElements from './addElements'

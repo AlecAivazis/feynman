@@ -1,22 +1,15 @@
-// the initial state is an empty list of elements
-export const initialState = [
-    {
-        type: 'fermion',
-        x1: 0,
-        y1: 50,
-        x2: 50,
-        y2: 100,
-    },
-    {
-        type: 'em',
-        x1: 100,
-        y1: 150,
-        x2: 150,
-        y2: 200,
-    }
-]
+// local imports
+import { ADD_ELEMENT } from 'actions/elements'
+
+// the initial state of elements
+export const initialState = []
 
 export default (state = initialState, {type, payload}) => {
+    // if the action corresponds to a new element
+    if (type === ADD_ELEMENT) {
+        // add the payload as an element
+        return state.concat(payload)
+    }
     // its an action we don't recognize
     return state
 }

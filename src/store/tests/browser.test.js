@@ -8,7 +8,7 @@ describe('Reducers', function() {
             const mock = createStore()
 
             // make sure the width attribute exists
-            expect(mock.getState().browser.width).to.exist
+            expect(mock.getState().browser.width).to.equal(window.innerWidth)
         })
 
         it('has height attribute', function() {
@@ -16,7 +16,7 @@ describe('Reducers', function() {
             const mock = createStore()
 
             // make sure the height attribute exists
-            expect(mock.getState().browser.height).to.exist
+            expect(mock.getState().browser.height).to.equal(window.innerHeight)
         })
     })
 })
