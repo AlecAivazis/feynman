@@ -35,9 +35,9 @@ describe('Interface Components', function() {
         it('hides the grid when the store says so', function() {
             // create a verion of the store
             const store = createStore()
-            // if the grid is supposed to be hidden
+            // if the grid is supposed to be shown
             if (store.getState().info.showGrid) {
-                // show the grid
+                // hide the grid
                 store.dispatch(toggleGrid())
             }
 
