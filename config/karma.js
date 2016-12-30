@@ -8,7 +8,6 @@
 var projectPaths = require('./projectPaths')
 var webpackConfig = require(projectPaths.webpackConfig)
 
-
 // annoying hack to be able to dynamically set keys on object
 var preprocessors = {}
 preprocessors[projectPaths.testGlob] = ['webpack', 'sourcemap']
@@ -40,7 +39,14 @@ module.exports = function (config) {
         preprocessors: preprocessors,
 
         // configure webpack using settings from development webpack config
-        webpack: webpackConfig,
+        webpack: Object.assign({}, webpackConfig, {
+            externals: {
+                'react/addons': true,
+                'react/lib/ReactContext': true,
+                'react/lib/ExecutionEnvironment': true,
+                cheerio: 'window',
+            },
+        }),
 
         webpackMiddleware: {
             noInfo: true,

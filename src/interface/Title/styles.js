@@ -9,5 +9,6 @@ export default {
         left: sidebarWidth,
         right: toolbarWidth,
         textAlign: 'center',
+        fontSize: 25,
     }
 }

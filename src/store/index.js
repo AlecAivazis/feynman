@@ -4,11 +4,13 @@ import { responsiveStoreEnhancer, calculateResponsiveState } from 'redux-respons
 // locals
 import info from './info'
 import browser from './browser'
+import elements from './elements'
 
 // create the reducer
 const reducer = combineReducers({
     info,
     browser,
+    elements,
 })
 
 // create the store from the reducer
