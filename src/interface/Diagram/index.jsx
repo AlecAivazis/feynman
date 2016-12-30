@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
-import Propagator from './propagator'
+import Propagator from './Propagator'
 
 const Diagram = ({info, elements, style}) => {
     // figure out if we need to style to fit the grid or not

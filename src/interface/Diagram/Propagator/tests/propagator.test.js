@@ -2,7 +2,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 // local imports
-import Propagator from '../propagator'
+import Propagator from '..'
 import Fermion from '../Fermion'
 import ElectroWeak from '../ElectroWeak'
 

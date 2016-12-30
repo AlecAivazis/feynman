@@ -7,7 +7,7 @@ import { createStore } from 'store'
 import { toggleGrid } from 'actions/info'
 import { addPropagators } from 'actions/elements'
 import Diagram from '..'
-import Propagator from '../propagator'
+import Propagator from '../Propagator'
 import Grid from '../Grid'
 
 describe('Interface Components', function() {
