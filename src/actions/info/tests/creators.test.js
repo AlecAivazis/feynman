@@ -8,47 +8,49 @@ import {
 } from 'actions/info'
 
 
-describe('info action creators', function() {
-    it('change diagram title', function() {
-        // the title to change the diagram to
-        const title = 'hello'
+describe('Action Creators', function() {
+    describe('info action creators', function() {
+        it('change diagram title', function() {
+            // the title to change the diagram to
+            const title = 'hello'
 
-        // make sure the action is expected
-        expect(setDiagramTitle(title)).to.deep.equal({
-            type: SET_TITLE,
-            payload: title,
+            // make sure the action is expected
+            expect(setDiagramTitle(title)).to.deep.equal({
+                type: SET_TITLE,
+                payload: title,
+            })
         })
-    })
 
-    it('toggle the grid', function() {
-        // all we care about is the type
-        expect(toggleGrid()).to.deep.equal({
-            type: TOGGLE_GRID,
+        it('toggle the grid', function() {
+            // all we care about is the type
+            expect(toggleGrid()).to.deep.equal({
+                type: TOGGLE_GRID,
+            })
         })
-    })
 
-    it('set the grid size', function() {
-        // the new size for the grid
-        const size = 20
+        it('set the grid size', function() {
+            // the new size for the grid
+            const size = 20
 
-        // all we care about is the type
-        expect(setGridSize(size)).to.deep.equal({
-            type: SET_GRID_SIZE,
-            payload: size
+            // all we care about is the type
+            expect(setGridSize(size)).to.deep.equal({
+                type: SET_GRID_SIZE,
+                payload: size
+            })
         })
-    })
 
-    it('toggle the hotkeys', function() {
-        // all we care about is the type
-        expect(toggleHotkeys()).to.deep.equal({
-            type: TOGGLE_HOTKEYS,
+        it('toggle the hotkeys', function() {
+            // all we care about is the type
+            expect(toggleHotkeys()).to.deep.equal({
+                type: TOGGLE_HOTKEYS,
+            })
         })
-    })
 
-    it('toggle the anchors', function() {
-        // all we care about is the type
-        expect(toggleAnchors()).to.deep.equal({
-            type: TOGGLE_ANCHORS,
+        it('toggle the anchors', function() {
+            // all we care about is the type
+            expect(toggleAnchors()).to.deep.equal({
+                type: TOGGLE_ANCHORS,
+            })
         })
     })
 })
