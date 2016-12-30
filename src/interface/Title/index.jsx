@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import styles from './styles'
 
 const DiagramTitle = ({style, info}) => (
-    <div style={{...styles.container, ...style}}>
+    <h1 style={{...styles.container, ...style}}>
         {info.title}
-    </div>
+    </h1>
 )
 
 const selector = ({info}) => ({info})

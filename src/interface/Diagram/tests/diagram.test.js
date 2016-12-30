@@ -51,5 +51,11 @@ describe('Diagram Components', function() {
             // make sure there is a grid
             expect(wrapper.find(Grid)).to.have.length(0)
         })
+
+        it('Produces a diagram element for each element', function() {
+            // create a verion of the store
+            const store = createStore()
+
+        })
     })
 })

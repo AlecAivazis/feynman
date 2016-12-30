@@ -10,5 +10,6 @@ export default {
         right: toolbarWidth,
         textAlign: 'center',
         fontSize: 25,
+        fontWeight: 400,
     }
 }
