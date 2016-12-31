@@ -26,7 +26,8 @@ describe('Reducers', function() {
             expect(store.getState().elements.anchors).to.deep.equal({
                 1: {
                     x: 50,
-                    y: 100
+                    y: 100,
+                    id: 1,
                 }
             })
         })
@@ -55,12 +56,14 @@ describe('Reducers', function() {
             // make sure the state matches expectation
             expect(store.getState().elements.anchors).to.deep.equal({
                 1: {
+                    id: 1,
                     x: 50,
-                    y: 100
+                    y: 100,
                 },
                 2: {
+                    id: 2,
                     x: 100,
-                    y: 100
+                    y: 100,
                 }
             })
         })

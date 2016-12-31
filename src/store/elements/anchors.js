@@ -13,14 +13,14 @@ export default (state, {type, payload}) => {
         const local = { ...anchors }
 
         // loop over every propagator we are supposed to add
-        for (const {id, ...anchor} of payload) {
+        for (const anchor of payload) {
             // if there is already an anchor with that id
-            if (local[id]) {
+            if (local[anchor.id]) {
                 throw new Error(`There already is an anchor with id ${payload.id}`)
             }
 
             // add the anchor to the local store
-            local[id] = anchor
+            local[anchor.id] = anchor
         }
 
         // add the payload to the list of propagators
