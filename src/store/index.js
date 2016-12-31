@@ -1,6 +1,7 @@
 // externals
-import { createStore as createReduxStore, combineReducers } from 'redux'
+import { createStore as createReduxStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { responsiveStoreEnhancer, calculateResponsiveState } from 'redux-responsive'
+import thunk from 'redux-thunk'
 // locals
 import info from './info'
 import browser from './browser'
@@ -13,9 +14,15 @@ const reducer = combineReducers({
     elements,
 })
 
-export const createStore = () => createReduxStore(reducer, responsiveStoreEnhancer)
+export const createStore = () => createReduxStore(
+    reducer,
+    compose(
+        applyMiddleware(thunk),
+        responsiveStoreEnhancer,
+    )
+)
 // create the store from the reducer
-const store = createStore(reducer, responsiveStoreEnhancer)
+const store = createStore()
 
 // make sure we track the window as it changes size
 window.addEventListener('resize', () =>

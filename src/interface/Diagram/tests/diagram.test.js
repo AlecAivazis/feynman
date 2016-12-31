@@ -5,7 +5,8 @@ import { mount } from 'enzyme'
 // local imports
 import { createStore } from 'store'
 import { toggleGrid } from 'actions/info'
-import { addPropagators } from 'actions/elements'
+import { addPropagators, addAnchors } from 'actions/elements'
+import { initialState } from 'store/elements'
 import Diagram from '..'
 import Propagator from '../Propagator'
 import Grid from '../Grid'
@@ -58,18 +59,33 @@ describe('Interface Components', function() {
             // create a store to test with
             const store = createStore()
 
-            // the elements to add
-            const elements = [
+            // add some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 50,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 1000,
+                }
+            ))
+
+            // add an element to the store
+            store.dispatch(addPropagators(
                 {
                     type: 'invalid1',
+                    anchor1: 1,
+                    anchor2: 2,
                 },
                 {
                     type: 'invalid2',
-                },
-            ]
-
-            // add an element to the store
-            store.dispatch(addPropagators(...elements))
+                    anchor1: 1,
+                    anchor2: 2,
+                }
+            ))
 
             // render the diagram in the wrapper
             const wrapper = mount(
@@ -77,9 +93,11 @@ describe('Interface Components', function() {
                     <Diagram/>
                 </Provider>
             )
+            // the expected number of propagators
+            const expected = initialState.propagators.length + 2
 
             // make sure there are two fermions in the diagram
-            expect(wrapper.find(Propagator)).to.have.length(2)
+            expect(wrapper.find(Propagator)).to.have.length(expected)
         })
     })
 })

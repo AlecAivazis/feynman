@@ -9,7 +9,7 @@ import {
 
 
 describe('Action Creators', function() {
-    describe('Info action creators', function() {
+    describe('Info', function() {
         it('change diagram title', function() {
             // the title to change the diagram to
             const title = 'hello'
