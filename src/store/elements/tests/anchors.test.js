@@ -123,5 +123,31 @@ describe('Reducers', function() {
             expect(store.getState().elements.anchors[anchor.id].x).to.equal(moves[1].x)
             expect(store.getState().elements.anchors[anchor.id].y).to.equal(moves[1].y)
         })
+
+        it('only moved the appropriate anchors', function() {
+            const anchor = {
+                id: 2,
+                x: 50,
+                y: 50
+            }
+            // add a second anchor
+            store.dispatch(addAnchors(anchor))
+
+            // the move to test
+            const move = {
+                id: initialAnchor.id,
+                x: 50,
+                y: 100,
+            }
+
+            // add the propagator to the store
+            store.dispatch(setAnchorLocations(move))
+
+            // make sure the other anchor was left unmodified
+            expect(store.getState().elements.anchors[anchor.id].x).to.equal(anchor.x)
+            expect(store.getState().elements.anchors[anchor.id].y).to.equal(anchor.y)
+
+
+        })
     })
 })
