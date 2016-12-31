@@ -7,6 +7,29 @@ import 'babel-polyfill'
 import App from './interface'
 import store from './store'
 
+import { addAnchors, addPropagators } from 'actions/elements'
+
+store.dispatch(addAnchors(
+    {
+        id: 1,
+        x: 50,
+        y: 100,
+    },
+    {
+        id: 2,
+        x: 100,
+        y: 200,
+    }
+))
+
+store.dispatch(addPropagators(
+    {
+        type: 'em',
+        anchor1: 1,
+        anchor2: 2,
+    }
+))
+
 ReactDOM.render((
     <Provider store={store}>
         <App/>
