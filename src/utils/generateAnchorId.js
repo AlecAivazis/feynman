@@ -1,3 +1,5 @@
+import range from './range'
+
 // this function returns a unique id for an anchor from the given store
 const generateAnchorId = store => {
     // the list of known anchor id
@@ -16,4 +18,31 @@ const generateAnchorId = store => {
     return candidate
 }
 
-export default generateAnchorId
+const generateMultipleAnchorIds = (store, n=1) => {
+    // if we only need to generate one id
+    if ( n === 1) {
+        // return the single int
+        return generateAnchorId(store)
+    }
+    // we need to generate multiple ids
+
+    // the list of ids
+    const ids = []
+
+    // generate the right number of ids
+    for (const i of range(n)) {
+        // create a candidate
+        let candidate = generateAnchorId(store)
+        // while there is a conflict with ids we've already generated
+        while (ids.includes(candidate)) {
+            // generate a new id
+            candidate = generateAnchorId(store)
+        }
+        // the candidate is garunteed unique, add it to the list
+        ids.push(candidate)
+    }
+
+    return ids
+}
+
+export default generateMultipleAnchorIds

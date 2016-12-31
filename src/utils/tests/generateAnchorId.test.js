@@ -37,5 +37,19 @@ describe('Utils', function() {
             // make sure the id is not taken
             expect(store.getState().elements.anchors[id]).to.not.exist
         })
+
+        it('can generate multiple unique ids', function() {
+            // create a store to test with
+            const store = createStore()
+
+            // the numer of unique ids to create
+            const nIds = 5
+            // create a set out of the result of calling the utility
+            const ids = new Set(generateAnchorId(store, nIds))
+
+            // make sure we have the correct number of unique ids
+            expect(ids.size).to.equal(nIds)
+
+        })
     })
 })
