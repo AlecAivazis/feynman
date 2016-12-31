@@ -8,7 +8,6 @@ export default (state, {type, payload}) => {
     if (type === ADD_ANCHORS) {
         // get the current list of anchors
         const { anchors } = state
-        console.log(anchors)
 
         // a local copy of the state to mutate
         const local = { ...anchors }
