@@ -6,7 +6,7 @@ import TouchBackend from 'react-dnd-touch-backend'
 import { DragDropContext } from 'react-dnd'
 // local imports
 import { createStore } from 'store'
-import { toggleGrid, toggleAnchors } from 'actions/info'
+import { toggleGrid, toggleAnchors, setGridSize } from 'actions/info'
 import { addPropagators, addAnchors } from 'actions/elements'
 import { initialState } from 'store/elements'
 import Diagram from '..'
@@ -61,6 +61,29 @@ describe('Interface Components', function() {
                 // hide the grid
                 store.dispatch(toggleGrid())
             }
+
+            // render the diagram in the wrapper
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Diagram/>
+                </Provider>
+            )
+
+            // make sure there is a grid
+            expect(wrapper.find(Grid)).to.have.length(0)
+        })
+
+        it('hides the grid when the gridSize is zero', function() {
+            // create a verion of the store
+            const store = createStore()
+            // make sure the grid would show otherwise
+            if (!store.getState().info.showGrid) {
+                // show the grid
+                store.dispatch(toggleGrid())
+            }
+
+            // set the grid size to zero
+            store.dispatch(setGridSize(0))
 
             // render the diagram in the wrapper
             const wrapper = mount(

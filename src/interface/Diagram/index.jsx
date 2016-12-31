@@ -18,7 +18,7 @@ const Diagram = ({info, elements, style}) => {
     // render the various components of the diagram
     return (
         <svg style={{...elementStyle, ...style}}>
-            {info.showGrid && <Grid/>}
+            {info.showGrid && info.gridSize > 0 && <Grid/>}
             {propagators.map((element, i) => <Propagator {...element} key={i}/>)}
             {info.showAnchors && Object.values(elements.anchors).map(anchor => <Anchor {...anchor} key={anchor.id} />)}
         </svg>

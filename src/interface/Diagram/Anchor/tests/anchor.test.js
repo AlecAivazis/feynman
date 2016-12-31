@@ -10,6 +10,7 @@ import Diagram from 'interface/Diagram'
 import { DraggableAnchor } from '..'
 import { createStore } from 'store'
 import { addAnchors } from 'actions/elements'
+import { relativePosition } from 'utils'
 
 // a test component
 const Test = DragDropContext(TestBackend)(
@@ -48,14 +49,22 @@ describe('Interface Components', function() {
             // get the handler id of the anchor
             const sourceId = wrapper.find(DraggableAnchor).get(0).getHandlerId()
 
+            // the location to move the anchor to
+            const move = {x: 400, y: 200}
+
             // move the anchor 50 to the right
             backend.simulateBeginDrag([sourceId], {
-                clientOffset: {x: 400}, // this should be offset by sidebarWidth
+                clientOffset: move, // this should be offset by sidebarWidth
                 getSourceClientOffset: () => ({x: 0, y: 0})
             })
 
+            // figure out the relative move
+            const relMove = relativePosition(move)
+
             // make sure the anchor was moved to the appropriate place
-            expect(store.getState().elements.anchors[1].x).to.equal(400 - sidebarWidth)
+            expect(store.getState().elements.anchors[1].x).to.equal(relMove.x)
+            expect(store.getState().elements.anchors[1].y).to.equal(relMove.y)
+
         })
     })
 })

@@ -4,20 +4,30 @@ import { DragSource } from 'react-dnd'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 // local imports
-import { relativePosition } from 'utils'
+import { relativePosition, fixPositionToGrid } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
 import { setAnchorLocations } from 'actions/elements'
 import styles from './styles'
 import { anchorDragType } from '../constants'
 
 class Anchor extends React.Component {
-    componentWillReceiveProps({ monitor, x, y, id, item, clientOffset }) {
+    componentWillReceiveProps({ x, y, id, info, item, clientOffset }) {
+        // round the mouse location to the grid
+        const client = clientOffset && relativePosition(fixPositionToGrid(clientOffset, info.gridSize))
+        // round the store's location to the grid
+        const store = fixPositionToGrid({x, y}, info.gridSize)
         // if the client offset is different than the location
-        if (item && item.id === id && clientOffset && !_.isEqual(clientOffset, {x, y})) {
+        if (item && item.id === id
+                 && client
+                 && (client.x !== store.x || client.y !== store.y)) {
+
             // update the redux store
             this.props.setAnchorLocations({
                 id: this.props.id,
-                ...relativePosition(clientOffset),
+                ...fixPositionToGrid(
+                    relativePosition(clientOffset),
+                    info.gridSize
+                ),
             })
         }
     }
@@ -40,16 +50,11 @@ class Anchor extends React.Component {
 const dragSource = {
     // returns the data describing the dragged element
     beginDrag(props) {
-        console.log(props)
         // for now, just hold onto the id
         return {
             id: props.id
         }
     },
-
-    isDragging(props, monitor) {
-        return monitor.getItem().id === props.id
-    }
 }
 
 // the drag event selector
@@ -68,5 +73,7 @@ const mapDispatchToProps = dispatch => ({
     // to set its own location
     setAnchorLocations: loc => dispatch(setAnchorLocations(loc))
 })
+// the anchor needs to know the grid size
+const mapStateToProps = ({info}) => ({info})
 
-export default connect(null, mapDispatchToProps)(DraggableAnchor)
+export default connect(mapStateToProps, mapDispatchToProps)(DraggableAnchor)
