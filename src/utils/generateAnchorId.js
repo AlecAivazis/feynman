@@ -19,13 +19,6 @@ const generateAnchorId = store => {
 }
 
 const generateMultipleAnchorIds = (store, n=1) => {
-    // if we only need to generate one id
-    if ( n === 1) {
-        // return the single int
-        return generateAnchorId(store)
-    }
-    // we need to generate multiple ids
-
     // the list of ids
     const ids = []
 
@@ -42,7 +35,7 @@ const generateMultipleAnchorIds = (store, n=1) => {
         ids.push(candidate)
     }
 
-    return ids
+    return n === 1 ? ids[0] : ids
 }
 
 export default generateMultipleAnchorIds

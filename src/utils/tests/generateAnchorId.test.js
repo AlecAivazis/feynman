@@ -21,7 +21,7 @@ describe('Utils', function() {
             const store = createStore()
 
             // generate a set of 1000 anchors
-            const anchors = range(1000).map(i => ({
+            const anchors = range(1000).map(() => ({
                 // with a random id
                 id: Math.random() * 10000,
                 x: 50,
