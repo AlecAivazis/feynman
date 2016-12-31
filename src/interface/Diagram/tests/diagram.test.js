@@ -2,6 +2,8 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
+import TouchBackend from 'react-dnd-touch-backend'
+import { DragDropContext } from 'react-dnd'
 // local imports
 import { createStore } from 'store'
 import { toggleGrid, toggleAnchors } from 'actions/info'
@@ -11,6 +13,16 @@ import Diagram from '..'
 import Propagator from '../Propagator'
 import Grid from '../Grid'
 import Anchor from '../Anchor'
+
+
+// a diagram wrapped in the right context
+const Test = DragDropContext(TouchBackend)(
+    ({store}) => (
+        <Provider store={store}>
+            <Diagram/>
+        </Provider>
+    )
+)
 
 describe('Interface Components', function() {
 
@@ -89,11 +101,7 @@ describe('Interface Components', function() {
             ))
 
             // render the diagram in the wrapper
-            const wrapper = mount(
-                <Provider store={store}>
-                    <Diagram/>
-                </Provider>
-            )
+            const wrapper = mount(<Test store={store}/>)
             // the expected number of propagators
             const expected = initialState.propagators.length + 2
 
@@ -125,11 +133,7 @@ describe('Interface Components', function() {
             ))
 
             // render the diagram in the wrapper
-            const wrapper = mount(
-                <Provider store={store}>
-                    <Diagram/>
-                </Provider>
-            )
+            const wrapper = mount(<Test store={store}/>)
 
             // make sure there are two Anchors in the diagram
             expect(wrapper.find(Anchor)).to.have.length(2)

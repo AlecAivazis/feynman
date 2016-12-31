@@ -24,6 +24,8 @@
     "rc-slider": "^5.4.0",
     "react": "^15.4.1",
     "react-addons-test-utils": "^15.4.1",
+    "react-dnd": "^2.1.4",
+    "react-dnd-touch-backend": "^0.3.5",
     "react-dom": "^15.4.1",
     "react-liftc": "^0.0.6",
     "react-redux": "^5.0.1",
