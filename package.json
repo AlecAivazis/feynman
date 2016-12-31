@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/AlecAivazis/feynamn#readme",
   "dependencies": {
+    "lodash": "^4.17.3",
     "rc-slider": "^5.4.0",
     "react": "^15.4.1",
     "react-addons-test-utils": "^15.4.1",

@@ -1,8 +1,8 @@
 // external imports
 import sinon from 'sinon'
 // local imports
-import { addAnchors } from '../creators'
-import { ADD_ANCHORS } from '../types'
+import { addAnchors, moveAnchors } from '../creators'
+import { ADD_ANCHORS, MOVE_ANCHORS } from '../types'
 
 // a stub for an empty getState
 const emptyState = sinon.stub().returns({
@@ -27,7 +27,6 @@ describe('Action Creators', function() {
                     type: ADD_ANCHORS,
                     payload: [anchor]
                 })
-
             })
 
             it('add multiple anchors', function() {
@@ -50,7 +49,43 @@ describe('Action Creators', function() {
                     type: ADD_ANCHORS,
                     payload: anchors
                 })
+            })
 
+            it('move single anchor', function() {
+                // the configuration for the anchor to add
+                const anchor = {
+                    id: 1,
+                    x: 50,
+                    y: 100
+                }
+
+                // make sure dispatch was called with the appropriate body
+                expect(moveAnchors(anchor)).to.deep.equal({
+                    type: MOVE_ANCHORS,
+                    payload: [anchor]
+                })
+            })
+
+            it('move multiple anchors', function() {
+                // the configuration for the anchor to add
+                const anchors = [
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100
+                    },
+                    {
+                        id: 2,
+                        x: 50,
+                        y: 100
+                    }
+                ]
+
+                // make sure dispatch was called with the appropriate body
+                expect(moveAnchors(...anchors)).to.deep.equal({
+                    type: MOVE_ANCHORS,
+                    payload: anchors
+                })
             })
         })
     })
