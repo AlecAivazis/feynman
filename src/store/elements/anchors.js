@@ -33,11 +33,9 @@ export default (state, {type, payload}) => {
 
         // the payload is a list of move orders
         for (const {id, x, y} of payload) {
-            // console.log(local[id], x, y)
             // add the x value to the current position of the appropriate anchor
             local[id].x += x
             local[id].y += y
-            // console.log(local[id])
         }
 
         // return the mutated state

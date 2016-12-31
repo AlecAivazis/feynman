@@ -75,7 +75,6 @@ describe('Reducers', function() {
         })
 
         it('can move single anchor with SET_ANCHOR_LOCATIONS action', function() {
-            console.log(initialAnchor)
             // the anchor to test
             const move = {
                 id: initialAnchor.id,

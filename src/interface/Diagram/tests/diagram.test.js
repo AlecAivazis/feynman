@@ -17,11 +17,16 @@ import Anchor from '../Anchor'
 
 // a diagram wrapped in the right context
 const Test = DragDropContext(TouchBackend)(
-    ({store}) => (
-        <Provider store={store}>
-            <Diagram/>
-        </Provider>
-    )
+    React.createClass({
+        render() {
+            return (
+                <Provider store={this.props.store}>
+                    <Diagram/>
+                </Provider>
+            )
+        }
+    })
+
 )
 
 describe('Interface Components', function() {
