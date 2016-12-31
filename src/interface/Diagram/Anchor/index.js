@@ -12,15 +12,18 @@ import { anchorDragType } from '../constants'
 
 class Anchor extends React.Component {
     componentWillReceiveProps({ x, y, id, info, item, clientOffset }) {
+        // if the item or clientIffset aren't defined or we are moving another item
+        if (!clientOffset || !item || item.id !== id) {
+            // don't do anything
+            return
+        }
+
         // round the mouse location to the grid
-        const client = clientOffset && relativePosition(fixPositionToGrid(clientOffset, info.gridSize))
+        const client = relativePosition(fixPositionToGrid(clientOffset, info.gridSize))
         // round the store's location to the grid
         const store = fixPositionToGrid({x, y}, info.gridSize)
         // if the client offset is different than the location
-        if (item && item.id === id
-                 && client
-                 && (client.x !== store.x || client.y !== store.y)) {
-
+        if (client.x !== store.x || client.y !== store.y) {
             // update the redux store
             this.props.setAnchorLocations({
                 id: this.props.id,
