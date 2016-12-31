@@ -1,7 +1,7 @@
 // exteranl imports
 import _ from 'lodash'
 // local imports
-import { ADD_ANCHORS, MOVE_ANCHORS } from 'actions/elements'
+import { ADD_ANCHORS, SET_ANCHOR_LOCATIONS } from 'actions/elements'
 
 // the reducer that manages just the propagator state but has reference
 // to the entire element state reducer (must return just the propagator slice)
@@ -27,15 +27,15 @@ export default (state, {type, payload}) => {
     }
 
     // if we need to move anchors
-    if (type === MOVE_ANCHORS) {
+    if (type === SET_ANCHOR_LOCATIONS) {
         // a local copy of the state to mutate
         const local = _.cloneDeep(state.anchors)
 
         // the payload is a list of move orders
         for (const {id, x, y} of payload) {
             // add the x value to the current position of the appropriate anchor
-            local[id].x += x
-            local[id].y += y
+            local[id].x = x
+            local[id].y = y
         }
 
         // return the mutated state

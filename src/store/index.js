@@ -6,6 +6,7 @@ import thunk from 'redux-thunk'
 import info from './info'
 import browser from './browser'
 import elements from './elements'
+import DevTools from 'components/DevTools'
 
 // create the reducer
 const reducer = combineReducers({
@@ -19,6 +20,7 @@ export const createStore = () => createReduxStore(
     compose(
         applyMiddleware(thunk),
         responsiveStoreEnhancer,
+        DevTools.instrument(),
     )
 )
 // create the store from the reducer

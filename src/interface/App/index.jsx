@@ -6,6 +6,7 @@ import TouchBackend from 'react-dnd-touch-backend'
 import './reset.css'
 import styles from './styles'
 import { Diagram, Sidebar, Title, Toolbar } from '..'
+import DevTools from 'components/DevTools'
 
 // App must be a class-based component because it will recieve a ref
 class App extends React.Component {
@@ -16,6 +17,7 @@ class App extends React.Component {
                 <Toolbar style={styles.overlay}/>
                 <Sidebar />
                 <Diagram />
+                <DevTools />
             </main>
         )
     }
