@@ -22,6 +22,7 @@ class Anchor extends React.Component {
         const client = relativePosition(fixPositionToGrid(clientOffset, info.gridSize))
         // round the store's location to the grid
         const store = fixPositionToGrid({x, y}, info.gridSize)
+
         // if the client offset is different than the location
         if (client.x !== store.x || client.y !== store.y) {
             // update the redux store

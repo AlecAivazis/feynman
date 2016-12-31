@@ -10,7 +10,7 @@ import Diagram from 'interface/Diagram'
 import { DraggableAnchor } from '..'
 import { createStore } from 'store'
 import { addAnchors } from 'actions/elements'
-import { relativePosition } from 'utils'
+import { relativePosition, fixPositionToGrid } from 'utils'
 
 // a test component
 const Test = DragDropContext(TestBackend)(
@@ -28,7 +28,7 @@ const Test = DragDropContext(TestBackend)(
 
 describe('Interface Components', function() {
     describe('Anchor', function() {
-        it('updates the appropriate entry in the store when dragged', function() {
+        it('updates the appropriate entry in the store when dragged (snaps to grid)', function() {
             // a store to test with
             const store = createStore()
             // add an anchor
@@ -45,12 +45,11 @@ describe('Interface Components', function() {
 
             // obtain a reference to the dnd backend
             const backend = wrapper.get(0).getManager().getBackend()
-
             // get the handler id of the anchor
             const sourceId = wrapper.find(DraggableAnchor).get(0).getHandlerId()
 
             // the location to move the anchor to
-            const move = {x: 400, y: 200}
+            const move = {x: 398, y: 205}
 
             // move the anchor 50 to the right
             backend.simulateBeginDrag([sourceId], {
@@ -58,13 +57,12 @@ describe('Interface Components', function() {
                 getSourceClientOffset: () => ({x: 0, y: 0})
             })
 
-            // figure out the relative move
-            const relMove = relativePosition(move)
+            // figure out the move in the diagram coordinates
+            const expectedMove = fixPositionToGrid(relativePosition(move), store.getState().info.gridSize)
 
             // make sure the anchor was moved to the appropriate place
-            expect(store.getState().elements.anchors[1].x).to.equal(relMove.x)
-            expect(store.getState().elements.anchors[1].y).to.equal(relMove.y)
-
+            expect(store.getState().elements.anchors[1].x).to.equal(expectedMove.x)
+            expect(store.getState().elements.anchors[1].y).to.equal(expectedMove.y)
         })
     })
 })
