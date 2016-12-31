@@ -1,7 +1,7 @@
 // local imports
 import { createStore } from 'store'
 import { addAnchors } from 'actions/elements'
-import generateAnchorId from '../generateAnchorId'
+import { generateAnchorId } from '..'
 import range from '../range'
 
 describe('Utils', function() {
