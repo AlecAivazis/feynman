@@ -1,7 +1,7 @@
 // local imports
 import { createStore } from 'store'
 import reducer, { initialState } from '..'
-import { addAnchors, moveAnchors } from 'actions/elements'
+import { addAnchors, setAnchorLocations } from 'actions/elements'
 
 
 describe('Reducers', function() {
@@ -74,7 +74,7 @@ describe('Reducers', function() {
             expect(action).to.throw(Error)
         })
 
-        it('can move single anchor with MOVE_ANCHORS action', function() {
+        it('can move single anchor with SET_ANCHOR_LOCATIONS action', function() {
             console.log(initialAnchor)
             // the anchor to test
             const move = {
@@ -84,15 +84,14 @@ describe('Reducers', function() {
             }
 
             // add the propagator to the store
-            store.dispatch(moveAnchors(move))
-            console.log(initialAnchor)
+            store.dispatch(setAnchorLocations(move))
 
             // make sure the initial anchor has been moved in the right direction
-            expect(store.getState().elements.anchors[initialAnchor.id].x).to.equal(initialAnchor.x + move.x)
-            expect(store.getState().elements.anchors[initialAnchor.id].y).to.equal(initialAnchor.y + move.y)
+            expect(store.getState().elements.anchors[initialAnchor.id].x).to.equal(move.x)
+            expect(store.getState().elements.anchors[initialAnchor.id].y).to.equal(move.y)
         })
 
-        it('can move multiple anchors with MOVE_ANCHORS action', function() {
+        it('can move multiple anchors with SET_ANCHOR_LOCATIONS action', function() {
             const anchor = {
                 id: 2,
                 x: 50,
@@ -116,14 +115,14 @@ describe('Reducers', function() {
             ]
 
             // add the propagator to the store
-            store.dispatch(moveAnchors(...moves))
+            store.dispatch(setAnchorLocations(...moves))
 
             // make sure the initial anchor was moved in the right direction
-            expect(store.getState().elements.anchors[initialAnchor.id].x).to.equal(initialAnchor.x + moves[0].x)
-            expect(store.getState().elements.anchors[initialAnchor.id].y).to.equal(initialAnchor.y + moves[0].y)
+            expect(store.getState().elements.anchors[initialAnchor.id].x).to.equal(moves[0].x)
+            expect(store.getState().elements.anchors[initialAnchor.id].y).to.equal(moves[0].y)
             // make sure the new anchor was moved in the right direction
-            expect(store.getState().elements.anchors[anchor.id].x).to.equal(anchor.x + moves[1].x)
-            expect(store.getState().elements.anchors[anchor.id].y).to.equal(anchor.y + moves[1].y)
+            expect(store.getState().elements.anchors[anchor.id].x).to.equal(moves[1].x)
+            expect(store.getState().elements.anchors[anchor.id].y).to.equal(moves[1].y)
         })
     })
 })
