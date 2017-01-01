@@ -15,7 +15,6 @@ export const initialState = {
     showAnchors: true,
     showHistory: false,
     showHotkeys: true,
-    selected: []
 }
 
 // return the diagram reducer
