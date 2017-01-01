@@ -11,6 +11,7 @@ import { DraggableAnchor } from '..'
 import { createStore } from 'store'
 import { addAnchors } from 'actions/elements'
 import { relativePosition, fixPositionToGrid } from 'utils'
+import Anchor from '..'
 
 // a test component
 const Test = DragDropContext(TestBackend)(
@@ -63,6 +64,27 @@ describe('Interface Components', function() {
             // make sure the anchor was moved to the appropriate place
             expect(store.getState().elements.anchors[1].x).to.equal(expectedMove.x)
             expect(store.getState().elements.anchors[1].y).to.equal(expectedMove.y)
+        })
+
+        it('clicking on the anchor selects it', function() {
+                        // a store to test with
+            const store = createStore()
+            // add an anchor
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 50
+                }
+            ))
+            // mount the anchor/diagram combo
+            const wrapper = mount(<Test store={store} />)
+
+            // find the anchor and click it
+            wrapper.find(Anchor).simulate('click')
+
+            // make sure there is only one selected element
+            expect(store.getState().elements.selection).to.deep.equal([{type: 'anchors', id: 1}])
         })
     })
 })

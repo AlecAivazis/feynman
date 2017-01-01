@@ -8,6 +8,7 @@ import Propagator from './Propagator'
 import Anchor from './Anchor'
 import { propagatorsWithLocation } from './util'
 
+
 const Diagram = ({info, elements, style}) => {
     // figure out if we need to style to fit the grid or not
     const elementStyle = info.showGrid ? styles.containerWithGrid : styles.containerWithoutGrid

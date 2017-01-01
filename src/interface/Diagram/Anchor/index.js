@@ -6,7 +6,7 @@ import _ from 'lodash'
 // local imports
 import { relativePosition, fixPositionToGrid } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
-import { setAnchorLocations } from 'actions/elements'
+import { setAnchorLocations, selectElements } from 'actions/elements'
 import styles from './styles'
 import { anchorDragType } from '../constants'
 
@@ -35,11 +35,12 @@ class Anchor extends React.Component {
     }
 
     render() {
-        const { x, y, style, connectDragSource }  = this.props
+        const { x, y, style, dispatch, connectDragSource }  = this.props
 
         return connectDragSource(
             <circle
                 {...{...styles.container, ...style}}
+                onClick={this.props.selectAnchor}
                 cx={x}
                 cy={y}
                 r={5}
@@ -71,9 +72,10 @@ const dragSelector = (connect, monitor) => ({
 export const DraggableAnchor = DragSource(anchorDragType, dragSource, dragSelector)(Anchor)
 
 // the anchor will need
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     // to set its own location
-    setAnchorLocations: loc => dispatch(setAnchorLocations(loc))
+    setAnchorLocations: loc => dispatch(setAnchorLocations(loc)),
+    selectAnchor: () => dispatch(selectElements({type: 'anchors', id: props.id}))
 })
 // the anchor needs to know the grid size
 const mapStateToProps = ({info}) => ({info})
