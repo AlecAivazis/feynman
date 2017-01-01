@@ -52,10 +52,13 @@ class Anchor extends React.Component {
 // the definition of the drag type
 const dragSource = {
     // returns the data describing the dragged element
-    beginDrag(props) {
+    beginDrag({selectAnchor, id}) {
+        // select the anchor
+        selectAnchor()
+
         // for now, just hold onto the id
         return {
-            id: props.id
+            id: id
         }
     },
 }

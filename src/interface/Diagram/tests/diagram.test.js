@@ -192,7 +192,7 @@ describe('Interface Components', function() {
             const wrapper = mount(<Test store={store}/>)
 
             // click on the diagram
-            wrapper.find(Diagram).simulate('click')
+            wrapper.find(Diagram).simulate('mouseDown')
 
             // make sure the selection is clear
             expect(store.getState().elements.selection).to.have.length(0)

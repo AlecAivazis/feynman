@@ -9,7 +9,7 @@ import { sidebarWidth } from 'interface/Sidebar/styles'
 import Diagram from 'interface/Diagram'
 import { DraggableAnchor } from '..'
 import { createStore } from 'store'
-import { addAnchors } from 'actions/elements'
+import { addAnchors, selectElements } from 'actions/elements'
 import { relativePosition, fixPositionToGrid } from 'utils'
 import Anchor from '..'
 

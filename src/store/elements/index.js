@@ -25,7 +25,7 @@ export default (state = initialState, {type, payload}) => {
         local.selection = payload.map(selected => {
             // if there is no element by that type and id
             if (!state[selected.type][selected.id]) {
-                throw new Error(`Could not find ${payload.type} with id ${payload.id}`)
+                throw new Error(`Could not find ${selected.type} with id ${selected.id}`)
             }
             // pass this item through
             return selected
