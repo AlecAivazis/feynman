@@ -17,7 +17,6 @@ class App extends React.Component {
                 <Toolbar style={styles.overlay}/>
                 <Sidebar />
                 <Diagram />
-                <DevTools />
             </main>
         )
     }

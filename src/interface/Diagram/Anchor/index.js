@@ -35,12 +35,15 @@ class Anchor extends React.Component {
     }
 
     render() {
-        const { x, y, style, dispatch, connectDragSource }  = this.props
+        const { x, y, style, dispatch, connectDragSource, selected }  = this.props
+
+        // get any required styling
+        const styling = selected ? styles.selected : styles.notSelected
 
         return connectDragSource(
             <circle
-                {...{...styles.container, ...style}}
-                onClick={event => {event.preventDefault() ; this.props.selectAnchor()}}
+                {...{...styling, ...style}}
+                onMouseDown={event => {event.preventDefault() ; this.props.selectAnchor()}}
                 cx={x}
                 cy={y}
                 r={5}

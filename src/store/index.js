@@ -20,7 +20,7 @@ export const createStore = () => createReduxStore(
     compose(
         applyMiddleware(thunk),
         responsiveStoreEnhancer,
-        DevTools.instrument(),
+        // DevTools.instrument(),
     )
 )
 // create the store from the reducer

@@ -1,5 +1,8 @@
 export default {
-    container: {
+    selected: {
+        fill: 'blue',
+    },
+    notSelected: {
 
     }
 }

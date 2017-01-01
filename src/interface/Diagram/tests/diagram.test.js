@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 import TouchBackend from 'react-dnd-touch-backend'
 import { DragDropContext } from 'react-dnd'
+import _ from 'lodash'
 // local imports
 import { createStore } from 'store'
 import { toggleGrid, toggleAnchors, setGridSize } from 'actions/info'
@@ -196,6 +197,39 @@ describe('Interface Components', function() {
 
             // make sure the selection is clear
             expect(store.getState().elements.selection).to.have.length(0)
+        })
+
+        it('passes selected state onto the appropriate anchor components', function() {
+            // create a verion of the store
+            const store = createStore()
+
+            // add some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 50,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 1000,
+                }
+            ))
+
+            // select the element
+            store.dispatch(selectElements({type: 'anchors', id:1}))
+
+            // render the diagram in the wrapper
+            const wrapper = mount(<Test store={store}/>)
+
+            // find the anchor corresponding to the selected element
+            const anchor = wrapper.find(Anchor).findWhere(ele => {
+                return ele.name() === 'Anchor' && ele.props().id == 1
+            })
+
+            // make sure the anchor was told to render selected
+            expect(anchor.props().selected).to.be.true
         })
     })
 })

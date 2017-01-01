@@ -81,7 +81,7 @@ describe('Interface Components', function() {
             const wrapper = mount(<Test store={store} />)
 
             // find the anchor and click it
-            wrapper.find(Anchor).simulate('click')
+            wrapper.find(Anchor).simulate('mouseDown')
 
             // make sure there is only one selected element
             expect(store.getState().elements.selection).to.deep.equal([{type: 'anchors', id: 1}])
