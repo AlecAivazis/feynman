@@ -1,7 +1,7 @@
 // local imports
 import { createStore } from 'store'
 import reducer from '..'
-import { selectElements, addAnchors } from 'actions/elements'
+import { selectElements, addAnchors, clearSelection } from 'actions/elements'
 
 
 describe('Reducers', function() {
@@ -63,6 +63,34 @@ describe('Reducers', function() {
             const action = selectElements(...selection)
 
             expect(() => reducer(undefined, action)).to.throw(Error)
+        })
+
+        it('responds to the CLEAR_SELECTION action', function() {
+            // add some anchors
+            const addAction = addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                }
+            )
+            const actionState = reducer(undefined, addAction)
+            // add some anchors
+            const selectAction = selectElements(
+                {
+                    type: 'anchors',
+                    id: 1,
+                }
+            )
+            const state = reducer(actionState, selectAction)
+            // sanity check
+            expect(state.selection).to.have.length(1)
+
+            // clear the selection
+            const clearedState = reducer(state, clearSelection())
+
+            // make sure the selection is emtpy
+            expect(clearedState.selection).to.have.length(0)
         })
     })
 })

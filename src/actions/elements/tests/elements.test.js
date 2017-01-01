@@ -1,5 +1,8 @@
 // local imports
-import { selectElements, SELECT_ELEMENTS } from 'actions/elements'
+import {
+    selectElements, SELECT_ELEMENTS,
+    clearSelection, CLEAR_SELECTION,
+} from 'actions/elements'
 
 describe('Action Creators', function() {
     describe('Elements', function() {
@@ -35,6 +38,13 @@ describe('Action Creators', function() {
                 expect(selectElements(...selection)).to.deep.equal({
                     type: SELECT_ELEMENTS,
                     payload: selection
+                })
+            })
+
+            it('clears selection', function() {
+                // check the structure of the selection anction
+                expect(clearSelection()).to.deep.equal({
+                    type: CLEAR_SELECTION,
                 })
             })
         })

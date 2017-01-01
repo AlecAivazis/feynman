@@ -40,7 +40,7 @@ class Anchor extends React.Component {
         return connectDragSource(
             <circle
                 {...{...styles.container, ...style}}
-                onClick={this.props.selectAnchor}
+                onClick={event => {event.stopPropagation() ; this.props.selectAnchor()}}
                 cx={x}
                 cy={y}
                 r={5}

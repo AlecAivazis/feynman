@@ -7,9 +7,10 @@ import Grid from './Grid'
 import Propagator from './Propagator'
 import Anchor from './Anchor'
 import { propagatorsWithLocation } from './util'
+import { clearSelection } from 'actions/elements'
 
 
-const Diagram = ({info, elements, style}) => {
+const Diagram = ({info, elements, dispatch, style}) => {
     // figure out if we need to style to fit the grid or not
     const elementStyle = info.showGrid ? styles.containerWithGrid : styles.containerWithoutGrid
 
@@ -18,7 +19,7 @@ const Diagram = ({info, elements, style}) => {
 
     // render the various components of the diagram
     return (
-        <svg style={{...elementStyle, ...style}}>
+        <svg style={{...elementStyle, ...style}} onClick={() => dispatch(clearSelection())}>
             {info.showGrid && info.gridSize > 0 && <Grid/>}
             {propagators.map((element, i) => <Propagator {...element} key={i}/>)}
             {info.showAnchors && Object.values(elements.anchors).map(anchor => <Anchor {...anchor} key={anchor.id} />)}
