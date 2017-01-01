@@ -27,17 +27,15 @@ class Anchor extends React.Component {
         if (client.x !== store.x || client.y !== store.y) {
             // update the redux store
             this.props.setAnchorLocations({
-                id: this.props.id,
-                ...fixPositionToGrid(
-                    relativePosition(clientOffset),
-                    info.gridSize
-                ),
+                id: id,
+                // to match the user's cursor
+                ...client,
             })
         }
     }
 
     render() {
-        const { x, y, style, connectDragSource, clientOffset}  = this.props
+        const { x, y, style, connectDragSource }  = this.props
 
         return connectDragSource(
             <circle
