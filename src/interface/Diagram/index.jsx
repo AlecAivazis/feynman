@@ -9,6 +9,12 @@ import Anchor from './Anchor'
 import { propagatorsWithLocation } from './util'
 import { clearSelection } from 'actions/elements'
 
+const _handleClick = dispatch => (event) => {
+    // only fire for clicks originating on the diagram
+    if (event.target.nodeName === 'svg') {
+        dispatch(clearSelection())
+    }
+}
 
 const Diagram = ({info, elements, dispatch, style}) => {
     // figure out if we need to style to fit the grid or not
@@ -19,7 +25,7 @@ const Diagram = ({info, elements, dispatch, style}) => {
 
     // render the various components of the diagram
     return (
-        <svg style={{...elementStyle, ...style}} onMouseDown={() => dispatch(clearSelection())}>
+        <svg style={{...elementStyle, ...style}} onMouseDown={_handleClick(dispatch)}>
             {info.showGrid && info.gridSize > 0 && <Grid/>}
             {propagators.map((element, i) => <Propagator {...element} key={i}/>)}
             {info.showAnchors && Object.values(elements.anchors).map(anchor => <Anchor {...anchor} key={anchor.id} />)}
