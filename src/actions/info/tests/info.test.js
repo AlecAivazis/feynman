@@ -5,6 +5,7 @@ import {
     setGridSize, SET_GRID_SIZE,
     toggleHotkeys, TOGGLE_HOTKEYS,
     toggleAnchors, TOGGLE_ANCHORS,
+    selectElements, SELECT_ELEMENTS,
 } from 'actions/info'
 
 
