@@ -8,9 +8,7 @@ import SelectionSummary from './SelectionSummary'
 const Toolbar = ({style, selection, ...unusedProps}) => (
     <div style={{...styles.container, ...style}}>
         {selection.length > 0 && <SelectionSummary selection={selection}/>}
-        {selection.length == 0 && (
-            'empty'
-        )}
+        {selection.length == 0 && 'empty'}
     </div>
 )
 
