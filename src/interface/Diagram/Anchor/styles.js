@@ -1,6 +1,8 @@
+import { brightBlue } from 'colors'
+
 export default {
     selected: {
-        fill: 'blue',
+        fill: brightBlue,
     },
     notSelected: {
 
