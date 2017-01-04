@@ -2,6 +2,7 @@
 import {
     selectElements, SELECT_ELEMENTS,
     clearSelection, CLEAR_SELECTION,
+    mergeElements, MERGE_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -45,6 +46,13 @@ describe('Action Creators', function() {
                 // check the structure of the selection anction
                 expect(clearSelection()).to.deep.equal({
                     type: CLEAR_SELECTION,
+                })
+            })
+
+            it('merge elements', function() {
+                // just check the type of the action
+                expect(mergeElements()).to.deep.equal({
+                    type: MERGE_ELEMENTS,
                 })
             })
         })
