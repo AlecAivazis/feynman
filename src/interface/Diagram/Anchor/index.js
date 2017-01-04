@@ -4,9 +4,9 @@ import { DragSource } from 'react-dnd'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 // local imports
-import { relativePosition, fixPositionToGrid } from 'utils'
+import { relativePosition, fixPositionToGrid, generateAnchorId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
-import { setAnchorLocations, selectElements } from 'actions/elements'
+import { setAnchorLocations, selectElements, addAnchors, addPropagators } from 'actions/elements'
 import styles from './styles'
 import { anchorDragType } from '../constants'
 
@@ -40,13 +40,47 @@ class Anchor extends React.Component {
     _mouseDown(event){
         // don't bubble
         event.stopPropagation()
+
+        // grab used props
+        let { id, selectAnchor, state, addAnchor, addPropagator } = this.props
+
+        // if the drag started with the alt key
+        if (event.altKey) {
+            // we are going to create a new anchor
+
+            // first, we need an id for the anchor
+            // note: this will also make sure we are dragging the right one
+            id = generateAnchorId(state)
+
+            // figure out the current location for the anchor
+            const pos = fixPositionToGrid(relativePosition({
+                x: event.clientX,
+                y: event.clientY
+            }), state.info.gridSize)
+
+            // create the new anchor
+            addAnchor({
+                id,
+                ...pos,
+            })
+
+            // create a propagator linking the two anchors
+            addPropagator({
+                type: 'fermion',
+                anchor1: this.props.id,
+                anchor2: id,
+            })
+        }
+
+
         // track the state of the mouse
         this.setState({
-            mouseDown: true
+            mouseDown: true,
+            moveTarget: id
         })
 
-        // select the component
-        this.props.selectAnchor()
+        // select the appropriate component
+        selectAnchor(id)
     }
 
     _mouseMove(event) {
@@ -55,19 +89,19 @@ class Anchor extends React.Component {
         // if the mouse is down
         if (this.state.mouseDown) {
             // get the used props
-            const { id, info, x, y } = this.props
+            const { state, x, y } = this.props
 
             // get the relative position of the mouse
             const pos = fixPositionToGrid(relativePosition({
                 x: event.clientX,
                 y: event.clientY
-            }), info.gridSize)
+            }), state.info.gridSize)
 
             // if its different than our current location
             if (pos.x != x || pos.y != y) {
                 // update the anchor's location
                 this.props.setAnchorLocations({
-                    id,
+                    id: this.state.moveTarget,
                     ...pos,
                 })
             }
@@ -79,6 +113,7 @@ class Anchor extends React.Component {
         event.stopPropagation()
         // track the state of the mouse
         this.setState({
+            moveTarget: null,
             mouseDown: false
         })
     }
@@ -105,9 +140,14 @@ class Anchor extends React.Component {
 const mapDispatchToProps = (dispatch, props) => ({
     // to set its own location
     setAnchorLocations: loc => dispatch(setAnchorLocations(loc)),
-    selectAnchor: () => dispatch(selectElements({type: 'anchors', id: props.id}))
+    // select a given anchor
+    selectAnchor: (id=props.id) => dispatch(selectElements({type: 'anchors', id})),
+    // add new anchors to the diagram
+    addAnchor: anchor => dispatch(addAnchors(anchor)),
+    // add new propagators to the diagram
+    addPropagator: propagator => dispatch(addPropagators(propagator))
 })
 // the anchor needs to know the grid size
-const mapStateToProps = ({info}) => ({info})
+const mapStateToProps = (state) => ({state})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Anchor)

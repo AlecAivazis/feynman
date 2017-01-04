@@ -45,5 +45,24 @@ describe('Reducers', function() {
             // make sure the state matches expectation
             expect( () => store.dispatch(addPropagators(propagator))).to.throw(Error)
         })
+
+        it('barfs when adding a propagator with no type', function() {
+            // a store to test with
+            const store = createStore()
+            // add the anchors to the store
+            store.dispatch(addAnchors(
+                { id: 1, x: 50, y: 100},
+                { id: 2, x: 50, y: 100}
+            ))
+
+            // the configuration for the element to add to the reducer
+            const propagator = {
+                anchor1: 1,
+                anchor2: 2,
+            }
+
+            // make sure the state matches expectation
+            expect( () => store.dispatch(addPropagators(propagator))).to.throw(Error)
+        })
     })
 })

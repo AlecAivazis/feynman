@@ -11,6 +11,11 @@ export default (state, {type, payload}) => {
 
         // loop over every propagator we are supposed to add
         for (const propagator of payload) {
+            // if there is no type
+            if(!propagator.type) {
+                throw new Error("Could not add propagator without type")
+            }
+
             // if there is no anchor matching anchor1
             if (!anchors[propagator.anchor1]) {
                 throw new Error(`Could not attach propagator to anchor1 with id ${propagator.anchor1}`)
