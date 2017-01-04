@@ -1,7 +1,7 @@
 // local imports
 import { createStore } from 'store'
 import reducer from '..'
-import { selectElements, addAnchors, clearSelection } from 'actions/elements'
+import { selectElements, addAnchors, clearSelection, mergeElements } from 'actions/elements'
 
 
 describe('Reducers', function() {
@@ -91,6 +91,49 @@ describe('Reducers', function() {
 
             // make sure the selection is emtpy
             expect(clearedState.selection).to.have.length(0)
+        })
+
+        it('merges anchors that are located at the same location', function() {
+            // the location of the conflict
+            const coords = {
+                x: 50,
+                y: 50,
+            }
+            // start off with some anchors
+            const anchorState = reducer(undefined, addAnchors(
+                {
+                    id: 1,
+                    ...coords,
+                },
+                {
+                    id: 2,
+                    ...coords,
+                },
+                {
+                    id: 3,
+                    x: 300,
+                    y: 500,
+                }
+            ))
+
+            // tell the reducer to merge itself
+            const mergedState = reducer(anchorState, mergeElements())
+
+            // make sure there are only two anchors left
+            expect(mergedState.anchors).to.have.length(2)
+            // a list of anchors
+            const anchors = Object.values(mergedState.anchors)
+
+            // a utility to verify the identity of an anchor
+            const verify = loc => loc.x === coords.x && loc.y === coords.y
+
+            // if we couldn't verify either anchor
+            if (!verify(anchors[0]) && !verify(anchors[1])) {
+                // the test failed
+                throw new Error("Could not find matching anchor - was probaly not merged.")
+            }
+
+
         })
     })
 })
