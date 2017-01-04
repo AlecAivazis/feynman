@@ -6,7 +6,7 @@ import _ from 'lodash'
 // local imports
 import { relativePosition, fixPositionToGrid, generateAnchorId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
-import { setAnchorLocations, selectElements, addAnchors, addPropagators } from 'actions/elements'
+import { setAnchorLocations, selectElements, addAnchors, addPropagators, mergeElements } from 'actions/elements'
 import styles from './styles'
 import { anchorDragType } from '../constants'
 
@@ -33,8 +33,8 @@ class Anchor extends React.Component {
 
     componentWillUnmount() {
         // remove the listener
-        window.removeEventListener(this.moveListener)
-        window.removeEventListener(this.upListener)
+        window.removeEventListener('mousemove', this.moveListener)
+        window.removeEventListener('mouseup', this.upListener)
     }
 
     _mouseDown(event){
@@ -111,11 +111,19 @@ class Anchor extends React.Component {
     _mouseUp(event){
         // don't bubble
         event.stopPropagation()
-        // track the state of the mouse
-        this.setState({
-            moveTarget: null,
-            mouseDown: false
-        })
+        // if we were tracking the state of the mouse
+        if (this.state.mouseDown) {
+            // tell the store to clean up any overlapping elements
+            this.props.mergeElements(this.state.moveTarget)
+
+            // track the state of the mouse
+            this.setState({
+                // clear the drag target
+                moveTarget: null,
+                // we are no longer holding the mouse down
+                mouseDown: false
+            })
+        }
     }
 
     render() {
@@ -145,7 +153,10 @@ const mapDispatchToProps = (dispatch, props) => ({
     // add new anchors to the diagram
     addAnchor: anchor => dispatch(addAnchors(anchor)),
     // add new propagators to the diagram
-    addPropagator: propagator => dispatch(addPropagators(propagator))
+    addPropagator: propagator => dispatch(addPropagators(propagator)),
+    // tell the store to merge overlapping elements
+    mergeElements: id => dispatch(mergeElements(id))
+
 })
 // the anchor needs access to the diagram info and elements reducers
 const mapStateToProps = ({info, elements}) => ({info, elements})

@@ -51,8 +51,9 @@ describe('Action Creators', function() {
 
             it('merge elements', function() {
                 // just check the type of the action
-                expect(mergeElements()).to.deep.equal({
+                expect(mergeElements(1)).to.deep.equal({
                     type: MERGE_ELEMENTS,
+                    payload: 1,
                 })
             })
         })

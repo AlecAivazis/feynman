@@ -1,7 +1,13 @@
 // local imports
 import { createStore } from 'store'
 import reducer from '..'
-import { selectElements, addAnchors, clearSelection, mergeElements } from 'actions/elements'
+import {
+    selectElements,
+    addAnchors,
+    clearSelection,
+    mergeElements,
+    addPropagators
+} from 'actions/elements'
 
 
 describe('Reducers', function() {
@@ -117,23 +123,63 @@ describe('Reducers', function() {
             ))
 
             // tell the reducer to merge itself
-            const mergedState = reducer(anchorState, mergeElements())
+            const mergedState = reducer(anchorState, mergeElements(1))
 
             // make sure there are only two anchors left
-            expect(mergedState.anchors).to.have.length(2)
-            // a list of anchors
-            const anchors = Object.values(mergedState.anchors)
+            expect(Object.values(mergedState.anchors)).to.have.length(2)
 
-            // a utility to verify the identity of an anchor
-            const verify = loc => loc.x === coords.x && loc.y === coords.y
+            // make sure the first entry does not exist
+            expect(mergedState.anchors[2].x).to.equal(coords.x)
+            expect(mergedState.anchors[2].y).to.equal(coords.y)
+            // make sure the second is valid
+            expect(mergedState.anchors[1]).to.not.exist
+            // make sure the third was left untouched
+            expect(mergedState.anchors[3].x).to.equal(300)
+            expect(mergedState.anchors[3].y).to.equal(500)
+        })
 
-            // if we couldn't verify either anchor
-            if (!verify(anchors[0]) && !verify(anchors[1])) {
-                // the test failed
-                throw new Error("Could not find matching anchor - was probaly not merged.")
+        it('replaces anchor references when merging', function() {
+            // the location of the conflict
+            const coords = {
+                x: 50,
+                y: 50,
             }
 
+            // start off with some anchors
+            const anchorState = reducer(undefined, addAnchors(
+                {
+                    id: 1,
+                    ...coords,
+                },
+                {
+                    id: 2,
+                    ...coords,
+                },
+                {
+                    id: 3,
+                    x: 300,
+                    y: 500,
+                }
+            ))
 
+            // add a propagator
+            const propagatorState = reducer(anchorState, addPropagators(
+                {
+                    type: 'fermion',
+                    anchor1: 2,
+                    anchor2: 3
+                }
+            ))
+
+            // tell the store to merge elements onto anchor 1
+            const mergedState = reducer(propagatorState, mergeElements(1))
+
+            // since that should replace anchor 1, the propagotr's anchor1 value should be 2
+            expect(mergedState.propagators[0].anchor1).to.equal(2)
         })
+
+        it('barfs if merging onto an undefined id')
+
+        it('barfs if merging onto a non-existant id')
     })
 })
