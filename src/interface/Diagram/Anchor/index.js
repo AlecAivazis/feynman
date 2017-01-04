@@ -42,7 +42,7 @@ class Anchor extends React.Component {
         event.stopPropagation()
 
         // grab used props
-        let { id, selectAnchor, state, addAnchor, addPropagator } = this.props
+        let { id, selectAnchor, info, elements, addAnchor, addPropagator } = this.props
 
         // if the drag started with the alt key
         if (event.altKey) {
@@ -50,13 +50,13 @@ class Anchor extends React.Component {
 
             // first, we need an id for the anchor
             // note: this will also make sure we are dragging the right one
-            id = generateAnchorId(state)
+            id = generateAnchorId(elements.anchors)
 
             // figure out the current location for the anchor
             const pos = fixPositionToGrid(relativePosition({
                 x: event.clientX,
                 y: event.clientY
-            }), state.info.gridSize)
+            }), info.gridSize)
 
             // create the new anchor
             addAnchor({
@@ -72,10 +72,10 @@ class Anchor extends React.Component {
             })
         }
 
-
-        // track the state of the mouse
         this.setState({
+            // track the state of the mouse
             mouseDown: true,
+            // make sure we are dragging the right element
             moveTarget: id
         })
 
@@ -89,13 +89,13 @@ class Anchor extends React.Component {
         // if the mouse is down
         if (this.state.mouseDown) {
             // get the used props
-            const { state, x, y } = this.props
+            const { info, x, y } = this.props
 
             // get the relative position of the mouse
             const pos = fixPositionToGrid(relativePosition({
                 x: event.clientX,
                 y: event.clientY
-            }), state.info.gridSize)
+            }), info.gridSize)
 
             // if its different than our current location
             if (pos.x != x || pos.y != y) {
@@ -147,7 +147,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     // add new propagators to the diagram
     addPropagator: propagator => dispatch(addPropagators(propagator))
 })
-// the anchor needs to know the grid size
-const mapStateToProps = (state) => ({state})
+// the anchor needs access to the diagram info and elements reducers
+const mapStateToProps = ({info, elements}) => ({info, elements})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Anchor)

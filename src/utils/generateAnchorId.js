@@ -1,14 +1,11 @@
 import range from './range'
 
 // this function returns a unique id for an anchor from the given store
-const generateAnchorId = state => {
-    // the list of known anchor id
-    const anchors = Object.keys(state.elements.anchors)
-
+const generateAnchorId = anchors => {
     // create our first candidate
     let candidate = Math.floor(Math.random() * 10000)
     // while there is still a conflict
-    while (anchors.includes(candidate)) {
+    while (anchors[candidate]) {
         // generate another random id
         candidate = Math.floor(Math.random() * 10000)
     }
@@ -18,18 +15,18 @@ const generateAnchorId = state => {
     return candidate
 }
 
-const generateMultipleAnchorIds = (state, n=1) => {
+const generateMultipleAnchorIds = (anchors, n=1) => {
     // the list of ids
     const ids = []
 
     // generate the right number of ids
     for (const i of range(n)) {
         // create a candidate
-        let candidate = generateAnchorId(state)
+        let candidate = generateAnchorId(anchors)
         // while there is a conflict with ids we've already generated
         while (ids.includes(candidate)) {
             // generate a new id
-            candidate = generateAnchorId(state)
+            candidate = generateAnchorId(anchors)
         }
         // the candidate is garunteed unique, add it to the list
         ids.push(candidate)

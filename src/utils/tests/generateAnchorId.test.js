@@ -8,12 +8,12 @@ describe('Utils', function() {
     describe('Generate Anchor Id Util', function() {
         it('can generate a unique id from an empty state', function() {
             // create a store to test with
-            const state = createStore().getState()
+            const { anchors } = createStore().getState().elements
             // generate an id for the anchor
-            const id = generateAnchorId(state)
+            const id = generateAnchorId(anchors)
 
             // make sure the id is not taken
-            expect(state.elements.anchors[id]).to.not.exist
+            expect(anchors[id]).to.not.exist
         })
 
         it('can generate a non-conflicting id with a non-empty state', function() {
@@ -21,7 +21,7 @@ describe('Utils', function() {
             const store = createStore()
 
             // generate a set of 1000 anchors
-            const anchors = range(1000).map(() => ({
+            const testAnchors = range(1000).map(() => ({
                 // with a random id
                 id: Math.random() * 10000,
                 x: 50,
@@ -29,14 +29,14 @@ describe('Utils', function() {
             }))
 
             // add an anchor to the state
-            store.dispatch(addAnchors(...anchors))
-            const state = store.getState()
+            store.dispatch(addAnchors(...testAnchors))
+            const { anchors } = store.getState().elements
 
             // generate an id for the anchor
-            const id = generateAnchorId(state)
+            const id = generateAnchorId(anchors)
 
             // make sure the id is not taken
-            expect(state.elements.anchors[id]).to.not.exist
+            expect(anchors[id]).to.not.exist
         })
 
         it('can generate multiple unique ids', function() {
