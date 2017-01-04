@@ -2,7 +2,7 @@
 import { createStore } from 'store'
 import reducer, { initialState } from '..'
 import { addAnchors, setAnchorLocations } from 'actions/elements'
-
+import { noIdErr } from '../anchors'
 
 describe('Reducers', function() {
 
@@ -146,8 +146,17 @@ describe('Reducers', function() {
             // make sure the other anchor was left unmodified
             expect(store.getState().elements.anchors[anchor.id].x).to.equal(anchor.x)
             expect(store.getState().elements.anchors[anchor.id].y).to.equal(anchor.y)
+        })
 
+        it('barfs if moving with no id', function() {
+            // the move to test
+            const move = {
+                x: 50,
+                y: 100,
+            }
 
+            // add the propagator to the store
+            expect(() => store.dispatch(setAnchorLocations(move))).to.throw(Error, noIdErr)
         })
     })
 })

@@ -30,6 +30,7 @@ const Test = DragDropContext(TestBackend)(
 describe('Interface Components', function() {
     describe('Anchor', function() {
         it('updates the appropriate entry in the store when dragged (snaps to grid)', function() {
+            this.skip()
             // a store to test with
             const store = createStore()
             // add an anchor

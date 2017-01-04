@@ -3,6 +3,8 @@ import _ from 'lodash'
 // local imports
 import { ADD_ANCHORS, SET_ANCHOR_LOCATIONS } from 'actions/elements'
 
+export const noIdErr = "cannot set location of anchor without explicit id"
+
 // the reducer that manages just the propagator state but has reference
 // to the entire element state reducer (must return just the propagator slice)
 export default (state, {type, payload}) => {
@@ -32,7 +34,11 @@ export default (state, {type, payload}) => {
         const local = _.cloneDeep(state.anchors)
 
         // the payload is a list of move orders
-        for (const {id, x, y} of payload) {
+        for (const {id=false, x, y} of payload) {
+            // if there is no id
+            if (!id) {
+                throw new Error(noIdErr)
+            }
             // add the x value to the current position of the appropriate anchor
             local[id].x = x
             local[id].y = y

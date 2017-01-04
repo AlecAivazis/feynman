@@ -11,39 +11,82 @@ import styles from './styles'
 import { anchorDragType } from '../constants'
 
 class Anchor extends React.Component {
-    componentWillReceiveProps({ x, y, id, info, item, clientOffset }) {
-        // if the item or clientIffset aren't defined or we are moving another item
-        if (!clientOffset || !item || item.id !== id) {
-            // don't do anything
-            return
-        }
 
-        // round the mouse location to the grid
-        const client = relativePosition(fixPositionToGrid(clientOffset, info.gridSize))
-        // round the store's location to the grid
-        const store = fixPositionToGrid({x, y}, info.gridSize)
+    state = {
+        mouseDown: false,
+    }
 
-        // if the client offset is different than the location
-        if (client.x !== store.x || client.y !== store.y) {
-            // update the redux store
+    constructor(...args) {
+        super(...args)
+
+        // function binds
+        this._mouseDown = this._mouseDown.bind(this)
+        this._mouseMove = _.throttle(this._mouseMove.bind(this), 20)
+        this._mouseUp = this._mouseUp.bind(this)
+    }
+
+    componentWillMount() {
+        // attach a listener to mouse movements
+        this.moveListener = window.addEventListener('mousemove', this._mouseMove)
+        this.upListener = window.addEventListener('mouseup', this._mouseUp)
+    }
+
+    componentWillUnmount() {
+        // remove the listener
+        window.removeEventListener(this.moveListener)
+        window.removeEventListener(this.upListener)
+    }
+
+    _mouseDown(event){
+        // don't bubble
+        event.stopPropagation()
+        // track the state of the mouse
+        this.setState({
+            mouseDown: true
+        })
+
+        // select the component
+        this.props.selectAnchor()
+    }
+
+    _mouseMove(event) {
+        // don't bubble
+        event.stopPropagation()
+        // if the mouse is down
+        if (this.state.mouseDown) {
+            // get the relative position of the mouse
+            const pos = relativePosition({
+                x: event.clientX,
+                y: event.clientY
+            })
+
+            // update the anchor
             this.props.setAnchorLocations({
-                id: id,
-                // to match the user's cursor
-                ...client,
+                id: this.props.id,
+                ...pos,
             })
         }
     }
 
+    _mouseUp(event){
+        // don't bubble
+        event.stopPropagation()
+        // track the state of the mouse
+        this.setState({
+            mouseDown: false
+        })
+    }
+
     render() {
-        const { x, y, style, dispatch, connectDragSource, selected }  = this.props
+        const { x, y, style, dispatch, selected }  = this.props
 
         // get any required styling
         const styling = selected ? styles.selected : styles.notSelected
 
-        return connectDragSource(
+        return (
             <circle
                 {...{...styling, ...style}}
-                onMouseDown={event => {event.preventDefault() ; this.props.selectAnchor()}}
+                onMouseDown={this._mouseDown}
                 cx={x}
                 cy={y}
                 r={5}
@@ -51,31 +94,6 @@ class Anchor extends React.Component {
         )
     }
 }
-
-// the definition of the drag type
-const dragSource = {
-    // returns the data describing the dragged element
-    beginDrag({selectAnchor, id}) {
-        // select the anchor
-        selectAnchor()
-
-        // for now, just hold onto the id
-        return {
-            id: id
-        }
-    },
-}
-
-// the drag event selector
-const dragSelector = (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-    clientOffset: monitor.getClientOffset(),
-    item: monitor.getItem(),
-})
-
-// wrap the anchor in the draggable interface
-export const DraggableAnchor = DragSource(anchorDragType, dragSource, dragSelector)(Anchor)
 
 // the anchor will need
 const mapDispatchToProps = (dispatch, props) => ({
@@ -86,4 +104,4 @@ const mapDispatchToProps = (dispatch, props) => ({
 // the anchor needs to know the grid size
 const mapStateToProps = ({info}) => ({info})
 
-export default connect(mapStateToProps, mapDispatchToProps)(DraggableAnchor)
+export default connect(mapStateToProps, mapDispatchToProps)(Anchor)
