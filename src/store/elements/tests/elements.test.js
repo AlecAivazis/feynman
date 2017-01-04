@@ -178,8 +178,12 @@ describe('Reducers', function() {
             expect(mergedState.propagators[0].anchor1).to.equal(2)
         })
 
-        it('barfs if merging onto an undefined id')
+        it('barfs if merging onto an undefined id', function() {
+            expect(() => reducer(undefined, mergeElements(undefined))).to.throw(Error)
+        })
 
-        it('barfs if merging onto a non-existant id')
+        it('barfs if merging onto a non-existant id', function() {
+            expect(() => reducer(undefined, mergeElements(1))).to.throw(Error)
+        })
     })
 })

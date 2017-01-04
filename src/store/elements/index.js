@@ -54,6 +54,11 @@ export default (state = initialState, {type, payload}) => {
         const local = _.cloneDeep(state)
         const source = local.anchors[sourceId]
 
+        // if the payload is undefined or there isn't an anchor with that id
+        if (!source) {
+            throw new Error(`Could not find anchor with id ${sourceId}`)
+        }
+
         // a list of duplicated elements
         const dupes = []
 
