@@ -54,17 +54,23 @@ class Anchor extends React.Component {
         event.stopPropagation()
         // if the mouse is down
         if (this.state.mouseDown) {
+            // get the used props
+            const { id, info, x, y } = this.props
+
             // get the relative position of the mouse
-            const pos = relativePosition({
+            const pos = fixPositionToGrid(relativePosition({
                 x: event.clientX,
                 y: event.clientY
-            })
+            }), info.gridSize)
 
-            // update the anchor
-            this.props.setAnchorLocations({
-                id: this.props.id,
-                ...pos,
-            })
+            // if its different than our current location
+            if (pos.x != x || pos.y != y) {
+                // update the anchor's location
+                this.props.setAnchorLocations({
+                    id,
+                    ...pos,
+                })
+            }
         }
     }
 
