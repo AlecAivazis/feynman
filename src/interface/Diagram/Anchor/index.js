@@ -10,6 +10,12 @@ import { setAnchorLocations, selectElements, addAnchors, addPropagators, mergeEl
 import styles from './styles'
 import { anchorDragType } from '../constants'
 
+export const defaultConfig = {
+    r: 5,
+    fill: 'black',
+    fixed: false,
+}
+
 class Anchor extends React.Component {
 
     state = {
@@ -127,18 +133,28 @@ class Anchor extends React.Component {
     }
 
     render() {
-        const { x, y, style, dispatch, selected }  = this.props
+        const {
+            x,
+            y,
+            dispatch,
+            selected,
+            r=defaultConfig.r,
+            fill=defaultConfig.fill,
+            fixed=defaultConfig.fixed,
+        }  = this.props
 
         // get any required styling
         const styling = selected ? styles.selected : styles.notSelected
+        // if
 
         return (
             <circle
-                {...{...styling, ...style}}
                 onMouseDown={this._mouseDown}
                 cx={x}
                 cy={y}
-                r={5}
+                r={r}
+                fill={fill}
+                {...styling}
             />
         )
     }
