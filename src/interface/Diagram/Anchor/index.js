@@ -10,13 +10,14 @@ import { setAnchorLocations, selectElements, addAnchors, addPropagators, mergeEl
 import styles from './styles'
 import { anchorDragType } from '../constants'
 
-export const defaultConfig = {
-    r: 5,
-    fill: 'black',
-    fixed: false,
-}
 
-class Anchor extends React.Component {
+export class Anchor extends React.Component {
+
+    static defaultProps = {
+        r: 5,
+        fill: 'black',
+        fixed: false,
+    }
 
     state = {
         mouseDown: false,
@@ -138,9 +139,9 @@ class Anchor extends React.Component {
             y,
             dispatch,
             selected,
-            r=defaultConfig.r,
-            fill=defaultConfig.fill,
-            fixed=defaultConfig.fixed,
+            r,
+            fill,
+            fixed,
         }  = this.props
 
         // get any required styling

@@ -11,7 +11,7 @@ import { DraggableAnchor } from '..'
 import { createStore } from 'store'
 import { addAnchors, selectElements } from 'actions/elements'
 import { relativePosition, fixPositionToGrid } from 'utils'
-import Anchor, { defaultConfig } from '..'
+import ConnectedAnchor, { Anchor } from '..'
 
 // a test component
 const Test = DragDropContext(TestBackend)(
@@ -82,7 +82,7 @@ describe('Interface Components', function() {
             const wrapper = mount(<Test store={store} />)
 
             // find the anchor and click it
-            wrapper.find(Anchor).simulate('mouseDown')
+            wrapper.find(ConnectedAnchor).simulate('mouseDown')
 
             // make sure there is only one selected element
             expect(store.getState().elements.selection).to.deep.equal([{type: 'anchors', id: 1}])
@@ -106,6 +106,9 @@ describe('Interface Components', function() {
             const anchor = wrapper.find('circle')
             // save a reference to its props
             const props = anchor.props()
+
+            // the default config
+            const defaultConfig = Anchor.defaultProps
 
             // go over each default configuration
             for (const config of Object.keys(defaultConfig)) {
