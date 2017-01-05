@@ -8,6 +8,7 @@ export default {
     line: {
         textAlign: 'center',
         marginBottom: 15,
+        lineHeight: 1.4,
     },
     link: {
         color: lightestBlue,
