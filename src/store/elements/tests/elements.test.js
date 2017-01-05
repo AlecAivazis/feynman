@@ -6,7 +6,8 @@ import {
     addAnchors,
     clearSelection,
     mergeElements,
-    addPropagators
+    addPropagators,
+    setElementAttrs
 } from 'actions/elements'
 
 
@@ -109,6 +110,66 @@ describe('Reducers', function() {
                 const val = reducer(undefined, {type: "init"})
                 // expect the default initial state
                 expect(val).to.exist
+            })
+        })
+
+        describe('Update Elements', function() {
+
+            it('responds to the SET_ELEMENT_ATTRS action', function() {
+                // add some anchors to a store
+                const initialState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    }
+                ))
+
+                // the action to update the initial state
+                const updatedState = reducer(initialState, setElementAttrs({
+                    type: 'anchors',
+                    id: 1,
+                    x: 100
+                }))
+
+                // make sure the appropriate anchor was updated
+                expect(updatedState.anchors[1].x).to.equal(100)
+            })
+
+            it('barfs if there is no id given', function() {
+                // the invalid action
+                const action = setElementAttrs({
+                    type: 'foo',
+                    x: 5
+                })
+                // make sure it throw an error
+                expect(() => reducer(undefined, action)).to.throw(Error)
+            })
+
+            it('barfs if there is no type given', function() {
+                // the invalid action
+                const action = setElementAttrs({
+                    id: 1,
+                    x: 5
+                })
+                // make sure it throw an error
+                expect(() => reducer(undefined, action)).to.throw(Error)
+            })
+
+            it('barfs if appropriate element cannot be found', function() {
+                // the invalid action
+                const action = setElementAttrs({
+                    type: 'foo',
+                    id: 1,
+                    x: 5
+                })
+                // make sure it throw an error
+                expect(() => reducer(undefined, action)).to.throw(Error)
             })
         })
 

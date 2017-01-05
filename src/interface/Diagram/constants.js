@@ -1,1 +1,0 @@
-export const anchorDragType = "@feynman/drag-anchor"

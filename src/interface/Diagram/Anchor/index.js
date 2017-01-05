@@ -6,9 +6,8 @@ import _ from 'lodash'
 // local imports
 import { relativePosition, fixPositionToGrid, generateAnchorId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
-import { setAnchorLocations, selectElements, addAnchors, addPropagators, mergeElements } from 'actions/elements'
+import { setElementAttrs, selectElements, addAnchors, addPropagators, mergeElements } from 'actions/elements'
 import styles from './styles'
-import { anchorDragType } from '../constants'
 
 
 export class Anchor extends React.Component {
@@ -145,8 +144,9 @@ export class Anchor extends React.Component {
         }  = this.props
 
         // get any required styling
-        const styling = selected ? styles.selected : styles.notSelected
-        // if
+        let styling = selected ? styles.selected : styles.notSelected
+        // if the anchor is fixed, mixin the fixed with
+        styling = fixed ? {...styling, ...styles.fixed} : styling
 
         return (
             <circle
@@ -164,7 +164,7 @@ export class Anchor extends React.Component {
 // the anchor will need
 const mapDispatchToProps = (dispatch, props) => ({
     // to set its own location
-    setAnchorLocations: loc => dispatch(setAnchorLocations(loc)),
+    setAnchorLocations: ({id, x, y}) => dispatch(setElementAttrs({type: 'anchors', id, x, y})),
     // select a given anchor
     selectAnchor: (id=props.id) => dispatch(selectElements({type: 'anchors', id})),
     // add new anchors to the diagram

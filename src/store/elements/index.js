@@ -4,7 +4,7 @@ import _ from 'lodash'
 import propagatorsPartial from './propagators'
 import anchorsPartial from './anchors'
 import selectionPartial from './selection'
-import { MERGE_ELEMENTS } from 'actions/elements'
+import { MERGE_ELEMENTS, SET_ELEMENT_ATTRS } from 'actions/elements'
 
 // the initial state of elements
 export const initialState = {
@@ -64,6 +64,25 @@ export default (state = initialState, {type, payload}) => {
         }
 
         // return the new state
+        return local
+    }
+
+    // if the payload represents updates in various element attributes
+    if (type === SET_ELEMENT_ATTRS) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+        // go through each mutation
+        for (const {type, id, ...attrs} of payload) {
+            // save a reference to the entry we are going to update
+            const target = local[type][id]
+            // update the appropriate element with the new attrs
+            local[type][id] = {
+                ...target,
+                ...attrs
+            }
+        }
+
+        // return the local copy
         return local
     }
 
