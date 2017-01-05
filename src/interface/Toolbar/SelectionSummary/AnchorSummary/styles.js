@@ -1,5 +1,8 @@
 export default {
     container: {
-        background: 'rgba(184, 184, 184, 0.45)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        flexGrow: 1,
     }
 }
