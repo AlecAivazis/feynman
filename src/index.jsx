@@ -24,7 +24,7 @@ store.dispatch(addAnchors(
 
 store.dispatch(addPropagators(
     {
-        type: 'em',
+        type: 'fermion',
         anchor1: 1,
         anchor2: 2,
     }

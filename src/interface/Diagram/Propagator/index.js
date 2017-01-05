@@ -19,4 +19,9 @@ const Propagator = ({type, ...element}) => {
     return <Component {...element} />
 }
 
+Propagator.defaultProps = {
+    strokeWidth: 2,
+    stroke: 'black',
+}
+
 export default Propagator
