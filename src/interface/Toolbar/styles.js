@@ -8,5 +8,7 @@ export default {
         height: '100%',
         display: 'flex',
         backgroundColor: 'rgba(50,50,50,0.65)',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     }
 }

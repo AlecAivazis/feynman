@@ -7,6 +7,7 @@ import { createStore } from 'store'
 import { addAnchors, selectElements } from 'actions/elements'
 import Toolbar from '..'
 import SelectionSummary from '../SelectionSummary'
+import ItemPalette from '../ItemPalette'
 
 describe('Interface Components', function() {
     describe('Toolbar', function() {
@@ -40,6 +41,20 @@ describe('Interface Components', function() {
 
             // expect there to be an anchor summary
             expect(wrapper.find(SelectionSummary)).to.have.length(1)
+        })
+
+        it('shows the item palette when there is no selection', function() {
+            // a store to test with
+            const store = createStore()
+            // render the toolbar
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Toolbar/>
+                </Provider>
+            )
+
+            // there should be an item palette showing
+            expect(wrapper.find(ItemPalette)).to.have.length(1)
         })
     })
 })
