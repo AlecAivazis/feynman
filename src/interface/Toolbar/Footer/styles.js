@@ -1,4 +1,4 @@
-import { brightBlue } from 'colors'
+import { lightestBlue } from 'colors'
 
 export default {
     container: {
@@ -10,7 +10,8 @@ export default {
         marginBottom: 15,
     },
     link: {
-        color: brightBlue,
+        color: lightestBlue,
         marginLeft: 5,
+        textDecoration: 'none',
     }
 }
