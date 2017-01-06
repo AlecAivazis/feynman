@@ -2,8 +2,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
-import TouchBackend from 'react-dnd-touch-backend'
-import { DragDropContext } from 'react-dnd'
 import _ from 'lodash'
 // local imports
 import { createStore } from 'store'
@@ -17,17 +15,10 @@ import Anchor from '../Anchor'
 
 
 // a diagram wrapped in the right context
-const Test = DragDropContext(TouchBackend)(
-    React.createClass({
-        render() {
-            return (
-                <Provider store={this.props.store}>
-                    <Diagram/>
-                </Provider>
-            )
-        }
-    })
-
+const Test = (props) => (
+     <Provider {...props}>
+        <Diagram/>
+    </Provider>
 )
 
 describe('Interface Components', function() {

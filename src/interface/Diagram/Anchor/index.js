@@ -1,6 +1,5 @@
 // external imports
 import React from 'react'
-import { DragSource } from 'react-dnd'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 // local imports

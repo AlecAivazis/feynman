@@ -1,7 +1,5 @@
 // external imports
 import React from 'react'
-import TestBackend from 'react-dnd-test-backend'
-import { DragDropContext } from 'react-dnd'
 import { mount } from 'enzyme'
 import { Provider } from 'react-redux'
 // local imports
@@ -14,16 +12,10 @@ import { relativePosition, fixPositionToGrid } from 'utils'
 import ConnectedAnchor, { Anchor } from '..'
 
 // a test component
-const Test = DragDropContext(TestBackend)(
-    React.createClass({
-      render: function () {
-        return (
-            <Provider store={this.props.store}>
-                <Diagram/>
-            </Provider>
-        )
-      }
-    })
+const Test = (props) =>(
+    <Provider {...props}>
+        <Diagram/>
+    </Provider>
 )
 
 
