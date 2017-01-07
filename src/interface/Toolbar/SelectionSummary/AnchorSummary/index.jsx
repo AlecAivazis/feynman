@@ -72,7 +72,13 @@ const AnchorSummary = ({
                 </div>
             )}
 
+
             {/* multiple anchor actions only */}
+
+            {anchors.length > 1 && (
+                null
+            )}
+
 
             {/* make sure delete is at the end */}
 
