@@ -67,7 +67,6 @@ export default (state = initialState, {type, payload}) => {
 
             // if we are supposed to select the resulting element
             if (select) {
-                console.log('focusing on an element')
                 // use the mergeTarget as the only selection
                 local.selection = [{type: 'anchors', id: mergeTarget}]
             }
@@ -103,28 +102,23 @@ export default (state = initialState, {type, payload}) => {
         // go over every delete order
         for (const {id, type} of payload) {
             // if there is an element with that id
-            if (local[type][id]) {
-                // remove it
-                Reflect.deleteProperty(local[type], id)
-                // if the element is an anchor
-                if (type === 'anchors') {
-                    console.log(id)
-                    console.log(local.propagators)
-                    // we have to find any propagators that are associated with this anchor
-                    for (const [i, entry] of local.propagators.entries()) {
-                        console.log(entry)
-                        // if either anchor has an id matching the anchor we removed
-                        if(entry === id || entry === id) {
-                            console.log('found propagator to remove', i)
-                            // we have to remove the element from the propagators
-                            local.propagators.slice(i, 1)
-                        }
-                    }
-                    console.log(local.propagators)
-                }
-            // otherwise we can't identify the element
-            } else {
+            if (!local[type] || !local[type][id]) {
                 throw new Error(`Can't find ${type} with id ${id}`)
+            }
+
+            // remove it
+            Reflect.deleteProperty(local[type], id)
+
+            // if the element is an anchor
+            if (type === 'anchors') {
+                // we have to find any propagators that are associated with this anchor
+                for (const [i, {anchor1, anchor2}] of local.propagators.entries()) {
+                    // if either anchor has an id matching the anchor we removed
+                    if(anchor1 === id || anchor2 === id) {
+                        // we have to remove the element from the propagators
+                        local.propagators.splice(i, 1)
+                    }
+                }
             }
         }
 
