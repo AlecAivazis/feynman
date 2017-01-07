@@ -19,6 +19,7 @@ export default {
         flexDirection: 'column',
         flexGrow: 1,
         width: '100%',
+        marginBottom: 10,
     },
     value: {
         color: 'white',
@@ -28,8 +29,16 @@ export default {
         fontSize: 14,
     },
     sliderRow: {
-        padding: '0 29px',
+        padding: '0 30px',
         minHeight: 'none',
         marginBottom: 0,
+    },
+    buttonRow: {
+        marginTop: 5,
+        justifyContent: 'center',
+    },
+    deleteButton: {
+        display: 'flex',
+        alignSelf: 'center',
     }
 }

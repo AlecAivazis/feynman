@@ -6,7 +6,7 @@ import { SketchPicker } from 'react-color'
 import styles from './styles'
 import Header from '../Header'
 import Label from '../Label'
-import { ColorPicker, Slider } from 'components'
+import { ColorPicker, Slider, Button } from 'components'
 import { setElementAttrs, deleteElements } from 'actions/elements'
 
 const AnchorSummary = ({ style, anchors, setAttrs, elements, deleteAnchors, ...unusedProps }) => {
@@ -44,9 +44,11 @@ const AnchorSummary = ({ style, anchors, setAttrs, elements, deleteAnchors, ...u
                         onChange={r => setAttrs({r})}
                     />
                 </div>
-                <span onClick={deleteAnchors}>
-                    delete
-                </span>
+            </div>
+            <div style={{...styles.row, ...styles.buttonRow}}>
+                <Button onClick={deleteAnchors} style={styles.deleteButton}>
+                    delete anchors
+                </Button>
             </div>
         </div>
     )

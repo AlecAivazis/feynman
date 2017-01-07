@@ -101,33 +101,27 @@ export default (state = initialState, {type, payload}) => {
         const local = _.cloneDeep(state)
         // go over every delete order
         for (const {id, type} of payload) {
+
             // if there is an element with that id
             if (!local[type] || !local[type][id]) {
                 throw new Error(`Can't find ${type} with id ${id}`)
             }
 
-            // remove it
+            // remove the original
             Reflect.deleteProperty(local[type], id)
 
-            // the selections of the appropriate type
-            const selected = local.selection[type]
-
-            // if the element is currently selected
-            if (selected && selected.includes(id)) {
-                // remove the element from the selection
-                selected.splice(selected.indexOf(id), 1)
+            // if we have a selection of this type
+            if (local.selection[type]) {
+                // remove the id from the selection
+                local.selection[type] = local.selection[type].filter(i => i !== id)
             }
 
             // if the element is an anchor
             if (type === 'anchors') {
-                // we have to find any propagators that are associated with this anchor
-                for (const [i, {anchor1, anchor2}] of local.propagators.entries()) {
-                    // if either anchor has an id matching the anchor we removed
-                    if(anchor1 === id || anchor2 === id) {
-                        // we have to remove the element from the propagators
-                        local.propagators.splice(i, 1)
-                    }
-                }
+                // only save keep the propagators that don't refer to the anchor
+                local.propagators = local.propagators.filter(
+                    ({anchor1, anchor2}) => anchor1 !== id && anchor2 !== id
+                )
             }
         }
 
