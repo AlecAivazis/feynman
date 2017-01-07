@@ -289,6 +289,37 @@ describe('Reducers', function() {
                 // make sure there are no propagators left
                 expect(deletedState.propagators).to.have.length(1)
             })
+
+            it('deleting a selcted object deselects it', function() {
+                // add some anchors to a store to start
+                const initialState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 200,
+                    },
+                ))
+
+                // select the element
+                const selectedState = reducer(initialState, selectElements(
+                    {type: 'anchors', id: 1},
+                    {type: 'anchors', id: 2},
+                ))
+
+                // sanity check
+                expect(selectedState.selection.anchors).to.have.length(2)
+
+                // delete the element
+                const deletedState = reducer(selectedState, deleteElements({type: 'anchors', id: 1}))
+
+                // make sure there that there one element selected
+                expect(deletedState.selection.anchors).to.deep.equal([2])
+            })
         })
 
 

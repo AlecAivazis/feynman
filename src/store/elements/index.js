@@ -109,6 +109,15 @@ export default (state = initialState, {type, payload}) => {
             // remove it
             Reflect.deleteProperty(local[type], id)
 
+            // the selections of the appropriate type
+            const selected = local.selection[type]
+
+            // if the element is currently selected
+            if (selected && selected.includes(id)) {
+                // remove the element from the selection
+                selected.splice(selected.indexOf(id), 1)
+            }
+
             // if the element is an anchor
             if (type === 'anchors') {
                 // we have to find any propagators that are associated with this anchor
