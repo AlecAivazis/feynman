@@ -5,5 +5,6 @@ export default {
         color: 'white',
         display: 'flex',
         justifyContent: 'center',
+        marginBottom: 5,
     }
 }

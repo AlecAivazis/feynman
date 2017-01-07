@@ -7,7 +7,8 @@ import {
     clearSelection,
     mergeElements,
     addPropagators,
-    setElementAttrs
+    setElementAttrs,
+    deleteElements,
 } from 'actions/elements'
 
 
@@ -170,6 +171,42 @@ describe('Reducers', function() {
                 })
                 // make sure it throw an error
                 expect(() => reducer(undefined, action)).to.throw(Error)
+            })
+
+            it('can delete elements', function() {
+                // add some anchors to a store
+                const initialState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    }
+                ))
+
+                // delete one of those anchors
+                const deletedState = reducer(initialState, deleteElements({
+                    type: 'anchors',
+                    id: 1,
+                }))
+
+                // make sure anchor 1 doesn't exist
+                expect(deletedState.anchors[1]).to.not.exist
+            })
+
+            it('throws an error when removing an element that doesn\'t exist', function() {
+                // the action to delete elements
+                const action = deleteElements({
+                    type: 'anchors',
+                    id: 1,
+                })
+
+                // delete one of those anchors
+                expect(() => reducer(initialState, action)).to.throw(Error)
             })
         })
 

@@ -1,9 +1,10 @@
 // local imports
 import {
-    selectElements, SELECT_ELEMENTS,
-    clearSelection, CLEAR_SELECTION,
-    mergeElements, MERGE_ELEMENTS,
+    selectElements,  SELECT_ELEMENTS,
+    clearSelection,  CLEAR_SELECTION,
+    mergeElements,   MERGE_ELEMENTS,
     setElementAttrs, SET_ELEMENT_ATTRS,
+    deleteElements,  DELETE_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -91,6 +92,29 @@ describe('Action Creators', function() {
                 expect(setElementAttrs(...attrs)).to.deep.equal({
                     type: SET_ELEMENT_ATTRS,
                     payload: attrs
+                })
+            })
+
+            it('can delete single element', function() {
+                // the delete payload
+                const del = {type: 'anchors', id: 1}
+                // test the structure of the action
+                expect(deleteElements(del)).to.deep.equal({
+                    type: DELETE_ELEMENTS,
+                    payload: [del]
+                })
+            })
+
+            it('can delete multiple elements', function() {
+                // the delete payload
+                const del = [
+                    {type: 'anchors', id: 1},
+                    {type: 'anchors', id: 2},
+                ]
+                // test the structure of the action
+                expect(deleteElements(...del)).to.deep.equal({
+                    type: DELETE_ELEMENTS,
+                    payload: del
                 })
             })
         })

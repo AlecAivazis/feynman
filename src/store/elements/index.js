@@ -4,7 +4,7 @@ import _ from 'lodash'
 import propagatorsPartial from './propagators'
 import anchorsPartial from './anchors'
 import selectionPartial from './selection'
-import { MERGE_ELEMENTS, SET_ELEMENT_ATTRS } from 'actions/elements'
+import { MERGE_ELEMENTS, SET_ELEMENT_ATTRS, DELETE_ELEMENTS } from 'actions/elements'
 
 // the initial state of elements
 export const initialState = {
@@ -84,6 +84,21 @@ export default (state = initialState, {type, payload}) => {
 
         // return the local copy
         return local
+    }
+
+    // if the payload represents an element to remove
+    if (type === DELETE_ELEMENTS) {
+        // go over every delete order
+        for (const {id, type} of payload) {
+            // if there is an element with that id
+            if (state[type][id]) {
+                // remove it
+                Reflect.deleteProperty(state[type], id)
+            // otherwise we can't identify the element
+            } else {
+                throw new Error(`Can't find ${type} with id ${id}`)
+            }
+        }
     }
 
     // return the updated state

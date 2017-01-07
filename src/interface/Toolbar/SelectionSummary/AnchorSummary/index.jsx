@@ -9,20 +9,6 @@ import Label from '../Label'
 import { ColorPicker, Slider } from 'components'
 import { setElementAttrs } from 'actions/elements'
 
-const firstValue = ({anchors, param, elements}) => {
-    // go over every anchor
-    for (const {id} of anchors) {
-        // the fill of the anchor
-        const val = elements.anchors[id][param]
-        // if the anchor has a fill
-        if (val) {
-            // use it
-            return val
-        }
-    }
-}
-
-
 const AnchorSummary = ({ style, anchors, setAttrs, elements, ...unusedProps }) => (
     <div style={{...styles.container, ...style}} {...unusedProps}>
         <Header>
@@ -57,6 +43,19 @@ const AnchorSummary = ({ style, anchors, setAttrs, elements, ...unusedProps }) =
         </div>
     </div>
 )
+
+const firstValue = ({anchors, param, elements}) => {
+    // go over every anchor
+    for (const {id} of anchors) {
+        // the fill of the anchor
+        const val = elements.anchors[id][param]
+        // if the anchor has a fill
+        if (val) {
+            // use it
+            return val
+        }
+    }
+}
 
 // the anchor summary needs
 const mapDispatchToProps = (dispatch, props) => ({
