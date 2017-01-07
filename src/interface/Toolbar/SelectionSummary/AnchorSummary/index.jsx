@@ -66,8 +66,8 @@ const AnchorSummary = ({
                         onClick={() => setAttrs({fixed: !fixed})}
                         style={styles.fixButton}
                         active={fixed}
-                        inactiveText="Fix anchor to canvas"
-                        activeText="Unfix anchor from canvas"
+                        inactiveText="Pin anchor"
+                        activeText="Unpin anchor"
                     />
                 </div>
             )}
