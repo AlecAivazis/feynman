@@ -6,22 +6,22 @@ import { SketchPicker } from 'react-color'
 import styles from './styles'
 import Header from '../Header'
 import Label from '../Label'
-import { ColorPicker } from 'components'
+import { ColorPicker, Slider } from 'components'
 import { setElementAttrs } from 'actions/elements'
 
-const firstColor = ({anchors, elements}) => {
-
+const firstValue = ({anchors, param, elements}) => {
     // go over every anchor
     for (const {id} of anchors) {
         // the fill of the anchor
-        const { fill } = elements.anchors[id]
+        const val = elements.anchors[id][param]
         // if the anchor has a fill
-        if (fill) {
+        if (val) {
             // use it
-            return fill
+            return val
         }
     }
 }
+
 
 const AnchorSummary = ({ style, anchors, setAttrs, elements, ...unusedProps }) => (
     <div style={{...styles.container, ...style}} {...unusedProps}>
@@ -31,15 +31,30 @@ const AnchorSummary = ({ style, anchors, setAttrs, elements, ...unusedProps }) =
         <div style={styles.row}>
             <Label>color:</Label>
             <ColorPicker
-                color={firstColor({anchors, elements}) || 'black'}
+                color={firstValue({param: 'fill', anchors, elements}) || 'black'}
                 style={styles.picker}
                 onChange={fill => setAttrs({fill})}
             />
         </div>
-        <div style={styles.row}>
-            <Label>size:</Label>
+        <div style={styles.multiRow}>
+            <div style={{...styles.row, marginBottom: 0}}>
+                <Label>size:</Label>
+                <div style={styles.value}
+                    dangerouslySetInnerHTML={{
+                        __html: firstValue({param: 'r', anchors, elements}) || '&mdash;'
+                    }}
+                />
+            </div>
+            <div style={{...styles.row, ...styles.sliderRow}}>
+                <Slider
+                    value={firstValue({param: 'r', anchors, elements})}
+                    min={1}
+                    max={10}
+                    step={1}
+                    onChange={r => setAttrs({r})}
+                />
+            </div>
         </div>
-
     </div>
 )
 

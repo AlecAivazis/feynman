@@ -12,5 +12,24 @@ export default {
         alignItems: 'center',
         padding: '0 15px',
         minHeight: 30,
+        marginBottom: 10,
     },
+    multiRow: {
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
+        width: '100%',
+    },
+    value: {
+        color: 'white',
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'center',
+        fontSize: 14,
+    },
+    sliderRow: {
+        padding: '0 29px',
+        minHeight: 'none',
+        marginBottom: 0,
+    }
 }
