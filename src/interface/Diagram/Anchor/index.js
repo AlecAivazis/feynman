@@ -99,7 +99,7 @@ export class Anchor extends React.Component {
         // don't bubble
         event.stopPropagation()
         // if the mouse is down
-        if (this.state.mouseDown) {
+        if (this.state.mouseDown && !this.props.fixed) {
             // get the used props
             const { info, x, y } = this.props
 
@@ -152,7 +152,7 @@ export class Anchor extends React.Component {
         // get any required styling
         let styling = selected ? styles.selected : styles.notSelected
         // if the anchor is fixed, mixin the fixed with
-        styling = fixed ? {...styling, ...styles.fixed} : styling
+        styling = fixed ? {...styles.fixed, ...styling} : styling
 
         return (
             <circle

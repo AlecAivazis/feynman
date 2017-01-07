@@ -37,8 +37,14 @@ export default {
         marginTop: 5,
         justifyContent: 'center',
     },
+    fixButton: {
+        display: 'flex',
+        alignSelf: 'center',
+        textTransform: 'capitalize',
+    },
     deleteButton: {
         display: 'flex',
         alignSelf: 'center',
+        textTransform: 'capitalize',
     }
 }

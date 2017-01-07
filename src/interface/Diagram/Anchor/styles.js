@@ -1,4 +1,4 @@
-import { brightBlue } from 'colors'
+import { brightBlue, idkGrey } from 'colors'
 
 export default {
     selected: {
@@ -6,5 +6,8 @@ export default {
     },
     notSelected: {
 
+    },
+    fixed: {
+        fill: idkGrey,
     }
 }
