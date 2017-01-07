@@ -9,8 +9,8 @@ import Propagator from './Propagator'
 import Anchor from './Anchor'
 import SelectionRectangle from './SelectionRectangle'
 import { propagatorsWithLocation } from './util'
-import { relativePosition } from 'utils'
-import { clearSelection } from 'actions/elements'
+import { relativePosition, elementsInRegion } from 'utils'
+import { clearSelection, selectElements } from 'actions/elements'
 
 class Diagram extends React.Component {
     // the diagram component keeps track of the placement of the user's selection rectangle
@@ -32,6 +32,9 @@ class Diagram extends React.Component {
         // render the various components of the diagram
         return (
             <svg style={{...elementStyle, ...style}} onMouseDown={this._mouseDown} >
+
+                {/* order matters here (last shows up on top) */}
+
                 {info.showGrid && info.gridSize > 0 && <Grid/>}
                 {propagators.map((element, i) => <Propagator {...element} key={i}/>)}
                 {info.showAnchors && Object.values(elements.anchors).map(anchor => (
@@ -61,7 +64,7 @@ class Diagram extends React.Component {
         // only fire for clicks originating on the diagram
         if (event.target.nodeName === 'svg') {
             // remove the previous selection
-            this.props.dispatch(clearSelection())
+            this.props.clearSelection()
             // start the selection rectangle
             this.setState({
                 point1: relativePosition({
@@ -82,6 +85,14 @@ class Diagram extends React.Component {
                     y: event.clientY,
                 })
             })
+
+            // select the elements in the region
+            this.props.selectElements(
+                ...elementsInRegion({
+                    elements: this.props.elements,
+                    region: this.state,
+                })
+            )
 
         }
     }
@@ -114,4 +125,9 @@ const selector = ({ info, elements }) => ({
     // get a list of each id in each selection type
     selection: elements.selection,
 })
-export default connect(selector)(Diagram)
+
+const mapDispatchToProps = dispatch => ({
+    selectElements: (...elements) => dispatch(selectElements(...elements)),
+    clearSelection: () => dispatch(clearSelection()),
+})
+export default connect(selector, mapDispatchToProps)(Diagram)
