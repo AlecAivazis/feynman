@@ -58,29 +58,15 @@ const AnchorSummary = ({
                 </div>
             </div>
 
-            {/* single anchor actions only */}
-
-            {anchors.length === 1 && (
-                <div style={{...styles.row, ...styles.buttonRow}}>
-                    <ToggleButton
-                        onClick={() => setAttrs({fixed: !fixed})}
-                        style={styles.fixButton}
-                        active={fixed}
-                        inactiveText="Pin anchor"
-                        activeText="Unpin anchor"
-                    />
-                </div>
-            )}
-
-
-            {/* multiple anchor actions only */}
-
-            {anchors.length > 1 && (
-                null
-            )}
-
-
-            {/* make sure delete is at the end */}
+            <div style={{...styles.row, ...styles.buttonRow}}>
+                <ToggleButton
+                    onClick={() => setAttrs({fixed: !fixed})}
+                    style={styles.fixButton}
+                    active={fixed}
+                    inactiveText={`Pin ${anchor}`}
+                    activeText={`Unpin ${anchor}`}
+                />
+            </div>
 
             <div style={{...styles.row, ...styles.buttonRow}}>
                 <RedButton onClick={deleteAnchors} style={styles.deleteButton}>
