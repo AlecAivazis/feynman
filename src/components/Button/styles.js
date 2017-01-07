@@ -2,8 +2,8 @@ import { grey } from 'colors'
 
 export default {
     container: {
-        fontSize: 11,
-        height: 27,
+        fontSize: 12,
+        height: 30,
         border: `1px solid ${grey}`,
         borderRadius: 3,
         background: '#d2d2d2 linear-gradient(180deg, #ebebeb, #d2d2d2) repeat-x',

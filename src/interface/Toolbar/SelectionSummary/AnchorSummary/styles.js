@@ -1,3 +1,13 @@
+const button = {
+    display: 'flex',
+    alignSelf: 'center',
+    textTransform: 'capitalize',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+}
+
 export default {
     container: {
         display: 'flex',
@@ -36,15 +46,12 @@ export default {
     buttonRow: {
         marginTop: 5,
         justifyContent: 'center',
+        padding: '0 30px',
     },
     fixButton: {
-        display: 'flex',
-        alignSelf: 'center',
-        textTransform: 'capitalize',
+        ...button,
     },
     deleteButton: {
-        display: 'flex',
-        alignSelf: 'center',
-        textTransform: 'capitalize',
+        ...button,
     }
 }
