@@ -77,7 +77,7 @@ describe('Interface Components', function() {
             wrapper.find(ConnectedAnchor).simulate('mouseDown')
 
             // make sure there is only one selected element
-            expect(store.getState().elements.selection).to.deep.equal([{type: 'anchors', id: 1}])
+            expect(store.getState().elements.selection.anchors).to.deep.equal([1])
         })
 
         it('gets mounted with default config', function() {

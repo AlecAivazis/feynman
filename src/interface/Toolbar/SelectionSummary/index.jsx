@@ -6,15 +6,12 @@ import _ from 'lodash'
 import styles from './styles'
 import AnchorSummary from './AnchorSummary'
 
-const SelectionSummary = ({ style, selection, ...unusedProps }) => {
-    // group the selection by type
-    const selectedItems = _.groupBy(selection, 'type')
-
-    return (
-        <div style={{...styles.container, ...style}} {...unusedProps}>
-             {selectedItems.anchors.length > 0 && <AnchorSummary anchors={selectedItems.anchors} />}
-        </div>
-    )
-}
+const SelectionSummary = ({ style, selection, ...unusedProps }) => (
+    <div style={{...styles.container, ...style}} {...unusedProps}>
+         {selection.anchors
+            && selection.anchors.length > 0
+            && <AnchorSummary anchors={selection.anchors} />}
+    </div>
+)
 
 export default SelectionSummary

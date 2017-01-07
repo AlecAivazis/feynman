@@ -12,7 +12,7 @@ export const initialState = {
     propagators: [],
     constraints: [],
     texts: [],
-    selection: [],
+    selection: {},
 }
 
 export default (state = initialState, {type, payload}) => {
@@ -68,7 +68,7 @@ export default (state = initialState, {type, payload}) => {
             // if we are supposed to select the resulting element
             if (select) {
                 // use the mergeTarget as the only selection
-                local.selection = [{type: 'anchors', id: mergeTarget}]
+                local.selection.anchors = [mergeTarget]
             }
         }
 

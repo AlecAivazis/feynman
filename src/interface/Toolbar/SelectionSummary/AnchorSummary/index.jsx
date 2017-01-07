@@ -54,7 +54,7 @@ const AnchorSummary = ({ style, anchors, setAttrs, elements, deleteAnchors, ...u
 
 const firstValue = ({anchors, param, elements}) => {
     // go over every anchor
-    for (const {id} of anchors) {
+    for (const id of anchors) {
         // the fill of the anchor
         const val = elements.anchors[id][param]
         // if the anchor has a fill
@@ -70,12 +70,12 @@ const mapDispatchToProps = (dispatch, {anchors}) => ({
     // to update the attributes of each anchor that is selected
     setAttrs: attrs => (
         dispatch(setElementAttrs(
-            ...anchors.map(({id}) => ({type: 'anchors', id, ...attrs}))
+            ...anchors.map(id => ({type: 'anchors', id, ...attrs}))
         ))
     ),
     deleteAnchors: () => (
         dispatch(deleteElements(
-            ...anchors.map(({id}) => ({type: 'anchors', id}))
+            ...anchors.map(id => ({type: 'anchors', id}))
         ))
     ),
 })

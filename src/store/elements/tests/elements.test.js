@@ -10,6 +10,7 @@ import {
     setElementAttrs,
     deleteElements,
 } from 'actions/elements'
+import {initialState as intialSelection} from '../selection'
 
 
 describe('Reducers', function() {
@@ -121,7 +122,7 @@ describe('Reducers', function() {
                 const mergedState = reducer(anchorState, mergeElements(1, true))
 
                 // make sure the resulting selection contains just the target
-                expect(mergedState.selection).to.deep.equal([{type: 'anchors', id: 2}])
+                expect(mergedState.selection.anchors).to.deep.equal([2])
             })
 
             it('barfs if merging onto an undefined id', function() {
@@ -326,7 +327,7 @@ describe('Reducers', function() {
                 const val = reducer(state, selectAction)
 
                 // make sure the selection is present
-                expect(val.selection).to.deep.equal(selection)
+                expect(val.selection.anchors).to.deep.equal(selection.map(({id}) => id))
             })
 
             it('throws an error if selecting an anchor that doesn\'t exist', function() {
@@ -350,7 +351,7 @@ describe('Reducers', function() {
                     x: 50,
                     y: 100,
                 })
-                const actionState = reducer(undefined, addAction)
+                const withAnchors = reducer(undefined, addAction)
                 // add some anchors
                 const selectAction = selectElements(
                     {
@@ -358,15 +359,15 @@ describe('Reducers', function() {
                         id: 1,
                     }
                 )
-                const state = reducer(actionState, selectAction)
+                const selected = reducer(withAnchors, selectAction)
                 // sanity check
-                expect(state.selection).to.have.length(1)
+                expect(selected.selection.anchors).to.have.length(1)
 
                 // clear the selection
-                const clearedState = reducer(state, clearSelection())
+                const clearedState = reducer(selected, clearSelection())
 
                 // make sure the selection is emtpy
-                expect(clearedState.selection).to.have.length(0)
+                expect(clearedState.selection).to.deep.equal(intialSelection)
             })
         })
     })

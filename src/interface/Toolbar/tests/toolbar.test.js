@@ -38,6 +38,7 @@ describe('Interface Components', function() {
                 type: 'anchors',
                 id: 1
             }))
+            console.log("helllo")
 
             // expect there to be an anchor summary
             expect(wrapper.find(SelectionSummary)).to.have.length(1)

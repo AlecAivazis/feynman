@@ -187,7 +187,7 @@ describe('Interface Components', function() {
             wrapper.find(Diagram).simulate('mouseDown')
 
             // make sure the selection is clear
-            expect(store.getState().elements.selection).to.have.length(0)
+            expect(store.getState().elements.selection.anchors).to.have.length(0)
         })
 
         it('passes selected state onto the appropriate anchor components', function() {
@@ -218,6 +218,9 @@ describe('Interface Components', function() {
             const anchor = wrapper.find(Anchor).findWhere(ele => {
                 return ele.name() === 'Anchor' && ele.props().id == 1
             })
+
+            // make sure such an element exist
+            expect(anchor).to.not.have.length(0)
 
             // make sure the anchor was told to render selected
             expect(anchor.props().selected).to.be.true

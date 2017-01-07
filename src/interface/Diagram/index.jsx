@@ -43,6 +43,6 @@ const selector = ({ info, elements }) => ({
     info,
     elements,
     // get a list of each id in each selection type
-    selection: _.mapValues(_.groupBy(elements.selection, 'type'), vals => vals.map(({id}) => id))
+    selection: elements.selection,
 })
 export default connect(selector)(Diagram)

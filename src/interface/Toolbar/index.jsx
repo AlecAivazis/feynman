@@ -9,7 +9,7 @@ import Footer from './Footer'
 
 const Toolbar = ({style, selection, ...unusedProps}) => (
     <div style={{...styles.container, ...style}}>
-        {selection.length > 0
+        {Object.values(selection).length > 0
             ? <SelectionSummary selection={selection}/>
             : <ItemPalette />
         }
