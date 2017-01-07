@@ -20,7 +20,7 @@ export default (state = initialState, {type, payload}) => {
     // if the action indicates we need to dedupe the elements
     if (type === MERGE_ELEMENTS) {
         // the payload is the id of the anchor we need to merge with
-        const sourceId = payload
+        const {id:sourceId, select=false} = payload
 
         // make a deep copy of the state that we can play with
         const local = _.cloneDeep(state)
@@ -44,6 +44,9 @@ export default (state = initialState, {type, payload}) => {
             }
         }
 
+        // the element we are going to merge onto
+        const mergeTarget = dupes[0]
+
         // if there are any dupes
         if (dupes.length > 0) {
             // visit each propagator to replace anchor references
@@ -51,16 +54,23 @@ export default (state = initialState, {type, payload}) => {
                 // if anchor1 is a reference to this element
                 if (propagator.anchor1 === sourceId) {
                     // then the anchor1 needs to become the element replacing the source
-                    propagator.anchor1 = dupes[0]
+                    propagator.anchor1 = mergeTarget
                 // otherwise if anchor2 is a reference to this element
                 } else if (propagator.anchor2 === sourceId) {
                     // then the anchor2 needs to become the element replacing the source
-                    propagator.anchor2 = dupes[0]
+                    propagator.anchor2 = mergeTarget
                 }
             }
 
             // remove the entry in the anchors object for the original anchor
             Reflect.deleteProperty(local.anchors, sourceId)
+
+            // if we are supposed to select the resulting element
+            if (select) {
+                console.log('focusing on an element')
+                // use the mergeTarget as the only selection
+                local.selection = [{type: 'anchors', id: mergeTarget}]
+            }
         }
 
         // return the new state
@@ -88,17 +98,38 @@ export default (state = initialState, {type, payload}) => {
 
     // if the payload represents an element to remove
     if (type === DELETE_ELEMENTS) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
         // go over every delete order
         for (const {id, type} of payload) {
             // if there is an element with that id
-            if (state[type][id]) {
+            if (local[type][id]) {
                 // remove it
-                Reflect.deleteProperty(state[type], id)
+                Reflect.deleteProperty(local[type], id)
+                // if the element is an anchor
+                if (type === 'anchors') {
+                    console.log(id)
+                    console.log(local.propagators)
+                    // we have to find any propagators that are associated with this anchor
+                    for (const [i, entry] of local.propagators.entries()) {
+                        console.log(entry)
+                        // if either anchor has an id matching the anchor we removed
+                        if(entry === id || entry === id) {
+                            console.log('found propagator to remove', i)
+                            // we have to remove the element from the propagators
+                            local.propagators.slice(i, 1)
+                        }
+                    }
+                    console.log(local.propagators)
+                }
             // otherwise we can't identify the element
             } else {
                 throw new Error(`Can't find ${type} with id ${id}`)
             }
         }
+
+        // return our copy
+        return local
     }
 
     // return the updated state

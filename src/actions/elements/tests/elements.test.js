@@ -57,7 +57,21 @@ describe('Action Creators', function() {
                 // just check the type of the action
                 expect(mergeElements(1)).to.deep.equal({
                     type: MERGE_ELEMENTS,
-                    payload: 1,
+                    payload: {
+                        id: 1,
+                        select: false,
+                    }
+                })
+            })
+
+            it('merge elements with selection', function() {
+                // just check the type of the action
+                expect(mergeElements(1, true)).to.deep.equal({
+                    type: MERGE_ELEMENTS,
+                    payload: {
+                        id: 1,
+                        select: true,
+                    }
                 })
             })
 

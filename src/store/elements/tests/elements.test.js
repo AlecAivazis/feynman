@@ -53,6 +53,9 @@ describe('Reducers', function() {
                 // make sure the third was left untouched
                 expect(mergedState.anchors[3].x).to.equal(300)
                 expect(mergedState.anchors[3].y).to.equal(500)
+
+                // make sure there are no anchors left over
+                expect(Object.values(mergedState.anchors)).to.have.length(2)
             })
 
             it('replaces anchor references when merging', function() {
@@ -93,6 +96,32 @@ describe('Reducers', function() {
 
                 // since that should replace anchor 1, the propagotr's anchor1 value should be 2
                 expect(mergedState.propagators[0].anchor1).to.equal(2)
+            })
+
+            it('can select the resulting element after merge', function() {
+                // the location of the conflict
+                const coords = {
+                    x: 50,
+                    y: 50,
+                }
+
+                // start off with some anchors
+                const anchorState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        ...coords,
+                    },
+                    {
+                        id: 2,
+                        ...coords,
+                    },
+                ))
+
+                // tell the reducer to merge itself
+                const mergedState = reducer(anchorState, mergeElements(1, true))
+
+                // make sure the resulting selection contains just the target
+                expect(mergedState.selection).to.deep.equal([{type: 'anchors', id: 2}])
             })
 
             it('barfs if merging onto an undefined id', function() {
@@ -172,7 +201,9 @@ describe('Reducers', function() {
                 // make sure it throw an error
                 expect(() => reducer(undefined, action)).to.throw(Error)
             })
+        })
 
+        describe('Delete', function() {
             it('can delete elements', function() {
                 // add some anchors to a store
                 const initialState = reducer(undefined, addAnchors(
@@ -207,6 +238,55 @@ describe('Reducers', function() {
 
                 // delete one of those anchors
                 expect(() => reducer(initialState, action)).to.throw(Error)
+            })
+
+            it('removes associated propagators when removing an anchor', function() {
+                // add some anchors to a store
+                const initialState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    },
+                    {
+                        id: 3,
+                        x: 100,
+                        y: 100,
+                    },
+                    {
+                        id: 4,
+                        x: 100,
+                        y: 100,
+                    }
+                ))
+
+                // and a propagator between the two anchors
+                const propagatorState = reducer(initialState, addPropagators(
+                    {
+                        type: 'fermion',
+                        anchor1: 1,
+                        anchor2: 2,
+                    },
+                    {
+                        type: 'em',
+                        anchor1: 3,
+                        anchor2: 4,
+                    }
+                ))
+
+                // delete one of those anchors
+                const deletedState = reducer(propagatorState, deleteElements({
+                    type: 'anchors',
+                    id: 1,
+                }))
+
+                // make sure there are no propagators left
+                expect(deletedState.propagators).to.have.length(1)
             })
         })
 

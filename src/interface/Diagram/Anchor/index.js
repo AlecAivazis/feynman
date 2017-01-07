@@ -5,7 +5,14 @@ import _ from 'lodash'
 // local imports
 import { relativePosition, fixPositionToGrid, generateAnchorId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
-import { setElementAttrs, selectElements, addAnchors, addPropagators, mergeElements } from 'actions/elements'
+import {
+    setElementAttrs,
+    selectElements,
+    addAnchors,
+    addPropagators,
+    mergeElements,
+    clearSelection,
+} from 'actions/elements'
 import styles from './styles'
 
 
@@ -118,8 +125,8 @@ export class Anchor extends React.Component {
         event.stopPropagation()
         // if we were tracking the state of the mouse
         if (this.state.mouseDown) {
-            // tell the store to clean up any overlapping elements
-            this.props.mergeElements(this.state.moveTarget)
+            // tell the store to clean up any overlapping elements (and select the resulting element)
+            this.props.mergeElements(this.state.moveTarget, true)
 
             // track the state of the mouse
             this.setState({
@@ -171,8 +178,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     // add new propagators to the diagram
     addPropagator: propagator => dispatch(addPropagators(propagator)),
     // tell the store to merge overlapping elements
-    mergeElements: id => dispatch(mergeElements(id))
-
+    mergeElements: (id, select) => dispatch(mergeElements(id, select)),
 })
 // the anchor needs access to the diagram info and elements reducers
 const mapStateToProps = ({info, elements}) => ({info, elements})
