@@ -125,8 +125,8 @@ export class Anchor extends React.Component {
         event.stopPropagation()
         // if we were tracking the state of the mouse
         if (this.state.mouseDown) {
-            // tell the store to clean up any overlapping elements (and select the resulting element)
-            this.props.mergeElements(this.state.moveTarget, true)
+            // save the id of the element we are moving
+            const { moveTarget } = this.state
 
             // track the state of the mouse
             this.setState({
@@ -135,6 +135,9 @@ export class Anchor extends React.Component {
                 // we are no longer holding the mouse down
                 mouseDown: false
             })
+
+            // tell the store to clean up any overlapping elements (and select the resulting element)
+            this.props.mergeElements(moveTarget, true)
         }
     }
 
