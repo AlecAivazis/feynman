@@ -4,7 +4,12 @@ import _ from 'lodash'
 import propagatorsPartial from './propagators'
 import anchorsPartial from './anchors'
 import selectionPartial from './selection'
-import { MERGE_ELEMENTS, SET_ELEMENT_ATTRS, DELETE_ELEMENTS } from 'actions/elements'
+import { 
+    MERGE_ELEMENTS, 
+    SET_ELEMENT_ATTRS, 
+    DELETE_ELEMENTS,
+    MOVE_SELECTED_ELEMENTS 
+} from 'actions/elements'
 
 // the initial state of elements
 export const initialState = {
@@ -126,6 +131,22 @@ export default (state = initialState, {type, payload}) => {
         }
 
         // return our copy
+        return local
+    }
+
+    if (type === MOVE_SELECTED_ELEMENTS) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // loop over every selected anchor
+        for (const id of local.selection.anchors) {
+            // save a reference to the assocaited element
+            const element = local.anchors[id]
+            // move the element according to the payload
+            element.x += payload.x
+            element.y += payload.y
+        }
+
         return local
     }
 

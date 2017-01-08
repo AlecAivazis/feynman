@@ -87,6 +87,7 @@ describe('Action Creators', function() {
                     payload: anchors
                 })
             })
+
         })
     })
 })

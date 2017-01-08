@@ -1,10 +1,11 @@
 // local imports
 import {
-    selectElements,  SELECT_ELEMENTS,
-    clearSelection,  CLEAR_SELECTION,
-    mergeElements,   MERGE_ELEMENTS,
-    setElementAttrs, SET_ELEMENT_ATTRS,
-    deleteElements,  DELETE_ELEMENTS,
+    selectElements,       SELECT_ELEMENTS,
+    clearSelection,       CLEAR_SELECTION,
+    mergeElements,        MERGE_ELEMENTS,
+    setElementAttrs,      SET_ELEMENT_ATTRS,
+    deleteElements,       DELETE_ELEMENTS,
+    moveSelectedElements, MOVE_SELECTED_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -129,6 +130,19 @@ describe('Action Creators', function() {
                 expect(deleteElements(...del)).to.deep.equal({
                     type: DELETE_ELEMENTS,
                     payload: del
+                })
+            })
+            
+            it('move selected anchors', function() {
+                // the move order
+                const move = {
+                    x: 50,
+                    y: 50
+                }
+
+                expect(moveSelectedElements(move)).to.deep.equal({
+                    type: MOVE_SELECTED_ELEMENTS,
+                    payload: move,
                 })
             })
         })

@@ -9,6 +9,7 @@ import {
     addPropagators,
     setElementAttrs,
     deleteElements,
+    moveSelectedElements,
 } from 'actions/elements'
 import {initialState as intialSelection} from '../selection'
 
@@ -400,6 +401,61 @@ describe('Reducers', function() {
                 // make sure the selection is emtpy
                 expect(clearedState.selection).to.deep.equal(intialSelection)
             })
+
+            it("responds to the MOVE_SELECTED_ELEMENTS action", function(){
+
+                // the anchors we are going to start off with
+                const anchors = [
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    },
+                    {
+                        id: 3,
+                        x: 500,
+                        y: 100
+                    }
+                ]
+
+                // start off with some anchors
+                const initialState = reducer(undefined, addAnchors(...anchors))
+
+                // select a subset of the anchors
+                const selectedState = reducer(initialState, selectElements(
+                    {
+                        type: 'anchors',
+                        id: 1,
+                    },
+                    {
+                        type: 'anchors',
+                        id: 2,
+                    }
+                ))
+
+                // the move to issue on the selected anchors
+                const move = {
+                    x: 50,
+                    y: 50,
+                }
+
+                // move the selected anchors
+                const movedState = reducer(selectedState, moveSelectedElements(move))
+
+                // make sure the selected anchors were moved
+                expect(movedState.anchors[1].x).to.equal(anchors[0].x + move.x)
+                expect(movedState.anchors[1].y).to.equal(anchors[0].y + move.y)
+                expect(movedState.anchors[2].x).to.equal(anchors[1].x + move.x)
+                expect(movedState.anchors[2].y).to.equal(anchors[1].y + move.y)
+                // make sure the non-selected anchor wasn't moved
+                expect(movedState.anchors[3].x).to.equal(anchors[2].x)
+                expect(movedState.anchors[3].y).to.equal(anchors[2].y)
+            }) 
         })
     })
 })
