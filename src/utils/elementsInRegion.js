@@ -16,7 +16,7 @@ const elementsInRegion = ({elements, region:{point1, point2}}) => {
     lowerLeft.x = point1.x < point2.x ? point1.x : point2.x
     lowerLeft.y = point1.y < point2.y ? point1.y : point2.y
 
-    // figure out the upper right ( really lower left corner)
+    // figure out the upper right ( really lower right corner)
     const upperRight = {}
     upperRight.x = point1.x > point2.x ? point1.x : point2.x
     upperRight.y = point1.y > point2.y ? point1.y : point2.y
