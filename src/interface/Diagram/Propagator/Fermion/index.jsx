@@ -2,13 +2,28 @@
 import React from 'react'
 // local imports
 import styles from './styles'
+import Arrow from './Arrow'
 
-const Fermion = ({ x1, y1, x2, y2, ...unusedProps }) => (
-    <path
-        {...styles.container}
-        {...unusedProps}
-        d={`M ${x1} ${y1} L ${x2} ${y2}`}
-    />
-)
+const Fermion = ({ x1, y1, x2, y2, strokeWidth, ...unusedProps }) => {
+
+
+    return (
+        <g>
+            <path
+                {...styles.container}
+                {...unusedProps}
+                strokeWidth={strokeWidth}
+                d={`M ${x1} ${y1} L ${x2} ${y2}`}
+            />
+            <Arrow
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                strokeWidth={strokeWidth}
+            />
+        </g>
+    )
+}
 
 export default Fermion

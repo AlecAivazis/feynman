@@ -16,7 +16,11 @@ const Propagator = ({type, ...element}) => {
     }
 
     // return the appropriate component
-    return <Component {...element} />
+    return (
+        <g>
+            <Component {...element} />
+        </g>
+    )
 }
 
 Propagator.defaultProps = {
