@@ -1,7 +1,7 @@
 // exteranl imports
 import _ from 'lodash'
 // local imports
-import { ADD_ANCHORS, SET_ANCHOR_LOCATIONS } from 'actions/elements'
+import { ADD_ANCHORS, ALIGN_SELECTED_ANCHORS  } from 'actions/elements'
 
 export const noIdErr = "cannot set location of anchor without explicit id"
 
@@ -26,6 +26,34 @@ export default (state, {type, payload}) => {
 
         // return the mutated state
         return local
+    }
+
+    // if the action indicates we need to align the selected anchors
+    else if (type === ALIGN_SELECTED_ANCHORS) {
+        // get the lense appropriate for the direction
+        const lense = {
+            horizontal: 'y',
+            vertical: 'x'
+        }[payload]
+
+        // if we were given an invalid direction
+        if (!lense) {
+            // yell loudly
+            throw new Error(`Cannot align anchors in the ${payload} direction.`)
+        }
+
+        // a local copy of the state to mutate
+        const local = _.cloneDeep(state.anchors)
+        const anchors = Object.values(local)
+
+        // the average value of the appropriate attribute
+        const average = anchors.map(anch => anch[lense])
+                               .reduce((a,b) => a + b, 0) / anchors.length
+
+        // return the local copy
+        return _.mapValues(local, 
+            val => ({...val, [lense]: average})
+        )
     }
 
     return state.anchors

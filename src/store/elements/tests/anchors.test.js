@@ -1,7 +1,7 @@
 // local imports
 import { createStore } from 'store'
 import reducer, { initialState } from '..'
-import { addAnchors, setAnchorLocations } from 'actions/elements'
+import { addAnchors, setAnchorLocations, selectElements, alignSelectedAnchors } from 'actions/elements'
 import { noIdErr } from '../anchors'
 
 describe('Reducers', function() {
@@ -15,7 +15,7 @@ describe('Reducers', function() {
             const initialAnchor = {
                 id: 1,
                 x: 50,
-                y: 100
+                y: 50
             }
 
             beforeEach(function() {
@@ -28,11 +28,7 @@ describe('Reducers', function() {
             it('responds to the ADD_ANCHOR reducer', function() {
                 // make sure the state matches expectation
                 expect(store.getState().elements.anchors).to.deep.equal({
-                    1: {
-                        x: 50,
-                        y: 100,
-                        id: 1,
-                    }
+                    [initialAnchor.id]: initialAnchor
                 })
             })
 
@@ -73,6 +69,64 @@ describe('Reducers', function() {
 
                 // make sure the id-conflicting action throws an error
                 expect(action).to.throw(Error)
+            })
+
+            it('can vertically align selected anchors', function() {
+                // add the propagator to the store
+                store.dispatch(addAnchors(
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    }
+                ))
+
+                // select anchors 1 and 2
+                store.dispatch(selectElements({type: 'anchors', id: 1}, {type: 'anchors', id: 2}))
+
+                // vertically align the selected anchors
+                store.dispatch(alignSelectedAnchors('vertical'))
+
+                // the state of the store after the mutations
+                const { anchors } = store.getState().elements
+                
+                // the expected location should be right in between the two
+                const expected = (100 + initialAnchor.x) / 2
+
+                // expect both anchors to have moved to the midpoint
+                expect(anchors[1].x).to.equal(expected)
+                expect(anchors[2].x).to.equal(expected)
+            })
+
+            it('can horizontally align selected anchors', function() {
+                // add the propagator to the store
+                store.dispatch(addAnchors(
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    }
+                ))
+
+                // select anchors 1 and 2
+                store.dispatch(selectElements({type: 'anchors', id: 1}, {type: 'anchors', id: 2}))
+
+                // vertically align the selected anchors
+                store.dispatch(alignSelectedAnchors('horizontal'))
+
+                // the state of the store after the mutations
+                const { anchors } = store.getState().elements
+
+                // the expected location should be right in between the two
+                const expected = (100 + initialAnchor.y) / 2
+
+                // expect both anchors to have moved to the midpoint
+                expect(anchors[1].y).to.equal(expected)
+                expect(anchors[2].y).to.equal(expected)
+            })
+
+            it('barfs if aligning in an invalid direction', function() {
+                expect(() => store.dispatch(alignSelectedAnchors('foo'))).to.throw(Error)
             })
 
         })

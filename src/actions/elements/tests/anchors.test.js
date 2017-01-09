@@ -1,8 +1,8 @@
 // external imports
 import sinon from 'sinon'
 // local imports
-import { addAnchors, setAnchorLocations } from '../creators'
-import { ADD_ANCHORS, SET_ANCHOR_LOCATIONS } from '../types'
+import { addAnchors, setAnchorLocations, alignSelectedAnchors } from '../creators'
+import { ADD_ANCHORS, SET_ANCHOR_LOCATIONS, ALIGN_SELECTED_ANCHORS } from '../types'
 
 // a stub for an empty getState
 const emptyState = sinon.stub().returns({
@@ -88,6 +88,12 @@ describe('Action Creators', function() {
                 })
             })
 
+            it('align selected anchors', function() {
+                expect(alignSelectedAnchors('vertical')).to.deep.equal({
+                    type: ALIGN_SELECTED_ANCHORS,
+                    payload: 'vertical',
+                })
+            }) 
         })
     })
 })
