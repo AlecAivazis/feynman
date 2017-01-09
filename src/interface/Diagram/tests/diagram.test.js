@@ -110,11 +110,13 @@ describe('Interface Components', function() {
             store.dispatch(addPropagators(
                 {
                     type: 'invalid1',
+                    id: 1,
                     anchor1: 1,
                     anchor2: 2,
                 },
                 {
                     type: 'invalid2',
+                    id: 2,
                     anchor1: 1,
                     anchor2: 2,
                 }
@@ -123,7 +125,7 @@ describe('Interface Components', function() {
             // render the diagram in the wrapper
             const wrapper = mount(<Test store={store}/>)
             // the expected number of propagators
-            const expected = initialState.propagators.length + 2
+            const expected = Object.values(initialState.propagators).length + 2
 
             // make sure there are two fermions in the diagram
             expect(wrapper.find(Propagator)).to.have.length(expected)

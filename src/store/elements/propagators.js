@@ -1,3 +1,5 @@
+// external imports
+import _ from 'lodash'
 // local imports
 import { ADD_PROPAGATORS } from 'actions/elements'
 
@@ -6,6 +8,9 @@ import { ADD_PROPAGATORS } from 'actions/elements'
 export default (state, {type, payload}) => {
     // if the payload corresponds to a new propagator
     if (type === ADD_PROPAGATORS) {
+        // make a local copy to mess with
+        const local = _.cloneDeep(state.propagators)
+
         // get the current list of anchors
         const { anchors } = state
 
@@ -25,15 +30,25 @@ export default (state, {type, payload}) => {
             if (!anchors[propagator.anchor2]) {
                 throw new Error(`Could not attach propagator to anchor2 with id ${propagator.anchor2}`)
             }
+
+            // there is no id
+            if (!propagator.id) {
+                throw new Error("Cannot add propagator to store withour an id")
+            }
+
+            // if there is already a propagator with that id
+            if (local[propagator.id]) {
+                throw new Error(`Cannot create propagator with id - ${propagator.id} that is already taken.`)
+            }
+
+            // save a refernce to the propagator locally
+            local[propagator.id] = propagator
         }
 
         // the propagators are safe to add to the state
 
         // add the payload to the list of propagators
-        return [
-            ...state.propagators,
-            ...payload
-        ]
+        return local
     }
 
     return state.propagators

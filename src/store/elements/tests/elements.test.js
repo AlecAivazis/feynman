@@ -89,6 +89,7 @@ describe('Reducers', function() {
                 const propagatorState = reducer(anchorState, addPropagators(
                     {
                         type: 'fermion',
+                        id: 1,
                         anchor1: 2,
                         anchor2: 3
                     }
@@ -98,7 +99,7 @@ describe('Reducers', function() {
                 const mergedState = reducer(propagatorState, mergeElements(1))
 
                 // since that should replace anchor 1, the propagotr's anchor1 value should be 2
-                expect(mergedState.propagators[0].anchor1).to.equal(2)
+                expect(mergedState.propagators[1].anchor1).to.equal(2)
             })
 
             it('can select the resulting element after merge', function() {
@@ -272,11 +273,13 @@ describe('Reducers', function() {
                 const propagatorState = reducer(initialState, addPropagators(
                     {
                         type: 'fermion',
+                        id: 1,
                         anchor1: 1,
                         anchor2: 2,
                     },
                     {
                         type: 'em',
+                        id: 2,
                         anchor1: 3,
                         anchor2: 4,
                     }
@@ -289,7 +292,7 @@ describe('Reducers', function() {
                 }))
 
                 // make sure there are no propagators left
-                expect(deletedState.propagators).to.have.length(1)
+                expect(Object.keys(deletedState.propagators)).to.have.length(1)
             })
 
             it('deleting a selcted object deselects it', function() {
@@ -458,7 +461,7 @@ describe('Reducers', function() {
                 // make sure the non-selected anchor wasn't moved
                 expect(movedState.anchors[3].x).to.equal(anchors[2].x)
                 expect(movedState.anchors[3].y).to.equal(anchors[2].y)
-            }) 
+            })
 
             it("can move with partial payload", function() {
                 // the anchors we are going to start off with

@@ -4,17 +4,17 @@ import _ from 'lodash'
 import propagatorsPartial from './propagators'
 import anchorsPartial from './anchors'
 import selectionPartial from './selection'
-import { 
-    MERGE_ELEMENTS, 
-    SET_ELEMENT_ATTRS, 
+import {
+    MERGE_ELEMENTS,
+    SET_ELEMENT_ATTRS,
     DELETE_ELEMENTS,
-    MOVE_SELECTED_ELEMENTS 
+    MOVE_SELECTED_ELEMENTS
 } from 'actions/elements'
 
 // the initial state of elements
 export const initialState = {
     anchors: {},
-    propagators: [],
+    propagators: {},
     constraints: [],
     texts: [],
     selection: {},
@@ -55,7 +55,7 @@ export default (state = initialState, {type, payload}) => {
         // if there are any dupes
         if (dupes.length > 0) {
             // visit each propagator to replace anchor references
-            for (const propagator of local.propagators) {
+            for (const propagator of Object.values(local.propagators)) {
                 // if anchor1 is a reference to this element
                 if (propagator.anchor1 === sourceId) {
                     // then the anchor1 needs to become the element replacing the source
@@ -124,7 +124,7 @@ export default (state = initialState, {type, payload}) => {
             // if the element is an anchor
             if (type === 'anchors') {
                 // only save keep the propagators that don't refer to the anchor
-                local.propagators = local.propagators.filter(
+                local.propagators = _.pickBy(local.propagators,
                     ({anchor1, anchor2}) => anchor1 !== id && anchor2 !== id
                 )
             }
