@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 // local imports
-import { relativePosition, fixPositionToGrid, generateAnchorId } from 'utils'
+import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
 import {
     moveSelectedElements,
@@ -65,7 +65,7 @@ export class Anchor extends React.Component {
 
             // first, we need an id for the anchor
             // note: this will also make sure we are dragging the right one
-            id = generateAnchorId(elements.anchors)
+            id = generateElementId(elements.anchors)
 
             // figure out the current location for the anchor
             const pos = fixPositionToGrid(relativePosition({
@@ -82,6 +82,7 @@ export class Anchor extends React.Component {
             // create a propagator linking the two anchors
             addPropagator({
                 type: 'fermion',
+                id: generateElementId(elements.propagators),
                 anchor1: this.props.id,
                 anchor2: id,
             })
@@ -92,7 +93,7 @@ export class Anchor extends React.Component {
 
         // if this element is already part of the selection
         else if (selectedAnchors && selectedAnchors.indexOf(id) > -1 ) {
-           // there's nothing new to do (the drag will move the group) 
+           // there's nothing new to do (the drag will move the group)
         }
 
         // otherwise we are moving a non-selected anchor

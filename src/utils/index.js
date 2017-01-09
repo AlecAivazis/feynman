@@ -1,6 +1,6 @@
 export range from './range'
 export round from './round'
-export generateAnchorId from './generateAnchorId'
+export generateElementId from './generateElementId'
 export relativePosition from './relativePosition'
 export fixPositionToGrid from './fixPositionToGrid'
 export elementsInRegion from './elementsInRegion'
