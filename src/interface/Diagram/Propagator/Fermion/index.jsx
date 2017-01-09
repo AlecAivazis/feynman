@@ -4,26 +4,22 @@ import React from 'react'
 import styles from './styles'
 import Arrow from './Arrow'
 
-const Fermion = ({ x1, y1, x2, y2, strokeWidth, ...unusedProps }) => {
-
-
-    return (
-        <g>
-            <path
-                {...styles.container}
-                {...unusedProps}
-                strokeWidth={strokeWidth}
-                d={`M ${x1} ${y1} L ${x2} ${y2}`}
-            />
-            <Arrow
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                strokeWidth={strokeWidth}
-            />
-        </g>
-    )
-}
+const Fermion = ({ x1, y1, x2, y2, strokeWidth, ...unusedProps }) => (
+    <g>
+        <path
+            {...styles.container}
+            {...unusedProps}
+            strokeWidth={strokeWidth}
+            d={`M ${x1} ${y1} L ${x2} ${y2}`}
+        />
+        <Arrow
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            strokeWidth={strokeWidth}
+        />
+    </g>
+)
 
 export default Fermion
