@@ -7,7 +7,7 @@ import styles from './styles'
 import Header from '../Header'
 import Label from '../Label'
 import { ColorPicker, Slider, Button, ToggleButton, RedButton } from 'components'
-import { setElementAttrs, deleteElements } from 'actions/elements'
+import { setElementAttrs, deleteElements, alignSelectedAnchors } from 'actions/elements'
 
 const AnchorSummary = ({
     style,
@@ -15,6 +15,7 @@ const AnchorSummary = ({
     setAttrs,
     elements,
     deleteAnchors,
+    alignAnchors,
     ...unusedProps
 }) => {
     // figur eout if anchor needs to be pluralized
@@ -68,6 +69,22 @@ const AnchorSummary = ({
                 />
             </div>
 
+            {anchors.length > 1 && (
+                <div style={{width: '100%', display: 'flex', flexDirection: 'column',}}>
+                    <div style={{...styles.row, ...styles.buttonRow}}>
+                        <Button onClick={alignAnchors('horizontal')} style={styles.alignButton}>
+                            Align horizontally
+                        </Button>
+                    </div>
+
+                    <div style={{...styles.row, ...styles.buttonRow}}>
+                        <Button onClick={alignAnchors('vertical')} style={styles.alignButton}>
+                            Align vertically
+                        </Button>
+                    </div>
+                </div>
+            )}
+
             <div style={{...styles.row, ...styles.buttonRow}}>
                 <RedButton onClick={deleteAnchors} style={styles.deleteButton}>
                     delete {anchor}
@@ -103,6 +120,9 @@ const mapDispatchToProps = (dispatch, {anchors}) => ({
             ...anchors.map(id => ({type: 'anchors', id}))
         ))
     ),
+    alignAnchors: dir => () => (
+        dispatch(alignSelectedAnchors(dir))
+    )
 })
 
 // the anchor summary needs the elements object

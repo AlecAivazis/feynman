@@ -1,3 +1,5 @@
+import { lightBlue } from 'colors'
+
 const button = {
     display: 'flex',
     alignSelf: 'center',
@@ -53,5 +55,10 @@ export default {
     },
     deleteButton: {
         ...button,
-    }
+    },
+    alignButton: {
+        ...button,
+        color: lightBlue,
+        width: '100%',
+    },
 }
