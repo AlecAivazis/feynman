@@ -143,8 +143,8 @@ export default (state = initialState, {type, payload}) => {
             // save a reference to the assocaited element
             const element = local.anchors[id]
             // move the element according to the payload
-            element.x += payload.x
-            element.y += payload.y
+            element.x += payload.x || 0
+            element.y += payload.y || 0
         }
 
         return local

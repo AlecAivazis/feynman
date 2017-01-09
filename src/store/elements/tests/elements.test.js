@@ -11,6 +11,7 @@ import {
     deleteElements,
     moveSelectedElements,
 } from 'actions/elements'
+import { setGridSize } from 'actions/info'
 import {initialState as intialSelection} from '../selection'
 
 
@@ -401,9 +402,11 @@ describe('Reducers', function() {
                 // make sure the selection is emtpy
                 expect(clearedState.selection).to.deep.equal(intialSelection)
             })
+        })
+
+        describe("Moving elements", function() {
 
             it("responds to the MOVE_SELECTED_ELEMENTS action", function(){
-
                 // the anchors we are going to start off with
                 const anchors = [
                     {
@@ -456,6 +459,41 @@ describe('Reducers', function() {
                 expect(movedState.anchors[3].x).to.equal(anchors[2].x)
                 expect(movedState.anchors[3].y).to.equal(anchors[2].y)
             }) 
+
+            it("can move with partial payload", function() {
+                // the anchors we are going to start off with
+                const anchors = [
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    }
+                ]
+
+                // start off with some anchors
+                const initialState = reducer(undefined, addAnchors(...anchors))
+
+                // select a subset of the anchors
+                const selectedState = reducer(initialState, selectElements(
+                    {
+                        type: 'anchors',
+                        id: 1,
+                    },
+                ))
+
+                // the move to issue on the selected anchors
+                const move = {
+                    x: 50,
+                }
+
+                // move the selected anchors
+                const movedState = reducer(selectedState, moveSelectedElements(move))
+
+                // make sure the selected anchors were moved
+                expect(movedState.anchors[1].x).to.equal(anchors[0].x + move.x)
+                expect(movedState.anchors[1].y).to.equal(anchors[0].y)
+
+            })
         })
     })
 })

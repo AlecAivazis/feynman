@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { relativePosition, fixPositionToGrid, generateAnchorId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
 import {
-    setElementAttrs,
+    moveSelectedElements,
     selectElements,
     addAnchors,
     addPropagators,
@@ -56,6 +56,9 @@ export class Anchor extends React.Component {
         // grab used props
         let { id, selectAnchor, info, elements, addAnchor, addPropagator } = this.props
 
+        // save a reference to the list of selected anchors
+        const selectedAnchors = elements.selection.anchors
+
         // if the drag started with the alt key
         if (event.altKey) {
             // we are going to create a new anchor
@@ -82,40 +85,54 @@ export class Anchor extends React.Component {
                 anchor1: this.props.id,
                 anchor2: id,
             })
+
+            // select the anchor
+            selectAnchor(id)
         }
 
+        // if this element is already part of the selection
+        else if (selectedAnchors && selectedAnchors.indexOf(id) > -1 ) {
+           // there's nothing new to do (the drag will move the group) 
+        }
+
+        // otherwise we are moving a non-selected anchor
+        else {
+            // select the anchor
+            selectAnchor(id)
+        }
+
+        // regardless of what action we are taking on this drag, we have to
         this.setState({
             // track the state of the mouse
             mouseDown: true,
-            // make sure we are dragging the right element
-            moveTarget: id
+            moveTarget: id,
         })
-
-        // select the appropriate component
-        selectAnchor(id)
     }
 
     _mouseMove(event) {
         // don't bubble
         event.stopPropagation()
         // if the mouse is down
-        if (this.state.mouseDown && !this.props.fixed) {
-            // get the used props
-            const { info, x, y } = this.props
-
-            // get the relative position of the mouse
-            const pos = fixPositionToGrid(relativePosition({
+        if (this.state.mouseDown) {
+            // the location of the mouse in the diagram's coordinate space
+            const mouse = fixPositionToGrid(relativePosition({
                 x: event.clientX,
-                y: event.clientY
-            }), info.gridSize)
+                y: event.clientY,
+            }), this.props.info.gridSize)
 
-            // if its different than our current location
-            if (pos.x != x || pos.y != y) {
-                // update the anchor's location
-                this.props.setAnchorLocations({
-                    id: this.state.moveTarget,
-                    ...pos,
-                })
+            // save a reference to the anchor we are moving
+            const anchor = this.props.elements.anchors[this.state.moveTarget]
+
+            // if the mouse is at a different spot than the anchor (when rounded)
+            if (mouse.x !== anchor.x || mouse.y !== anchor.y) {
+                // compute the delta
+                const delta = {
+                    x: mouse.x - anchor.x,
+                    y: mouse.y - anchor.y,
+                }
+
+                // move all of the selected anchors by the same amount we've moved the mouse
+                this.props.moveSelectedAnchors(delta)
             }
         }
     }
@@ -172,8 +189,8 @@ export class Anchor extends React.Component {
 
 // the anchor will need
 const mapDispatchToProps = (dispatch, props) => ({
-    // to set its own location
-    setAnchorLocations: ({id, x, y}) => dispatch(setElementAttrs({type: 'anchors', id, x, y})),
+    // to move itself and other anchors
+    moveSelectedAnchors: move => dispatch(moveSelectedElements(move)),
     // select a given anchor
     selectAnchor: (id=props.id) => dispatch(selectElements({type: 'anchors', id})),
     // add new anchors to the diagram

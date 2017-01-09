@@ -40,5 +40,6 @@ describe('Interface Components', function() {
                 }
             ])
         })
+
     })
 })

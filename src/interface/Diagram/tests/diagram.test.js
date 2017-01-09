@@ -132,9 +132,9 @@ describe('Interface Components', function() {
         it('renders Anchors when appropriate', function() {
             // create a verion of the store
             const store = createStore()
-            // if the grid is supposed to be shown
+            // if anchors are supposed to be hidden
             if (!store.getState().info.showAnchors) {
-                // hide the grid
+                // make sure the anchors are shown
                 store.dispatch(toggleAnchors())
             }
 

@@ -110,7 +110,36 @@ describe('Interface Components', function() {
                 // make sure the prop matches the default value
                 expect(props[config]).to.equal(defaultConfig[config])
             }
+        })
 
+        it('clicking on a group of selected anchors does not deselect the group', function(){
+            // a store to test with
+            const store = createStore()
+            // add an anchor
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 50
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 100
+                }
+            ))
+
+            // select the anchors
+            store.dispatch(selectElements({type: 'anchors', id: 1}, {type: 'anchors', id: 2}))
+
+            // mount the anchor/diagram combo
+            const wrapper = mount(<Test store={store} />)
+
+            // click on one of the selected anchors
+            wrapper.find(ConnectedAnchor).at(0).simulate('mouseDown')
+
+            // make sure the selection has both entries still
+            expect(store.getState().elements.selection.anchors).to.deep.equal([1,2])
         })
     })
 })
