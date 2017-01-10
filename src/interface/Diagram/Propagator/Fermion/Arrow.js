@@ -1,7 +1,9 @@
 // external imports
 import React from 'react'
+// local imports
+import styles from './styles'
 
-const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, flip=false, ...unusedProps}) => {
+const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, flip=false, selected, ...unusedProps}) => {
     // some points in space
     const x = (x1 + x2) / 2
     const y = (y1 + y2) / 2
@@ -35,11 +37,15 @@ const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, flip=false, ...unusedProps}
         angle += 180
     }
 
+    // the styling we use depends on wether or not the fermion is selected
+    const styling = selected ? styles.selected : {}
+
     // render the arrow
     return (
         <polygon
             transform={`rotate(${angle}, ${x}, ${y})`}
             {...unusedProps}
+            {...styling}
             points={`${x},${y-halfHeight} ${x+halfBase},${y+halfHeight} ${x-halfBase}, ${y+halfHeight}`}
         />
     )

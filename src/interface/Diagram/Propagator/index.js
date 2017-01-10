@@ -24,7 +24,7 @@ export const Propagator = ({type, selected, ...element}) => {
     // return the appropriate component
     return Component && (
         <g>
-            <Component {...element} {...styling}/>
+            <Component {...element} {...styling} selected={selected}/>
         </g>
     )
 }

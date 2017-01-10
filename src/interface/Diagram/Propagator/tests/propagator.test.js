@@ -52,13 +52,9 @@ describe('Interface Components', function() {
             // the default configuration
             const defaultConfig = PropComponent.defaultProps
             const props = fermion.props()
-            console.log(defaultConfig, props)
 
             // go over each default configuration
             for (const config of Object.keys(defaultConfig)) {
-                // the selected config doesn't pass through
-                if (config === "selected") continue
-                
                 // make sure the prop matches the default value
                 expect(props[config]).to.equal(defaultConfig[config])
             }

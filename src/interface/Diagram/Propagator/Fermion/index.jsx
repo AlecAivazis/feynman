@@ -4,7 +4,7 @@ import React from 'react'
 import styles from './styles'
 import Arrow from './Arrow'
 
-const Fermion = ({ x1, y1, x2, y2, strokeWidth, ...unusedProps }) => (
+const Fermion = ({ x1, y1, x2, y2, strokeWidth, selected, ...unusedProps }) => (
     <g>
         <path
             {...styles.container}
@@ -17,6 +17,7 @@ const Fermion = ({ x1, y1, x2, y2, strokeWidth, ...unusedProps }) => (
             y1={y1}
             x2={x2}
             y2={y2}
+            selected={selected}
             strokeWidth={strokeWidth}
         />
     </g>
