@@ -1,8 +1,10 @@
 // external imports
 import React from 'react'
-import { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
+import { mount } from 'enzyme'
 // local imports
-import Propagator from '..'
+import { createStore } from 'store'
+import Propagator, {Propagator as PropComponent} from '..'
 import Fermion from '../Fermion'
 import ElectroWeak from '../ElectroWeak'
 
@@ -10,31 +12,53 @@ describe('Interface Components', function() {
     describe('Diagram Element', function() {
 
         it('renders an ElectroWeak', function() {
+            const store = createStore()
+
             // render a fermion through the diagram element
-            const wrapper = shallow(<Propagator type="em" />)
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Propagator type="em" />
+                </Provider>
+            )
             // make sure there is a fermion
             expect(wrapper.find(ElectroWeak)).to.have.length(1)
         })
 
         it('renders a Fermion', function() {
+            const store = createStore()
+
             // render a fermion through the diagram element
-            const wrapper = shallow(<Propagator type="fermion" />)
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Propagator type="fermion" />
+                </Provider>
+            )
             // make sure there is a fermion
             expect(wrapper.find(Fermion)).to.have.length(1)
         })
 
         it('passes default config onto the rendered propagator', function() {
+            const store = createStore()
+
             // render a fermion through the diagram element
-            const wrapper = shallow(<Propagator type="fermion" />)
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Propagator type="fermion" />
+                </Provider>
+            )
             // make sure there is a fermion
             const fermion = wrapper.find(Fermion)
 
             // the default configuration
-            const defaultConfig = Propagator.defaultProps
+            const defaultConfig = PropComponent.defaultProps
             const props = fermion.props()
+            console.log(defaultConfig, props)
 
             // go over each default configuration
             for (const config of Object.keys(defaultConfig)) {
+                // the selected config doesn't pass through
+                if (config === "selected") continue
+                
                 // make sure the prop matches the default value
                 expect(props[config]).to.equal(defaultConfig[config])
             }
