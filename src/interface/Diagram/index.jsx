@@ -2,6 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import autobind from 'autobind-decorator'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
@@ -60,6 +61,7 @@ class Diagram extends React.Component {
         document.removeEventListener('mouseup', this._mouseUp)
     }
 
+    @autobind
     _mouseDown(event) {
         // only fire for clicks originating on the diagram
         if (event.target.nodeName === 'svg') {
@@ -75,6 +77,7 @@ class Diagram extends React.Component {
         }
     }
 
+    @autobind
     _mouseMove(event) {
         // only fire for moves originating on the diagram when we are building the selection rectangle
         if (this.state.point1) {
@@ -97,6 +100,7 @@ class Diagram extends React.Component {
         }
     }
 
+    @autobind
     _mouseUp(event) {
         // only fire for moves originating on the diagram when we are building the selection rectangle
         if (this.state.point1) {
@@ -107,15 +111,6 @@ class Diagram extends React.Component {
             })
 
         }
-    }
-
-    constructor(...args) {
-        super(...args)
-
-        // function binds
-        this._mouseDown = this._mouseDown.bind(this)
-        this._mouseUp = this._mouseUp.bind(this)
-        this._mouseMove = this._mouseMove.bind(this)
     }
 }
 

@@ -1,42 +1,68 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
+import autobind from 'autobind-decorator'
 // local imports
 import { selectElements } from 'actions/elements'
 import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 
-export const Propagator = ({type, selected, ...element}) => {
-    // a mapping of element type to component
-    const Component = {
-        fermion: Fermion,
-        em: ElectroWeak,
-    }[type]
+export class Propagator extends React.Component {
 
-    if (typeof Component === 'undefined') {
-        return null
+    state = {
+        point: null
     }
- 
-    // use the selected styling when appropriate
-    const styling = selected ? styles.selected : {}
 
-    // return the appropriate component
-    return Component && (
-        <g>
-            <Component {...element} {...styling} selected={selected}/>
-        </g>
-    )
-}
+    static defaultProps = {
+        strokeWidth: 2,
+        stroke: 'black',
+        selected: false,
+    }
 
-Propagator.defaultProps = {
-    strokeWidth: 2,
-    stroke: 'black',
-    selected: false,
+    render() {
+        // grab used props
+        const {
+            type,
+            selected,
+            selectPropagator,
+            set,
+            state,
+            ...element
+        } = this.props
+
+        // a mapping of element type to component
+        const Component = {
+            fermion: Fermion,
+            em: ElectroWeak,
+        }[type]
+
+        if (typeof Component === 'undefined') {
+            return null
+        }
+
+        // use the selected styling when appropriate
+        const styling = selected ? styles.selected : {}
+
+        return (
+            <g onMouseDown={this._mouseDown}>
+                <Component {...element} {...styling} selected={selected}/>
+            </g>
+        )
+    }
+
+    @autobind
+    _mouseDown(event) {
+
+        console.log('hello')
+    }
 }
 
 const mapDispatchToProps = (dispatch, props) => ({
-    selectPropagator: () => dispatch(selectElements({type: 'propagators', id: props.id}))
+    selectPropagator: () => dispatch(selectElements({type: 'propagators', id: props.id})),
+    moveSelectedElements: move => dispatch(moveSelectedElements(move)),
 })
 
-export default connect(null, mapDispatchToProps)(Propagator)
+const selector = ({elements}) => ({elements})
+
+export default connect(selector, mapDispatchToProps)(Propagator)

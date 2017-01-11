@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/AlecAivazis/feynamn#readme",
   "dependencies": {
+    "autobind-decorator": "^1.3.4",
     "lodash": "^4.17.3",
     "rc-slider": "^5.4.0",
     "react": "^15.4.1",
@@ -37,6 +38,7 @@
     "babel-core": "^6.7.6",
     "babel-eslint": "^6.0.2",
     "babel-loader": "^6.2.10",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",

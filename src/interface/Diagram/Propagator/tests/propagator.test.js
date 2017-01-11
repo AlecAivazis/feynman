@@ -3,7 +3,9 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 // local imports
+import { addAnchors, addPropagators } from 'actions/elements'
 import { createStore } from 'store'
+import Diagram from 'interface/Diagram'
 import Propagator, {Propagator as PropComponent} from '..'
 import Fermion from '../Fermion'
 import ElectroWeak from '../ElectroWeak'
@@ -58,6 +60,45 @@ describe('Interface Components', function() {
                 // make sure the prop matches the default value
                 expect(props[config]).to.equal(defaultConfig[config])
             }
+        })
+
+        it('renders with selected prop equal true when appropriate', function() {
+            // a store to start out with
+            const store = createStore()
+            // create some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 200
+                }
+            ))
+
+            // add a propagator connecting the anchors
+            store.dispatch(addPropagators({
+                id: 1,
+                type: 'fermion',
+                anchor1: 1,
+                anchor2: 2,
+            }))
+
+            // render a fermion through the diagram element
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Diagram />
+                </Provider>
+            )
+            // make sure there is a fermion
+            const fermion = wrapper.find(Fermion)
+
+            // the default configuration
+            const defaultConfig = PropComponent.defaultProps
+            const props = fermion.props()
 
         })
     })
