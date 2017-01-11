@@ -99,7 +99,43 @@ describe('Interface Components', function() {
             // the default configuration
             const defaultConfig = PropComponent.defaultProps
             const props = fermion.props()
+        })
 
+        it('can be selected with click', function() {// a store to start out with
+            const store = createStore()
+            // create some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 200
+                }
+            ))
+
+            // add a propagator connecting the anchors
+            store.dispatch(addPropagators({
+                id: 1,
+                type: 'fermion',
+                anchor1: 1,
+                anchor2: 2,
+            }))
+
+            // render a fermion through the diagram element
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Diagram />
+                </Provider>
+            )
+
+            // click on the propagator
+            wrapper.find(Fermion).simulate('mousedown')
+
+            expect(store.getState().elements.selection.propagators).to.deep.equal([1])
         })
     })
 })

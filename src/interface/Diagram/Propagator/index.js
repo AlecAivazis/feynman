@@ -53,8 +53,8 @@ export class Propagator extends React.Component {
 
     @autobind
     _mouseDown(event) {
-
-        console.log('hello')
+        // select the propagator
+        this.props.selectPropagator()
     }
 }
 

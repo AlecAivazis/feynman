@@ -37,7 +37,13 @@ class Diagram extends React.Component {
                 {/* order matters here (last shows up on top) */}
 
                 {info.showGrid && info.gridSize > 0 && <Grid/>}
-                {propagators.map((element, i) => <Propagator {...element} key={i}/>)}
+                {propagators.map((element, i) => (
+                    <Propagator
+                        {...element}
+                        key={i}
+                        selected={selection.propagators && selection.propagators.includes(element.id)}
+                    />
+                ))}
                 {info.showAnchors && Object.values(elements.anchors).map(anchor => (
                     <Anchor {...anchor}
                         selected={selection.anchors && selection.anchors.includes(anchor.id)}
