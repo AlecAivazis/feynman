@@ -3,10 +3,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import autobind from 'autobind-decorator'
 // local imports
-import { selectElements } from 'actions/elements'
 import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
+import { EventListener } from 'components'
+import { selectElements } from 'actions/elements'
+import { throttle } from 'utils'
 
 export class Propagator extends React.Component {
 
@@ -47,14 +49,28 @@ export class Propagator extends React.Component {
         return (
             <g onMouseDown={this._mouseDown}>
                 <Component {...element} {...styling} selected={selected}/>
+                <EventListener event="mousemove">
+                    {this._mouseMove}
+                </EventListener>
+                <EventListener event="mouseup">
+                    {this._mouseUp}
+                </EventListener>
             </g>
         )
     }
 
     @autobind
     _mouseDown(event) {
+        // grab the used props
+        const { elements, selectPropagator } = this.props
         // select the propagator
-        this.props.selectPropagator()
+        selectPropagator()
+    }
+
+    @autobind
+    @throttle(20)
+    _mouseMove(event) {
+        // if there is a starting point
     }
 }
 
