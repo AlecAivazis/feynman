@@ -138,8 +138,11 @@ export default (state = initialState, {type, payload}) => {
         // create a copy we can play with
         const local = _.cloneDeep(state)
 
+        // the anchors to move
+        const anchors = local.selection.anchors || []
+
         // loop over every selected anchor
-        for (const id of local.selection.anchors) {
+        for (const id of anchors) {
             // save a reference to the assocaited element
             const element = local.anchors[id]
             // move the element according to the payload

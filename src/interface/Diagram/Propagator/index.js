@@ -6,7 +6,7 @@ import autobind from 'autobind-decorator'
 import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
-import { EventListener } from 'components'
+import { EventListener, Splittable } from 'components'
 import { selectElements } from 'actions/elements'
 import { throttle } from 'utils'
 
@@ -47,15 +47,16 @@ export class Propagator extends React.Component {
         const styling = selected ? styles.selected : {}
 
         return (
-            <g onMouseDown={this._mouseDown}>
-                <Component {...element} {...styling} selected={selected}/>
-                <EventListener event="mousemove">
-                    {this._mouseMove}
-                </EventListener>
-                <EventListener event="mouseup">
-                    {this._mouseUp}
-                </EventListener>
-            </g>
+            <Splittable
+                element="propagators"
+                id={element.id}
+            >
+                <Component
+                    {...element}
+                    {...styling}
+                    selected={selected}
+                />
+            </Splittable>
         )
     }
 

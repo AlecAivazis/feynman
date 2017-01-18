@@ -2,18 +2,18 @@
 import React from 'react'
 import { mount } from 'enzyme'
 // local imports
-import ElementDrag from '../ElementDrag'
+import Splittable from '../Splittable'
 
 describe('"Reusable" Components', function() {
-    describe('ElementDrag', function() {
+    describe('Splittable', function() {
         it('renders its child', function() {
             // render a wrapped div
             const wrapper = mount(
-                <ElementDrag>
+                <Splittable>
                     <div>
                         hello
                     </div>
-                </ElementDrag>
+                </Splittable>
             )
 
             // make sure there is a div in the view
@@ -23,14 +23,14 @@ describe('"Reusable" Components', function() {
         it('barfs if there are multiple children', function() {
             // render an element drag over two divs
             const wrapper = () => mount(
-                <ElementDrag>
+                <Splittable>
                     <div>
                         hello
                     </div>
                     <div>
                         hello
                     </div>
-                </ElementDrag>
+                </Splittable>
             )
 
             // make sure that fails
