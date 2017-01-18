@@ -464,9 +464,8 @@ describe('Reducers', function() {
             })
 
             it('can move selected propagators', function() {
-
-                // start off with some anchors
-                const initialState = reducer(undefined, addAnchors(
+                // the anchors we are going to start off with
+                const anchors = [
                     {
                         id: 1,
                         x: 50,
@@ -475,9 +474,17 @@ describe('Reducers', function() {
                     {
                         id: 2,
                         x: 100,
-                        y: 200,
+                        y: 100,
+                    },
+                    {
+                        id: 3,
+                        x: 500,
+                        y: 100
                     }
-                ))
+                ]
+
+                // start off with some anchors
+                const initialState = reducer(undefined, addAnchors(...anchors))
 
                 // add a propagator connecting the two
                 const propagatorState = reducer(initialState, addPropagators(
@@ -489,6 +496,31 @@ describe('Reducers', function() {
                     }
                 ))
 
+                // select the propagator
+                const selectedState = reducer(propagatorState, selectElements(
+                    {
+                        type: 'propagators',
+                        id: 1,
+                    }
+                ))
+
+                // the amount of move the propagator
+                const move = {
+                    x: 50,
+                    y: 50,
+                }
+
+                // move the propagator
+                const movedState = reducer(propagatorState, moveSelectedElements(move))
+
+                // make sure the appropriate anchors were moved
+                expect(movedState.anchors[1].x).to.equal(anchors[0].x + move.x)
+                expect(movedState.anchors[1].y).to.equal(anchors[0].y + move.y)
+                expect(movedState.anchors[2].x).to.equal(anchors[1].x + move.x)
+                expect(movedState.anchors[2].y).to.equal(anchors[1].y + move.y)
+                // make sure the non-selected anchor wasn't moved
+                expect(movedState.anchors[3].x).to.equal(anchors[2].x)
+                expect(movedState.anchors[3].y).to.equal(anchors[2].y)
             })
 
             it("can move with partial payload", function() {
