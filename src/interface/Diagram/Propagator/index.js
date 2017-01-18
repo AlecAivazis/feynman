@@ -7,79 +7,39 @@ import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import { EventListener, Splittable } from 'components'
-import { selectElements } from 'actions/elements'
-import { throttle } from 'utils'
 
-export class Propagator extends React.Component {
+const Propagator = ({
+    strokeWidth=2, stroke="black", selected=false,
+    type, ...element
+}) => {
+    // a mapping of element type to component
+    const Component = {
+        fermion: Fermion,
+        em: ElectroWeak,
+    }[type]
 
-    state = {
-        point: null
+    if (typeof Component === 'undefined') {
+        return null
     }
 
-    static defaultProps = {
-        strokeWidth: 2,
-        stroke: 'black',
-        selected: false,
-    }
+    // use the selected styling when appropriate
+    const styling = selected ? styles.selected : {}
 
-    render() {
-        // grab used props
-        const {
-            type,
-            selected,
-            selectPropagator,
-            set,
-            state,
-            ...element
-        } = this.props
-
-        // a mapping of element type to component
-        const Component = {
-            fermion: Fermion,
-            em: ElectroWeak,
-        }[type]
-
-        if (typeof Component === 'undefined') {
-            return null
-        }
-
-        // use the selected styling when appropriate
-        const styling = selected ? styles.selected : {}
-
-        return (
-            <Splittable
-                element="propagators"
-                id={element.id}
-            >
-                <Component
-                    {...element}
-                    {...styling}
-                    selected={selected}
-                />
-            </Splittable>
-        )
-    }
-
-    @autobind
-    _mouseDown(event) {
-        // grab the used props
-        const { elements, selectPropagator } = this.props
-        // select the propagator
-        selectPropagator()
-    }
-
-    @autobind
-    @throttle(20)
-    _mouseMove(event) {
-        // if there is a starting point
-    }
+    return (
+        <Splittable
+            element="propagators"
+            id={element.id}
+        >
+            <Component
+                strokeWidth={strokeWidth}
+                stroke={stroke}
+                selected={selected}
+                {...element}
+                {...styling}
+                selected={selected}
+            />
+        </Splittable>
+    )
 }
 
-const mapDispatchToProps = (dispatch, props) => ({
-    selectPropagator: () => dispatch(selectElements({type: 'propagators', id: props.id})),
-    moveSelectedElements: move => dispatch(moveSelectedElements(move)),
-})
-
-const selector = ({elements}) => ({elements})
-
-export default connect(selector, mapDispatchToProps)(Propagator)
+export default Propagator
