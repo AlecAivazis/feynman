@@ -8,10 +8,7 @@ import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import { EventListener, Splittable } from 'components'
 
-const Propagator = ({
-    strokeWidth=2, stroke="black", selected=false,
-    type, ...element
-}) => {
+export const Propagator = ({type, selected, ...element}) => {
     // a mapping of element type to component
     const Component = {
         fermion: Fermion,
@@ -31,8 +28,6 @@ const Propagator = ({
             id={element.id}
         >
             <Component
-                strokeWidth={strokeWidth}
-                stroke={stroke}
                 selected={selected}
                 {...element}
                 {...styling}
@@ -40,6 +35,12 @@ const Propagator = ({
             />
         </Splittable>
     )
+}
+
+Propagator.defaultProps = {
+    strokeWidth: 2,
+    stroke: "black",
+    selected: false
 }
 
 export default Propagator

@@ -409,7 +409,7 @@ describe('Reducers', function() {
 
         describe("Moving elements", function() {
 
-            it("responds to the MOVE_SELECTED_ELEMENTS action", function(){
+            it("can move selected anchors", function(){
                 // the anchors we are going to start off with
                 const anchors = [
                     {
@@ -463,6 +463,34 @@ describe('Reducers', function() {
                 expect(movedState.anchors[3].y).to.equal(anchors[2].y)
             })
 
+            it('can move selected propagators', function() {
+
+                // start off with some anchors
+                const initialState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 200,
+                    }
+                ))
+
+                // add a propagator connecting the two
+                const propagatorState = reducer(initialState, addPropagators(
+                    {
+                        id: 1,
+                        type: 'fermion',
+                        anchor1: 1,
+                        anchor2: 2,
+                    }
+                ))
+
+            })
+
             it("can move with partial payload", function() {
                 // the anchors we are going to start off with
                 const anchors = [
@@ -495,7 +523,6 @@ describe('Reducers', function() {
                 // make sure the selected anchors were moved
                 expect(movedState.anchors[1].x).to.equal(anchors[0].x + move.x)
                 expect(movedState.anchors[1].y).to.equal(anchors[0].y)
-
             })
         })
     })
