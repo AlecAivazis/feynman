@@ -511,7 +511,7 @@ describe('Reducers', function() {
                 }
 
                 // move the propagator
-                const movedState = reducer(propagatorState, moveSelectedElements(move))
+                const movedState = reducer(selectedState, moveSelectedElements(move))
 
                 // make sure the appropriate anchors were moved
                 expect(movedState.anchors[1].x).to.equal(anchors[0].x + move.x)

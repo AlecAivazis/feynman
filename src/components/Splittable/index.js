@@ -93,6 +93,14 @@ class Splittable extends React.Component {
 
                 // move the selected anchors
                 moveSelectedElements(delta)
+
+                // move the origin to the new location
+                this.setState({
+                    origin: fixPositionToGrid(relativePosition({
+                        x: event.clientX,
+                        y: event.clientY,
+                    }), info.gridSize)
+                })
             }
         }
     }
