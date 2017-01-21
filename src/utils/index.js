@@ -1,4 +1,5 @@
 export range from './range'
+export ceil from './ceil'
 export round from './round'
 export generateElementId from './generateElementId'
 export relativePosition from './relativePosition'

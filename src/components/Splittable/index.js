@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 // local imports
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { selectElements, mergeElements, moveSelectedElements } from 'actions/elements'
-import { throttle } from 'utils'
+import { throttle, round } from 'utils'
 import { EventListener } from 'components'
 
 class Splittable extends React.Component {
@@ -21,7 +21,8 @@ class Splittable extends React.Component {
 
     state = {
         origin: null,
-        moveTarget: null
+        moveTarget: null,
+        elementOrigin: null
     }
 
     @autobind
@@ -30,10 +31,18 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // grab the used props
-        let { elements, element:name, id, split, selectElement, info } = this.props
+        let {
+            elements,
+            type,
+            split,
+            element:{id, ...element},
+            selectElement,
+            info,
+            location,
+        } = this.props
 
         // save a reference to the selected elements
-        const selected = elements.selection[name]
+        const selected = elements.selection[type]
 
         // if the element is already part of the selector
         if (selected && selected.indexOf(id) > -1 ) {
@@ -54,14 +63,14 @@ class Splittable extends React.Component {
 
         // regardless of what action we are taking on this drag, we have to
         this.setState({
-            // track the state of the mouse
-            origin: fixPositionToGrid(relativePosition({
+            // track the current location of the mouse
+            origin: {
                 x: event.clientX,
                 y: event.clientY,
-            }), info.gridSize),
+            },
             // and the id of the element we are moving
             moveTarget: id
-        })
+        }, () => console.log(this.state.origin))
     }
 
     @autobind
@@ -71,37 +80,30 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // get the used props
-        const { elements, element:name, info, moveSelectedElements } = this.props
+        const { type, info, moveSelectedElements } = this.props
         const { origin } = this.state
 
         // if the mouse is down
         if (origin) {
             // the location of the mouse in the diagram's coordinate space
-            const mouse = fixPositionToGrid(relativePosition({
-                x: event.clientX,
+            const mouse = {
+                x: event.clientX, 
                 y: event.clientY,
-            }), info.gridSize)
-
-
-            // if the mouse is in a different location than where it was last time
-            if (origin.x != mouse.x || origin.y != mouse.y) {
-                // compute the delta
-                const delta = {
-                    x: mouse.x - origin.x,
-                    y: mouse.y - origin.y,
-                }
-
-                // move the selected anchors
-                moveSelectedElements(delta)
-
-                // move the origin to the new location
-                this.setState({
-                    origin: fixPositionToGrid(relativePosition({
-                        x: event.clientX,
-                        y: event.clientY,
-                    }), info.gridSize)
-                })
             }
+
+            // compute the difference between the mouse's current location and the previous one
+            const delta = {
+                x: mouse.x - origin.x,
+                y: mouse.y - origin.y,
+            }
+
+            // move the selected anchors
+            moveSelectedElements(delta)
+
+            // save the current location for the next time we move the element
+            this.setState({
+                origin: mouse
+            })
         }
     }
 
@@ -110,13 +112,14 @@ class Splittable extends React.Component {
         // stop the event from bubbling up
         event.stopPropagation()
 
-        // if this component was being dragged
-        if (this.state.origin) {
-            // save the id of the element we are moving
-            const { moveTarget } = this.state
+        // used state
+        const { origin, moveTarget } = this.state
+        const { mergeElements } = this.props
 
+        // if this component was being dragged
+        if (origin) {
             // tell the store to clean up any overlapping elements (and select the resulting element)
-            // this.props.mergeElements(moveTarget, true)
+            mergeElements(moveTarget, true)
         }
 
         // track the state of the mouse
@@ -147,7 +150,7 @@ class Splittable extends React.Component {
 
 const selector = ({elements, info}) => ({elements, info})
 const mapDispatchToProps = (dispatch, props) => ({
-    selectElement: id => dispatch(selectElements({type: props.element, id})),
+    selectElement: id => dispatch(selectElements({type: props.type, id})),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
     // tell the store to merge overlapping elements
     mergeElements: (id, select) => dispatch(mergeElements(id, select)),

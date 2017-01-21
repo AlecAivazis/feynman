@@ -8,7 +8,11 @@ import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import { EventListener, Splittable } from 'components'
 
-export const Propagator = ({type, selected, ...element}) => {
+export function splitPropagator(id, store) {
+
+}
+
+export default function Propagator ({type, selected, ...element}) {
     // a mapping of element type to component
     const Component = {
         fermion: Fermion,
@@ -24,8 +28,14 @@ export const Propagator = ({type, selected, ...element}) => {
 
     return (
         <Splittable
-            element="propagators"
-            id={element.id}
+            type="propagators"
+            element={element}
+            location={({anchor1}, {anchors}) => {
+                // grab the x and y coordinates
+                const { x, y } = anchors[anchor1]
+
+                return {x, y}
+            }}
         >
             <Component
                 selected={selected}
@@ -42,5 +52,3 @@ Propagator.defaultProps = {
     stroke: "black",
     selected: false
 }
-
-export default Propagator
