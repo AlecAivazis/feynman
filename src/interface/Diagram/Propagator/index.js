@@ -7,13 +7,14 @@ import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import { EventListener, Splittable } from 'components'
+import { fixPositionToGrid } from 'utils'
 
-export function splitPropagator(id, store) {
-
+export function splitPropagator({id, elements}) {
+    return id
 }
 
-export default function Propagator ({type, selected, ...element}) {
-    // a mapping of element type to component
+const Propagator = ({type, selected, id, info, ...element}) => {
+// a mapping of element type to component
     const Component = {
         fermion: Fermion,
         em: ElectroWeak,
@@ -29,12 +30,12 @@ export default function Propagator ({type, selected, ...element}) {
     return (
         <Splittable
             type="propagators"
-            element={element}
-            location={({anchor1}, {anchors}) => {
-                // grab the x and y coordinates
-                const { x, y } = anchors[anchor1]
-
-                return {x, y}
+            id={id}
+            split={splitPropagator}
+            onMoveStart={() => {
+                // compute the fixed locations of each anchor
+                const anchor1 = fixPositionToGrid(element.anchor1, info.gridSize)
+                console.log(anchor1)
             }}
         >
             <Component
@@ -47,8 +48,13 @@ export default function Propagator ({type, selected, ...element}) {
     )
 }
 
+
+const selector = ({info}) => ({info})
+
 Propagator.defaultProps = {
     strokeWidth: 2,
     stroke: "black",
     selected: false
 }
+
+export default connect(selector)(Propagator)

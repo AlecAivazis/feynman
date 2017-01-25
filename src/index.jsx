@@ -12,7 +12,7 @@ import { addAnchors, addPropagators, selectElements } from 'actions/elements'
 store.dispatch(addAnchors(
     {
         id: 1,
-        x: 50,
+        x: 25,
         y: 100,
     },
     {

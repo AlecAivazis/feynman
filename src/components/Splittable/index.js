@@ -22,7 +22,7 @@ class Splittable extends React.Component {
     state = {
         origin: null,
         moveTarget: null,
-        elementOrigin: null
+        distanceToMove: null
     }
 
     @autobind
@@ -35,7 +35,7 @@ class Splittable extends React.Component {
             elements,
             type,
             split,
-            element:{id, ...element},
+            id,
             selectElement,
             info,
             location,
@@ -54,23 +54,26 @@ class Splittable extends React.Component {
             // if the altkey was held when the drag started
             if (event.altkey) {
                 // let the user do what they want (they will return the id to follow)
-                id = split(id)
+                id = split({id, elements})
             }
 
             // select appropriate element
             selectElement(id)
         }
 
+
+        const origin = {
+            x: event.clientX,
+            y: event.clientY,
+        }
+
         // regardless of what action we are taking on this drag, we have to
         this.setState({
             // track the current location of the mouse
-            origin: {
-                x: event.clientX,
-                y: event.clientY,
-            },
+            origin,
             // and the id of the element we are moving
             moveTarget: id
-        }, () => console.log(this.state.origin))
+        })
     }
 
     @autobind
@@ -81,7 +84,7 @@ class Splittable extends React.Component {
 
         // get the used props
         const { type, info, moveSelectedElements } = this.props
-        const { origin } = this.state
+        const { origin, distanceToMove } = this.state
 
         // if the mouse is down
         if (origin) {
@@ -97,12 +100,67 @@ class Splittable extends React.Component {
                 y: mouse.y - origin.y,
             }
 
+            // the amount to move (this will be halved)
+            let grid
+            // the minimum amount to wait before moving
+            let snapMove = {}
+
+            // if there is a grid
+            if (info.gridSize > 0) {
+                grid = info.gridSize
+                snapMove = {
+                    x: grid,
+                    y: grid,
+                }
+            }
+            // otherwise there is no grid
+            else {
+                grid = 2
+                snapMove = {
+                    x: Math.abs(delta.x), // this minus sign is accounted for on line 137
+                    y: Math.abs(delta.y)
+                }
+            }
+
+            // the location to move to
+            const fixed = {...origin}
+
+            // if we have moved the mouse enough in the x direction
+            if (Math.abs(delta.x) > grid/2) {
+                // if we are moving in the positive direction
+                if (delta.x > 0) {
+                    // add one grid to element
+                    fixed.x += snapMove.x
+                // otherwise we are moving in the negative direction
+                } else {
+                    // remove one grid to element
+                    fixed.x -= snapMove.x
+                }
+            }
+
+            // if we have moved the mouse enough in the x direction
+            if (Math.abs(delta.y) >= grid/2) {
+                // if we are moving in the postive y direction (visually negative)
+                if (delta.y > 0) {
+                    // add one grid to element
+                    fixed.y += snapMove.y
+                // if we are moving in the negative y direction (visually positive)
+                } else {
+                    // remove one grid to element
+                    fixed.y -= snapMove.y
+                }
+            }
+
+            const fixedDelta = {
+                x: fixed.x - origin.x,
+                y: fixed.y - origin.y,
+            }
             // move the selected anchors
-            moveSelectedElements(delta)
+            moveSelectedElements(fixedDelta)
 
             // save the current location for the next time we move the element
             this.setState({
-                origin: mouse
+                origin: fixed,
             })
         }
     }
