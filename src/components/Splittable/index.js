@@ -16,7 +16,8 @@ class Splittable extends React.Component {
     }
 
     static defaultProps = {
-        split: id => id // default, don't split anything
+        split: id => id, // default, don't split anything
+        onMoveStart: () => {}
     }
 
     state = {
@@ -39,6 +40,7 @@ class Splittable extends React.Component {
             selectElement,
             info,
             location,
+            onMoveStart,
         } = this.props
 
         // save a reference to the selected elements
@@ -60,6 +62,9 @@ class Splittable extends React.Component {
             // select appropriate element
             selectElement(id)
         }
+
+        // call the lifecycle method
+        onMoveStart()
 
 
         const origin = {

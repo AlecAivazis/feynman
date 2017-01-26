@@ -1,19 +1,41 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
-import autobind from 'autobind-decorator'
 // local imports
 import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import { EventListener, Splittable } from 'components'
 import { fixPositionToGrid } from 'utils'
+import { setElementAttrs } from 'actions/elements'
 
 export function splitPropagator({id, elements}) {
     return id
 }
 
-const Propagator = ({type, selected, id, info, ...element}) => {
+const onMoveStart = ({ dispatch, anchor1, anchor2, elements, info:{gridSize}}) => () => {
+
+    // compute the new location for anchor1
+    const anchor1Loc = fixPositionToGrid(elements.anchors[anchor1], gridSize)
+    const anchor2Loc = fixPositionToGrid(elements.anchors[anchor2], gridSize)
+
+    // update the new location for the anchors
+    dispatch(setElementAttrs(
+        {
+            type: 'anchors',
+            id: anchor1,
+            ...anchor1Loc,
+        },
+        {
+            type: 'anchors',
+            id: anchor2,
+            ...anchor2Loc,
+        }
+    ))
+
+}
+
+const Propagator = ({type, selected, id, info, elements, dispatch, ...element}) => {
 // a mapping of element type to component
     const Component = {
         fermion: Fermion,
@@ -32,11 +54,12 @@ const Propagator = ({type, selected, id, info, ...element}) => {
             type="propagators"
             id={id}
             split={splitPropagator}
-            onMoveStart={() => {
-                // compute the fixed locations of each anchor
-                const anchor1 = fixPositionToGrid(element.anchor1, info.gridSize)
-                console.log(anchor1)
-            }}
+            onMoveStart={onMoveStart({
+                dispatch,
+                ...element,
+                elements,
+                info
+            })}
         >
             <Component
                 selected={selected}
@@ -48,13 +71,11 @@ const Propagator = ({type, selected, id, info, ...element}) => {
     )
 }
 
-
-const selector = ({info}) => ({info})
-
 Propagator.defaultProps = {
     strokeWidth: 2,
     stroke: "black",
     selected: false
 }
 
+const selector = ({elements, info}) => ({elements, info})
 export default connect(selector)(Propagator)
