@@ -12,7 +12,8 @@ class Splittable extends React.Component {
 
     static propsTypes = {
         element: React.PropTypes.string.isRequired,
-        split: React.PropTypes.func.isRequired
+        split: React.PropTypes.func.isRequired,
+        type: React.PropTypes.string.isRequired
     }
 
     static defaultProps = {
@@ -66,7 +67,6 @@ class Splittable extends React.Component {
         // call the lifecycle method
         onMoveStart()
 
-
         const origin = {
             x: event.clientX,
             y: event.clientY,
@@ -82,7 +82,6 @@ class Splittable extends React.Component {
     }
 
     @autobind
-    @throttle(20)
     _mouseMove(event) {
         // stop the event from bubbling up
         event.stopPropagation()
@@ -90,9 +89,10 @@ class Splittable extends React.Component {
         // get the used props
         const { type, info, moveSelectedElements } = this.props
         const { origin, distanceToMove } = this.state
-
+        // console.log(this.props.id)
         // if the mouse is down
         if (origin) {
+            // console.log(this.state.origin)
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
                 x: event.clientX, 
@@ -105,17 +105,19 @@ class Splittable extends React.Component {
                 y: mouse.y - origin.y,
             }
 
+
             // the amount to move (this will be halved)
             let grid
             // the minimum amount to wait before moving
             let snapMove = {}
+            // console.log(delta)
 
             // if there is a grid
             if (info.gridSize > 0) {
                 grid = info.gridSize
                 snapMove = {
-                    x: grid,
-                    y: grid,
+                    x: round(delta.x, grid),
+                    y: round(delta.y, grid),
                 }
             }
             // otherwise there is no grid
@@ -132,28 +134,14 @@ class Splittable extends React.Component {
 
             // if we have moved the mouse enough in the x direction
             if (Math.abs(delta.x) > grid/2) {
-                // if we are moving in the positive direction
-                if (delta.x > 0) {
-                    // add one grid to element
-                    fixed.x += snapMove.x
-                // otherwise we are moving in the negative direction
-                } else {
-                    // remove one grid to element
-                    fixed.x -= snapMove.x
-                }
+                // add one grid to element
+                fixed.x += snapMove.x
             }
 
             // if we have moved the mouse enough in the x direction
             if (Math.abs(delta.y) >= grid/2) {
-                // if we are moving in the postive y direction (visually negative)
-                if (delta.y > 0) {
-                    // add one grid to element
-                    fixed.y += snapMove.y
-                // if we are moving in the negative y direction (visually positive)
-                } else {
-                    // remove one grid to element
-                    fixed.y -= snapMove.y
-                }
+                // add one grid to element
+                fixed.y += snapMove.y
             }
 
             const fixedDelta = {
@@ -194,8 +182,12 @@ class Splittable extends React.Component {
         })
     }
 
+    componentDidMount() {
+        this._mouseMove({stopPropagation() {}})
+    }
+
     render() {
-        const { children, ...unusedProps } = this.props
+        const { children:child, ...unusedProps } = this.props
 
         return (
             <g onMouseDown={this._mouseDown}>
@@ -205,7 +197,7 @@ class Splittable extends React.Component {
                 <EventListener event="mouseup">
                     {this._mouseUp}
                 </EventListener>
-                {React.Children.only(children)}
+                {React.Children.only(child)}
             </g>
         )
     }

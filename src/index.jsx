@@ -19,7 +19,12 @@ store.dispatch(addAnchors(
         id: 2,
         x: 100,
         y: 200,
-    }
+    },
+    {
+        id: 3,
+        x: 400,
+        y: 200,
+    },
 ))
 
 store.dispatch(addPropagators(
@@ -28,6 +33,12 @@ store.dispatch(addPropagators(
         id: 1,
         anchor1: 1,
         anchor2: 2,
+    },
+    {
+        type: 'fermion',
+        id: 2,
+        anchor1: 1,
+        anchor2: 3,
     }
 ))
 

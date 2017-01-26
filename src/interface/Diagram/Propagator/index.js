@@ -14,7 +14,6 @@ export function splitPropagator({id, elements}) {
 }
 
 const onMoveStart = ({ dispatch, anchor1, anchor2, elements, info:{gridSize}}) => () => {
-
     // compute the new location for anchor1
     const anchor1Loc = fixPositionToGrid(elements.anchors[anchor1], gridSize)
     const anchor2Loc = fixPositionToGrid(elements.anchors[anchor2], gridSize)
