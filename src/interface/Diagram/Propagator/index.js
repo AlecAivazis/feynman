@@ -9,31 +9,6 @@ import { EventListener, Splittable } from 'components'
 import { fixPositionToGrid } from 'utils'
 import { setElementAttrs } from 'actions/elements'
 
-export function splitPropagator({id, elements}) {
-    return id
-}
-
-const onMoveStart = ({ dispatch, anchor1, anchor2, elements, info:{gridSize}}) => () => {
-    // compute the new location for anchor1
-    const anchor1Loc = fixPositionToGrid(elements.anchors[anchor1], gridSize)
-    const anchor2Loc = fixPositionToGrid(elements.anchors[anchor2], gridSize)
-
-    // update the new location for the anchors
-    dispatch(setElementAttrs(
-        {
-            type: 'anchors',
-            id: anchor1,
-            ...anchor1Loc,
-        },
-        {
-            type: 'anchors',
-            id: anchor2,
-            ...anchor2Loc,
-        }
-    ))
-
-}
-
 const Propagator = ({type, selected, id, info, elements, dispatch, ...element}) => {
 // a mapping of element type to component
     const Component = {
@@ -74,6 +49,31 @@ Propagator.defaultProps = {
     strokeWidth: 2,
     stroke: "black",
     selected: false
+}
+
+export function splitPropagator({id, elements}) {
+    return id
+}
+
+const onMoveStart = ({ dispatch, anchor1, anchor2, elements, info:{gridSize}}) => () => {
+    // compute the new location for anchor1
+    const anchor1Loc = fixPositionToGrid(elements.anchors[anchor1], gridSize)
+    const anchor2Loc = fixPositionToGrid(elements.anchors[anchor2], gridSize)
+
+    // update the new location for the anchors
+    dispatch(setElementAttrs(
+        {
+            type: 'anchors',
+            id: anchor1,
+            ...anchor1Loc,
+        },
+        {
+            type: 'anchors',
+            id: anchor2,
+            ...anchor2Loc,
+        }
+    ))
+
 }
 
 const selector = ({elements, info}) => ({elements, info})

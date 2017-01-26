@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { Splittable } from 'components'
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
-import { addAnchors, addPropagators } from 'actions/elements'
+import { addAnchors, addPropagators, setElementAttrs } from 'actions/elements'
 import styles from './styles'
 
 const Anchor = ({
@@ -22,6 +22,7 @@ const Anchor = ({
     elements,
     addAnchor,
     addPropagator,
+    snapAnchor,
 }) => {
 
     // get any required styling
@@ -40,6 +41,7 @@ const Anchor = ({
                 addAnchor,
                 addPropagator
             })}
+            onMoveStart={snapAnchor(info.gridSize)}
         >
             <circle
                 cx={x}
@@ -86,8 +88,11 @@ const splitAnchor = ({ info, elements, addAnchor, addPropagator }) => ({id, x, y
 }
 
 const selector = ({info, elements}) => ({info, elements})
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, {x, y, id}) => ({
     addAnchor: anchors => dispatch(addAnchors(anchors)),
     addPropagator: propagators => dispatch(addPropagators(propagators)),
+    snapAnchor: grid => () => dispatch(
+        setElementAttrs({type: 'anchors', id, ...fixPositionToGrid({x, y}, grid)})
+    )
 })
 export default connect(selector, mapDispatchToProps)(Anchor)
