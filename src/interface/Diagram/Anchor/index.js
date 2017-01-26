@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { Splittable } from 'components'
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { sidebarWidth } from 'interface/Sidebar/styles'
+import { addAnchors, addPropagators } from 'actions/elements'
 import styles from './styles'
 
 const Anchor = ({
@@ -16,6 +17,11 @@ const Anchor = ({
     fill,
     fixed,
     id,
+    selectAnchor,
+    info,
+    elements,
+    addAnchor,
+    addPropagator,
 }) => {
 
     // get any required styling
@@ -27,6 +33,13 @@ const Anchor = ({
         <Splittable
             type="anchors"
             id={id}
+            split={splitAnchor({
+                selectAnchor,
+                info,
+                elements,
+                addAnchor,
+                addPropagator
+            })}
         >
             <circle
                 cx={x}
@@ -45,47 +58,36 @@ Anchor.defaultProps = {
     fixed: false,
 }
 
-const splitAnchor = () => {
-    // don't bubble
-    event.stopPropagation()
+const splitAnchor = ({ info, elements, addAnchor, addPropagator }) => ({id, x, y}) => {
+    // we are going to create a new anchor connected to the origin
 
-    // grab used props
-    let { id, selectAnchor, info, elements, addAnchor, addPropagator } = this.props
+    // first, we need an id for the anchor
+    // note: this will also make sure we are dragging the right one
+    const newAnchorId = generateElementId(elements.anchors)
 
-    // save a reference to the list of selected anchors
-    const selectedAnchors = elements.selection.anchors
+    // figure out the current location for the anchor
+    const pos = fixPositionToGrid(relativePosition({x, y}), info.gridSize)
 
-    // if the drag started with the alt key
-    if (event.altKey) {
-        // we are going to create a new anchor
+    // create the new anchor
+    addAnchor({
+        id: newAnchorId,
+        ...pos,
+    })
 
-        // first, we need an id for the anchor
-        // note: this will also make sure we are dragging the right one
-        id = generateElementId(elements.anchors)
+    // create a propagator linking the two anchors
+    addPropagator({
+        type: 'fermion',
+        id: generateElementId(elements.propagators),
+        anchor1: id,
+        anchor2: newAnchorId,
+    })
 
-        // figure out the current location for the anchor
-        const pos = fixPositionToGrid(relativePosition({
-            x: event.clientX,
-            y: event.clientY
-        }), info.gridSize)
-
-        // create the new anchor
-        addAnchor({
-            id,
-            ...pos,
-        })
-
-        // create a propagator linking the two anchors
-        addPropagator({
-            type: 'fermion',
-            id: generateElementId(elements.propagators),
-            anchor1: this.props.id,
-            anchor2: id,
-        })
-
-        // select the anchor
-        selectAnchor(id)
-    }
+    return newAnchorId
 }
 
-export default Anchor
+const selector = ({info, elements}) => ({info, elements})
+const mapDispatchToProps = dispatch => ({
+    addAnchor: anchors => dispatch(addAnchors(anchors)),
+    addPropagator: propagators => dispatch(addPropagators(propagators)),
+})
+export default connect(selector, mapDispatchToProps)(Anchor)

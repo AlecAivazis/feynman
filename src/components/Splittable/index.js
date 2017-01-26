@@ -47,6 +47,11 @@ class Splittable extends React.Component {
         // save a reference to the selected elements
         const selected = elements.selection[type]
 
+        const origin = {
+            x: event.clientX,
+            y: event.clientY,
+        }
+
         // if the element is already part of the selector
         if (selected && selected.indexOf(id) > -1 ) {
 
@@ -55,9 +60,9 @@ class Splittable extends React.Component {
         // otherwise we are moving a non-selected anchor
         else {
             // if the altkey was held when the drag started
-            if (event.altkey) {
+            if (event.altKey) {
                 // let the user do what they want (they will return the id to follow)
-                id = split({id, elements})
+                id = split({id, ...origin})
             }
 
             // select appropriate element
@@ -66,11 +71,6 @@ class Splittable extends React.Component {
 
         // call the lifecycle method
         onMoveStart()
-
-        const origin = {
-            x: event.clientX,
-            y: event.clientY,
-        }
 
         // regardless of what action we are taking on this drag, we have to
         this.setState({
@@ -89,10 +89,8 @@ class Splittable extends React.Component {
         // get the used props
         const { type, info, moveSelectedElements } = this.props
         const { origin, distanceToMove } = this.state
-        // console.log(this.props.id)
         // if the mouse is down
         if (origin) {
-            // console.log(this.state.origin)
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
                 x: event.clientX, 
@@ -110,7 +108,6 @@ class Splittable extends React.Component {
             let grid
             // the minimum amount to wait before moving
             let snapMove = {}
-            // console.log(delta)
 
             // if there is a grid
             if (info.gridSize > 0) {
@@ -165,10 +162,10 @@ class Splittable extends React.Component {
 
         // used state
         const { origin, moveTarget } = this.state
-        const { mergeElements } = this.props
+        const { mergeElements, type } = this.props
 
         // if this component was being dragged
-        if (origin) {
+        if (origin && type === 'anchors') {
             // tell the store to clean up any overlapping elements (and select the resulting element)
             mergeElements(moveTarget, true)
         }
