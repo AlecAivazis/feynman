@@ -18,7 +18,7 @@ class Splittable extends React.Component {
 
     static defaultProps = {
         split: id => id, // default, don't split anything
-        onMoveStart: () => {}
+        snap: () => {}
     }
 
     state = {
@@ -41,7 +41,7 @@ class Splittable extends React.Component {
             selectElement,
             info,
             location,
-            onMoveStart,
+            snap,
         } = this.props
 
         // save a reference to the selected elements
@@ -69,9 +69,6 @@ class Splittable extends React.Component {
             selectElement(id)
         }
 
-        // call the lifecycle method
-        onMoveStart()
-
         // regardless of what action we are taking on this drag, we have to
         this.setState({
             // track the current location of the mouse
@@ -87,10 +84,13 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // get the used props
-        const { type, info, moveSelectedElements } = this.props
+        const { type, info, moveSelectedElements, snap } = this.props
         const { origin, distanceToMove } = this.state
         // if the mouse is down
         if (origin) {
+            // make sure the anchor starts from the grid
+            snap()
+
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
                 x: event.clientX, 

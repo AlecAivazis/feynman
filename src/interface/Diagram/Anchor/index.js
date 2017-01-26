@@ -24,7 +24,6 @@ const Anchor = ({
     addPropagator,
     snapAnchor,
 }) => {
-
     // get any required styling
     let styling = selected ? styles.selected : styles.notSelected
     // if the anchor is fixed, mixin the fixed with
@@ -41,7 +40,7 @@ const Anchor = ({
                 addAnchor,
                 addPropagator
             })}
-            onMoveStart={snapAnchor(info.gridSize)}
+            snap={snapAnchor(info.gridSize)}
         >
             <circle
                 cx={x}

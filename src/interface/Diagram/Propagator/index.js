@@ -27,8 +27,8 @@ const Propagator = ({type, selected, id, info, elements, dispatch, ...element}) 
         <Splittable
             type="propagators"
             id={id}
-            split={splitPropagator}
-            onMoveStart={onMoveStart({
+            split={split}
+            snap={snap({
                 dispatch,
                 ...element,
                 elements,
@@ -51,11 +51,11 @@ Propagator.defaultProps = {
     selected: false
 }
 
-export function splitPropagator({id, elements}) {
+export function split({id, elements}) {
     return id
 }
 
-const onMoveStart = ({ dispatch, anchor1, anchor2, elements, info:{gridSize}}) => () => {
+const snap = ({ dispatch, anchor1, anchor2, elements, info:{gridSize}}) => () => {
     // compute the new location for anchor1
     const anchor1Loc = fixPositionToGrid(elements.anchors[anchor1], gridSize)
     const anchor2Loc = fixPositionToGrid(elements.anchors[anchor2], gridSize)
