@@ -9,7 +9,7 @@ import { sidebarWidth } from 'interface/Sidebar/styles'
 import { addAnchors, addPropagators, setElementAttrs } from 'actions/elements'
 import styles from './styles'
 
-const Anchor = ({
+export const Anchor = ({
     x,
     y,
     selected,

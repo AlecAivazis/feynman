@@ -9,7 +9,7 @@ import { EventListener, Splittable } from 'components'
 import { fixPositionToGrid, generateElementId } from 'utils'
 import { setElementAttrs, addAnchors, addPropagators } from 'actions/elements'
 
-const Propagator = ({
+export const Propagator = ({
     type,
     selected,
     id,

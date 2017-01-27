@@ -6,7 +6,7 @@ import { mount } from 'enzyme'
 import { addAnchors, addPropagators } from 'actions/elements'
 import { createStore } from 'store'
 import Diagram from 'interface/Diagram'
-import Propagator from '..'
+import Propagator, {Propagator as CoreProp} from '..'
 import Fermion from '../Fermion'
 import ElectroWeak from '../ElectroWeak'
 
@@ -52,7 +52,7 @@ describe('Interface Components', function() {
             const fermion = wrapper.find(Fermion)
 
             // the default configuration
-            const defaultConfig = Propagator.defaultProps
+            const defaultConfig = CoreProp.defaultProps
             const props = fermion.props()
 
             // go over each default configuration
