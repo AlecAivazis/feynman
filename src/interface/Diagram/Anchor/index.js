@@ -40,7 +40,6 @@ const Anchor = ({
                 addAnchor,
                 addPropagator
             })}
-            snap={snapAnchor(info.gridSize)}
         >
             <circle
                 cx={x}
@@ -89,10 +88,10 @@ const splitAnchor = ({ info, elements, addAnchor, addPropagator }) => ({id, x, y
 }
 
 const selector = ({info, elements}) => ({info, elements})
-const mapDispatchToProps = (dispatch, {x, y, id}) => ({
+const mapDispatchToProps = (dispatch, {x, y}) => ({
     addAnchor: anchors => dispatch(addAnchors(anchors)),
     addPropagator: propagators => dispatch(addPropagators(propagators)),
-    snapAnchor: grid => () => dispatch(
+    snapAnchor: grid => id => dispatch(
         setElementAttrs({type: 'anchors', id, ...fixPositionToGrid({x, y}, grid)})
     )
 })

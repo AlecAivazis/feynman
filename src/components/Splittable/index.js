@@ -4,9 +4,10 @@ import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 // local imports
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
-import { selectElements, mergeElements, moveSelectedElements } from 'actions/elements'
+import { selectElements, mergeElements, moveSelectedElements, setElementAttrs } from 'actions/elements'
 import { throttle, round } from 'utils'
 import { EventListener } from 'components'
+import { snapAnchor, snapPropagator } from './snap'
 
 class Splittable extends React.Component {
 
@@ -24,7 +25,7 @@ class Splittable extends React.Component {
     state = {
         origin: null,
         moveTarget: null,
-        distanceToMove: null
+        moveType: null
     }
 
     @autobind
@@ -76,7 +77,8 @@ class Splittable extends React.Component {
             // track the current location of the mouse
             origin,
             // and the id of the element we are moving
-            moveTarget: id
+            moveTarget: id,
+            moveType: type,
         })
     }
 
@@ -86,12 +88,23 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // get the used props
-        const { type, info, moveSelectedElements, snap } = this.props
-        const { origin, distanceToMove } = this.state
+        const { type, info, elements, setElementAttrs, moveSelectedElements } = this.props
+        const { origin, moveTarget, moveType } = this.state
         // if the mouse is down
         if (origin) {
+
+            // the mapping of type to snap utils
+            const snap = {
+                'anchors': snapAnchor,
+                'propagators': snapPropagator,
+            }[moveType]
+
+            if (!snap) {
+                return
+            }
+
             // make sure the anchor starts from the grid
-            snap()
+            snap({id: moveTarget, elements,  info, setElementAttrs})
 
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
@@ -208,6 +221,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
     // tell the store to merge overlapping elements
     mergeElements: (id, select) => dispatch(mergeElements(id, select)),
+    // update particular attributes of elements
+    setElementAttrs: (...attrs) => dispatch(setElementAttrs(...attrs)),
 
 })
 export default connect(selector, mapDispatchToProps)(Splittable)
