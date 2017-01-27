@@ -63,11 +63,10 @@ const splitAnchor = ({ info, elements, addAnchor, addPropagator }) => ({id, x, y
     // we are going to create a new anchor connected to the origin
 
     // first, we need an id for the anchor
-    // note: this will also make sure we are dragging the right one
     const newAnchorId = generateElementId(elements.anchors)
 
     // figure out the current location for the anchor
-    const pos = fixPositionToGrid(relativePosition({x, y}), info.gridSize)
+    const pos = fixPositionToGrid({x, y}, info.gridSize)
 
     // create the new anchor
     addAnchor({
@@ -83,7 +82,10 @@ const splitAnchor = ({ info, elements, addAnchor, addPropagator }) => ({id, x, y
         anchor2: newAnchorId,
     })
 
-    return newAnchorId
+    return {
+        type: 'anchors',
+        id: newAnchorId
+    }
 }
 
 const selector = ({info, elements}) => ({info, elements})

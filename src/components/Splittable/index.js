@@ -17,7 +17,7 @@ class Splittable extends React.Component {
     }
 
     static defaultProps = {
-        split: id => id, // default, don't split anything
+        split: id => {id}, // default, don't split anything
         snap: () => {}
     }
 
@@ -62,11 +62,13 @@ class Splittable extends React.Component {
             // if the altkey was held when the drag started
             if (event.altKey) {
                 // let the user do what they want (they will return the id to follow)
-                id = split({id, ...origin})
+                const splitResult = split({id, ...relativePosition(origin)})
+                id = splitResult.id
+                type = splitResult.type
             }
 
             // select appropriate element
-            selectElement(id)
+            selectElement({id, type})
         }
 
         // regardless of what action we are taking on this drag, we have to
@@ -202,7 +204,7 @@ class Splittable extends React.Component {
 
 const selector = ({elements, info}) => ({elements, info})
 const mapDispatchToProps = (dispatch, props) => ({
-    selectElement: id => dispatch(selectElements({type: props.type, id})),
+    selectElement: ({id, type}) => dispatch(selectElements({type, id})),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
     // tell the store to merge overlapping elements
     mergeElements: (id, select) => dispatch(mergeElements(id, select)),
