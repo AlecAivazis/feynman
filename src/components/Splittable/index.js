@@ -99,12 +99,12 @@ class Splittable extends React.Component {
                 'propagators': snapPropagator,
             }[moveType]
 
-            if (!snap) {
-                return
+            // if we are moving an element that we need to snap to the grid first
+            if (snap) {
+                // make sure the anchor starts from the grid
+                snap({id: moveTarget, elements,  info, setElementAttrs})
             }
 
-            // make sure the anchor starts from the grid
-            snap({id: moveTarget, elements,  info, setElementAttrs})
 
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
@@ -176,11 +176,11 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // used state
-        const { origin, moveTarget } = this.state
-        const { mergeElements, type } = this.props
+        const { origin, moveTarget, moveType } = this.state
+        const { mergeElements } = this.props
 
         // if this component was being dragged
-        if (origin && type === 'anchors') {
+        if (origin && moveType === 'anchors') {
             // tell the store to clean up any overlapping elements (and select the resulting element)
             mergeElements(moveTarget, true)
         }
@@ -192,10 +192,6 @@ class Splittable extends React.Component {
             // we are no longer holding the mouse down
             origin: false
         })
-    }
-
-    componentDidMount() {
-        this._mouseMove({stopPropagation() {}})
     }
 
     render() {
