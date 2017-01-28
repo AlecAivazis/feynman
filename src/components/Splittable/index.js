@@ -18,7 +18,7 @@ class Splittable extends React.Component {
     }
 
     static defaultProps = {
-        split: id => {id}, // default, don't split anything
+        split: id => id, // default, don't split anything
         snap: () => {}
     }
 

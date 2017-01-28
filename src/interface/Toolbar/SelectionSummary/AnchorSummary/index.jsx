@@ -4,9 +4,8 @@ import { connect } from 'react-redux'
 import { SketchPicker } from 'react-color'
 // local imports
 import styles from './styles'
-import Header from '../Header'
-import Label from '../Label'
-import { ColorPicker, Slider, Button, ToggleButton, RedButton } from 'components'
+import { MultiRow, SliderRow, ButtonRow, Row, Label, Header } from '..'
+import { ColorPicker, Button, ToggleButton, RedButton } from 'components'
 import { setElementAttrs, deleteElements, alignSelectedAnchors } from 'actions/elements'
 
 const AnchorSummary = ({
@@ -18,7 +17,7 @@ const AnchorSummary = ({
     alignAnchors,
     ...unusedProps
 }) => {
-    // figur eout if anchor needs to be pluralized
+    // figure out if anchor needs to be pluralized
     const anchor = anchors.length > 1 ? 'anchors' : 'anchor'
 
     // the values to show in the summary
@@ -31,35 +30,22 @@ const AnchorSummary = ({
             <Header>
                 {`${anchors.length} ${anchor} selected`}
             </Header>
-            <div style={styles.row}>
+            <Row>
                 <Label>color:</Label>
                 <ColorPicker
                     color={fill || 'black'}
-                    style={styles.picker}
                     onChange={fill => setAttrs({fill})}
                 />
-            </div>
-            <div style={{...styles.multiRow, marginBottom: 25}}>
-                <div style={{...styles.row, marginBottom: 0}}>
-                    <Label>size:</Label>
-                    <div style={styles.value}
-                        dangerouslySetInnerHTML={{
-                            __html: r || '&mdash;'
-                        }}
-                    />
-                </div>
-                <div style={{...styles.row, ...styles.sliderRow}}>
-                    <Slider
-                        value={firstValue({param: 'r', anchors, elements})}
-                        min={1}
-                        max={10}
-                        step={1}
-                        onChange={r => setAttrs({r})}
-                    />
-                </div>
-            </div>
-
-            <div style={{...styles.row, ...styles.buttonRow}}>
+            </Row>
+            <SliderRow
+                label="size"
+                value={r}
+                onChange={r => setAttrs({r})}
+                min={1}
+                max={10}
+                step={1}
+            />
+            <ButtonRow>
                 <ToggleButton
                     onClick={() => setAttrs({fixed: !fixed})}
                     style={styles.fixButton}
@@ -67,29 +53,29 @@ const AnchorSummary = ({
                     inactiveText={`Pin ${anchor}`}
                     activeText={`Unpin ${anchor}`}
                 />
-            </div>
+            </ButtonRow>
 
             {anchors.length > 1 && (
                 <div style={{width: '100%', display: 'flex', flexDirection: 'column',}}>
-                    <div style={{...styles.row, ...styles.buttonRow}}>
+                    <ButtonRow>
                         <Button onClick={alignAnchors('horizontal')} style={styles.alignButton}>
                             Align horizontally
                         </Button>
-                    </div>
+                    </ButtonRow>
 
-                    <div style={{...styles.row, ...styles.buttonRow}}>
+                    <ButtonRow>
                         <Button onClick={alignAnchors('vertical')} style={styles.alignButton}>
                             Align vertically
                         </Button>
-                    </div>
+                    </ButtonRow>
                 </div>
             )}
 
-            <div style={{...styles.row, ...styles.buttonRow}}>
+            <ButtonRow>
                 <RedButton onClick={deleteAnchors} style={styles.deleteButton}>
                     delete {anchor}
                 </RedButton>
-            </div>
+            </ButtonRow>
         </div>
     )
 }

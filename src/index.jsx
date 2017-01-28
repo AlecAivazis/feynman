@@ -44,10 +44,16 @@ store.dispatch(addPropagators(
 
 window.store = store
 
-store.dispatch(selectElements({
-    type: 'anchors',
-    id: 2
-}))
+store.dispatch(selectElements(
+    {
+        type: 'propagators',
+        id: 1
+    },
+    {
+        type: 'anchors',
+        id: 1
+    }
+))
 
 ReactDOM.render((
     <Provider store={store}>

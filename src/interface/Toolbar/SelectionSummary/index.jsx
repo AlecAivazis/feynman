@@ -17,3 +17,11 @@ const SelectionSummary = ({ style, selection, ...unusedProps }) => (
 )
 
 export default SelectionSummary
+
+// local exports for convinience
+export MultiRow from './MultiRow'
+export SliderRow from './SliderRow'
+export Row from './Row'
+export Label from './Label'
+export Header from './Header'
+export ButtonRow from './ButtonRow'
