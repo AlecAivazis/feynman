@@ -1,21 +1,54 @@
 // external imports
 import React from 'react'
+import { connect } from 'react-redux'
 // local imports
-import Header from '../Header'
+import { Header, SliderRow } from '..'
+import { Propagator } from 'interface/Diagram/Propagator'
+import { setElementAttrs } from 'actions/elements'
 import styles from './styles'
 
-const PropagatorSummary = ({propagators}) => {
+const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) => {
     // figure out if the entity needs to be pluralized
     const propagator = propagators.length > 1 ? 'propagators' : 'propagator'
-
+    // grab the first strokeWidth
+    const strokeWidth = firstValue({propagators, param: 'strokeWidth', elements})
+        
     // render the component
     return (
-        <div>
+        <div {...unusedProps}>
             <Header>
                 {`${propagators.length} ${propagator} selected`}
             </Header>
+            <SliderRow
+                label="size"
+                value={strokeWidth || Propagator.defaultProps.strokeWidth}
+                onChange={strokeWidth => setAttrs({strokeWidth})}
+                min={1}
+                max={10}
+                step={1}
+            />
         </div>
     )
 }
+const firstValue = ({propagators, param, elements}) => {
+    // go over every propagator
+    for (const id of propagators) {
+        // the fill of the propagator
+        const val = elements.propagators[id][param]
+        // if the propagator has the attr
+        if (val) {
+            // use it
+            return val
+        }
+    }
+}
 
-export default PropagatorSummary
+const mapDispatchToProps = (dispatch, {propagators}) => ({
+    setAttrs: (attrs) => (
+        dispatch(setElementAttrs(
+            ...propagators.map(id => ({type: 'propagators', id, ...attrs}))
+        ))
+    ),
+})
+const selector = ({elements}) => ({elements})
+export default connect(selector, mapDispatchToProps)(PropagatorSummary)
