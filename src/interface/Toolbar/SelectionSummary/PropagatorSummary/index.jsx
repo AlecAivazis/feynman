@@ -2,7 +2,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { Header, SliderRow } from '..'
+import { Header, SliderRow, Row, Label } from '..'
+import { ColorPicker } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs } from 'actions/elements'
 import styles from './styles'
@@ -10,8 +11,9 @@ import styles from './styles'
 const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) => {
     // figure out if the entity needs to be pluralized
     const propagator = propagators.length > 1 ? 'propagators' : 'propagator'
-    // grab the first strokeWidth
+    // grab the first values of the group properties
     const strokeWidth = firstValue({propagators, param: 'strokeWidth', elements})
+    const stroke = firstValue({propagators, param: 'stroke', elements})
         
     // render the component
     return (
@@ -19,6 +21,13 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
             <Header>
                 {`${propagators.length} ${propagator} selected`}
             </Header>
+            <Row>
+                <Label>color:</Label>
+                <ColorPicker
+                    color={stroke || Propagator.defaultProps.stroke}
+                    onChange={stroke => setAttrs({stroke})}
+                />
+            </Row>
             <SliderRow
                 label="size"
                 value={strokeWidth || Propagator.defaultProps.strokeWidth}

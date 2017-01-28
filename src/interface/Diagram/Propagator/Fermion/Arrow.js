@@ -3,7 +3,7 @@ import React from 'react'
 // local imports
 import styles from './styles'
 
-const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, flip=false, selected, ...unusedProps}) => {
+const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, stroke, flip=false, selected, ...unusedProps}) => {
     // some points in space
     const x = (x1 + x2) / 2
     const y = (y1 + y2) / 2
@@ -44,6 +44,7 @@ const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, flip=false, selected, ...un
     return (
         <polygon
             transform={`rotate(${angle}, ${x}, ${y})`}
+            fill={stroke}
             {...unusedProps}
             {...styling}
             points={`${x},${y-halfHeight} ${x+halfBase},${y+halfHeight} ${x-halfBase}, ${y+halfHeight}`}
