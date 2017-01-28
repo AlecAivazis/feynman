@@ -556,6 +556,42 @@ describe('Reducers', function() {
                 expect(movedState.anchors[1].x).to.equal(anchors[0].x + move.x)
                 expect(movedState.anchors[1].y).to.equal(anchors[0].y)
             })
+
+            it('moving selected elements does not affect pinned anchors', function() {
+                // the anchors we are going to start off with
+                const anchors = [
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    }
+                ]
+
+                // start off with some anchors
+                const initialState = reducer(undefined, addAnchors(...anchors))
+                // pin the anchor we just created
+                const pinnedState = reducer(initialState, setElementAttrs({type: 'anchors', id: 1, fixed: true}))
+
+                // select a subset of the anchors
+                const selectedState = reducer(pinnedState, selectElements(
+                    {
+                        type: 'anchors',
+                        id: 1,
+                    },
+                ))
+
+                // the move to issue on the selected anchors
+                const move = {
+                    x: 50,
+                }
+
+                // move the selected anchors
+                const movedState = reducer(selectedState, moveSelectedElements(move))
+
+                // make sure the selected anchors were moved
+                expect(movedState.anchors[1].x).to.equal(anchors[0].x)
+                expect(movedState.anchors[1].y).to.equal(anchors[0].y)
+            })
         })
     })
 })

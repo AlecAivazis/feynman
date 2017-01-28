@@ -156,9 +156,12 @@ export default (state = initialState, {type, payload}) => {
         for (const id of _.uniq(anchors)) {
             // save a reference to the assocaited element
             const element = local.anchors[id]
-            // move the element according to the payload
-            element.x += payload.x || 0
-            element.y += payload.y || 0
+            // if the anchor is not fixed
+            if (!element.fixed) {
+                // move the element according to the payload
+                element.x += payload.x || 0
+                element.y += payload.y || 0
+            }
         }
 
         return local
