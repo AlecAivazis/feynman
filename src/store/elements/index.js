@@ -139,7 +139,7 @@ export default (state = initialState, {type, payload}) => {
         const local = _.cloneDeep(state)
 
         // the anchors to move
-        const anchors = local.selection.anchors || []
+        const anchors = [...local.selection.anchors] || []
 
         // if there are selected propagators
         if (local.selection.propagators) {
