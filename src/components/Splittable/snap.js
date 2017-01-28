@@ -17,9 +17,9 @@ export const snapPropagator = ({ setElementAttrs, elements, info:{gridSize}, id}
     const anchor1 = elements.anchors[anchor1Id]
     const anchor2 = elements.anchors[anchor2Id]
     
-
     // the list of changes
     const moves = []
+
     // if the first anchor is not fixed
     if (!anchor1.fixed) {
         // compute the new location for anchor1
@@ -32,6 +32,7 @@ export const snapPropagator = ({ setElementAttrs, elements, info:{gridSize}, id}
             ...anchor1Loc,
         })
     }
+    
     // if the second anchor is not fixed
     if (!anchor2.fixed) {
         // compute the new location for anchor2
