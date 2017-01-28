@@ -36,10 +36,29 @@ const elementsInRegion = ({elements, region:{point1, point2}}) => {
                     // add the element to the list
                     prev.push(element)
                 }
-
-                // return the previous list
-                return prev
             }
+
+            // otherwise we could be looking at a propagator
+            else if (type === 'propagators') {
+                // the anchors associated with the element
+                const anchor1 = elements.anchors[rest.anchor1]
+                const anchor2 = elements.anchors[rest.anchor2]
+
+                // the mid point
+                const mid = {
+                    x: (anchor1.x + anchor2.x) / 2,
+                    y: (anchor1.y + anchor2.y) / 2,
+                }
+                // if the mid point is contained in the rectangle
+                if (mid.x > lowerLeft.x && mid.y > lowerLeft.y
+                        && mid.x < upperRight.x && mid.y < upperRight.y ) {
+                    // add the element to the list
+                    prev.push(element)
+                }
+            }
+
+            // return the previous list
+            return prev
         }, [])
     ).filter(id => id)
 
