@@ -105,6 +105,11 @@ describe('Reducers', function() {
                         id: 2,
                         x: 100,
                         y: 100,
+                    },
+                    {
+                        id: 3,
+                        x: 500,
+                        y: 500,
                     }
                 ))
 
@@ -123,6 +128,8 @@ describe('Reducers', function() {
                 // expect both anchors to have moved to the midpoint
                 expect(anchors[1].y).to.equal(expected)
                 expect(anchors[2].y).to.equal(expected)
+                // and the third anchor to not have moved
+                expect(anchors[3].y).to.equal(500)
             })
 
             it('barfs if aligning in an invalid direction', function() {

@@ -30,6 +30,13 @@ export default (state, {type, payload}) => {
 
     // if the action indicates we need to align the selected anchors
     else if (type === ALIGN_SELECTED_ANCHORS) {
+        const selection = state.selection.anchors 
+        // if there are no selected anchors
+        if (selection.length === 0 ) {
+            // don't do anything
+            return state.anchors
+        }
+
         // get the lense appropriate for the direction
         const lense = {
             horizontal: 'y',
@@ -44,15 +51,19 @@ export default (state, {type, payload}) => {
 
         // a local copy of the state to mutate
         const local = _.cloneDeep(state.anchors)
-        const anchors = Object.values(local)
 
         // the average value of the appropriate attribute
-        const average = anchors.map(anch => anch[lense])
-                               .reduce((a,b) => a + b, 0) / anchors.length
+        const average = selection
+                             // first we need a reference to each selected anchor entity
+                             .map(selected => state.anchors[selected])
+                             // grab the appropriate attribute
+                             .map(anch => anch[lense])
+                             // add up the total and divide by the length to compute the avg
+                             .reduce((a,b) => a + b, 0) / selection.length
 
         // return the local copy
         return _.mapValues(local, 
-            val => ({...val, [lense]: average})
+            val => selection.includes(val.id) ? {...val, [lense]: average} : val
         )
     }
 
