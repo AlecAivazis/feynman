@@ -16,7 +16,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
     const strokeWidth = firstValue({propagators, param: 'strokeWidth', elements})
     const stroke = firstValue({propagators, param: 'stroke', elements})
 
-    // assume that there is only one propagator and grab the summary
+    // assume that there is only one propagator and grab the appropriate summary component
     const head = elements.propagators[propagators[0]]
     const ElementSummary = {
         fermion: FermionSummary,
