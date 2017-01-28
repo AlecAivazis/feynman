@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 // local imports
 import { Header, SliderRow, Row, Label } from '..'
+import FermionSummary from './FermionSummary'
 import { ColorPicker } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs } from 'actions/elements'
@@ -14,6 +15,12 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
     // grab the first values of the group properties
     const strokeWidth = firstValue({propagators, param: 'strokeWidth', elements})
     const stroke = firstValue({propagators, param: 'stroke', elements})
+
+    // assume that there is only one propagator and grab the summary
+    const head = elements.propagators[propagators[0]]
+    const ElementSummary = {
+        fermion: FermionSummary,
+    }[head.type]
         
     // render the component
     return (
@@ -36,6 +43,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
                 max={10}
                 step={1}
             />
+            {propagators.length === 1 && <ElementSummary setAttrs={setAttrs} {...head}/>}
         </div>
     )
 }

@@ -1,10 +1,11 @@
-import { grey } from 'colors'
+import { grey, lightBlue } from 'colors'
 
 export default {
     container: {
         fontSize: 12,
         height: 30,
         border: `1px solid ${grey}`,
+        color: lightBlue,
         borderRadius: 3,
         background: '#d2d2d2 linear-gradient(180deg, #ebebeb, #d2d2d2) repeat-x',
         padding: '5px 10px',

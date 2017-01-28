@@ -48,10 +48,6 @@ store.dispatch(selectElements(
     {
         type: 'propagators',
         id: 1
-    },
-    {
-        type: 'anchors',
-        id: 1
     }
 ))
 
