@@ -109,13 +109,13 @@ describe('Interface Components', function() {
             // add an element to the store
             store.dispatch(addPropagators(
                 {
-                    type: 'invalid1',
+                    kind: 'invalid1',
                     id: 1,
                     anchor1: 1,
                     anchor2: 2,
                 },
                 {
-                    type: 'invalid2',
+                    kind: 'invalid2',
                     id: 2,
                     anchor1: 1,
                     anchor2: 2,

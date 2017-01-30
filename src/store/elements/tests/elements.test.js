@@ -88,7 +88,7 @@ describe('Reducers', function() {
                 // add a propagator
                 const propagatorState = reducer(anchorState, addPropagators(
                     {
-                        type: 'fermion',
+                        kind: 'fermion',
                         id: 1,
                         anchor1: 2,
                         anchor2: 3
@@ -272,13 +272,13 @@ describe('Reducers', function() {
                 // and a propagator between the two anchors
                 const propagatorState = reducer(initialState, addPropagators(
                     {
-                        type: 'fermion',
+                        kind: 'fermion',
                         id: 1,
                         anchor1: 1,
                         anchor2: 2,
                     },
                     {
-                        type: 'em',
+                        kind: 'em',
                         id: 2,
                         anchor1: 3,
                         anchor2: 4,
@@ -490,7 +490,7 @@ describe('Reducers', function() {
                 const propagatorState = reducer(initialState, addPropagators(
                     {
                         id: 1,
-                        type: 'fermion',
+                        kind: 'fermion',
                         anchor1: 1,
                         anchor2: 2,
                     }

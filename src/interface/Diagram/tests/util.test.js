@@ -25,7 +25,7 @@ describe('Interface Components', function() {
 
             // add a propagator that links the two
             store.dispatch(addPropagators({
-                type: 'em',
+                kind: 'em',
                 id: 1,
                 anchor1: 1,
                 anchor2: 2,
@@ -33,7 +33,7 @@ describe('Interface Components', function() {
 
             expect(propagatorsWithLocation(store.getState().elements)).to.deep.equal([
                 {
-                    type: 'em',
+                    kind: 'em',
                     id: 1,
                     anchor1: 1,
                     anchor2: 2,

@@ -29,13 +29,13 @@ store.dispatch(addAnchors(
 
 store.dispatch(addPropagators(
     {
-        type: 'fermion',
+        kind: 'fermion',
         id: 1,
         anchor1: 1,
         anchor2: 2,
     },
     {
-        type: 'fermion',
+        kind: 'fermion',
         id: 2,
         anchor1: 1,
         anchor2: 3,

@@ -19,7 +19,7 @@ describe('Interface Components', function() {
             // render a fermion through the diagram element
             const wrapper = mount(
                 <Provider store={store}>
-                    <Propagator type="em" />
+                    <Propagator kind="em" />
                 </Provider>
             )
             // make sure there is a fermion
@@ -32,7 +32,7 @@ describe('Interface Components', function() {
             // render a fermion through the diagram element
             const wrapper = mount(
                 <Provider store={store}>
-                    <Propagator type="fermion" />
+                    <Propagator kind="fermion" />
                 </Provider>
             )
             // make sure there is a fermion
@@ -45,7 +45,7 @@ describe('Interface Components', function() {
             // render a fermion through the diagram element
             const wrapper = mount(
                 <Provider store={store}>
-                    <Propagator type="fermion" />
+                    <Propagator kind="fermion" />
                 </Provider>
             )
             // make sure there is a fermion
@@ -82,7 +82,7 @@ describe('Interface Components', function() {
             // add a propagator connecting the anchors
             store.dispatch(addPropagators({
                 id: 1,
-                type: 'fermion',
+                kind: 'fermion',
                 anchor1: 1,
                 anchor2: 2,
             }))
@@ -120,7 +120,7 @@ describe('Interface Components', function() {
             // add a propagator connecting the anchors
             store.dispatch(addPropagators({
                 id: 1,
-                type: 'fermion',
+                kind: 'fermion',
                 anchor1: 1,
                 anchor2: 2,
             }))

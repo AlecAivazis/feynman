@@ -81,13 +81,13 @@ describe('Utils', function() {
             store.dispatch(addPropagators(
                 {
                     id: 1,
-                    type: 'fermion',
+                    kind: 'fermion',
                     anchor1: 1,
                     anchor2: 2
                 },
                 {
                     id: 2,
-                    type: 'fermion',
+                    kind: 'fermion',
                     anchor1: 3,
                     anchor2: 4
                 },

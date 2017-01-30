@@ -20,7 +20,7 @@ describe('Reducers', function() {
                 // the configuration for the element to add to the reducer
                 const propagator = {
                     id: 1,
-                    type: 'fermion',
+                    kind: 'fermion',
                     anchor1: 1,
                     anchor2: 2,
                 }
@@ -44,7 +44,7 @@ describe('Reducers', function() {
                 // the configuration for the element to add to the reducer
                 const propagator = {
                     id: 1,
-                    type: 'fermion',
+                    kind: 'fermion',
                     anchor1: 1,
                     anchor2: 2,
                 }
@@ -84,7 +84,7 @@ describe('Reducers', function() {
 
                 // the configuration for the element to add to the reducer
                 const propagator = {
-                    type: 'fermion',
+                    kind: 'fermion',
                     anchor1: 1,
                     anchor2: 2,
                 }

@@ -75,7 +75,7 @@ const splitAnchor = ({ info, elements, addAnchor, addPropagator }) => ({id, x, y
 
     // create a propagator linking the two anchors
     addPropagator({
-        type: 'fermion',
+        kind: 'fermion',
         id: generateElementId(elements.propagators),
         anchor1: id,
         anchor2: newAnchorId,

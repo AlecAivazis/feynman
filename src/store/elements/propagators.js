@@ -17,7 +17,7 @@ export default (state, {type, payload}) => {
         // loop over every propagator we are supposed to add
         for (const propagator of payload) {
             // if there is no type
-            if(!propagator.type) {
+            if(!propagator.kind) {
                 throw new Error("Could not add propagator without type")
             }
 

@@ -10,7 +10,7 @@ import { fixPositionToGrid, generateElementId } from 'utils'
 import { setElementAttrs, addAnchors, addPropagators } from 'actions/elements'
 
 export const Propagator = ({
-    type,
+    kind,
     selected,
     id,
     info,
@@ -21,11 +21,11 @@ export const Propagator = ({
     setElementAttrs,
     ...element
 }) => {
-    // a mapping of element type to component
+    // a mapping of element kind to component
     const Component = {
         fermion: Fermion,
         em: ElectroWeak,
-    }[type]
+    }[kind]
 
     if (typeof Component === 'undefined') {
         return null
@@ -98,13 +98,13 @@ export const split = ({info, elements, addAnchor, addPropagator, setElementAttrs
     addPropagator(
         {
             id: newPropagatorId,
-            type: 'fermion',
+            kind: 'fermion',
             anchor1: splitAnchorId,
             anchor2,
         },
         {
             id: branchPropagatorId,
-            type: 'fermion',
+            kind: 'fermion',
             anchor1: splitAnchorId,
             anchor2: branchAnchorId,
         }
