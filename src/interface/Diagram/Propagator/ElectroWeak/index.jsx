@@ -1,5 +1,6 @@
 // external imports
 import React from 'react'
+import SvgMatrix from 'svg-matrix'
 // local imports
 import styles from './styles'
 import range from 'utils/range'
@@ -10,8 +11,8 @@ const ElectroWeak = ({ x1, y1, x2, y2, ...unusedProps }) => {
     // the height of the pattern
     const amplitude = 3 * scale / 2
     // compute the length of the line
-    const dx = x1 - x2
-    const dy = y1 - y2
+    const dx = x2 - x1
+    const dy = y2 - y1
     const length = Math.sqrt(dx*dx + dy*dy)
 
     // find the closest whole number of full periods
@@ -38,13 +39,13 @@ const ElectroWeak = ({ x1, y1, x2, y2, ...unusedProps }) => {
     }
 
     // compute the angle we need to rotate the propagator to line up correctly
-    let angle = Math.atan(dy/dx) * 180/Math.PI
-    if (dx > 0) {
-        angle += 180
-    }
+    const angle = Math.atan2(dy, dx) * 180/Math.PI
 
-    // scale the length to fit the grid
-    const lengthScale = Math.abs(dx / (nPeriods * scale))
+    // the transform matrix to line the propagator up to the anchors
+    const scaleFactor = length / (nPeriods * scale)
+    const transform = SvgMatrix()
+                        .rotate(angle, x1, y1)
+                        .scale(scaleFactor, scaleFactor, x1, y1)
 
     // render the actual path
     return (
@@ -52,9 +53,8 @@ const ElectroWeak = ({ x1, y1, x2, y2, ...unusedProps }) => {
             {...styles.container}
             {...unusedProps}
             fill="none"
-            transform={`scale(${lengthScale}) rotate(${angle}, ${x1}, ${y1})`}
-            d={pathString}
-        />
+            transform={transform.transformString}
+            d={pathString}/>
     )
 }
 
