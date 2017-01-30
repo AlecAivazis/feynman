@@ -29,7 +29,7 @@ store.dispatch(addAnchors(
 
 store.dispatch(addPropagators(
     {
-        kind: 'fermion',
+        kind: 'em',
         id: 1,
         anchor1: 1,
         anchor2: 2,
