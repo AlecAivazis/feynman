@@ -48,7 +48,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
                 <MultiRow>
                     <Row>
                         <Select 
-                            value={head.type} 
+                            value={head.kind} 
                             onChange={(event) => setAttrs({kind: event.target.value})}
                         >
                             <Option value="fermion">fermion</Option> 
