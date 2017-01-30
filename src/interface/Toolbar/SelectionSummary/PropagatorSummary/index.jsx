@@ -20,6 +20,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
     // get the appropriate summary for the head
     const ElementSummary = {
         fermion: FermionSummary,
+        dashed: FermionSummary,
     }[head.kind]
         
     // render the component

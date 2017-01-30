@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
+import Dashed from './Dashed'
 import { EventListener, Splittable } from 'components'
 import { fixPositionToGrid, generateElementId } from 'utils'
 import { setElementAttrs, addAnchors, addPropagators } from 'actions/elements'
@@ -25,6 +26,7 @@ export const Propagator = ({
     const Component = {
         fermion: Fermion,
         em: ElectroWeak,
+        dashed: Dashed,
     }[kind]
 
     if (typeof Component === 'undefined') {
