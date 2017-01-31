@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Header, SliderRow, Row, Label, MultiRow } from '..'
 import FermionSummary from './FermionSummary'
 import ElectroWeakSummary from './ElectroWeakSummary'
+import GluonSummary from './GluonSummary'
 import { ColorPicker, Select, Option } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs } from 'actions/elements'
@@ -23,8 +24,9 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
         fermion: FermionSummary,
         dashed: FermionSummary,
         em: ElectroWeakSummary,
+        gluon: GluonSummary,
     }[head.kind]
-        
+
     // render the component
     return (
         <div {...unusedProps}>
@@ -49,15 +51,15 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
             {propagators.length === 1 && (
                 <MultiRow>
                     <Row>
-                        <Select 
-                            value={head.kind} 
+                        <Select
+                            value={head.kind}
                             onChange={(event) => setAttrs({kind: event.target.value})}
                         >
-                            <Option value="fermion">fermion</Option> 
-                            <Option value="dashed">dashed</Option> 
-                            <Option value="em">electroweak</Option> 
+                            <Option value="fermion">fermion</Option>
+                            <Option value="dashed">dashed</Option>
+                            <Option value="em">electroweak</Option>
                         </Select>
-                    </Row> 
+                    </Row>
                     {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head}/>}
                 </MultiRow>
             )}

@@ -1,11 +1,13 @@
 // external imports
 import React from 'react'
-import { connect } from 'react-redux'
 // local imports
 import { Button } from 'components'
 import { ButtonRow } from '../..'
+import ElectroWeak from 'interface/Diagram/Propagator/ElectroWeak'
 
-const PropagatorSummary = ({direction=1, setAttrs, ...unusedProps}) => (
+const defaults = ElectroWeak.defaultProps
+
+const PropagatorSummary = ({direction=defaults.direction, setAttrs, ...unusedProps}) => (
     <ButtonRow>
         <Button style={{width: '100%'}} onClick={() => setAttrs({direction: -direction})}>
             Invert Amplitude
