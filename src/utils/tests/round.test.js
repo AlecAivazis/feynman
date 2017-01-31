@@ -1,6 +1,5 @@
 // local imports
 import round from '../round'
-import 'babel-polyfill'
 
 describe('Utils', function() {
     describe('Round util', function() {
