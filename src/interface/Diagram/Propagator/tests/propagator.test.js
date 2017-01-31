@@ -9,6 +9,7 @@ import Diagram from 'interface/Diagram'
 import Propagator, {Propagator as CoreProp} from '..'
 import Fermion from '../Fermion'
 import ElectroWeak from '../ElectroWeak'
+import Gluon from '../Gluon'
 
 describe('Interface Components', function() {
     describe('Diagram Element', function() {
@@ -37,6 +38,20 @@ describe('Interface Components', function() {
             )
             // make sure there is a fermion
             expect(wrapper.find(Fermion)).to.have.length(1)
+        })
+
+        it('renders a gluon', function() {
+            const store = createStore()
+
+            // render a fermion through the diagram element
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Propagator kind="gluon" />
+                </Provider>
+            )
+            // make sure there is a fermion
+            expect(wrapper.find(Gluon)).to.have.length(1)
+
         })
 
         it('passes default config onto the rendered propagator', function() {

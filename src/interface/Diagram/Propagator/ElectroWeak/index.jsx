@@ -2,11 +2,15 @@
 import React from 'react'
 import SvgMatrix from 'svg-matrix'
 // local imports
-import styles from './styles'
 import range from 'utils/range'
 import Align from '../Align'
 
-const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, amplitude:amp=1, arrow, ...unusedProps }) => {
+const ElectroWeak = ({ 
+    x1, y1, x2, y2, amplitude:direction=1, 
+    // pulled out to prevent cascade
+    arrow, anchor1, anchor2, 
+    ...unusedProps 
+}) => {
     // the width of the pattern
     const scale = 20
     // the height of the pattern
@@ -29,8 +33,8 @@ const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, amplitude:amp=1, arrow,
     const cy = y1
 
     // the upper and lower y coorindates for the anchors
-    const ymin = cy - amp * amplitude
-    const ymax = cy + amp * amplitude
+    const ymin = cy - direction * amplitude
+    const ymax = cy + direction * amplitude
 
     // start the path at the current (x, y) location
     let pathString = `M ${cx} ${cy} `
@@ -54,7 +58,6 @@ const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, amplitude:amp=1, arrow,
             length={nPeriods * scale}
         >
             <path
-                {...styles.container}
                 {...unusedProps}
                 fill="none"
                 d={pathString}/>
