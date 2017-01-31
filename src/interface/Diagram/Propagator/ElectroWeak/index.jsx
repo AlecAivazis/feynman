@@ -36,7 +36,7 @@ const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, ...unusedProps }) => {
     let pathString = `M ${cx} ${cy} `
     pathString += `C ${cx+scale/2} ${ymin} ${cx+scale/2} ${ymax} ${cx+scale} ${cy} `
 
-    // for each period we have to render
+    // for each period we have to render (correct for zero indexing)
     for (const _ of range(nPeriods-1)) {
         // increment the running counter
         cx += scale
