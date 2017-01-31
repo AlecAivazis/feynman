@@ -161,7 +161,6 @@ class Splittable extends React.Component {
                 y: fixed.y - origin.y,
             }
             if (Math.abs(fixedDelta.x) > 0 || Math.abs(fixedDelta.y) > 0) {
-                console.log(snapMove)
                 // move the selected anchors
                 moveSelectedElements(fixedDelta)
 
