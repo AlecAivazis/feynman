@@ -136,8 +136,8 @@ class Splittable extends React.Component {
             else {
                 grid = 2
                 snapMove = {
-                    x: Math.abs(delta.x), // this minus sign is accounted for on line 137
-                    y: Math.abs(delta.y)
+                    x: delta.x, 
+                    y: delta.y
                 }
             }
 
@@ -160,13 +160,16 @@ class Splittable extends React.Component {
                 x: fixed.x - origin.x,
                 y: fixed.y - origin.y,
             }
-            // move the selected anchors
-            moveSelectedElements(fixedDelta)
+            if (Math.abs(fixedDelta.x) > 0 || Math.abs(fixedDelta.y) > 0) {
+                console.log(snapMove)
+                // move the selected anchors
+                moveSelectedElements(fixedDelta)
 
-            // save the current location for the next time we move the element
-            this.setState({
-                origin: fixed,
-            })
+                // save the current location for the next time we move the element
+                this.setState({
+                    origin: fixed,
+                })
+            }
         }
     }
 
