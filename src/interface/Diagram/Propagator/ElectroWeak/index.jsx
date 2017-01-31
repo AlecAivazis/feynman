@@ -5,11 +5,11 @@ import SvgMatrix from 'svg-matrix'
 import range from 'utils/range'
 import Align from '../Align'
 
-const ElectroWeak = ({ 
-    x1, y1, x2, y2, amplitude:direction=1, 
+const ElectroWeak = ({
+    x1, y1, x2, y2, direction,
     // pulled out to prevent cascade
-    arrow, anchor1, anchor2, 
-    ...unusedProps 
+    arrow, anchor1, anchor2,
+    ...unusedProps
 }) => {
     // the width of the pattern
     const scale = 20
@@ -20,11 +20,6 @@ const ElectroWeak = ({
     const dy = y2 - y1
     const length = Math.sqrt(dx*dx + dy*dy)
 
-    // if there is no length
-    if (length === 0) {
-        // dont render anything
-        return null
-    }
     // find the closest whole number of full periods
     const nPeriods = Math.round(length/scale)
 
@@ -63,6 +58,10 @@ const ElectroWeak = ({
                 d={pathString}/>
         </Align>
     )
+}
+
+ElectroWeak.defaultProps = {
+    direction: 1,
 }
 
 export default ElectroWeak

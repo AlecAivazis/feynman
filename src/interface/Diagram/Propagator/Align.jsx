@@ -6,6 +6,13 @@ const Align = ({x1, y1, x2, y2, length, ...unusedProps}) => {
     const dx = x2 - x1
     const dy = y2 - y1
     const actual = Math.sqrt(dx*dx + dy*dy)
+
+    // if there is no length
+    if (actual === 0) {
+        // dont render anything
+        return null
+    }
+
     // compute the angle we need to rotate the propagator to line up correctly
     const angle = Math.atan2(dy, dx) * 180/Math.PI
 

@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import { Button } from 'components'
 import { ButtonRow } from '../..'
 
-const PropagatorSummary = ({amplitude=1, setAttrs, ...unusedProps}) => (
+const PropagatorSummary = ({direction=1, setAttrs, ...unusedProps}) => (
     <ButtonRow>
-        <Button style={{width: '100%'}} onClick={() => setAttrs({amplitude: -amplitude})}>
+        <Button style={{width: '100%'}} onClick={() => setAttrs({direction: -direction})}>
             Invert Amplitude
         </Button>
     </ButtonRow>
