@@ -58,6 +58,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
                             <Option value="fermion">fermion</Option>
                             <Option value="dashed">dashed</Option>
                             <Option value="em">electroweak</Option>
+                            <Option value="gluon">gluon</Option>
                         </Select>
                     </Row>
                     {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head}/>}
