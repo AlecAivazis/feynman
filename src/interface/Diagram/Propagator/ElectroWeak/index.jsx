@@ -5,7 +5,7 @@ import SvgMatrix from 'svg-matrix'
 import styles from './styles'
 import range from 'utils/range'
 
-const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, amplitude:amp=1, ...unusedProps }) => {
+const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, amplitude:amp=1, arrow, ...unusedProps }) => {
     // the width of the pattern
     const scale = 20
     // the height of the pattern
