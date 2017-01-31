@@ -30,11 +30,6 @@ const GluonWithoutEndcaps = ({
     const ymin = cy
     const ymax = cy + 2 * direction * amplitude
 
-    //  if there isn't enough room for at least one loop
-    if (nLoops === 0) {
-        // render a fermion instead
-        return null
-    }
     // the step size
     const delta = scale
 
@@ -69,6 +64,8 @@ const GluonWithoutEndcaps = ({
             y1={y1}
             y2={y2}
             length={2 * scale * nLoops}
+            degrade={nLoops === 0}
+            element={{ x1, x2, y1, y2, direction, arrow, anchor1, anchor2, ...unusedProps }}
         >
             <path
                 {...unusedProps}

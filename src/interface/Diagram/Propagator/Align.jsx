@@ -1,8 +1,10 @@
 // external imports
 import React from 'react'
 import SvgMatrix from 'svg-matrix'
+// local imports
+import Fermion from 'interface/Diagram/Propagator/Fermion'
 
-const Align = ({x1, y1, x2, y2, length, ...unusedProps}) => {
+const Align = ({x1, y1, x2, y2, length, element, degrade, ...unusedProps}) => {
     const dx = x2 - x1
     const dy = y2 - y1
     const actual = Math.sqrt(dx*dx + dy*dy)
@@ -11,6 +13,11 @@ const Align = ({x1, y1, x2, y2, length, ...unusedProps}) => {
     if (actual === 0) {
         // dont render anything
         return null
+    }
+    // if we are told to show something, but round to zero
+    if (degrade) {
+        // render a fermion (this is a little misleading)
+        return <Fermion {...element} arrow={false}/>
     }
 
     // compute the angle we need to rotate the propagator to line up correctly

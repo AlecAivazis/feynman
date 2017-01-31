@@ -51,6 +51,8 @@ const ElectroWeak = ({
             x2={x2}
             y2={y2}
             length={nPeriods * scale}
+            degrade={nPeriods === 1}
+            element={{ x1, x2, y1, y2, direction, arrow, anchor1, anchor2, ...unusedProps }}
         >
             <path
                 {...unusedProps}
