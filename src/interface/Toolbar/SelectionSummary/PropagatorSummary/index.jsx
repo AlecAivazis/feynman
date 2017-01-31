@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 // local imports
 import { Header, SliderRow, Row, Label, MultiRow } from '..'
 import FermionSummary from './FermionSummary'
+import ElectroWeakSummary from './ElectroWeakSummary'
 import { ColorPicker, Select, Option } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs } from 'actions/elements'
@@ -21,6 +22,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
     const ElementSummary = {
         fermion: FermionSummary,
         dashed: FermionSummary,
+        em: ElectroWeakSummary,
     }[head.kind]
         
     // render the component

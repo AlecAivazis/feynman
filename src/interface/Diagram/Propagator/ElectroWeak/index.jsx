@@ -5,7 +5,7 @@ import SvgMatrix from 'svg-matrix'
 import styles from './styles'
 import range from 'utils/range'
 
-const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, ...unusedProps }) => {
+const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, amplitude:amp=1, ...unusedProps }) => {
     // the width of the pattern
     const scale = 20
     // the height of the pattern
@@ -20,7 +20,6 @@ const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, ...unusedProps }) => {
         // dont render anything
         return null
     }
-
     // find the closest whole number of full periods
     const nPeriods = Math.round(length/scale)
 
@@ -29,8 +28,8 @@ const ElectroWeak = ({ x1, y1, x2, y2, anchor1, anchor2, ...unusedProps }) => {
     const cy = y1
 
     // the upper and lower y coorindates for the anchors
-    const ymin = cy - amplitude
-    const ymax = cy + amplitude
+    const ymin = cy - amp * amplitude
+    const ymax = cy + amp * amplitude
 
     // start the path at the current (x, y) location
     let pathString = `M ${cx} ${cy} `
