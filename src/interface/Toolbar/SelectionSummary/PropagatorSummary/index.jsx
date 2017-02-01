@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { Header, SliderRow, Row, Label, MultiRow } from '..'
+import { Header, SliderRow, Row, Label, MultiRow, ButtonRow } from '..'
 import FermionSummary from './FermionSummary'
 import ElectroWeakSummary from './ElectroWeakSummary'
 import GluonSummary from './GluonSummary'
@@ -50,17 +50,18 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
             />
             {propagators.length === 1 && (
                 <MultiRow>
-                    <Row>
+                    <ButtonRow>
                         <Select
                             value={head.kind}
                             onChange={(event) => setAttrs({kind: event.target.value})}
+                            style={styles.select}
                         >
                             <Option value="fermion">fermion</Option>
                             <Option value="dashed">dashed</Option>
                             <Option value="em">electroweak</Option>
                             <Option value="gluon">gluon</Option>
                         </Select>
-                    </Row>
+                    </ButtonRow>
                     {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head}/>}
                 </MultiRow>
             )}
