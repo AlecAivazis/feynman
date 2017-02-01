@@ -7,5 +7,9 @@ export default {
         backgroundColor: 'white',
         padding: 10,
         height: 26,
+    },
+    button: {
+        width: '100%',
+        textTransform: 'capitalize',
     }
 }

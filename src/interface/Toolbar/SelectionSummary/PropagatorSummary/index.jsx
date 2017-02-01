@@ -6,12 +6,12 @@ import { Header, SliderRow, Row, Label, MultiRow, ButtonRow } from '..'
 import FermionSummary from './FermionSummary'
 import ElectroWeakSummary from './ElectroWeakSummary'
 import GluonSummary from './GluonSummary'
-import { ColorPicker, Select, Option } from 'components'
+import { ColorPicker, Select, Option, RedButton } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
-import { setElementAttrs } from 'actions/elements'
+import { setElementAttrs, deleteElements } from 'actions/elements'
 import styles from './styles'
 
-const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) => {
+const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, ...unusedProps}) => {
     // figure out if the entity needs to be pluralized
     const propagator = propagators.length > 1 ? 'propagators' : 'propagator'
     // grab the first values of the group properties
@@ -49,7 +49,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
                 step={1}
             />
             {propagators.length === 1 && (
-                <MultiRow>
+                <MultiRow style={{marginBottom: 0}}>
                     <ButtonRow>
                         <Select
                             value={head.kind}
@@ -65,6 +65,11 @@ const PropagatorSummary = ({propagators, setAttrs, elements, ...unusedProps}) =>
                     {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head}/>}
                 </MultiRow>
             )}
+            <ButtonRow>
+                <RedButton onClick={deletePropagators} style={styles.button}>
+                    delete {propagator}
+                </RedButton>
+            </ButtonRow>
         </div>
     )
 }
@@ -85,6 +90,11 @@ const mapDispatchToProps = (dispatch, {propagators}) => ({
     setAttrs: (attrs) => (
         dispatch(setElementAttrs(
             ...propagators.map(id => ({type: 'propagators', id, ...attrs}))
+        ))
+    ),
+    deletePropagators: () => (
+        dispatch(deleteElements(
+            ...propagators.map(id => ({type: 'propagators', id}))
         ))
     ),
 })
