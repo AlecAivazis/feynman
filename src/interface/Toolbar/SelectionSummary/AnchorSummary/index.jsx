@@ -15,6 +15,7 @@ const AnchorSummary = ({
     elements,
     deleteAnchors,
     alignAnchors,
+    showDelete=true,
     ...unusedProps
 }) => {
     // figure out if anchor needs to be pluralized
@@ -45,15 +46,18 @@ const AnchorSummary = ({
                 max={10}
                 step={1}
             />
-            <ButtonRow>
-                <ToggleButton
-                    onClick={() => setAttrs({fixed: !fixed})}
-                    style={styles.fixButton}
-                    active={fixed}
-                    inactiveText={`Pin ${anchor}`}
-                    activeText={`Unpin ${anchor}`}
-                />
-            </ButtonRow>
+
+            {anchors.length === 1 && (
+                <ButtonRow>
+                    <ToggleButton
+                        onClick={() => setAttrs({fixed: !fixed})}
+                        style={styles.fixButton}
+                        active={fixed}
+                        inactiveText={`Pin ${anchor}`}
+                        activeText={`Unpin ${anchor}`}
+                    />
+                </ButtonRow>
+            )}
 
             {anchors.length > 1 && (
                 <div style={{width: '100%', display: 'flex', flexDirection: 'column',}}>
@@ -71,11 +75,13 @@ const AnchorSummary = ({
                 </div>
             )}
 
-            <ButtonRow>
-                <RedButton onClick={deleteAnchors} style={styles.deleteButton}>
-                    delete {anchor}
-                </RedButton>
-            </ButtonRow>
+            {showDelete && (
+                <ButtonRow>
+                    <RedButton onClick={deleteAnchors} style={styles.deleteButton}>
+                        delete {anchor}
+                    </RedButton>
+                </ButtonRow>
+            )}
         </div>
     )
 }

@@ -11,7 +11,7 @@ import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs, deleteElements } from 'actions/elements'
 import styles from './styles'
 
-const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, ...unusedProps}) => {
+const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, showDelete=true, ...unusedProps}) => {
     // figure out if the entity needs to be pluralized
     const propagator = propagators.length > 1 ? 'propagators' : 'propagator'
     // grab the first values of the group properties
@@ -65,11 +65,13 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
                     {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head}/>}
                 </MultiRow>
             )}
-            <ButtonRow>
-                <RedButton onClick={deletePropagators} style={styles.button}>
-                    delete {propagator}
-                </RedButton>
-            </ButtonRow>
+            {showDelete && (
+                <ButtonRow>
+                    <RedButton onClick={deletePropagators} style={styles.button}>
+                        delete {propagator}
+                    </RedButton>
+                </ButtonRow>
+            )}
         </div>
     )
 }

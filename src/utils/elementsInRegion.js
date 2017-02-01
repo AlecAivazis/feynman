@@ -1,10 +1,7 @@
 // external imports
 import _ from 'lodash'
-
-// :muscle:
-const flatMap = function(arr, lambda) {
-    return Array.prototype.concat.apply([], arr.map(lambda));
-};
+// local imports
+import flatMap from './flatMap'
 
 // this function returns a reference to the elements within a region
 const elementsInRegion = ({elements, region:{point1, point2}}) => {
