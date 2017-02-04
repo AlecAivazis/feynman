@@ -3,8 +3,8 @@ import React from 'react'
 // local imports
 import styles from './styles'
 
-const Select = ({...unusedProps}) => (
-    <select style={styles.select} {...unusedProps}/>
+const Select = ({style, ...unusedProps}) => (
+    <select style={{...styles.select, ...style}} {...unusedProps}/>
 )
 
 export default Select

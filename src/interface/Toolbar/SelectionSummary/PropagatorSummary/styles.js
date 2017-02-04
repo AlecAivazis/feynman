@@ -4,9 +4,6 @@ export default {
     },
     select: {
         width: '100%',
-        backgroundColor: 'white',
-        padding: 10,
-        height: 26,
     },
     button: {
         width: '100%',

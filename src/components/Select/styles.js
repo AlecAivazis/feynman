@@ -1,7 +1,8 @@
 export default {
     select: {
         backgroundColor: 'white',
-        padding: 10,
+        height: 24,
+        fontSize: 12,
     },
     option: {
 
