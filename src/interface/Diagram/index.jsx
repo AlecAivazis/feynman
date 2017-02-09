@@ -138,10 +138,10 @@ class Diagram extends React.Component {
         }
 
         // compute the relative position of the mouse
-        const point2 = fixPositionToGrid(relativePosition({
+        const point2 = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        }), info.gridSize)
+        })
 
 
         // save the second point
@@ -161,7 +161,9 @@ class Diagram extends React.Component {
                 setElementAttrs({
                     type: 'anchors',
                     id: this.state.newElement,
-                    ...this.state.point2
+                    ...fixPositionToGrid(
+                        this.state.point2, info.gridSize
+                    )
                 })
             }
         })
