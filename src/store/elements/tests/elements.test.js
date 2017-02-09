@@ -10,9 +10,11 @@ import {
     setElementAttrs,
     deleteElements,
     moveSelectedElements,
+    clearElements,
 } from 'actions/elements'
 import { setGridSize } from 'actions/info'
 import {initialState as intialSelection} from '../selection'
+import {initialState as initialReducerState} from '..'
 
 
 describe('Reducers', function() {
@@ -144,6 +146,27 @@ describe('Reducers', function() {
                 const val = reducer(undefined, {type: "init"})
                 // expect the default initial state
                 expect(val).to.exist
+            })
+
+            it('can clear all elements', function() {
+                // add some anchors to a store
+                const initialState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    }
+                ))
+
+                // clear all elements
+                const clearedState = reducer(initialState, clearElements())
+                // make sure there are no elements
+                expect(clearedState).to.deep.equal(initialReducerState)
             })
         })
 
