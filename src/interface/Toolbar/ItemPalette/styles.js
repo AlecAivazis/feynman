@@ -29,6 +29,7 @@ export default {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        cursor: 'pointer',
         height: 75,
         width: 75,
         background: 'rgba(137,137,137,0.8) linear-gradient(180deg, rgba(153,153,153,0.8), rgba(137,137,137,0.8)) repeat-x',
