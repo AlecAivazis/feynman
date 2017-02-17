@@ -8,7 +8,8 @@ import {
     MERGE_ELEMENTS,
     SET_ELEMENT_ATTRS,
     DELETE_ELEMENTS,
-    MOVE_SELECTED_ELEMENTS
+    MOVE_SELECTED_ELEMENTS,
+    CLEAR_ELEMENTS
 } from 'actions/elements'
 
 // the initial state of elements
@@ -98,6 +99,12 @@ export default (state = initialState, {type, payload}) => {
 
         // return the local copy
         return local
+    }
+
+    // if we need to clear the current collection of elements
+    if (type === CLEAR_ELEMENTS) {
+        // return the initial state
+        return initialState
     }
 
     // if the payload represents an element to remove

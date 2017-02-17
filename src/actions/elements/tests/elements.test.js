@@ -6,6 +6,7 @@ import {
     setElementAttrs,      SET_ELEMENT_ATTRS,
     deleteElements,       DELETE_ELEMENTS,
     moveSelectedElements, MOVE_SELECTED_ELEMENTS,
+    clearElements,        CLEAR_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -62,6 +63,13 @@ describe('Action Creators', function() {
                         id: 1,
                         select: false,
                     }
+                })
+            })
+
+            it('clear elements', function() {
+                // just check the type of the action
+                expect(clearElements()).to.deep.equal({
+                    type: CLEAR_ELEMENTS
                 })
             })
 
@@ -132,7 +140,7 @@ describe('Action Creators', function() {
                     payload: del
                 })
             })
-            
+
             it('move selected anchors', function() {
                 // the move order
                 const move = {
