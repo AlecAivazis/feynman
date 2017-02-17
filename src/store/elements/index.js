@@ -3,13 +3,14 @@ import _ from 'lodash'
 // local imports
 import propagatorsPartial from './propagators'
 import anchorsPartial from './anchors'
-import selectionPartial from './selection'
+import selectionPartial, {initialState as initialSelection} from './selection'
 import {
     MERGE_ELEMENTS,
     SET_ELEMENT_ATTRS,
     DELETE_ELEMENTS,
     MOVE_SELECTED_ELEMENTS,
-    CLEAR_ELEMENTS
+    CLEAR_ELEMENTS,
+    DELETE_SELECTION
 } from 'actions/elements'
 
 // the initial state of elements
@@ -138,6 +139,27 @@ export default (state = initialState, {type, payload}) => {
         }
 
         // return our copy
+        return local
+    }
+    
+    // if the action indicates we need to delete the selection
+    if (type === DELETE_SELECTION) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // create labeled lists of selected elements
+        const anchors = (local.selection.anchors || []).map(id => ({id, type: 'anchors'}))
+        const propagators = (local.selection.propagators || []).map(id => ({id, type: 'propagators'}))
+        
+        // for each element we have to delete
+        for (const {type, id} of [...anchors, ...propagators]) {
+            // remove the element
+            Reflect.deleteProperty(local[type], id) 
+        }
+
+        // clear the selection 
+        local.selection = initialSelection
+        // we're done here
         return local
     }
 

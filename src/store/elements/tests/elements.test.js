@@ -11,6 +11,7 @@ import {
     deleteElements,
     moveSelectedElements,
     clearElements,
+    deleteSelection,
 } from 'actions/elements'
 import { setGridSize } from 'actions/info'
 import {initialState as intialSelection} from '../selection'
@@ -427,6 +428,34 @@ describe('Reducers', function() {
 
                 // make sure the selection is emtpy
                 expect(clearedState.selection).to.deep.equal(intialSelection)
+            })
+
+            it('removes anchors with the DELETE_SELECTION action', function() {
+                // add some anchors
+                const addAction = addAnchors({
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                })
+                const withAnchors = reducer(undefined, addAction)
+                // select some anchors
+                const selectAction = selectElements(
+                    {
+                        type: 'anchors',
+                        id: 1,
+                    }
+                )
+                const selected = reducer(withAnchors, selectAction)
+                // sanity check
+                expect(selected.selection.anchors).to.have.length(1)
+
+                // delete the selection
+                const deleted = reducer(selected, deleteSelection())
+                
+                // make sure there are no selected anchors
+                expect(deleted.selection.anchors).to.have.length(0)
+                // make sure there are no anchors in the reducer
+                expect(Object.keys(deleted.anchors)).to.have.length(0)
             })
         })
 

@@ -7,6 +7,7 @@ import {
     deleteElements,       DELETE_ELEMENTS,
     moveSelectedElements, MOVE_SELECTED_ELEMENTS,
     clearElements,        CLEAR_ELEMENTS,
+    deleteSelection,      DELETE_SELECTION,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -50,6 +51,13 @@ describe('Action Creators', function() {
                 // check the structure of the selection anction
                 expect(clearSelection()).to.deep.equal({
                     type: CLEAR_SELECTION,
+                })
+            })
+
+            it('delete selection', function() {
+                // make sure the action has the correct structure
+                expect(deleteSelection()).to.deep.equal({
+                    type: DELETE_SELECTION,
                 })
             })
         })
