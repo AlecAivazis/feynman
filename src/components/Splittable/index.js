@@ -127,6 +127,7 @@ class Splittable extends React.Component {
             // if there is a grid
             if (info.gridSize > 0) {
                 grid = info.gridSize
+                // move the element in units of the grid size
                 snapMove = {
                     x: round(delta.x, grid),
                     y: round(delta.y, grid),
@@ -135,6 +136,7 @@ class Splittable extends React.Component {
             // otherwise there is no grid
             else {
                 grid = 2
+                // move the element to the mouse's location
                 snapMove = {
                     x: delta.x, 
                     y: delta.y

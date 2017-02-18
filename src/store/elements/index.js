@@ -162,8 +162,8 @@ export default (state = initialState, {type, payload}) => {
             id => (
                 // the list of propagators with this id
                 (Object.values(local.propagators) || [])
-                                 .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
-                                 .map(({id}) => ({id, type: 'propagators'}))
+                       .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
+                       .map(({id}) => ({id, type: 'propagators'}))
             )
         )
 

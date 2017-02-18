@@ -67,6 +67,9 @@ class Diagram extends React.Component {
                 { this.state.point1 && this.state.point2 && !this.state.newElement && (
                     <SelectionRectangle {...this.state} />
                 )}
+
+                {/* Event listeners */}
+
                 <EventListener event="mousemove">
                     {this._mouseMove}
                 </EventListener>
@@ -211,7 +214,6 @@ class Diagram extends React.Component {
 const selector = ({ info, elements }) => ({
     info,
     elements,
-    // get a list of each id in each selection type
     selection: elements.selection,
 })
 
