@@ -457,6 +457,50 @@ describe('Reducers', function() {
                 // make sure there are no anchors in the reducer
                 expect(Object.keys(deleted.anchors)).to.have.length(0)
             })
+
+            it('removes associated propagators when removing a selected anchor', function() {
+                // add some anchors
+                const withAnchors = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 200
+                    }
+                ))
+                // add a propagator between the anchors
+                const withPropagators = reducer(withAnchors, addPropagators(
+                    {
+                        id: 1,
+                        anchor1: 1,
+                        anchor2: 2,
+                        kind: 'fermion',
+                    }
+                ))
+                // select some anchors
+                const selected = reducer(withPropagators, selectElements(
+                    {
+                        type: 'anchors',
+                        id: 1,
+                    }
+                ))
+                // sanity check
+                expect(selected.selection.anchors).to.have.length(1)
+
+                // delete the selection
+                const deleted = reducer(selected, deleteSelection())
+                
+                // make sure there are no selected anchors
+                expect(deleted.selection.anchors).to.have.length(0)
+                // make sure there are no anchors in the reducer
+                expect(Object.keys(deleted.anchors)).to.have.length(1)
+                // and that we deleted the propagator
+                expect(Object.keys(deleted.propagators)).to.have.length(0)
+            })
         })
 
         describe("Moving elements", function() {

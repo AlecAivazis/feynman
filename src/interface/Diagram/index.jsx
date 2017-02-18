@@ -10,9 +10,21 @@ import Propagator from './Propagator'
 import Anchor from './Anchor'
 import SelectionRectangle from './SelectionRectangle'
 import { propagatorsWithLocation } from './util'
-import { relativePosition, elementsInRegion, generateElementId, fixPositionToGrid } from 'utils'
+import { 
+    relativePosition, 
+    elementsInRegion, 
+    generateElementId, 
+    fixPositionToGrid 
+} from 'utils'
 import { EventListener } from 'components'
-import { clearSelection, selectElements, addAnchors, addPropagators, setElementAttrs as setAttrs } from 'actions/elements'
+import { 
+    clearSelection,
+    selectElements, 
+    addAnchors, 
+    addPropagators, 
+    setElementAttrs as setAttrs,
+    deleteSelection,
+} from 'actions/elements'
 
 class Diagram extends React.Component {
     // the diagram component keeps track of the placement of the user's selection rectangle
@@ -60,6 +72,9 @@ class Diagram extends React.Component {
                 </EventListener>
                 <EventListener event="mouseup">
                     {this._mouseUp}
+                </EventListener>
+                <EventListener event="keydown">
+                   {this._keyPress} 
                 </EventListener>
             </svg>
         )
@@ -182,6 +197,15 @@ class Diagram extends React.Component {
 
         }
     }
+
+    @autobind
+    _keyPress(event) {
+        // if the user pressed the backspace or the delete key respectively
+        if ([8,46].includes(event.which)) {
+            // delete the selected elements
+            this.props.deleteSelectedElements()
+        }
+    }
 }
 
 const selector = ({ info, elements }) => ({
@@ -196,6 +220,7 @@ const mapDispatchToProps = dispatch => ({
     clearSelection: () => dispatch(clearSelection()),
     addAnchors: (...anchors) => dispatch(addAnchors(...anchors)),
     addPropagators: (...props) => dispatch(addPropagators(...props)),
-    setElementAttrs: (...attrs) => dispatch(setAttrs(...attrs))
+    setElementAttrs: (...attrs) => dispatch(setAttrs(...attrs)),
+    deleteSelectedElements: () => dispatch(deleteSelection())
 })
 export default connect(selector, mapDispatchToProps)(Diagram)

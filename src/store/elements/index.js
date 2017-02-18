@@ -12,6 +12,7 @@ import {
     CLEAR_ELEMENTS,
     DELETE_SELECTION
 } from 'actions/elements'
+import { flatMap } from 'utils'
 
 // the initial state of elements
 export const initialState = {
@@ -147,14 +148,32 @@ export default (state = initialState, {type, payload}) => {
         // create a copy we can play with
         const local = _.cloneDeep(state)
 
+        // the selected elements
+        const selectedAnchors = local.selection.anchors || []
+        const selectedPropagators = local.selection.propagators || []
+
+
         // create labeled lists of selected elements
-        const anchors = (local.selection.anchors || []).map(id => ({id, type: 'anchors'}))
-        const propagators = (local.selection.propagators || []).map(id => ({id, type: 'propagators'}))
-        
+        const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
+        const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
+
+        // the list of propagators we need to include because of related anchors
+        const relatedProps = flatMap(selectedAnchors, 
+            id => (
+                // the list of propagators with this id
+                (Object.values(local.propagators) || [])
+                                 .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
+                                 .map(({id}) => ({id, type: 'propagators'}))
+            )
+        )
+
         // for each element we have to delete
-        for (const {type, id} of [...anchors, ...propagators]) {
-            // remove the element
-            Reflect.deleteProperty(local[type], id) 
+        for (const {type, id} of [...anchors, ...propagators, ...relatedProps]) {
+            // if that element still exists
+            if (local[type][id]) {
+                // remove the element
+                Reflect.deleteProperty(local[type], id) 
+            }
         }
 
         // clear the selection 
