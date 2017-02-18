@@ -28,7 +28,15 @@ class PaletteItem extends React.Component {
 
     render() {
         // grab used props
-        const { style, image, deleteSelectedElements, element, placeElement, selectElements, ...unusedProps } = this.props
+        const { 
+            style,
+            image,
+            deleteSelectedElements,
+            element,
+            placeElement,
+            selectElements, 
+            ...unusedProps 
+        } = this.props
 
         return (
             <div style={{...styles.paletteItem, ...style}} {...unusedProps} onMouseDown={this._mouseDown}>
@@ -100,7 +108,7 @@ class PaletteItem extends React.Component {
                     this.props.selectElements(...dragElement.payload)
                     // hide the shadow and hold onto the element we just made so we can move it later
                     // BUG: this element disappears when the created element is selected, i have to move the state of the dragElement
-                    //      and which item paletteItem it came from in the ItemPalette component
+                    //      and which item paletteItem it came from to some element that doesn't get removed
                     this.setState({shadow: false, dragElement, origin}) 
                 }
             }

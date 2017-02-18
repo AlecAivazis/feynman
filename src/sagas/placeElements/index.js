@@ -4,7 +4,7 @@ import { takeEvery } from 'redux-saga'
 import { PLACE_ELEMENTS } from 'actions/elements/types'
 import placePropagator from './placePropagator'
 
-// the dispatch table of 
+// the dispatch table mapping element type to the saga that creates it
 const dispatch = {
     propagators: placePropagator
 }

@@ -2,12 +2,11 @@
 import { createStore as createReduxStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { responsiveStoreEnhancer, calculateResponsiveState } from 'redux-responsive'
 import createSagaMiddleware from 'redux-saga'
-import thunk from 'redux-thunk'
 // locals
 import info from './info'
 import browser from './browser'
 import elements from './elements'
-import DevTools from 'components/DevTools'
+// import DevTools from 'components/DevTools'
 import sagas from 'sagas'
 
 // create the reducer
@@ -23,7 +22,7 @@ const sagaMiddleware = createSagaMiddleware()
 export const createStore = () => createReduxStore(
     reducer,
     compose(
-        applyMiddleware(thunk, sagaMiddleware),
+        applyMiddleware(sagaMiddleware),
         responsiveStoreEnhancer,
         // DevTools.instrument(),
     )
