@@ -1,7 +1,6 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
-import liftC from 'react-liftc'
 import autobind from 'autobind-decorator'
 // local imports
 import styles, { toolbarWidth } from './styles'
@@ -9,7 +8,8 @@ import SelectionSummary from './SelectionSummary'
 import ItemPalette from './ItemPalette'
 import Footer from './Footer'
 import { EventListener } from 'components'
-
+import { propagatorSpec } from './specs'
+import { placeElement, selectElements, deleteElements, clearSelection } from 'actions/elements'
 
 // WARNING: This component is is way more complicated that originally thought necessary.
 //          This is because the ItemPalette's state is wiped when the dragged out element 
@@ -36,7 +36,13 @@ class Toolbar extends React.Component {
 
                 {/* the image to show while dragging (and over the toolbar) */}
                 {this.state.shadow.show && (
-                    <img style={{...styles.shadow, ...this.state.mouseOrigin}} src={this.state.shadow.image}/>
+                    <img 
+                        src={this.state.shadow.image}
+                        style={{
+                            ...{top: this.state.mouseOrigin.y, left: this.state.mouseOrigin.x},
+                            ...styles.shadow, 
+                        }} 
+                    />
                 )}
 
                 <EventListener event="mousemove">
@@ -57,8 +63,8 @@ class Toolbar extends React.Component {
                 image,
             },
             mouseOrigin: {
-                top: event.clientY,
-                left: event.clientX
+                x: event.clientX,
+                y: event.clientY,
             },
             elementDragConfig: config,
         })
@@ -67,7 +73,7 @@ class Toolbar extends React.Component {
     @autobind
     _mouseUp(event) {
         this.setState({
-            mouseOrigin: false, 
+            mouseOrigin: null, 
             shadow: {show: false, image: null},
             elementDragConfig: null
         })
@@ -75,6 +81,7 @@ class Toolbar extends React.Component {
 
     @autobind
     _mouseMove(event) {
+        // if the mouse is down
         if (this.state.mouseOrigin) {
             // compute the location of the mouse
             const pos = {
@@ -82,22 +89,70 @@ class Toolbar extends React.Component {
                 y: event.clientY
             }
 
+            // hide the shadow if the mouse is still over the toolbar
+            const showShadow = pos.x >= window.innerWidth - toolbarWidth
+            // save a reference to the current element we are dragging
+            let { dragElement } = this.state
+            // grab the used props
+            const { info, elements } = this.props
+        
+            // grab the type of the element we dragged
+            const { type, ...config } = this.state.elementDragConfig
+
+            // if we are not showing the shadow
+            if (!showShadow) {
+                // if we don't have an element to drag
+                if (!this.state.dragElement) {
+                    // track that we have created an element
+                    dragElement = specMap[type]({...pos, info, elements, config})
+
+                    // create one with the appropriate spec
+                    this.props.placeElement(dragElement.element)
+                    // select the element we just created
+                    this.props.selectElement(dragElement.select)
+                }
+
+                // move the element we just created
+
+            }
+            // otherwise we are showing the shadow
+            else {
+                // if we still have an element attached
+                if (this.state.dragElement) {
+                    // clear the current selection
+                    this.props.clearSelection()
+                    // delete it
+                    this.props.deleteElements(...this.state.dragElement.remove)
+
+                    // clear the drag element state
+                    dragElement = null
+                }
+            }
+
             // update the state to accomodate the mouse movement
             this.setState({
-                // update the location of the mouse in css-position friendly terms
-                mouseOrigin: {
-                    top: pos.y,
-                    left: pos.x
-                },
-                // hide the shadow if the mouse is still over the toolbar
+                // update the location of the mouse 
+                mouseOrigin: pos,
                 shadow: {
                     ...this.state.shadow,
-                    show: pos.x >= window.innerWidth - toolbarWidth,
-                }
+                    show: showShadow,
+                },
+                dragElement
             })
         }
     }
 }
 
-const selector = ({elements}) => ({selection: elements.selection})
-export default connect(selector)(Toolbar)
+// a dispatch table of element table to spec function
+const specMap = {
+    propagators: propagatorSpec,
+}
+
+const selector = ({elements, info}) => ({elements, info, selection: elements.selection})
+const mapDispatchToProps = dispatch => ({
+    placeElement: element => dispatch(placeElement(element)),
+    selectElement: element => dispatch(selectElements(element)),
+    deleteElements: (...elements) => dispatch(deleteElements(...elements)),
+    clearSelection: () => dispatch(clearSelection())
+})
+export default connect(selector, mapDispatchToProps)(Toolbar)

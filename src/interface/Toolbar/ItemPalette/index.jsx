@@ -22,12 +22,12 @@ const ItemPalette = ({ style, info, dispatch, elements, setShadow, onMouseDown, 
                 Drag and drop items to add them to a canvas
             </h2>
             <div style={styles.palette}>
-                <Item image={circle} type="propagators" config={{kind: "gluon"}} />
-                <Item image={gluon} type="propagators" config={{kind: "gluon"}} />
-                <Item image={dashed} type="propagators" config={{kind: "dashed"}} />
-                <Item image={line} type="propagators" config={{kind: "line"}} />
-                <Item image={em} type="propagators" config={{kind: "em"}} />
-                <Item image={text} type="propagators" config={{kind: "em"}} />
+                <Item image={circle} config={{type: "propagators", kind: "gluon"}} />
+                <Item image={gluon} config={{type: "propagators", kind: "gluon"}} />
+                <Item image={dashed} config={{type: "propagators", kind: "dashed"}} />
+                <Item image={line} config={{type: "propagators", kind: "line"}} />
+                <Item image={em} config={{type: "propagators", kind: "em"}} />
+                <Item image={text} config={{type: "propagators", kind: "em"}} />
             </div>
         </div>
     )
