@@ -24,8 +24,6 @@ describe('Sagas', function() {
                     }
                 }
 
-
-
                 // get the generator
                 const gen = placePropagator(desc)
                 // the first thing we have to do is create the two anchors
