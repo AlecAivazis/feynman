@@ -96,11 +96,9 @@ describe('Action Creators', function() {
             it('place element', function() {
                 expect(placeElement({hello:'world'})).to.deep.equal({
                     type: PLACE_ELEMENTS,
-                    payload: [
-                        {
-                            hello: "world"
-                        }
-                    ]
+                    payload: {
+                        hello: "world"
+                    }
                 })
             })
 

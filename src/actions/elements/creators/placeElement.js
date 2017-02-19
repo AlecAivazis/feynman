@@ -1,7 +1,7 @@
 // local imports
 import { PLACE_ELEMENTS } from 'actions/elements'
 
-export default (...elements) => ({
+export default (element) => ({
     type: PLACE_ELEMENTS,
-    payload: elements,
+    payload: element,
 })
