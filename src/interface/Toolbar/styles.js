@@ -1,3 +1,6 @@
+// local imports
+import { image } from './ItemPalette/styles'
+
 export const toolbarWidth = 220
 
 export default {
@@ -10,5 +13,9 @@ export default {
         backgroundColor: 'rgba(50,50,50,0.65)',
         flexDirection: 'column',
         justifyContent: 'space-between',
+    },
+    shadow: {
+        ...image,
+        position: 'fixed', 
     }
 }

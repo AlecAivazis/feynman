@@ -1,7 +1,7 @@
 // local imports
 import { itsGrey } from 'colors'
 
-const image = {
+export const image = {
     userDrag: 'none',
     userSelect: 'none',
     MozUserSelect: 'none',
@@ -46,8 +46,4 @@ export default {
         marginBottom: 25,
     },
     image,
-    shadow: {
-        ...image,
-        position: 'fixed',
-    }
 }
