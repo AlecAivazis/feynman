@@ -7,7 +7,7 @@ import 'babel-polyfill'
 import App from './interface'
 import store from './store'
 
-import { addAnchors, addPropagators, selectElements } from 'actions/elements'
+import { addAnchors, addPropagators } from 'actions/elements'
 
 store.dispatch(addAnchors(
     {
@@ -41,8 +41,6 @@ store.dispatch(addPropagators(
         anchor2: 3,
     }
 ))
-
-window.store = store
 
 ReactDOM.render((
     <Provider store={store}>

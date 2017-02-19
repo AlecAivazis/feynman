@@ -2,7 +2,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { Provider } from 'react-redux'
-import 'babel-polyfill' // this has to be here and only here among all of the tests (sooo brittle /skincrawl)
 // local imports
 import { sidebarWidth } from 'interface/Sidebar/styles'
 import Diagram from 'interface/Diagram'

@@ -8,6 +8,7 @@ import {
     moveSelectedElements, MOVE_SELECTED_ELEMENTS,
     clearElements,        CLEAR_ELEMENTS,
     deleteSelection,      DELETE_SELECTION,
+    placeElement,         PLACE_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -89,6 +90,17 @@ describe('Action Creators', function() {
                         id: 1,
                         select: true,
                     }
+                })
+            })
+
+            it('place element', function() {
+                expect(placeElement({hello:'world'})).to.deep.equal({
+                    type: PLACE_ELEMENTS,
+                    payload: [
+                        {
+                            hello: "world"
+                        }
+                    ]
                 })
             })
 
