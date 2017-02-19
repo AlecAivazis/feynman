@@ -1,6 +1,5 @@
 // external imports
 import { takeEvery } from 'redux-saga'
-import _ from 'lodash'
 // local imports
 import { PLACE_ELEMENTS } from 'actions/elements/types'
 import placePropagator from './placePropagator'
