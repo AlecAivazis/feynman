@@ -9,7 +9,8 @@ import ItemPalette from './ItemPalette'
 import Footer from './Footer'
 import { EventListener } from 'components'
 import { propagatorSpec } from './specs'
-import { placeElement, selectElements, deleteElements, clearSelection } from 'actions/elements'
+import { placeElement, selectElements, deleteElements, clearSelection, moveSelectedElements } from 'actions/elements'
+import { fixDeltaToGrid } from 'utils'
 
 // WARNING: This component is is way more complicated that originally thought necessary.
 //          This is because the ItemPalette's state is wiped when the dragged out element 
@@ -19,7 +20,8 @@ class Toolbar extends React.Component {
     state = {
         shadow: {show: false, image: null},
         mouseOrigin: null,
-        elementDragConfig: null
+        elementDragConfig: null,
+        dragElement: null,
     }
 
     render() {
@@ -75,16 +77,19 @@ class Toolbar extends React.Component {
         this.setState({
             mouseOrigin: null, 
             shadow: {show: false, image: null},
-            elementDragConfig: null
+            elementDragConfig: null,
+            dragElement: null,
         })
     }
 
     @autobind
     _mouseMove(event) {
+        // the origin
+        const origin = this.state.mouseOrigin
         // if the mouse is down
-        if (this.state.mouseOrigin) {
+        if (origin) {
             // compute the location of the mouse
-            const pos = {
+            let pos = {
                 x: event.clientX,
                 y: event.clientY
             }
@@ -93,16 +98,16 @@ class Toolbar extends React.Component {
             const showShadow = pos.x >= window.innerWidth - toolbarWidth
             // save a reference to the current element we are dragging
             let { dragElement } = this.state
-            // grab the used props
-            const { info, elements } = this.props
-        
-            // grab the type of the element we dragged
-            const { type, ...config } = this.state.elementDragConfig
 
             // if we are not showing the shadow
             if (!showShadow) {
                 // if we don't have an element to drag
-                if (!this.state.dragElement) {
+                if (!dragElement) {
+                    // grab the used props
+                    const { info, elements } = this.props
+                    // grab the type of the element we dragged
+                    const { type, ...config } = this.state.elementDragConfig
+
                     // track that we have created an element
                     dragElement = specMap[type]({...pos, info, elements, config})
 
@@ -112,8 +117,26 @@ class Toolbar extends React.Component {
                     this.props.selectElement(dragElement.select)
                 }
 
-                // move the element we just created
+                // the fixed target
+                const fixed = fixDeltaToGrid({
+                    origin, 
+                    next: pos, 
+                    info: this.props.info
+                })
+                // the distance to move
+                const fixedDelta = {
+                    x: fixed.x - origin.x,
+                    y: fixed.y - origin.y,
+                }
 
+                // if there is a non-zero distance to move
+                if (Math.abs(fixedDelta.x) > 0 || Math.abs(fixedDelta.y) > 0) {
+                    // move the selected anchors
+                     this.props.moveSelectedElements(fixedDelta)
+                }
+
+                // make sure we measure relative to the fixed location
+                pos = fixed
             }
             // otherwise we are showing the shadow
             else {
@@ -153,6 +176,7 @@ const mapDispatchToProps = dispatch => ({
     placeElement: element => dispatch(placeElement(element)),
     selectElement: element => dispatch(selectElements(element)),
     deleteElements: (...elements) => dispatch(deleteElements(...elements)),
-    clearSelection: () => dispatch(clearSelection())
+    clearSelection: () => dispatch(clearSelection()),
+    moveSelectedElements: move => dispatch(moveSelectedElements(move)),
 })
 export default connect(selector, mapDispatchToProps)(Toolbar)
