@@ -30,13 +30,13 @@ export const propagatorSpec = ({x, y, info, elements, config}) => {
             ...config,
             anchor1: {
                 id: anchor1,
-                ...upper
+                x: lower.x,
+                y: upper.y,
             },
             anchor2: {
                 id: anchor2,
-                x: 500,
-                y: 600,
-                ...lower
+                x: upper.x,
+                y: lower.y,
             }
         },
         // select the propagator we created when we're done
