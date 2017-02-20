@@ -6,6 +6,7 @@ import {
     toggleHotkeys, TOGGLE_HOTKEYS,
     toggleAnchors, TOGGLE_ANCHORS,
     selectElements, SELECT_ELEMENTS,
+    togglePatternModal, TOGGLE_PATTERN_MODAL,
 } from 'actions/info'
 
 
@@ -19,6 +20,13 @@ describe('Action Creators', function() {
             expect(setDiagramTitle(title)).to.deep.equal({
                 type: SET_TITLE,
                 payload: title,
+            })
+        })
+
+        it('toggle the grid', function() {
+            // all we care about is the type
+            expect(togglePatternModal()).to.deep.equal({
+                type: TOGGLE_PATTERN_MODAL,
             })
         })
 
