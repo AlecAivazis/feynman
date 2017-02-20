@@ -10,7 +10,7 @@ import Footer from './Footer'
 import { EventListener } from 'components'
 import { propagatorSpec } from './specs'
 import { placeElement, selectElements, deleteElements, clearSelection, moveSelectedElements } from 'actions/elements'
-import { fixDeltaToGrid } from 'utils'
+import { fixDeltaToGrid, relativePosition } from 'utils'
 
 // WARNING: This component is is way more complicated that originally thought necessary.
 //          This is because the ItemPalette's state is wiped when the dragged out element 
@@ -109,7 +109,7 @@ class Toolbar extends React.Component {
                     const { type, ...config } = this.state.elementDragConfig
 
                     // track that we have created an element
-                    dragElement = specMap[type]({...pos, info, elements, config})
+                    dragElement = specMap[type]({...relativePosition(pos), info, elements, config})
 
                     // create one with the appropriate spec
                     this.props.placeElement(dragElement.element)

@@ -25,7 +25,7 @@ const ItemPalette = ({ style, info, dispatch, elements, setShadow, onMouseDown, 
                 <Item image={circle} config={{type: "propagators", kind: "gluon"}} />
                 <Item image={gluon} config={{type: "propagators", kind: "gluon"}} />
                 <Item image={dashed} config={{type: "propagators", kind: "dashed"}} />
-                <Item image={line} config={{type: "propagators", kind: "line"}} />
+                <Item image={line} config={{type: "propagators", kind: "fermion"}} />
                 <Item image={em} config={{type: "propagators", kind: "em"}} />
                 <Item image={text} config={{type: "propagators", kind: "em"}} />
             </div>

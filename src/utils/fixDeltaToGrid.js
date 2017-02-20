@@ -2,7 +2,6 @@
 import { round } from 'utils'
 
 export default function computeFixedDelta({origin, next, info}) {
-    
     // compute the difference between the mouse's current location and the previous one
     const delta = {
         x: next.x - origin.x,

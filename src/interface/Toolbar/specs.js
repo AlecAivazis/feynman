@@ -1,14 +1,25 @@
 // this file contains the functions that map the mouse's location to elements specs
 // to be interpretted by the placeElement saga
 
-// external imports
-import { generateElementId } from 'utils'
+// local imports
+import { generateElementId, ceil } from 'utils'
 
 export const propagatorSpec = ({x, y, info, elements, config}) => {
     // compute two anchor ids to use
     const [anchor1, anchor2] = generateElementId(elements.anchors, 2)
     // compute a propagator id to use
     const propagatorId = generateElementId(elements.propagators)
+
+    // the lower right corner of the bounding box
+    const upper = {
+        x: ceil(x, info.gridSize),
+        y: ceil(y, info.gridSize),
+    }
+
+    const lower = {
+        x: upper.x - info.gridSize,
+        y: upper.y - info.gridSize
+    }
 
     // return the element spec
     return {
@@ -19,13 +30,13 @@ export const propagatorSpec = ({x, y, info, elements, config}) => {
             ...config,
             anchor1: {
                 id: anchor1,
-                x: 300,
-                y: 400,
+                ...upper
             },
             anchor2: {
                 id: anchor2,
                 x: 500,
-                y: 600
+                y: 600,
+                ...lower
             }
         },
         // select the propagator we created when we're done
