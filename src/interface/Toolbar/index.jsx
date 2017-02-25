@@ -7,13 +7,20 @@ import styles, { toolbarWidth } from './styles'
 import SelectionSummary from './SelectionSummary'
 import ItemPalette from './ItemPalette'
 import Footer from './Footer'
-import { EventListener } from 'components'
+import { EventListener, Button } from 'components'
 import { propagatorSpec } from './specs'
-import { placeElement, selectElements, deleteElements, clearSelection, moveSelectedElements } from 'actions/elements'
+import {
+    placeElement,
+    selectElements,
+    deleteElements,
+    clearSelection,
+    moveSelectedElements ,
+} from 'actions/elements'
+import { togglePatternModal } from 'actions/info'
 import { fixDeltaToGrid, relativePosition } from 'utils'
 
 // WARNING: This component is is way more complicated that originally thought necessary.
-//          This is because the ItemPalette's state is wiped when the dragged out element 
+//          This is because the ItemPalette's state is wiped when the dragged out element
 //          is selected, which forces this component to maintain the shadow and item creation state
 class Toolbar extends React.Component {
     // the initial state
@@ -26,7 +33,7 @@ class Toolbar extends React.Component {
 
     render() {
         // grab the used props
-        const { style, selection, ...unusedProps } = this.props
+        const { style, selection, togglePatterns, ...unusedProps } = this.props
 
         return (
             <div style={{...styles.container, ...style}}>
@@ -38,14 +45,18 @@ class Toolbar extends React.Component {
 
                 {/* the image to show while dragging (and over the toolbar) */}
                 {this.state.shadow.show && (
-                    <img 
+                    <img
                         src={this.state.shadow.image}
                         style={{
                             ...{top: this.state.mouseOrigin.y, left: this.state.mouseOrigin.x},
-                            ...styles.shadow, 
-                        }} 
+                            ...styles.shadow,
+                        }}
                     />
                 )}
+
+                <Button onClick={togglePatterns}>
+                    hello
+                </Button>
 
                 <EventListener event="mousemove">
                     {this._mouseMove}
@@ -75,7 +86,7 @@ class Toolbar extends React.Component {
     @autobind
     _mouseUp(event) {
         this.setState({
-            mouseOrigin: null, 
+            mouseOrigin: null,
             shadow: {show: false, image: null},
             elementDragConfig: null,
             dragElement: null,
@@ -119,8 +130,8 @@ class Toolbar extends React.Component {
 
                 // the fixed target
                 const fixed = fixDeltaToGrid({
-                    origin, 
-                    next: pos, 
+                    origin,
+                    next: pos,
                     info: this.props.info
                 })
                 // the distance to move
@@ -154,7 +165,7 @@ class Toolbar extends React.Component {
 
             // update the state to accomodate the mouse movement
             this.setState({
-                // update the location of the mouse 
+                // update the location of the mouse
                 mouseOrigin: pos,
                 shadow: {
                     ...this.state.shadow,
@@ -178,5 +189,6 @@ const mapDispatchToProps = dispatch => ({
     deleteElements: (...elements) => dispatch(deleteElements(...elements)),
     clearSelection: () => dispatch(clearSelection()),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
+    togglePatterns: () => dispatch(togglePatternModal())
 })
 export default connect(selector, mapDispatchToProps)(Toolbar)

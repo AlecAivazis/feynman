@@ -10,21 +10,22 @@ import Propagator from './Propagator'
 import Anchor from './Anchor'
 import SelectionRectangle from './SelectionRectangle'
 import { propagatorsWithLocation } from './util'
-import { 
-    relativePosition, 
-    elementsInRegion, 
-    generateElementId, 
-    fixPositionToGrid 
+import {
+    relativePosition,
+    elementsInRegion,
+    generateElementId,
+    fixPositionToGrid
 } from 'utils'
 import { EventListener } from 'components'
-import { 
+import {
     clearSelection,
-    selectElements, 
-    addAnchors, 
-    addPropagators, 
+    selectElements,
+    addAnchors,
+    addPropagators,
     setElementAttrs as setAttrs,
     deleteSelection,
 } from 'actions/elements'
+import PatternModal from '../PatternModal'
 
 class Diagram extends React.Component {
     // the diagram component keeps track of the placement of the user's selection rectangle
@@ -77,7 +78,7 @@ class Diagram extends React.Component {
                     {this._mouseUp}
                 </EventListener>
                 <EventListener event="keydown">
-                   {this._keyPress} 
+                   {this._keyPress}
                 </EventListener>
             </svg>
         )

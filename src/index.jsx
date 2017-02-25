@@ -8,6 +8,7 @@ import App from './interface'
 import store from './store'
 
 import { placeElement } from 'actions/elements'
+import { togglePatternModal } from 'actions/info'
 
 store.dispatch(placeElement({
     type: "pattern",
@@ -43,6 +44,8 @@ store.dispatch(placeElement({
         }
     ]
 }))
+
+store.dispatch(togglePatternModal())
 
 ReactDOM.render((
     <Provider store={store}>

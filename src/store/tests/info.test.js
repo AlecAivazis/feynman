@@ -8,6 +8,7 @@ import {
     setGridSize,
     toggleHotkeys,
     toggleAnchors,
+    togglePatternModal,
 } from 'actions/info'
 
 describe('Reducers', function() {
@@ -56,13 +57,22 @@ describe('Reducers', function() {
             expect(state.showHotkeys).to.equal(!initialState.showHotkeys)
         })
 
-        it('responds to the TOGGLE_ANCHORS action', function(){
+        it('responds to the TOGGLE_ANCHORS action', function() {
             // create an action corresponding to toggling the grid
             const action = toggleAnchors()
             // get the mutated state after toggling the grid
             const state = diagramReducer(undefined, action)
             // make sure the title matches the expectation
             expect(state.showAnchors).to.equal(!initialState.showAnchors)
+        })
+
+        it('responds to the TOGGLE_PATTERN_MODAL action', function() {
+            // create an action corresponding to toggling the pattern modal
+            const action = togglePatternModal()
+            // get the mutated state after toggling the pattern modal
+            const state = diagramReducer(undefined, action)
+            // make sure the title matches the expectation
+            expect(state.showPatternModal).to.equal(!initialState.showPatternModal)
         })
     })
 })

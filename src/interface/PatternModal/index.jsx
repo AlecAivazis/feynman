@@ -1,10 +1,21 @@
 // external imports
 import React from 'react'
+import { connect } from 'react-redux'
+// local imports
+import { Overlay } from 'components'
+import { togglePatternModal } from 'actions/info'
 
-const PatternModal = () => (
-    <div>
+const PatternModal = ({hideOverlay}) => (
+    <Overlay
+        title="Select starting template..."
+        hide={hideOverlay}
+        addon="addon"
+    >
         hello
-    </div>
+    </Overlay>
 )
 
-export default PatternModal
+const mapDispatchToProps = dispatch => ({
+    hideOverlay: () => dispatch(togglePatternModal())
+})
+export default connect(null, mapDispatchToProps)(PatternModal)
