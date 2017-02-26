@@ -1,3 +1,6 @@
+// local imports
+import { yagLGrey } from 'colors'
+
 export default {
     container: {
         position: 'fixed',
@@ -15,6 +18,8 @@ export default {
         display: 'flex',
     },
     content: {
-
+        backgroundColor: yagLGrey,
+        borderRadius: '0 0 6px 6px',
+        padding: '1.5%',
     }
 }

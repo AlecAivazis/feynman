@@ -4,10 +4,13 @@ import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 import PaletteItem from './paletteItem'
+import { Button } from 'components'
 import {circle, gluon, line, dashed, em, text} from './images'
+import { togglePatternModal } from 'actions/info'
 
-const ItemPalette = ({ style, info, dispatch, elements, setShadow, onMouseDown, ...unusedProps }) => {
-    
+
+const ItemPalette = ({ togglePatterns, style, onMouseDown, ...unusedProps }) => {
+
     // a local component to dry up code
     const Item = ({...props}) => (
         <PaletteItem onMouseDown={onMouseDown} {...props}/>
@@ -29,9 +32,17 @@ const ItemPalette = ({ style, info, dispatch, elements, setShadow, onMouseDown, 
                 <Item image={em} config={{type: "propagators", kind: "em"}} />
                 <Item image={text} config={{type: "propagators", kind: "em"}} />
             </div>
+            <div style={styles.patternButtonContainer}>
+                <Button onClick={togglePatterns} style={styles.patternButton}>
+                    Show patterns
+                </Button>
+            </div>
         </div>
     )
 }
 
-const selector = ({info, elements}) => ({info, elements})
-export default connect(selector)(ItemPalette)
+const mapDispatchToProps = dispatch => ({
+    togglePatterns: () => dispatch(togglePatternModal())
+})
+
+export default connect(null, mapDispatchToProps)(ItemPalette)

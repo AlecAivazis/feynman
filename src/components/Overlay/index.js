@@ -7,9 +7,9 @@ import Header from './Header'
 const preventBubble = (event) => event && event.stopPropagation()
 
 const Overlay = ({style, addon, title, children, hide, onClick, ...unusedProps}) => (
-    <aside style={{...styles.container, ...style}} {...unusedProps} onClick={hide}>
-        <section  style={styles.content} onClick={preventBubble}>
-            <Header addon={addon}>
+    <aside style={styles.container} {...unusedProps} onClick={hide}>
+        <section  style={style} onClick={preventBubble}>
+            <Header addon={addon} hide={hide}>
                 {title}
             </Header>
             <div style={styles.content}>

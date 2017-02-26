@@ -7,6 +7,7 @@ import { toggleHotkeys } from 'actions/info'
 import { Collapsible } from 'components'
 import Hotkey from './Hotkey'
 
+
 const HotkeySummary = ({style, info, dispatch, ...unusedProps}) => (
     <Collapsible
         title="Hotkeys"

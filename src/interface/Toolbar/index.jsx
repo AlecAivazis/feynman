@@ -7,7 +7,7 @@ import styles, { toolbarWidth } from './styles'
 import SelectionSummary from './SelectionSummary'
 import ItemPalette from './ItemPalette'
 import Footer from './Footer'
-import { EventListener, Button } from 'components'
+import { EventListener } from 'components'
 import { propagatorSpec } from './specs'
 import {
     placeElement,
@@ -53,10 +53,6 @@ class Toolbar extends React.Component {
                         }}
                     />
                 )}
-
-                <Button onClick={togglePatterns}>
-                    hello
-                </Button>
 
                 <EventListener event="mousemove">
                     {this._mouseMove}
@@ -189,6 +185,5 @@ const mapDispatchToProps = dispatch => ({
     deleteElements: (...elements) => dispatch(deleteElements(...elements)),
     clearSelection: () => dispatch(clearSelection()),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
-    togglePatterns: () => dispatch(togglePatternModal())
 })
 export default connect(selector, mapDispatchToProps)(Toolbar)
