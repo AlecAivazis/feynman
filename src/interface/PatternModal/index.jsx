@@ -2,6 +2,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
+import Choice from './Choice'
+import patterns from './patterns'
 import styles from './styles'
 import { Overlay } from 'components'
 import { togglePatternModal } from 'actions/info'
@@ -11,8 +13,9 @@ const PatternModal = ({hideOverlay}) => (
         title="Select starting template..."
         hide={hideOverlay}
         style={styles.overlay}
+        contentStyle={styles.overlayContent}
     >
-        hello
+        {patterns.map((pattern, i) => <Choice {...pattern} hideOverlay={hideOverlay} key={i}/>)}
     </Overlay>
 )
 

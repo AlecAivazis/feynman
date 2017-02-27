@@ -9,6 +9,7 @@ import {
     clearElements,        CLEAR_ELEMENTS,
     deleteSelection,      DELETE_SELECTION,
     placeElement,         PLACE_ELEMENTS,
+    loadPattern,          LOAD_PATTERN,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -99,6 +100,16 @@ describe('Action Creators', function() {
                     payload: {
                         hello: "world"
                     }
+                })
+            })
+
+            it('load pattern', function() {
+                // a pattern fixture
+                const pattern = {name:"hello"}
+                // check the structure of the action
+                expect(loadPattern(pattern)).to.deep.equal({
+                    type: LOAD_PATTERN,
+                    payload: pattern
                 })
             })
 
