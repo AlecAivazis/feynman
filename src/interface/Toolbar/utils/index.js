@@ -1,0 +1,1 @@
+export anchorsInSpec from './anchorsInSpec'

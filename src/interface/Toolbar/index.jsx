@@ -15,9 +15,11 @@ import {
     deleteElements,
     clearSelection,
     moveSelectedElements ,
+    mergeElements,
 } from 'actions/elements'
 import { togglePatternModal } from 'actions/info'
 import { fixDeltaToGrid, relativePosition } from 'utils'
+import { anchorsInSpec } from './utils'
 
 // WARNING: This component is is way more complicated that originally thought necessary.
 //          This is because the ItemPalette's state is wiped when the dragged out element
@@ -81,6 +83,14 @@ class Toolbar extends React.Component {
 
     @autobind
     _mouseUp(event) {
+        // TODO: make mergeElements action creator take multiple target
+        // for each each we created
+        for (const {id} of anchorsInSpec(this.state.dragElement)) {
+            // perform any merges on overlapping anchors
+            this.props.mergeAnchors(id)
+        }
+
+        // clear any references we made while dragging
         this.setState({
             mouseOrigin: null,
             shadow: {show: false, image: null},
@@ -185,5 +195,6 @@ const mapDispatchToProps = dispatch => ({
     deleteElements: (...elements) => dispatch(deleteElements(...elements)),
     clearSelection: () => dispatch(clearSelection()),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
+    mergeAnchors: element => dispatch(mergeElements(element)),
 })
 export default connect(selector, mapDispatchToProps)(Toolbar)

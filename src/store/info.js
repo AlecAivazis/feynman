@@ -17,7 +17,7 @@ export const initialState = {
     showAnchors: true,
     showHistory: false,
     showHotkeys: true,
-    showPatternModal: true,
+    showPatternModal: true, // this must reflect the initial value of `patternModalInitalVis`
     patternModalInitalVis: true,
 }
 
