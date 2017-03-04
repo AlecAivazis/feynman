@@ -19,8 +19,7 @@ const PatternModal = ({info, hideOverlay, toggleInitialState}) => (
     <Overlay
         title="Select starting template..."
         hide={hideOverlay}
-        style={styles.overlay}
-        contentStyle={styles.overlayContent}
+        style={styles.overlayContent}
         addon={
             <Addon 
                 checked={info.patternModalInitalVis}

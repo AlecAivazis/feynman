@@ -6,7 +6,8 @@ import {
     TOGGLE_HOTKEYS,
     TOGGLE_ANCHORS,
     TOGGLE_PATTERN_MODAL,
-    TOGGLE_PATTERN_INITIAL_VIS
+    TOGGLE_PATTERN_INITIAL_VIS,
+    TOGGLE_EXPORT_MODAL,
 } from 'actions/info'
 
 // the default state
@@ -17,6 +18,7 @@ export const initialState = {
     showAnchors: true,
     showHistory: false,
     showHotkeys: true,
+    showExportModal: true,
     showPatternModal: true, // this must reflect the initial value of `patternModalInitalVis`
     patternModalInitalVis: true,
 }
@@ -84,6 +86,15 @@ export default (state = initialState, {type, payload}) => {
         return {
             ...state,
             patternModalInitalVis: !state.patternModalInitalVis
+        }
+    }
+    
+    // if the action indicates we should toggle the export modal
+    if (type === TOGGLE_EXPORT_MODAL) {
+        // inverty the export modal visibility
+        return {
+            ...state,
+            showExportModal: !state.showExportModal,
         }
     }
 

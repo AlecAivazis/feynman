@@ -1,7 +1,5 @@
 export default {
-    overlay: {
-        width: '70%',
-    },
+    overlay: {},
     overlayContent: {
         flexDirection: 'row',
         display: 'flex',

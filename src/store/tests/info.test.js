@@ -9,6 +9,7 @@ import {
     toggleHotkeys,
     toggleAnchors,
     togglePatternModal,
+    toggleExportModal,
     TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so 
 } from 'actions/info'           // import the type directly
 
@@ -85,6 +86,15 @@ describe('Reducers', function() {
             const mutated = reducer(undefined, action) 
             // make sure the internal state flipped
             expect(mutated.patternModalInitalVis).to.equal(!initialState.patternModalInitalVis)
+        })
+
+        it('responds to the TOGGLE_EXPORT_MODAL action', function() {
+            // create the action to toggle the xport modal
+            const action = toggleExportModal()
+            // get the state after toggling the modal
+            const state = reducer(undefined, action)
+            // make sure the state look like we expect
+            expect(state.showExportModal).to.equal(!initialState.showExportModal)
         })
     })
 })

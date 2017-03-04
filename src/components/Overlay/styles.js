@@ -21,5 +21,8 @@ export default {
         backgroundColor: yagLGrey,
         borderRadius: '0 0 6px 6px',
         padding: '1.5%',
+    },
+    contentWrapper: {
+        width: '70%',
     }
 }

@@ -9,7 +9,8 @@ import {
     toggleAnchors, TOGGLE_ANCHORS,
     selectElements, SELECT_ELEMENTS,
     togglePatternModal, TOGGLE_PATTERN_MODAL,
-    togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS
+    togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS,
+    toggleExportModal, TOGGLE_EXPORT_MODAL,
 } from 'actions/info'
 import { fieldName } from '../creators/togglePatternModalInitialVis'
 import LocalStorageMock from './storage.js'
@@ -40,6 +41,13 @@ describe('Action Creators', function() {
             // all we care about is the type
             expect(toggleGrid()).to.deep.equal({
                 type: TOGGLE_GRID,
+            })
+        })
+
+        it('toggle the export modal', function() {
+            // all we care about is the type
+            expect(toggleExportModal()).to.deep.equal({
+                type: TOGGLE_EXPORT_MODAL,
             })
         })
 
