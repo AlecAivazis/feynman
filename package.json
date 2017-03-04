@@ -3,7 +3,6 @@
   "description": "A tool for drawing feynamn diagrams.",
   "version": "0.0.0",
   "private": true,
-  "main": "gulpfile.babel.js",
   "scripts": {
     "build": "webpack --config config/webpack.js",
     "build-production": "NODE_ENV=production npm run build",
