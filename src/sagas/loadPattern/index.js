@@ -14,8 +14,8 @@ export function* loadPatternWorker({type, payload:{elements}}) {
 }
 
 
-// this saga creates an element for each element description passed
+// this saga loads a particular pattern
 export default function* loadPattern() {
-    // whenever we want to create a propagator around a particular point
+    // whenever we want to load a pattern onto the diagram
     yield takeEvery(LOAD_PATTERN, loadPatternWorker)
 }
