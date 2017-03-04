@@ -2,7 +2,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { Provider } from 'react-redux'
-import 'babel-polyfill'
 // local imports
 import { createStore } from 'store'
 import Splittable from '../Splittable'

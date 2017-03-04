@@ -5,7 +5,8 @@ import {
     SET_GRID_SIZE,
     TOGGLE_HOTKEYS,
     TOGGLE_ANCHORS,
-    TOGGLE_PATTERN_MODAL
+    TOGGLE_PATTERN_MODAL,
+    TOGGLE_PATTERN_INITIAL_VIS
 } from 'actions/info'
 
 // the default state
@@ -16,7 +17,8 @@ export const initialState = {
     showAnchors: true,
     showHistory: false,
     showHotkeys: true,
-    showPatternModal: false,
+    showPatternModal: true,
+    patternModalInitalVis: true,
 }
 
 // return the diagram reducer
@@ -73,6 +75,15 @@ export default (state = initialState, {type, payload}) => {
         return {
             ...state,
             showPatternModal: !state.showPatternModal,
+        }
+    }
+
+    // if the action indicated we should toggle the initial visibility of the pattern modal
+    if (type === TOGGLE_PATTERN_INITIAL_VIS) {
+        // invert the internal state
+        return {
+            ...state,
+            patternModalInitalVis: !state.patternModalInitalVis
         }
     }
 

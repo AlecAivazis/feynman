@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+import 'babel-polyfill'
 // local imports
 import {
     setDiagramTitle, SET_TITLE,
@@ -7,7 +9,11 @@ import {
     toggleAnchors, TOGGLE_ANCHORS,
     selectElements, SELECT_ELEMENTS,
     togglePatternModal, TOGGLE_PATTERN_MODAL,
+    togglePatternInitialVis, TOGGLE_PATTERN_INITIAL_VIS
 } from 'actions/info'
+import { fieldName } from '../creators/togglePatternInitialVis'
+import LocalStorageMock from './storage.js'
+import { createStore } from 'store'
 
 
 describe('Action Creators', function() {
@@ -59,6 +65,42 @@ describe('Action Creators', function() {
             // all we care about is the type
             expect(toggleAnchors()).to.deep.equal({
                 type: TOGGLE_ANCHORS,
+            })
+        })
+
+        describe('Toggle Pattern Initial Visibility Thunk', function() {
+
+            // some mocks, fixtures, and spies
+            let store, storage, thunk, dispatch
+            beforeEach(function() {
+                // a store to pass to the Thunk
+                store = createStore()
+                // a mocked local storage to pass to the thunk factory
+                storage = new LocalStorageMock()
+                // create an instance of the thunk with the mocked storage
+                thunk = togglePatternInitialVis(storage)
+                // we need a dispatch we can check against
+                dispatch = sinon.spy()
+            })
+
+            it('inverts the current state in local storage', function() {
+                // call the thunk
+                thunk(dispatch, store.getState)
+                
+                // make sure dispatch was called with the correct action
+                dispatch.should.have.been.calledWith({
+                    type: TOGGLE_PATTERN_INITIAL_VIS,
+                })
+            })
+
+            it('inverts the current state in local storage', function() {
+                // call the thunk
+                thunk(dispatch, store.getState)
+                
+                // make sure dispatch was called with the correct action
+                storage.getItem(fieldName).should.deep.equal(
+                    !store.getState().info.patternModalInitalVis
+                )
             })
         })
     })
