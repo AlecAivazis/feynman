@@ -5,21 +5,38 @@ import { connect } from 'react-redux'
 import Choice from './Choice'
 import patterns from './patterns'
 import styles from './styles'
-import { Overlay } from 'components'
-import { togglePatternModal } from 'actions/info'
+import { Overlay, Checkbox } from 'components'
+import { togglePatternModal, togglePatternModalInitialVis } from 'actions/info'
 
-const PatternModal = ({hideOverlay}) => (
+const Addon = ({toggleInitialState, checked}) => (
+    <div onClick={toggleInitialState} style={styles.addon}>
+        show at startup 
+        <Checkbox checked={checked} style={styles.checkbox}/>
+    </div>
+)
+
+const PatternModal = ({info, hideOverlay, toggleInitialState}) => (
     <Overlay
         title="Select starting template..."
         hide={hideOverlay}
         style={styles.overlay}
         contentStyle={styles.overlayContent}
+        addon={
+            <Addon 
+                checked={info.patternModalInitalVis}
+                toggleInitialState={toggleInitialState} 
+            />
+        }
     >
         {patterns.map((pattern, i) => <Choice {...pattern} hideOverlay={hideOverlay} key={i}/>)}
     </Overlay>
 )
 
+const selector = ({info}) => ({info})
 const mapDispatchToProps = dispatch => ({
-    hideOverlay: () => dispatch(togglePatternModal())
+    hideOverlay: () => dispatch(togglePatternModal()),
+    toggleInitialState: () => dispatch(
+        togglePatternModalInitialVis(window.localStorage)
+    ),
 })
-export default connect(null, mapDispatchToProps)(PatternModal)
+export default connect(selector, mapDispatchToProps)(PatternModal)

@@ -9,9 +9,9 @@ import {
     toggleAnchors, TOGGLE_ANCHORS,
     selectElements, SELECT_ELEMENTS,
     togglePatternModal, TOGGLE_PATTERN_MODAL,
-    togglePatternInitialVis, TOGGLE_PATTERN_INITIAL_VIS
+    togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS
 } from 'actions/info'
-import { fieldName } from '../creators/togglePatternInitialVis'
+import { fieldName } from '../creators/togglePatternModalInitialVis'
 import LocalStorageMock from './storage.js'
 import { createStore } from 'store'
 
@@ -78,7 +78,7 @@ describe('Action Creators', function() {
                 // a mocked local storage to pass to the thunk factory
                 storage = new LocalStorageMock()
                 // create an instance of the thunk with the mocked storage
-                thunk = togglePatternInitialVis(storage)
+                thunk = togglePatternModalInitialVis(storage)
                 // we need a dispatch we can check against
                 dispatch = sinon.spy()
             })
