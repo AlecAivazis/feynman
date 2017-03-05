@@ -45,7 +45,7 @@ const LatexPropagator = ({
             value = valueMap[prop] ? valueMap[prop](value) : value
             
             // join them in the appropriate manner
-            return `${key}:${value}`
+            return `${key}: ${value}`
         }
     ).join(', ')
 
