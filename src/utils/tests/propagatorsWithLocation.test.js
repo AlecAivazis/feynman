@@ -1,7 +1,7 @@
 // local imports
 import { createStore } from 'store'
 import { addAnchors, addPropagators } from 'actions/elements'
-import { propagatorsWithLocation } from '../util'
+import { propagatorsWithLocation } from '..'
 
 describe('Interface Components', function() {
     describe('Diagram Element', function() {

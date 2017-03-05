@@ -9,7 +9,7 @@ import Grid from './Grid'
 import Propagator from './Propagator'
 import Anchor from './Anchor'
 import SelectionRectangle from './SelectionRectangle'
-import { propagatorsWithLocation } from './util'
+import { propagatorsWithLocation } from 'utils'
 import {
     relativePosition,
     elementsInRegion,

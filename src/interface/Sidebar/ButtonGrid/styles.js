@@ -1,8 +1,22 @@
+const buttonRow = {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: '0px 10px',
+    justifyContent: 'space-between',
+}
+
 export default {
     container: {
         display: 'flex',
-        margin: '0px 15px',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+    },
+    leftButton: {
+        marginRight: 10,
+    },
+    buttonRow,
+    bottomRow: {
+        ...buttonRow,
+        marginTop: 10,
+        justifyContent: "center",
     }
 }

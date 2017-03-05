@@ -36,6 +36,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
             <Row>
                 <Label>color:</Label>
                 <ColorPicker
+                    style={styles.colorPicker}
                     color={stroke || Propagator.defaultProps.stroke}
                     onChange={stroke => setAttrs({stroke})}
                 />

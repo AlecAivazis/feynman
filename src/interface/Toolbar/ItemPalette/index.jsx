@@ -34,7 +34,7 @@ const ItemPalette = ({ togglePatterns, style, onMouseDown, ...unusedProps }) => 
             </div>
             <div style={styles.patternButtonContainer}>
                 <Button onClick={togglePatterns} style={styles.patternButton}>
-                    Show patterns
+                    Show Patterns
                 </Button>
             </div>
         </div>

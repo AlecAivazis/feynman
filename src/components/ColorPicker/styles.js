@@ -1,7 +1,7 @@
 export default {
     container: {
         display: 'flex',
-        width: '100%',
+        width: 50,
         cursor: 'pointer',
         justifyContent: 'center',
         zIndex: 10,

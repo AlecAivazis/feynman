@@ -28,4 +28,8 @@ export default {
         color: lightBlue,
         width: '100%',
     },
+    colorPicker: {
+        marginLeft: 'auto',
+        marginRight: 10,
+    }
 }

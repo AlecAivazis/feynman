@@ -8,5 +8,9 @@ export default {
     button: {
         width: '100%',
         textTransform: 'capitalize',
+    },
+    colorPicker: {
+        marginLeft: 'auto',
+        marginRight: 10,
     }
 }

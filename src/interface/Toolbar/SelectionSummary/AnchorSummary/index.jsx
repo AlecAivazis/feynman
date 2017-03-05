@@ -34,6 +34,7 @@ const AnchorSummary = ({
             <Row>
                 <Label>color:</Label>
                 <ColorPicker
+                    style={styles.colorPicker}
                     color={fill || 'black'}
                     onChange={fill => setAttrs({fill})}
                 />

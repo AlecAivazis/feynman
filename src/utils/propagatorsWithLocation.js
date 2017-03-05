@@ -1,7 +1,7 @@
 
 // propagatorsWithLocation returns the list of propagator configuration
 // with concrete (dereferenced) values
-export const propagatorsWithLocation = elements => Object.values(elements.propagators).map(
+const propagatorsWithLocation = elements => Object.values(elements.propagators).map(
     ({anchor1, anchor2, ...propagator}) => {
         // get the location for the two anchors (guarunteed to exist by the reducer)
         const anch1 = elements.anchors[anchor1]
@@ -19,3 +19,5 @@ export const propagatorsWithLocation = elements => Object.values(elements.propag
         }
     }
 )
+
+export default propagatorsWithLocation
