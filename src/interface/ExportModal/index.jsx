@@ -8,6 +8,9 @@ import { toggleExportModal } from 'actions/info'
 import styles from './styles'
 import LatexPropagator from './Propagator'
 
+// the link for the corresponding latex package
+const latexPackageLocation = 'https://storage.googleapis.com/aivazis-static-assets/feynman/feynman.sty'
+
 const ExportModal = ({elements, hideModal}) => (
     <Overlay title="Export to LaTeX" hide={hideModal}  style={styles.container}>
         Add this to your preamble
@@ -18,8 +21,8 @@ const ExportModal = ({elements, hideModal}) => (
         <Code>
             \begin{'{feynman}'} <br/>
             {propagatorsWithLocation(elements).map(propagator => (
-                <LatexPropagator 
-                    {...propagator} 
+                <LatexPropagator
+                    {...propagator}
                     key={propagator.id}
                 />
             ))}
@@ -29,9 +32,11 @@ const ExportModal = ({elements, hideModal}) => (
             <Button onClick={hideModal} style={styles.closeButton}>
                 Close
             </Button>
-            <Button>
-                Download LaTeX package
-            </Button>
+            <a href={latexPackageLocation}>
+                <Button>
+                    Download LaTeX package
+                </Button>
+            </a>
         </div>
     </Overlay>
 )
