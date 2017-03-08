@@ -21,10 +21,7 @@ const ExportModal = ({elements, hideModal}) => (
         <Code>
             \begin{'{feynman}'} <br/>
             {propagatorsWithLocation(elements).map(propagator => (
-                <LatexPropagator
-                    {...propagator}
-                    key={propagator.id}
-                />
+                <LatexPropagator {...propagator} key={propagator.id} />
             ))}
             \end{'{feynman}'}<br/>
         </Code>
