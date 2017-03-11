@@ -9,10 +9,8 @@ import { exportDiagramImageEvent } from 'interface/Diagram'
 
 // the function to call to export the diagram as an image
 const exportDiagramAsImage = () => {
-    console.log('hello')
     window.dispatchEvent(new Event(exportDiagramImageEvent))
 }
-
 
 const ButtonGrid = ({ 
     style,
