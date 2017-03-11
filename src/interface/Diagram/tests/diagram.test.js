@@ -3,12 +3,13 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 import _ from 'lodash'
+import sinon from 'sinon'
 // local imports
 import { createStore } from 'store'
 import { toggleGrid, toggleAnchors, setGridSize } from 'actions/info'
 import { addPropagators, addAnchors, selectElements } from 'actions/elements'
 import { initialState } from 'store/elements'
-import Diagram from '..'
+import Diagram, { exportDiagramImageEvent } from '..'
 import Propagator from '../Propagator'
 import Grid from '../Grid'
 import Anchor from '../Anchor'
@@ -226,6 +227,26 @@ describe('Interface Components', function() {
 
             // make sure the anchor was told to render selected
             expect(anchor.props().selected).to.be.true
+        })
+
+        it('responds to the export-diagram-image event', function() {
+            // create a verion of the store
+            const store = createStore()
+
+            // create a spy to pass to the component
+            const spy = sinon.spy()
+
+            const diagram = mount(
+                <Provider store={store}>
+                    <Diagram testing={spy} />
+                </Provider>
+            )
+
+            // trigger the event
+            window.dispatchEvent(new Event(exportDiagramImageEvent))
+            
+            // make sure the spy was called
+            spy.should.have.been.called
         })
     })
 })

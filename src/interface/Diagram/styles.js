@@ -15,4 +15,11 @@ export default {
     containerWithoutGrid: {
         ...container,
     },
+    diagram: {
+        display: 'flex',
+        flexGrow: 1,
+    },
+    canvas: {
+        
+    }
 }

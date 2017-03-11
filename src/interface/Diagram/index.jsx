@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import autobind from 'autobind-decorator'
+import canvg from 'canvg'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
@@ -27,6 +28,8 @@ import {
 } from 'actions/elements'
 import PatternModal from '../PatternModal'
 
+export const exportDiagramImageEvent = 'export-diagram-image'
+
 class Diagram extends React.Component {
     // the diagram component keeps track of the placement of the user's selection rectangle
     // using 2 points
@@ -47,41 +50,59 @@ class Diagram extends React.Component {
 
         // render the various components of the diagram
         return (
-            <svg style={{...elementStyle, ...style}} onMouseDown={this._mouseDown} >
+            <div style={{...elementStyle, ...style}} onMouseDown={this._mouseDown}>
+                <svg ref={ele => this.diagram = ele} style={styles.diagram}>
+                    {/* order matters here (last shows up on top) */}
 
-                {/* order matters here (last shows up on top) */}
+                    {info.showGrid && info.gridSize > 0 && <Grid/>}
+                    {propagators.map((element, i) => (
+                        <Propagator
+                            {...element}
+                            key={i}
+                            selected={selection.propagators && selection.propagators.includes(element.id)}
+                        />
+                    ))}
+                    {info.showAnchors && Object.values(elements.anchors).map(anchor => (
+                        <Anchor {...anchor}
+                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
+                            key={anchor.id}
+                        />
+                    ))}
+                    { this.state.point1 && this.state.point2 && !this.state.newElement && (
+                        <SelectionRectangle {...this.state} />
+                    )}
 
-                {info.showGrid && info.gridSize > 0 && <Grid/>}
-                {propagators.map((element, i) => (
-                    <Propagator
-                        {...element}
-                        key={i}
-                        selected={selection.propagators && selection.propagators.includes(element.id)}
-                    />
-                ))}
-                {info.showAnchors && Object.values(elements.anchors).map(anchor => (
-                    <Anchor {...anchor}
-                        selected={selection.anchors && selection.anchors.includes(anchor.id)}
-                        key={anchor.id}
-                    />
-                ))}
-                { this.state.point1 && this.state.point2 && !this.state.newElement && (
-                    <SelectionRectangle {...this.state} />
-                )}
+                    {/* Mouse Movement (selection rectangle and element creation) */}
+                    <EventListener event="mousemove">
+                        {this._mouseMove}
+                    </EventListener>
+                    <EventListener event="mouseup">
+                        {this._mouseUp}
+                    </EventListener>
+                    <EventListener event="keydown">
+                    {this._keyPress}
+                    </EventListener>
 
-                {/* Event listeners */}
-
-                <EventListener event="mousemove">
-                    {this._mouseMove}
-                </EventListener>
-                <EventListener event="mouseup">
-                    {this._mouseUp}
-                </EventListener>
-                <EventListener event="keydown">
-                   {this._keyPress}
-                </EventListener>
-            </svg>
+                    {/* When we need to export the diagram as an image */}
+                    <EventListener event={exportDiagramImageEvent}>
+                        {this._exportDiagram}
+                    </EventListener>
+                </svg>
+            </div>
         )
+    }
+
+    @autobind
+    _exportDiagram() {
+        // if we are testing and shouldn't actually produce an image
+        if (this.props.testing) {
+            // call the spy
+            this.props.testing()
+            // don't do anything else 
+            return 
+        }
+        
+        canvg(this.canvas, this.diagram)
     }
 
     @autobind

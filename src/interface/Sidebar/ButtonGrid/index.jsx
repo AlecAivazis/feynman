@@ -5,6 +5,14 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import { ToggleButton, Button } from 'components'
 import { toggleGrid, toggleAnchors, toggleExportModal } from 'actions/info'
+import { exportDiagramImageEvent } from 'interface/Diagram'
+
+// the function to call to export the diagram as an image
+const exportDiagramAsImage = () => {
+    console.log('hello')
+    window.dispatchEvent(new Event(exportDiagramImageEvent))
+}
+
 
 const ButtonGrid = ({ 
     style,
@@ -31,7 +39,7 @@ const ButtonGrid = ({
             />
         </div>
         <div style={styles.bottomRow}>
-            <Button style={styles.leftButton}>
+            <Button style={styles.leftButton} onClick={exportDiagramAsImage}>
                 Export PNG
             </Button>
             <Button onClick={openExportModal}>
