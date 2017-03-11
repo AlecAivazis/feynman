@@ -228,25 +228,5 @@ describe('Interface Components', function() {
             // make sure the anchor was told to render selected
             expect(anchor.props().selected).to.be.true
         })
-
-        it('responds to the export-diagram-image event', function() {
-            // create a verion of the store
-            const store = createStore()
-
-            // create a spy to pass to the component
-            const spy = sinon.spy()
-
-            const diagram = mount(
-                <Provider store={store}>
-                    <Diagram testingSpy={spy} />
-                </Provider>
-            )
-
-            // trigger the event
-            window.dispatchEvent(new Event(exportDiagramImageEvent))
-
-            // make sure the spy was called
-            spy.should.have.been.called
-        })
     })
 })

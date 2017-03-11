@@ -1,9 +1,7 @@
 import { sighGrey } from 'colors'
 
 export default {
-    container: {
-
-    },
+    container: {},
     gridLine: {
         stroke: sighGrey,
     }

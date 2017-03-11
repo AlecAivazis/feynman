@@ -42,6 +42,7 @@ export const Anchor = ({
             })}
         >
             <circle
+                className="anchor" // used to remove the elements during export
                 cx={x}
                 cy={y}
                 r={r}

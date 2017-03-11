@@ -3,7 +3,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import autobind from 'autobind-decorator'
-import canvg from 'canvg-browser'
 import { saveAs } from 'file-saver'
 // local imports
 import styles from './styles'
@@ -11,12 +10,13 @@ import Grid from './Grid'
 import Propagator from './Propagator'
 import Anchor from './Anchor'
 import SelectionRectangle from './SelectionRectangle'
-import { propagatorsWithLocation } from 'utils'
 import {
     relativePosition,
     elementsInRegion,
     generateElementId,
     fixPositionToGrid,
+    propagatorsWithLocation,
+    diagramBoundingBox,
     dataUrlToBlob
 } from 'utils'
 import 'utils/svgDataUrl'
@@ -54,22 +54,26 @@ class Diagram extends React.Component {
         // render the various components of the diagram
         return (
             <svg ref={ele => this.diagram = ele} style={styles.diagram} style={{...elementStyle, ...style}} onMouseDown={this._mouseDown}>
-                {/* order matters here (last shows up on top) */}
 
-                {info.showGrid && info.gridSize > 0 && <Grid/>}
-                {propagators.map((element, i) => (
-                    <Propagator
-                        {...element}
-                        key={i}
-                        selected={selection.propagators && selection.propagators.includes(element.id)}
-                    />
-                ))}
-                {info.showAnchors && Object.values(elements.anchors).map(anchor => (
-                    <Anchor {...anchor}
-                        selected={selection.anchors && selection.anchors.includes(anchor.id)}
-                        key={anchor.id}
-                    />
-                ))}
+                {/* wrap the whole diagram in a group so we can transform the diagram when exporting */}
+                <g className="diagram">
+                    {/* order matters here (last shows up on top) */}
+                    {info.showGrid && info.gridSize > 0 && <Grid/>}
+                    {propagators.map((element, i) => (
+                        <Propagator
+                            {...element}
+                            key={i}
+                            selected={selection.propagators && selection.propagators.includes(element.id)}
+                        />
+                    ))}
+                    {info.showAnchors && Object.values(elements.anchors).map(anchor => (
+                        <Anchor {...anchor}
+                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
+                            key={anchor.id}
+                        />
+                    ))}
+                </g>
+                
                 { this.state.point1 && this.state.point2 && !this.state.newElement && (
                     <SelectionRectangle {...this.state} />
                 )}
@@ -103,8 +107,39 @@ class Diagram extends React.Component {
             return
         }
 
+        // the svg node containing the diagram
+        const diagram = this.diagram.cloneNode(true)
+
+        // computing the bounding box for the diagram
+        const bb = diagramBoundingBox(this.props.elements)
+        // remove the grey coloring in the grid
+        diagram.style['backgroundColor'] = "rgba(0,0,0,0)"
+
+        // the elements to remove from the diagram
+        const removeTargets = [
+            ...diagram.getElementsByClassName("grid"),
+            ...diagram.getElementsByClassName("anchor"),
+        ]
+
+        // visit each target
+        for (const target of removeTargets) {
+            // remove it from the exported image
+            target.parentNode.removeChild(target)
+        }
+
+        // add the dimensional attribtues to the diagram so the resulting image
+        // has the correct size 
+        diagram.setAttribute('x1', bb.x1)
+        diagram.setAttribute('y1', bb.y1)
+        diagram.setAttribute('width', bb.width)
+        diagram.setAttribute('height', bb.height)
+
+        // move the actual diagram into the viewport of the image
+        diagram.getElementsByClassName('diagram')[0]
+               .setAttribute('transform', `translate(-${bb.x1}, -${bb.y1})`)
+               
         // export the diagram as a png
-        const dataUrl = await this.diagram.toDataURL("image/png")
+        const dataUrl = await diagram.toDataURL("image/png")
 
         // save the data url as a png
         saveAs(dataUrlToBlob(dataUrl), "diagram.png")

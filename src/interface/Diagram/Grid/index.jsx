@@ -12,9 +12,9 @@ const Grid = ({ style, browser, info }) => {
     // the number of horizontal lines (add one to cover the remainder)
     const nHorizontal = Math.floor(browser.height / info.gridSize) + 1
 
-    // render the actual dom structure
+    // className is used to remove it during png export
     return (
-        <g {...{...styles.container, ...style}}>
+        <g {...{...styles.container, ...style}} className="grid">
             {range(nVertical).map(i => (
                 <path
                     {...styles.gridLine}
