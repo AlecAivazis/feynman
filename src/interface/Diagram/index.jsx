@@ -3,7 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import autobind from 'autobind-decorator'
-import canvg from 'canvg'
+import canvg from 'canvg-browser'
+import { saveAs } from 'file-saver'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
@@ -15,8 +16,10 @@ import {
     relativePosition,
     elementsInRegion,
     generateElementId,
-    fixPositionToGrid
+    fixPositionToGrid,
+    dataUrlToBlob
 } from 'utils'
+import 'utils/svgDataUrl'
 import { EventListener } from 'components'
 import {
     clearSelection,
@@ -50,59 +53,61 @@ class Diagram extends React.Component {
 
         // render the various components of the diagram
         return (
-            <div style={{...elementStyle, ...style}} onMouseDown={this._mouseDown}>
-                <svg ref={ele => this.diagram = ele} style={styles.diagram}>
-                    {/* order matters here (last shows up on top) */}
+            <svg ref={ele => this.diagram = ele} style={styles.diagram} style={{...elementStyle, ...style}} onMouseDown={this._mouseDown}>
+                {/* order matters here (last shows up on top) */}
 
-                    {info.showGrid && info.gridSize > 0 && <Grid/>}
-                    {propagators.map((element, i) => (
-                        <Propagator
-                            {...element}
-                            key={i}
-                            selected={selection.propagators && selection.propagators.includes(element.id)}
-                        />
-                    ))}
-                    {info.showAnchors && Object.values(elements.anchors).map(anchor => (
-                        <Anchor {...anchor}
-                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
-                            key={anchor.id}
-                        />
-                    ))}
-                    { this.state.point1 && this.state.point2 && !this.state.newElement && (
-                        <SelectionRectangle {...this.state} />
-                    )}
+                {info.showGrid && info.gridSize > 0 && <Grid/>}
+                {propagators.map((element, i) => (
+                    <Propagator
+                        {...element}
+                        key={i}
+                        selected={selection.propagators && selection.propagators.includes(element.id)}
+                    />
+                ))}
+                {info.showAnchors && Object.values(elements.anchors).map(anchor => (
+                    <Anchor {...anchor}
+                        selected={selection.anchors && selection.anchors.includes(anchor.id)}
+                        key={anchor.id}
+                    />
+                ))}
+                { this.state.point1 && this.state.point2 && !this.state.newElement && (
+                    <SelectionRectangle {...this.state} />
+                )}
 
-                    {/* Mouse Movement (selection rectangle and element creation) */}
-                    <EventListener event="mousemove">
-                        {this._mouseMove}
-                    </EventListener>
-                    <EventListener event="mouseup">
-                        {this._mouseUp}
-                    </EventListener>
-                    <EventListener event="keydown">
-                    {this._keyPress}
-                    </EventListener>
+                {/* Mouse Movement (selection rectangle and element creation) */}
+                <EventListener event="mousemove">
+                    {this._mouseMove}
+                </EventListener>
+                <EventListener event="mouseup">
+                    {this._mouseUp}
+                </EventListener>
+                <EventListener event="keydown">
+                {this._keyPress}
+                </EventListener>
 
-                    {/* When we need to export the diagram as an image */}
-                    <EventListener event={exportDiagramImageEvent}>
-                        {this._exportDiagram}
-                    </EventListener>
-                </svg>
-            </div>
+                {/* When we need to export the diagram as an image */}
+                <EventListener event={exportDiagramImageEvent}>
+                    {this._exportDiagram}
+                </EventListener>
+            </svg>
         )
     }
 
     @autobind
-    _exportDiagram() {
+    async _exportDiagram() {
         // if we are testing and shouldn't actually produce an image
-        if (this.props.testing) {
+        if (this.props.testingSpy) {
             // call the spy
-            this.props.testing()
-            // don't do anything else 
-            return 
+            this.props.testingSpy()
+            // don't do anything else
+            return
         }
-        
-        canvg(this.canvas, this.diagram)
+
+        // export the diagram as a png
+        const dataUrl = await this.diagram.toDataURL("image/png")
+
+        // save the data url as a png
+        saveAs(dataUrlToBlob(dataUrl), "diagram.png")
     }
 
     @autobind

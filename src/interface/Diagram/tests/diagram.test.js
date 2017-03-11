@@ -238,13 +238,13 @@ describe('Interface Components', function() {
 
             const diagram = mount(
                 <Provider store={store}>
-                    <Diagram testing={spy} />
+                    <Diagram testingSpy={spy} />
                 </Provider>
             )
 
             // trigger the event
             window.dispatchEvent(new Event(exportDiagramImageEvent))
-            
+
             // make sure the spy was called
             spy.should.have.been.called
         })

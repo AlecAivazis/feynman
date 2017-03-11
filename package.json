@@ -22,6 +22,8 @@
   "homepage": "https://github.com/AlecAivazis/feynamn#readme",
   "dependencies": {
     "autobind-decorator": "^1.3.4",
+    "canvg-browser": "^1.0.0",
+    "file-saver": "^1.3.3",
     "lodash": "^4.17.3",
     "rc-slider": "^5.4.0",
     "react": "^15.4.1",
