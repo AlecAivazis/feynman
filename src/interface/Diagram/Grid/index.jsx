@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { range } from 'utils'
+import { range, round } from 'utils'
 import styles from './styles'
 import { sidebarWidth } from 'interface/Sidebar/styles'
 
@@ -12,23 +12,37 @@ const Grid = ({ style, browser, info }) => {
     // the number of horizontal lines (add one to cover the remainder)
     const nHorizontal = Math.floor(browser.height / info.gridSize) + 1
 
+    // the 4 edges of the grid
+    const topEdge = browser.height + info.gridSize - info.pan.y
+    const bottomEdge = -info.gridSize - info.pan.y
+    const leftEdge = -info.gridSize - info.pan.x
+    const rightEdge = browser.width + info.gridSize - info.pan.x
+
     // className is used to remove it during png export
     return (
         <g {...{...styles.container, ...style}} className="grid">
-            {range(nVertical).map(i => (
-                <path
-                    {...styles.gridLine}
-                    key={`${i*info.gridSize} -50`}
-                    d={`M ${i*info.gridSize} -50 L ${i*info.gridSize} ${browser.height}`}
-                />
-            ))}
-            {range(nHorizontal).map(i => (
-                <path
-                    {...styles.gridLine}
-                    key={`-50 ${i*info.gridSize}`}
-                    d={`M -50 ${i*info.gridSize}  L ${browser.width} ${i*info.gridSize} `}
-                />
-            ))}
+            {range(nVertical).map(i => {
+                // the shared x coordinate of the vertical lines
+                const x = round(leftEdge + i * info.gridSize, info.gridSize)
+                // render the line
+                return (
+                    <path
+                        {...styles.gridLine}
+                        key={`${x} ${bottomEdge}`}
+                        d={`M ${x} ${bottomEdge} L ${x} ${topEdge}`}
+                    />
+            )})}
+            {range(nHorizontal).map(i => {
+                // the shared y coordinate of the horizontal lines
+                const y = round(bottomEdge + i * info.gridSize, info.gridSize)
+                // render the line
+                return (
+                    <path
+                        {...styles.gridLine}
+                        key={`${leftEdge} ${y}`}
+                        d={`M ${leftEdge} ${y}  L ${rightEdge} ${y} `}
+                    />
+            )})}
         </g>
     )
 }
