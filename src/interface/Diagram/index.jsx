@@ -29,6 +29,7 @@ import {
     setElementAttrs as setAttrs,
     deleteSelection,
 } from 'actions/elements'
+import { panDiagram as panDiagramAction } from 'actions/info'
 import PatternModal from '../PatternModal'
 
 export const exportDiagramImageEvent = 'export-diagram-image'
@@ -39,7 +40,9 @@ class Diagram extends React.Component {
     state = {
         point1: null,
         point2: null,
-        newElement: false
+        newElement: false,
+        spacebarPressed: false,
+        origin: null,
     }
 
     render() {
@@ -50,7 +53,7 @@ class Diagram extends React.Component {
 
         // figure the concrete locations for each propgators (dereference the anchors)
         const propagators = propagatorsWithLocation(elements)
-
+        console.log(info.pan)
         // render the various components of the diagram
         return (
             <svg ref={ele => this.diagram = ele} style={styles.diagram} style={{...elementStyle, ...style}} onMouseDown={this._mouseDown}>
@@ -78,7 +81,7 @@ class Diagram extends React.Component {
                     <SelectionRectangle {...this.state} />
                 )}
 
-                {/* Mouse Movement (selection rectangle and element creation) */}
+                {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">
                     {this._mouseMove}
                 </EventListener>
@@ -89,9 +92,14 @@ class Diagram extends React.Component {
                     {this._keyPress}
                 </EventListener>
 
-                {/* When we need to export the diagram as an image */}
+                {/* when we need to export the diagram as an image */}
                 <EventListener event={exportDiagramImageEvent}>
                     {this._exportDiagram}
+                </EventListener>
+
+                {/* track the state of the spacebar for panning */}
+                <EventListener event="keyup">
+                    {this._keyUp}
                 </EventListener>
             </svg>
         )
@@ -217,6 +225,53 @@ class Diagram extends React.Component {
             return
         }
 
+        // if we are holding spacebar
+        if (this.state.spacebarPressed) {
+            this._panDiagram(event)
+        }
+        // otherwise just create the selection rectangle like normal
+        else {
+            this._drawRectangle(event)
+        }
+    }
+
+    @autobind
+    _mouseUp(event) {
+        // only fire for moves originating on the diagram when we are building the selection rectangle
+        if (this.state.point1) {
+            // clear the rectangle the selection rectangle
+            this.setState({
+                point1: null,
+                point2: null,
+                newElement: null,
+                origin: null,
+            })
+        }
+    }
+
+    @autobind
+    _keyPress(event) {
+        // if the key that was pressed was the spacebar
+        if (event.which === 32 && !this.state.spacebarPressed){
+            this.setState({
+                spacebarPressed: true
+            })
+        // if the user pressed the backspace or the delete key respectively
+        } else if ([8,46].includes(event.which)) {
+            // delete the selected elements
+            this.props.deleteSelectedElements()
+        }
+    }
+
+    @autobind
+    _keyUp(event) {
+        this.setState({
+            spacebarPressed: false
+        })
+    }
+
+    @autobind
+    _drawRectangle(event) {
         // compute the relative position of the mouse
         const point2 = relativePosition({
             x: event.clientX,
@@ -250,26 +305,22 @@ class Diagram extends React.Component {
     }
 
     @autobind
-    _mouseUp(event) {
-        // only fire for moves originating on the diagram when we are building the selection rectangle
-        if (this.state.point1) {
-            // clear the rectangle the selection rectangle
-            this.setState({
-                point1: null,
-                point2: null,
-                newElement: null,
-            })
+    _panDiagram(event) {
+        // compute the relative position of the mouse
+        const point2 = relativePosition({
+            x: event.clientX,
+            y: event.clientY,
+        })
 
-        }
-    }
+        const target = this.state.origin || point2
+        // pan the diagram the match the mouse movement
+        this.props.panDiagram({
+            x: point2.x - target.x,
+            y: point2.y - target.y,
+        })
 
-    @autobind
-    _keyPress(event) {
-        // if the user pressed the backspace or the delete key respectively
-        if ([8,46].includes(event.which)) {
-            // delete the selected elements
-            this.props.deleteSelectedElements()
-        }
+        // update the origin
+        this.setState({origin: point2})
     }
 }
 
@@ -285,6 +336,7 @@ const mapDispatchToProps = dispatch => ({
     addAnchors: (...anchors) => dispatch(addAnchors(...anchors)),
     addPropagators: (...props) => dispatch(addPropagators(...props)),
     setElementAttrs: (...attrs) => dispatch(setAttrs(...attrs)),
-    deleteSelectedElements: () => dispatch(deleteSelection())
+    deleteSelectedElements: () => dispatch(deleteSelection()),
+    panDiagram: pan => dispatch(panDiagramAction(pan)),
 })
 export default connect(selector, mapDispatchToProps)(Diagram)
