@@ -28,7 +28,7 @@ describe('Reducers', function() {
                 store.dispatch(addPropagators(propagator))
 
                 // make sure the state matches expectation
-                expect(store.getState().elements.propagators).to.deep.equal(
+                expect(store.getState().diagram.elements.propagators).to.deep.equal(
                     {
                         ...initialState.propagators,
                         1: propagator

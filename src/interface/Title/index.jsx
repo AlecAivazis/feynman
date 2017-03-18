@@ -10,5 +10,5 @@ const DiagramTitle = ({style, info}) => (
     </h1>
 )
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 export default connect(selector)(DiagramTitle)

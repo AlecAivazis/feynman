@@ -1,7 +1,7 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
-// local imports 
+// local imports
 import { round as roundTo } from 'utils'
 
 // round a number to the tenths place to show in latex (package assumes grid of 50)
@@ -43,14 +43,14 @@ const LatexPropagator = ({
             // make sure to transform the value appropriately if we have to
             let value = propagator[prop]
             value = valueMap[prop] ? valueMap[prop](value) : value
-            
+
             // join them in the appropriate manner
             return `${key}: ${value}`
         }
     ).join(', ')
 
     // the position string
-    const position = `{${round(x1)}, ${round(y1)}}` + 
+    const position = `{${round(x1)}, ${round(y1)}}` +
                      `{${round(x2)}, ${round(y2)}}`
 
     return (
@@ -60,5 +60,5 @@ const LatexPropagator = ({
     )
 }
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 export default connect(selector)(LatexPropagator)

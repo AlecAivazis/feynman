@@ -19,5 +19,5 @@ const App = ({info}) => (
     </main>
 )
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 export default connect(selector)(App)

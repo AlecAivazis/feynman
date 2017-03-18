@@ -28,7 +28,7 @@ describe('Utils', function() {
             store.dispatch(addAnchors(...anchors))
 
             // compute the bounding box for the diagram
-            const bb = diagramBoundingBox(store.getState().elements)
+            const bb = diagramBoundingBox(store.getState().diagram.elements)
 
             // make sure each anchor is contained in the bounding box
             for (const anchor of anchors) {
@@ -63,7 +63,7 @@ describe('Utils', function() {
             store.dispatch(addAnchors(...anchors))
 
             // compute the bounding box for the diagram
-            const bb = diagramBoundingBox(store.getState().elements)
+            const bb = diagramBoundingBox(store.getState().diagram.elements)
 
             // make suree there is a height and width at least as big as the known value
             expect(bb.width).to.be.at.least(anchors[1].x - anchors[0].x)

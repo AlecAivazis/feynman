@@ -188,7 +188,7 @@ const specMap = {
     propagators: propagatorSpec,
 }
 
-const selector = ({elements, info}) => ({elements, info, selection: elements.selection})
+const selector = ({diagram: {elements, info}}) => ({elements, info, selection: elements.selection})
 const mapDispatchToProps = dispatch => ({
     placeElement: element => dispatch(placeElement(element)),
     selectElement: element => dispatch(selectElements(element)),

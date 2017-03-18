@@ -8,7 +8,7 @@ import sinon from 'sinon'
 import { createStore } from 'store'
 import { toggleGrid, toggleAnchors, setGridSize } from 'actions/info'
 import { addPropagators, addAnchors, selectElements } from 'actions/elements'
-import { initialState } from 'store/elements'
+import { initialState } from 'store/diagram/elements'
 import Diagram, { exportDiagramImageEvent } from '..'
 import Propagator from '../Propagator'
 import Grid from '../Grid'
@@ -30,7 +30,7 @@ describe('Interface Components', function() {
             // create a verion of the store
             const store = createStore()
             // if the grid is supposed to be hidden
-            if (!store.getState().info.showGrid) {
+            if (!store.getState().diagram.info.showGrid) {
                 // show the grid
                 store.dispatch(toggleGrid())
             }
@@ -50,7 +50,7 @@ describe('Interface Components', function() {
             // create a verion of the store
             const store = createStore()
             // if the grid is supposed to be shown
-            if (store.getState().info.showGrid) {
+            if (store.getState().diagram.info.showGrid) {
                 // hide the grid
                 store.dispatch(toggleGrid())
             }
@@ -70,7 +70,7 @@ describe('Interface Components', function() {
             // create a verion of the store
             const store = createStore()
             // make sure the grid would show otherwise
-            if (!store.getState().info.showGrid) {
+            if (!store.getState().diagram.info.showGrid) {
                 // show the grid
                 store.dispatch(toggleGrid())
             }
@@ -136,7 +136,7 @@ describe('Interface Components', function() {
             // create a verion of the store
             const store = createStore()
             // if anchors are supposed to be hidden
-            if (!store.getState().info.showAnchors) {
+            if (!store.getState().diagram.info.showAnchors) {
                 // make sure the anchors are shown
                 store.dispatch(toggleAnchors())
             }
@@ -190,7 +190,7 @@ describe('Interface Components', function() {
             wrapper.find(Diagram).simulate('mouseDown')
 
             // make sure the selection is clear
-            expect(store.getState().elements.selection.anchors).to.have.length(0)
+            expect(store.getState().diagram.elements.selection.anchors).to.have.length(0)
         })
 
         it('passes selected state onto the appropriate anchor components', function() {

@@ -39,5 +39,5 @@ const GridSizeControl = ({info, dispatch, style, ...unusedProps}) => (
     </div>
 )
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 export default connect(selector)(GridSizeControl)

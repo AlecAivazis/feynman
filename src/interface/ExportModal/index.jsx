@@ -42,5 +42,5 @@ const ExportModal = ({elements, hideModal}) => (
 const mapDispatchToProps = dispatch => ({
     hideModal: () => dispatch(toggleExportModal())
 })
-const selector = ({elements}) => ({elements})
+const selector = ({diagram: {elements}}) => ({elements})
 export default connect(selector, mapDispatchToProps)(ExportModal)

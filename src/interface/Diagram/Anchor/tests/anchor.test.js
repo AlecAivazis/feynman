@@ -51,11 +51,11 @@ describe('Interface Components', function() {
             })
 
             // figure out the move in the diagram coordinates
-            const expectedMove = fixPositionToGrid(relativePosition(move), store.getState().info.gridSize)
+            const expectedMove = fixPositionToGrid(relativePosition(move), store.getState().diagram.info.gridSize)
 
             // make sure the anchor was moved to the appropriate place
-            expect(store.getState().elements.anchors[1].x).to.equal(expectedMove.x)
-            expect(store.getState().elements.anchors[1].y).to.equal(expectedMove.y)
+            expect(store.getState().diagram.elements.anchors[1].x).to.equal(expectedMove.x)
+            expect(store.getState().diagram.elements.anchors[1].y).to.equal(expectedMove.y)
         })
 
         it('clicking on the anchor selects it', function() {
@@ -76,7 +76,7 @@ describe('Interface Components', function() {
             wrapper.find(ConnectedAnchor).simulate('mouseDown')
 
             // make sure there is only one selected element
-            expect(store.getState().elements.selection.anchors).to.deep.equal([1])
+            expect(store.getState().diagram.elements.selection.anchors).to.deep.equal([1])
         })
 
         it('gets mounted with default config', function() {
@@ -138,7 +138,7 @@ describe('Interface Components', function() {
             wrapper.find(ConnectedAnchor).at(0).simulate('mouseDown')
 
             // make sure the selection has both entries still
-            expect(store.getState().elements.selection.anchors).to.deep.equal([1,2])
+            expect(store.getState().diagram.elements.selection.anchors).to.deep.equal([1,2])
         })
     })
 })

@@ -88,7 +88,7 @@ const splitAnchor = ({ info, elements, addAnchor, addPropagator }) => ({id, x, y
     }
 }
 
-const selector = ({info, elements}) => ({info, elements})
+const selector = ({diagram: {info, elements}}) => ({info, elements})
 const mapDispatchToProps = (dispatch, {x, y}) => ({
     addAnchor: anchors => dispatch(addAnchors(anchors)),
     addPropagator: propagators => dispatch(addPropagators(propagators)),

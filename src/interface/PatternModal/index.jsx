@@ -10,7 +10,7 @@ import { togglePatternModal, togglePatternModalInitialVis } from 'actions/info'
 
 const Addon = ({toggleInitialState, checked}) => (
     <div onClick={toggleInitialState} style={styles.addon}>
-        show at startup 
+        show at startup
         <Checkbox checked={checked} style={styles.checkbox}/>
     </div>
 )
@@ -21,9 +21,9 @@ const PatternModal = ({info, hideOverlay, toggleInitialState}) => (
         hide={hideOverlay}
         style={styles.overlayContent}
         addon={
-            <Addon 
+            <Addon
                 checked={info.patternModalInitalVis}
-                toggleInitialState={toggleInitialState} 
+                toggleInitialState={toggleInitialState}
             />
         }
     >
@@ -31,7 +31,7 @@ const PatternModal = ({info, hideOverlay, toggleInitialState}) => (
     </Overlay>
 )
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 const mapDispatchToProps = dispatch => ({
     hideOverlay: () => dispatch(togglePatternModal()),
     toggleInitialState: () => dispatch(

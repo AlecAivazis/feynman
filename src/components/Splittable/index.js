@@ -173,7 +173,7 @@ class Splittable extends React.Component {
     }
 }
 
-const selector = ({elements, info}) => ({elements, info})
+const selector = ({diagram: {elements, info}}) => ({elements, info})
 const mapDispatchToProps = (dispatch, props) => ({
     selectElement: ({id, type}) => dispatch(selectElements({type, id})),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),

@@ -33,5 +33,5 @@ const Grid = ({ style, browser, info }) => {
     )
 }
 
-const selector = ({info, browser}) => ({info, browser})
+const selector = ({diagram: {info}, browser}) => ({info, browser})
 export default connect(selector)(Grid)

@@ -27,7 +27,7 @@ describe('Reducers', function() {
 
             it('responds to the ADD_ANCHOR reducer', function() {
                 // make sure the state matches expectation
-                expect(store.getState().elements.anchors).to.deep.equal({
+                expect(store.getState().diagram.elements.anchors).to.deep.equal({
                     [initialAnchor.id]: initialAnchor
                 })
             })
@@ -51,7 +51,7 @@ describe('Reducers', function() {
                 store.dispatch(addAnchors(...anchors))
 
                 // make sure the state matches expectation
-                expect(store.getState().elements.anchors).to.deep.equal({
+                expect(store.getState().diagram.elements.anchors).to.deep.equal({
                     [initialAnchor.id]: initialAnchor,
                     [anchors[0].id]: anchors[0],
                     [anchors[1].id]: anchors[1],
@@ -88,8 +88,8 @@ describe('Reducers', function() {
                 store.dispatch(alignSelectedAnchors('vertical'))
 
                 // the state of the store after the mutations
-                const { anchors } = store.getState().elements
-                
+                const { anchors } = store.getState().diagram.elements
+
                 // the expected location should be right in between the two
                 const expected = (100 + initialAnchor.x) / 2
 
@@ -120,7 +120,7 @@ describe('Reducers', function() {
                 store.dispatch(alignSelectedAnchors('horizontal'))
 
                 // the state of the store after the mutations
-                const { anchors } = store.getState().elements
+                const { anchors } = store.getState().diagram.elements
 
                 // the expected location should be right in between the two
                 const expected = (100 + initialAnchor.y) / 2

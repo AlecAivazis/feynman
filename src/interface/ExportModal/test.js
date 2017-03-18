@@ -45,10 +45,10 @@ describe('Interface Components', function() {
         })
 
         it('Creates a LatexPropagator for each element in the store', function() {
-            // make sure there are as many propagators rendered 
+            // make sure there are as many propagators rendered
             wrapper.find(LatexPropagator).should.have.length(
                 // as there are in the store
-                Object.values(store.getState().elements.propagators).length
+                Object.values(store.getState().diagram.elements.propagators).length
             )
         })
 

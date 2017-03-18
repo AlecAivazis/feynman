@@ -31,7 +31,7 @@ describe('Interface Components', function() {
                 anchor2: 2,
             }))
 
-            expect(propagatorsWithLocation(store.getState().elements)).to.deep.equal([
+            expect(propagatorsWithLocation(store.getState().diagram.elements)).to.deep.equal([
                 {
                     kind: 'em',
                     id: 1,

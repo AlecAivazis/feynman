@@ -120,7 +120,7 @@ export const split = ({info, elements, addAnchor, addPropagator, setElementAttrs
     }
 }
 
-const selector = ({elements, info}) => ({elements, info})
+const selector = ({diagram: {elements, info}}) => ({elements, info})
 const mapDispatchToProps = dispatch => ({
     addAnchor: (...anchors) => dispatch(addAnchors(...anchors)),
     addPropagator: (...propagators) => dispatch(addPropagators(...propagators)),

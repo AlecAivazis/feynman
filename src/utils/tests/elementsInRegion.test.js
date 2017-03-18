@@ -43,7 +43,7 @@ describe('Utils', function() {
             }
 
             // figure out the elements in the region
-            const inside = elementsInRegion({elements: store.getState().elements, region})
+            const inside = elementsInRegion({elements: store.getState().diagram.elements, region})
 
             // make sure the result is what we expect
             expect(inside).to.deep.equal([{type: "anchors", id: 1}, {type: "anchors", id: 2}])
@@ -108,7 +108,7 @@ describe('Utils', function() {
             }
 
             // figure out the elements in the region
-            const inside = elementsInRegion({elements: store.getState().elements, region})
+            const inside = elementsInRegion({elements: store.getState().diagram.elements, region})
 
             // make sure the result is what we expect
             expect(inside).to.deep.equal([{type: "propagators", id: 1}])
