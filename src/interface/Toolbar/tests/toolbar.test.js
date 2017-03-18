@@ -62,7 +62,7 @@ describe('Interface Components', function() {
             // a store to test with
             const store = createStore()
             // save a reference to the default pattern modal state
-            const { info: { showPatternModal: defaulState } } = store.getState()
+            const { info: { showPatternModal: defaulState } } = store.getState().diagram
             // render the toolbar
             const wrapper = mount(
                 <Provider store={store}>
@@ -80,7 +80,7 @@ describe('Interface Components', function() {
             button.simulate('click')
 
             // make sure the modal's visibilty has been inverted
-            expect(store.getState().info.showPatternModal).to.equal(!defaulState)
+            expect(store.getState().diagram.info.showPatternModal).to.equal(!defaulState)
         })
     })
 })

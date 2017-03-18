@@ -8,7 +8,7 @@ describe('Utils', function() {
     describe('Generate Element Id Util', function() {
         it('can generate a unique id from an empty state', function() {
             // create a store to test with
-            const { anchors } = createStore().getState().elements
+            const { anchors } = createStore().getState().diagram.elements
             // generate an id for the anchor
             const id = generateElementId(anchors)
 
@@ -41,12 +41,12 @@ describe('Utils', function() {
 
         it('can generate multiple unique ids', function() {
             // create a state to test with
-            const state = createStore().getState()
+            const { anchors } = createStore().getState().diagram.elements
 
             // the numer of unique ids to create
             const nIds = 5
             // create a set out of the result of calling the utility
-            const ids = new Set(generateElementId(state, nIds))
+            const ids = new Set(generateElementId(anchors, nIds))
 
             // make sure we have the correct number of unique ids
             expect(ids.size).to.equal(nIds)

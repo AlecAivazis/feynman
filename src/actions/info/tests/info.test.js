@@ -94,7 +94,7 @@ describe('Action Creators', function() {
             it('inverts the current state in local storage', function() {
                 // call the thunk
                 thunk(dispatch, store.getState)
-                
+
                 // make sure dispatch was called with the correct action
                 dispatch.should.have.been.calledWith({
                     type: TOGGLE_PATTERN_INITIAL_VIS,
@@ -104,10 +104,10 @@ describe('Action Creators', function() {
             it('inverts the current state in local storage', function() {
                 // call the thunk
                 thunk(dispatch, store.getState)
-                
+
                 // make sure dispatch was called with the correct action
                 storage.getItem(fieldName).should.deep.equal(
-                    !store.getState().info.patternModalInitalVis
+                    !store.getState().diagram.info.patternModalInitalVis
                 )
             })
         })

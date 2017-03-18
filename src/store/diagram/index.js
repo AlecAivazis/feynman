@@ -2,10 +2,7 @@
 import infoReducer from './info'
 import elementsReducer from './elements'
 
-const initialState = {
-    elements: {},
-    info: {}
-}
+const initialState = {}
 
 export default (state = initialState, action) => {
 

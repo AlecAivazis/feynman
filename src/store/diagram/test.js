@@ -7,12 +7,26 @@ import {
     selectElements,
     setElementAttrs,
 } from 'actions/elements'
+import { createStore } from 'store'
 
 describe('Reducers', function() {
-    describe('Diagram (currently just global scope)', function() {
+    describe('Diagram', function() {
+        // a store to test with
+        let store
+        // with one anchor
+        const initialAnchor = {
+            id: 1,
+            x: 50,
+            y: 50
+        }
+
+        beforeEach(function() {
+            // start with a fresh store
+            store = createStore()
+        })
 
         it('has the info reducer', function() {
-            expect(store.getState().info).to.exist
+            expect(store.getState().diagram.info).to.exist
         })
 
         it('has the elements reducer', function() {
