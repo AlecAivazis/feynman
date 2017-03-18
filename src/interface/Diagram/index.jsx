@@ -86,7 +86,7 @@ class Diagram extends React.Component {
                     {this._mouseUp}
                 </EventListener>
                 <EventListener event="keydown">
-                {this._keyPress}
+                    {this._keyPress}
                 </EventListener>
 
                 {/* When we need to export the diagram as an image */}
