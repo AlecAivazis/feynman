@@ -1,14 +1,24 @@
 // local imports
-import reducer from '..'
+import reducer from '.'
 import {
     moveSelectedElements,
     addAnchors,
     addPropagators,
     selectElements,
+    setElementAttrs,
 } from 'actions/elements'
 
 describe('Reducers', function() {
     describe('Diagram (currently just global scope)', function() {
+
+        it('has the info reducer', function() {
+            expect(store.getState().info).to.exist
+        })
+
+        it('has the elements reducer', function() {
+            expect(store.getState().diagram.elements).to.exist
+        })
+
         describe("Moving elements", function() {
 
             it("can move selected anchors", function(){

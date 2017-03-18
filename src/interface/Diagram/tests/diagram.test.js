@@ -190,7 +190,7 @@ describe('Interface Components', function() {
             wrapper.find(Diagram).simulate('mouseDown')
 
             // make sure the selection is clear
-            expect(store.getState().elements.selection.anchors).to.have.length(0)
+            expect(store.getState().diagram.elements.selection.anchors).to.have.length(0)
         })
 
         it('passes selected state onto the appropriate anchor components', function() {

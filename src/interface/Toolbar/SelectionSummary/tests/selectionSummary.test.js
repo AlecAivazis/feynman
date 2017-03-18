@@ -55,7 +55,7 @@ describe('Interface Components', function() {
                 const wrapper = mount(
                     <Provider store={store}>
                         <SelectionSummary
-                            selection={store.getState().elements.selection}
+                            selection={store.getState().diagram.elements.selection}
                         />
                     </Provider>
                 )

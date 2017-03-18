@@ -45,7 +45,7 @@ describe('Interface Components', function() {
             // mount the propagator summary
             const wrapper = mount(
                 <Provider store={store}>
-                    <PropagatorSummary propagators={store.getState().elements.selection.propagators}/>
+                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators}/>
                 </Provider>
             )
 
@@ -85,7 +85,7 @@ describe('Interface Components', function() {
             // mount the propagator summary
             const wrapper = mount(
                 <Provider store={store}>
-                    <PropagatorSummary propagators={store.getState().elements.selection.propagators}/>
+                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators}/>
                 </Provider>
             )
 
@@ -125,7 +125,7 @@ describe('Interface Components', function() {
             // mount the propagator summary
             const wrapper = mount(
                 <Provider store={store}>
-                    <PropagatorSummary propagators={store.getState().elements.selection.propagators}/>
+                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators}/>
                 </Provider>
             )
 

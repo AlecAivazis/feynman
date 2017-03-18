@@ -30,7 +30,7 @@ describe('Utils', function() {
 
             // add an anchor to the state
             store.dispatch(addAnchors(...testAnchors))
-            const { anchors } = store.getState().elements
+            const { anchors } = store.getState().diagram.elements
 
             // generate an id for the anchor
             const id = generateElementId(anchors)

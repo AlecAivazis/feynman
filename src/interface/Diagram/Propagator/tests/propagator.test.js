@@ -150,7 +150,7 @@ describe('Interface Components', function() {
             // click on the propagator
             wrapper.find(Fermion).simulate('mousedown')
 
-            expect(store.getState().elements.selection.propagators).to.deep.equal([1])
+            expect(store.getState().diagram.elements.selection.propagators).to.deep.equal([1])
         })
     })
 })
