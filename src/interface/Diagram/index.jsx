@@ -73,7 +73,7 @@ class Diagram extends React.Component {
                         />
                     ))}
                 </g>
-                
+
                 { this.state.point1 && this.state.point2 && !this.state.newElement && (
                     <SelectionRectangle {...this.state} />
                 )}
@@ -128,7 +128,7 @@ class Diagram extends React.Component {
         }
 
         // add the dimensional attribtues to the diagram so the resulting image
-        // has the correct size 
+        // has the correct size
         diagram.setAttribute('x1', bb.x1)
         diagram.setAttribute('y1', bb.y1)
         diagram.setAttribute('width', bb.width)
@@ -137,7 +137,7 @@ class Diagram extends React.Component {
         // move the actual diagram into the viewport of the image
         diagram.getElementsByClassName('diagram')[0]
                .setAttribute('transform', `translate(-${bb.x1}, -${bb.y1})`)
-               
+
         // export the diagram as a png
         const dataUrl = await diagram.toDataURL("image/png")
 
@@ -273,7 +273,7 @@ class Diagram extends React.Component {
     }
 }
 
-const selector = ({ info, elements }) => ({
+const selector = ({diagram: { info, elements }}) => ({
     info,
     elements,
     selection: elements.selection,

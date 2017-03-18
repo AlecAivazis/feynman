@@ -17,6 +17,6 @@ const TitleControl = ({style, info, dispatch, ...unusedProps}) => (
     </div>
 )
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 // export the connected component
 export default connect(selector)(TitleControl)

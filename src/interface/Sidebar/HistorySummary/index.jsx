@@ -13,5 +13,5 @@ const HistorySummary = ({info, dispatch, style}) => (
     </Collapsible>
 )
 
-const selector = ({ info }) => ({info})
+const selector = ({diagram: { info }}) => ({info})
 export default connect(selector)(HistorySummary)

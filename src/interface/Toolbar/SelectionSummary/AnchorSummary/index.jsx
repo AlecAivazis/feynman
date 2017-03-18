@@ -119,5 +119,5 @@ const mapDispatchToProps = (dispatch, {anchors}) => ({
 })
 
 // the anchor summary needs the elements object
-const selector = ({ elements }) => ({ elements })
+const selector = ({diagram: { elements }}) => ({ elements })
 export default connect(selector, mapDispatchToProps)(AnchorSummary)

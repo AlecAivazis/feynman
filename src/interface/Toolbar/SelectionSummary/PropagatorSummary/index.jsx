@@ -101,5 +101,5 @@ const mapDispatchToProps = (dispatch, {propagators}) => ({
         ))
     ),
 })
-const selector = ({elements}) => ({elements})
+const selector = ({diagram: {elements}}) => ({elements})
 export default connect(selector, mapDispatchToProps)(PropagatorSummary)

@@ -81,5 +81,5 @@ const HotkeySummary = ({style, info, dispatch, ...unusedProps}) => (
     </Collapsible>
 )
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 export default connect(selector)(HotkeySummary)

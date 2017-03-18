@@ -4,3 +4,4 @@
 .DS_Store
 *.log
 src/server/static/client.js
+.vscode/

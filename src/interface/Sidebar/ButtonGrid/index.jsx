@@ -12,13 +12,13 @@ const exportDiagramAsImage = () => {
     window.dispatchEvent(new Event(exportDiagramImageEvent))
 }
 
-const ButtonGrid = ({ 
+const ButtonGrid = ({
     style,
     info,
     toggleGrid,
     toggleAnchors,
     openExportModal,
-    ...unusedProps 
+    ...unusedProps
 }) => (
     <div style={{...styles.container, ...style}}>
         <div style={styles.buttonRow}>
@@ -47,7 +47,7 @@ const ButtonGrid = ({
     </div>
 )
 
-const selector = ({info}) => ({info})
+const selector = ({diagram: {info}}) => ({info})
 const mapDispatchToProps = dispatch => ({
     openExportModal: () => dispatch(toggleExportModal()),
     toggleAnchors: () => dispatch(toggleAnchors()),
