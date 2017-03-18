@@ -12,6 +12,7 @@ export default {
         backgroundColor: 'white',
         flexDirection: 'column',
         padding: '0 10px',
+        zIndex: 5,
     },
     sidebarContainer: {
         display: 'flex',

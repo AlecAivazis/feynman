@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import autobind from 'autobind-decorator'
 import { saveAs } from 'file-saver'
+import SvgMatrix from 'svg-matrix'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
@@ -53,13 +54,16 @@ class Diagram extends React.Component {
 
         // figure the concrete locations for each propgators (dereference the anchors)
         const propagators = propagatorsWithLocation(elements)
-        console.log(info.pan)
+
         // render the various components of the diagram
         return (
-            <svg ref={ele => this.diagram = ele} style={styles.diagram} style={{...elementStyle, ...style}} onMouseDown={this._mouseDown}>
-
+            <svg
+                ref={ele => this.diagram = ele}
+                style={{...elementStyle, ...style}}
+                onMouseDown={this._mouseDown}
+            >
                 {/* wrap the whole diagram in a group so we can transform the diagram when exporting */}
-                <g className="diagram">
+                <g className="diagram" transform={this.transformString}>
                     {/* order matters here (last shows up on top) */}
                     {info.showGrid && info.gridSize > 0 && <Grid/>}
                     {propagators.map((element, i) => (
@@ -103,6 +107,11 @@ class Diagram extends React.Component {
                 </EventListener>
             </svg>
         )
+    }
+
+    get transformString() {
+        const {x , y} = this.props.info.pan
+        return SvgMatrix().translate(x, y).transformString
     }
 
     @autobind
@@ -251,8 +260,8 @@ class Diagram extends React.Component {
 
     @autobind
     _keyPress(event) {
-        // if the key that was pressed was the spacebar
-        if (event.which === 32 && !this.state.spacebarPressed){
+        // if the key that was pressed was the spacebar, we haven't pressed teh spacebar yet, and we aren't dragging something
+        if (event.which === 32 && !this.state.spacebarPressed && !this.state.point1){
             this.setState({
                 spacebarPressed: true
             })
