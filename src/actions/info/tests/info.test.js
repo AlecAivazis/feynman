@@ -11,6 +11,7 @@ import {
     togglePatternModal, TOGGLE_PATTERN_MODAL,
     togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS,
     toggleExportModal, TOGGLE_EXPORT_MODAL,
+    panDiagram, PAN_DIAGRAM,
 } from 'actions/info'
 import { fieldName } from '../creators/togglePatternModalInitialVis'
 import LocalStorageMock from './storage.js'
@@ -27,6 +28,17 @@ describe('Action Creators', function() {
             expect(setDiagramTitle(title)).to.deep.equal({
                 type: SET_TITLE,
                 payload: title,
+            })
+        })
+
+        it('pan diagram', function() {
+            // the pan for the diagram
+            const pan = {x: 10}
+
+            // make sure the action is expected
+            expect(panDiagram(pan)).to.deep.equal({
+                type: PAN_DIAGRAM,
+                payload: pan,
             })
         })
 

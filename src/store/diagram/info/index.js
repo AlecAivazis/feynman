@@ -8,6 +8,7 @@ import {
     TOGGLE_PATTERN_MODAL,
     TOGGLE_PATTERN_INITIAL_VIS,
     TOGGLE_EXPORT_MODAL,
+    PAN_DIAGRAM,
 } from 'actions/info'
 
 // the default state
@@ -21,6 +22,10 @@ export const initialState = {
     showExportModal: false,
     showPatternModal: true, // this must reflect the initial value of `patternModalInitalVis`
     patternModalInitalVis: true,
+    pan: {
+        x: 0,
+        y: 0,
+    }
 }
 
 // return the diagram reducer
@@ -88,13 +93,25 @@ export default (state = initialState, {type, payload}) => {
             patternModalInitalVis: !state.patternModalInitalVis
         }
     }
-    
+
     // if the action indicates we should toggle the export modal
     if (type === TOGGLE_EXPORT_MODAL) {
-        // inverty the export modal visibility
+        // invert the export modal visibility
         return {
             ...state,
             showExportModal: !state.showExportModal,
+        }
+    }
+
+    // if the action indicates we need to pan the diagram
+    if (type === PAN_DIAGRAM) {
+        // add the partial pan to our current state
+        return {
+            ...state,
+            pan: {
+                x: state.pan.x + (payload.x || 0),
+                y: state.pan.y + (payload.y || 0),
+            }
         }
     }
 

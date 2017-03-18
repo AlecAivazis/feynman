@@ -10,7 +10,8 @@ import {
     toggleAnchors,
     togglePatternModal,
     toggleExportModal,
-    TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so 
+    panDiagram,
+    TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so
 } from 'actions/info'           // import the type directly
 
 describe('Reducers', function() {
@@ -83,7 +84,7 @@ describe('Reducers', function() {
                 type: TOGGLE_PATTERN_INITIAL_VIS,
             }
             // get the mutated state after toggling the visibility
-            const mutated = reducer(undefined, action) 
+            const mutated = reducer(undefined, action)
             // make sure the internal state flipped
             expect(mutated.patternModalInitalVis).to.equal(!initialState.patternModalInitalVis)
         })
@@ -95,6 +96,20 @@ describe('Reducers', function() {
             const state = reducer(undefined, action)
             // make sure the state look like we expect
             expect(state.showExportModal).to.equal(!initialState.showExportModal)
+        })
+
+        describe('panning', function() {
+            it('incrementally pans', function() {
+                // get the state of the reducer after panning
+                const state = reducer(undefined, panDiagram({x: 10, y: 5}))
+                // make sure the state updated as expected
+                expect(state.pan).to.deep.equal({x: 10, y: 5})
+
+                // pan again
+                const secondPan = reducer(state, panDiagram({x: -10, y: -5}))
+                // make sure we added teh results
+                expect(secondPan.pan).to.deep.equal({x: 0, y: 0})
+            })
         })
     })
 })
