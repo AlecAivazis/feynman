@@ -4,16 +4,14 @@ import { responsiveStoreEnhancer, calculateResponsiveState } from 'redux-respons
 import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
 // locals
-import info from './info'
 import browser from './browser'
-import elements from './elements'
+import diagram from './diagram'
 import sagas from 'sagas'
 
 // create the reducer
 const reducer = combineReducers({
-    info,
+    diagram,
     browser,
-    elements,
 })
 
 // the saga middleware
