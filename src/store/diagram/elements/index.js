@@ -8,7 +8,6 @@ import {
     MERGE_ELEMENTS,
     SET_ELEMENT_ATTRS,
     DELETE_ELEMENTS,
-    MOVE_SELECTED_ELEMENTS,
     CLEAR_ELEMENTS,
     DELETE_SELECTION
 } from 'actions/elements'
@@ -142,7 +141,7 @@ export default (state = initialState, {type, payload}) => {
         // return our copy
         return local
     }
-    
+
     // if the action indicates we need to delete the selection
     if (type === DELETE_SELECTION) {
         // create a copy we can play with
@@ -158,7 +157,7 @@ export default (state = initialState, {type, payload}) => {
         const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
 
         // the list of propagators we need to include because of related anchors
-        const relatedProps = flatMap(selectedAnchors, 
+        const relatedProps = flatMap(selectedAnchors,
             id => (
                 // the list of propagators with this id
                 (Object.values(local.propagators) || [])
@@ -172,46 +171,13 @@ export default (state = initialState, {type, payload}) => {
             // if that element still exists
             if (local[type][id]) {
                 // remove the element
-                Reflect.deleteProperty(local[type], id) 
+                Reflect.deleteProperty(local[type], id)
             }
         }
 
-        // clear the selection 
+        // clear the selection
         local.selection = initialSelection
         // we're done here
-        return local
-    }
-
-    if (type === MOVE_SELECTED_ELEMENTS) {
-        // create a copy we can play with
-        const local = _.cloneDeep(state)
-
-        // the anchors to move
-        const anchors = local.selection.anchors ? [...local.selection.anchors] : []
-
-        // if there are selected propagators
-        if (local.selection.propagators) {
-            // go over every propagator
-            for (const id of local.selection.propagators) {
-                // get the anchors associated with that propagator
-                const { anchor1, anchor2 } = local.propagators[id]
-                // add the propgators anchors to the list of anchors we have to move
-                anchors.push(anchor1, anchor2)
-            }
-        }
-
-        // loop over every selected anchor
-        for (const id of _.uniq(anchors)) {
-            // save a reference to the assocaited element
-            const element = local.anchors[id]
-            // if the anchor is not fixed
-            if (!element.fixed) {
-                // move the element according to the payload
-                element.x += payload.x || 0
-                element.y += payload.y || 0
-            }
-        }
-
         return local
     }
 
