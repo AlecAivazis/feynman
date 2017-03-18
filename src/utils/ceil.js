@@ -1,3 +1,3 @@
-const ceilTo = (n, to) => Math.ceil(n / to) * to
+const ceilTo = (n, to) => to === 0 ? n : Math.ceil(n / to) * to
 
 export default ceilTo

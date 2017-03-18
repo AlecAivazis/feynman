@@ -2,6 +2,7 @@
 import infoReducer from './info'
 import elementsReducer from './elements'
 import { MOVE_SELECTED_ELEMENTS } from 'actions/elements'
+import { round } from 'utils'
 
 const initialState = {}
 
@@ -32,8 +33,8 @@ export default (state = initialState, {type, payload}) => {
             // if the anchor is not fixed
             if (!element.fixed) {
                 // move the element according to the payload
-                element.x += payload.x || 0
-                element.y += payload.y || 0
+                element.x += payload.x ? round(payload.x, state.info.gridSize) : 0
+                element.y += payload.y ? round(payload.y, state.info.gridSize) : 0
             }
         }
 

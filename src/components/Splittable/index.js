@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 // local imports
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { selectElements, mergeElements, moveSelectedElements, setElementAttrs } from 'actions/elements'
-import { throttle, fixDeltaToGrid } from 'utils'
+import { throttle, fixDeltaToGrid, round } from 'utils'
 import { EventListener } from 'components'
 import { snapAnchor, snapPropagator } from './snap'
 
@@ -112,23 +112,20 @@ class Splittable extends React.Component {
                 y: event.clientY,
             }
 
-            // the fixed target
+
+            // the location to move to
             const fixed = fixDeltaToGrid({origin, next: mouse, info})
-            // the distance to move
-            const fixedDelta = {
+            const delta = {
                 x: fixed.x - origin.x,
                 y: fixed.y - origin.y,
             }
 
-            if (Math.abs(fixedDelta.x) > 0 || Math.abs(fixedDelta.y) > 0) {
-                // move the selected anchors
-                moveSelectedElements(fixedDelta)
-
-                // save the current location for the next time we move the element
-                this.setState({
-                    origin: fixed,
-                })
-            }
+            // move the selected anchors
+            moveSelectedElements(delta)
+            // save the current location for the next time we move the element
+            this.setState({
+                origin: fixed,
+            })
         }
     }
 
