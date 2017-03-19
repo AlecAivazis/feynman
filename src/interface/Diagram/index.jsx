@@ -81,10 +81,19 @@ class Diagram extends React.Component {
                     ))}
 
                 </g>
-                { this.state.point1 && this.state.point2 && !this.state.newElement && (
-                    <SelectionRectangle {...this.state} />
-                )}
 
+                { this.state.point1 && this.state.point2 && !this.state.newElement && (
+                    <SelectionRectangle
+                        point1={{
+                            x: this.state.point1.x + this.props.info.pan.x,
+                            y: this.state.point1.y + this.props.info.pan.y,
+                        }}
+                        point2={{
+                            x: this.state.point2.x + this.props.info.pan.x,
+                            y: this.state.point2.y + this.props.info.pan.y,
+                        }}
+                    />
+                )}
                 {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">
                     {this._mouseMove}
@@ -176,13 +185,17 @@ class Diagram extends React.Component {
         const loc = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        }, null)
+        }, this.props.info)
 
         // remove the previous selection
         this.props.clearSelection()
         // start the selection rectangle
         this.setState({
             point1: loc,
+            origin: {
+                x: event.clientX,
+                y: event.clientY,
+            }
         })
 
         // if the alt key was being held down
@@ -285,7 +298,7 @@ class Diagram extends React.Component {
         const point2 = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        }, null)
+        }, this.props.info)
 
 
         // save the second point
@@ -316,22 +329,22 @@ class Diagram extends React.Component {
     @autobind
     _panDiagram(event) {
         // compute the relative position of the mouse
-        const point2 = relativePosition({
+        const point2 = {
             x: event.clientX,
             y: event.clientY,
-        }, null)
+        }
 
 
         const pan = {
-            x: point2.x - this.state.point1.x,
-            y: point2.y - this.state.point1.y,
+            x: point2.x - this.state.origin.x,
+            y: point2.y - this.state.origin.y,
         }
 
         // pan the diagram the match the mouse movement
         this.props.panDiagram(pan)
 
         // update the origin
-        this.setState({point1: point2})
+        this.setState({origin: point2})
     }
 }
 
