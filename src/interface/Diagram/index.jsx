@@ -30,7 +30,7 @@ import {
     setElementAttrs as setAttrs,
     deleteSelection,
 } from 'actions/elements'
-import { panDiagram as panDiagramAction } from 'actions/info'
+import { panDiagram as panDiagramAction, zoomIn as zoomInAction, zoomOut as zoomOutAction } from 'actions/info'
 import PatternModal from '../PatternModal'
 
 export const exportDiagramImageEvent = 'export-diagram-image'
@@ -113,6 +113,11 @@ class Diagram extends React.Component {
                 {/* track the state of the spacebar for panning */}
                 <EventListener event="keyup">
                     {this._keyUp}
+                </EventListener>
+
+                {/* when the user scrolls */}
+                <EventListener event="mousewheel">
+                    {this._mouseWheel}
                 </EventListener>
             </svg>
         )
@@ -334,7 +339,7 @@ class Diagram extends React.Component {
             y: event.clientY,
         }
 
-
+        // the difference we've moved
         const pan = {
             x: point2.x - this.state.origin.x,
             y: point2.y - this.state.origin.y,
@@ -345,6 +350,23 @@ class Diagram extends React.Component {
 
         // update the origin
         this.setState({origin: point2})
+    }
+
+    @autobind
+    _mouseWheel(event) {
+        // don't scroll
+        event.stopPropagation()
+        event.preventDefault()
+
+        // if the user scrolled up
+        if (event.wheelDelta / 120 > 0) {
+            // zoom in
+            this.props.zoomIn()
+        // otherwise we scrolled down
+        } else {
+            // zoom the diagram out
+            this.props.zoomOut()
+        }
     }
 }
 
@@ -362,5 +384,7 @@ const mapDispatchToProps = dispatch => ({
     setElementAttrs: (...attrs) => dispatch(setAttrs(...attrs)),
     deleteSelectedElements: () => dispatch(deleteSelection()),
     panDiagram: pan => dispatch(panDiagramAction(pan)),
+    zoomIn: () => dispatch(zoomInAction()),
+    zoomOut: () => dispatch(zoomOutAction()),
 })
 export default connect(selector, mapDispatchToProps)(Diagram)

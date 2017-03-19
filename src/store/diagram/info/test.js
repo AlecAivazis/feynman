@@ -11,6 +11,8 @@ import {
     togglePatternModal,
     toggleExportModal,
     panDiagram,
+    zoomIn,
+    zoomOut,
     TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so
 } from 'actions/info'           // import the type directly
 
@@ -109,6 +111,77 @@ describe('Reducers', function() {
                 const secondPan = reducer(state, panDiagram({x: -10, y: -5}))
                 // make sure we added teh results
                 expect(secondPan.pan).to.deep.equal({x: 0, y: 0})
+            })
+        })
+
+        describe('zoom', function() {
+            it('responds to the ZOOM_IN action', function() {
+                // zoom in from the initial state
+                const zoomed = reducer(undefined, zoomIn())
+                // make sure we incremented the zoom level correctly
+                expect(zoomed.zoomLevel).to.equal(1.1)
+                // zoom in again
+                const zoomed2 = reducer(zoomed, zoomIn())
+                // make sure we incremented the zoom level correctly
+                expect(zoomed2.zoomLevel.toFixed(1)).to.equal(1.2.toFixed(1))
+            })
+
+            it('responds to the ZOOM_OUT action', function() {
+                // zoom out from the initial state
+                const zoomed = reducer(undefined, zoomOut())
+                // make sure we incremented the zoom level correctly
+                expect(zoomed.zoomLevel).to.deep.equal(0.9)
+                // zoom out again
+                const zoomed2 = reducer(zoomed, zoomOut())
+                // make sure we incremented the zoom level correctly
+                expect(zoomed2.zoomLevel).to.deep.equal(0.8)
+            })
+
+            it('responds to both zooms', function() {
+                // zoom out from the initial state
+                const zoomed = reducer(undefined, zoomOut())
+                // zoom out again
+                const zoomed2 = reducer(zoomed, zoomIn())
+                // make sure we incremented the zoom level correctly
+                expect(zoomed2.zoomLevel).to.deep.equal(1)
+            })
+
+            it('does not zoom in past 2', function() {
+                // zoom in from the initial state
+                const zoomed = reducer(undefined, zoomIn())
+                // zoom in again
+                const zoomed2 = reducer(zoomed, zoomIn())
+                const zoomed3 = reducer(zoomed2, zoomIn())
+                const zoomed4 = reducer(zoomed3, zoomIn())
+                const zoomed5 = reducer(zoomed4, zoomIn())
+                const zoomed6 = reducer(zoomed5, zoomIn())
+                const zoomed7 = reducer(zoomed6, zoomIn())
+                const zoomed8 = reducer(zoomed7, zoomIn())
+                const zoomed9 = reducer(zoomed8, zoomIn())
+                const zoomed10 = reducer(zoomed9, zoomIn())
+                const zoomed11 = reducer(zoomed10, zoomIn())
+
+                // make sure we didn't go above 2
+                expect(zoomed11.zoomLevel.toFixed(1)).to.equal(2.0.toFixed(1))
+            })
+
+            it('does not zoom out past 0.5', function () {
+                // zoom in from the initial state
+                const zoomed = reducer(undefined, zoomOut())
+                // zoom in again
+                const zoomed2 = reducer(zoomed, zoomOut())
+                const zoomed3 = reducer(zoomed2, zoomOut())
+                const zoomed4 = reducer(zoomed3, zoomOut())
+                const zoomed5 = reducer(zoomed4, zoomOut())
+                const zoomed6 = reducer(zoomed5, zoomOut())
+                const zoomed7 = reducer(zoomed6, zoomOut())
+                const zoomed8 = reducer(zoomed7, zoomOut())
+                const zoomed9 = reducer(zoomed8, zoomOut())
+                const zoomed10 = reducer(zoomed9, zoomOut())
+                const zoomed11 = reducer(zoomed10, zoomOut())
+
+                // make sure we didn't go above 2
+                expect(zoomed11.zoomLevel.toFixed(1)).to.equal(0.5.toFixed(1))
             })
         })
     })
