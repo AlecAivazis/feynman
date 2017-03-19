@@ -79,8 +79,8 @@ class Diagram extends React.Component {
                             key={anchor.id}
                         />
                     ))}
-                </g>
 
+                </g>
                 { this.state.point1 && this.state.point2 && !this.state.newElement && (
                     <SelectionRectangle {...this.state} />
                 )}
@@ -176,13 +176,13 @@ class Diagram extends React.Component {
         const loc = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        })
+        }, null)
 
         // remove the previous selection
         this.props.clearSelection()
         // start the selection rectangle
         this.setState({
-            point1: loc
+            point1: loc,
         })
 
         // if the alt key was being held down
@@ -285,7 +285,7 @@ class Diagram extends React.Component {
         const point2 = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        })
+        }, null)
 
 
         // save the second point
@@ -302,11 +302,11 @@ class Diagram extends React.Component {
             // otherwise we are creating a new element
             } else {
                 // move the drag anchor to match the mouse
-                setElementAttrs({
+                this.props.setElementAttrs({
                     type: 'anchors',
                     id: this.state.newElement,
                     ...fixPositionToGrid(
-                        this.state.point2, info.gridSize
+                        this.state.point2, this.props.info.gridSize
                     )
                 })
             }
@@ -319,17 +319,19 @@ class Diagram extends React.Component {
         const point2 = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        })
+        }, null)
 
-        const target = this.state.origin || point2
+
+        const pan = {
+            x: point2.x - this.state.point1.x,
+            y: point2.y - this.state.point1.y,
+        }
+
         // pan the diagram the match the mouse movement
-        this.props.panDiagram({
-            x: point2.x - target.x,
-            y: point2.y - target.y,
-        })
+        this.props.panDiagram(pan)
 
         // update the origin
-        this.setState({origin: point2})
+        this.setState({point1: point2})
     }
 }
 

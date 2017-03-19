@@ -63,7 +63,7 @@ class Splittable extends React.Component {
             // if the altkey was held when the drag started
             if (event.altKey) {
                 // let the user do what they want (they will return the id to follow)
-                const splitResult = split({id, ...relativePosition(origin)})
+                const splitResult = split({id, ...relativePosition(origin, info)})
                 id = splitResult.id
                 type = splitResult.type
             }

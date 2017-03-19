@@ -50,8 +50,10 @@ describe('Interface Components', function() {
                 getSourceClientOffset: () => ({x: 0, y: 0})
             })
 
+            const info = {pan: {x: 0, y: 0}}
+
             // figure out the move in the diagram coordinates
-            const expectedMove = fixPositionToGrid(relativePosition(move), store.getState().diagram.info.gridSize)
+            const expectedMove = fixPositionToGrid(relativePosition(move, info), store.getState().diagram.info.gridSize)
 
             // make sure the anchor was moved to the appropriate place
             expect(store.getState().diagram.elements.anchors[1].x).to.equal(expectedMove.x)
