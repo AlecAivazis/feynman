@@ -125,7 +125,10 @@ class Diagram extends React.Component {
 
     get transformString() {
         const {x , y} = this.props.info.pan
-        return SvgMatrix().translate(x, y).transformString
+        return SvgMatrix()
+                .translate(x, y)
+                .scale(this.props.info.zoomLevel)
+                .transformString
     }
 
     @autobind
