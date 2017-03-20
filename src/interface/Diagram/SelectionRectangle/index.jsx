@@ -31,6 +31,7 @@ const SelectionRectangle = ({ point1, point2 }) => {
             width={width}
             height={height}
             transform={`matrix(${transform.join(',')})`}
+            className="selectionRectangle"
         />
     )
 }

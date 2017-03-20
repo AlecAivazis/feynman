@@ -80,20 +80,10 @@ class Diagram extends React.Component {
                         />
                     ))}
 
+                    { this.state.point1 && this.state.point2 && !this.state.newElement && (
+                        <SelectionRectangle {...this.state}/>
+                    )}
                 </g>
-
-                { this.state.point1 && this.state.point2 && !this.state.newElement && (
-                    <SelectionRectangle
-                        point1={{
-                            x: this.state.point1.x + this.props.info.pan.x,
-                            y: this.state.point1.y + this.props.info.pan.y,
-                        }}
-                        point2={{
-                            x: this.state.point2.x + this.props.info.pan.x,
-                            y: this.state.point2.y + this.props.info.pan.y,
-                        }}
-                    />
-                )}
                 {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">
                     {this._mouseMove}
@@ -101,16 +91,16 @@ class Diagram extends React.Component {
                 <EventListener event="mouseup">
                     {this._mouseUp}
                 </EventListener>
-                <EventListener event="keydown">
-                    {this._keyPress}
-                </EventListener>
 
                 {/* when we need to export the diagram as an image */}
                 <EventListener event={exportDiagramImageEvent}>
                     {this._exportDiagram}
                 </EventListener>
 
-                {/* track the state of the spacebar for panning */}
+                {/* track the state of the spacebar for panning and alt for element creation */}
+                <EventListener event="keydown">
+                    {this._keyPress}
+                </EventListener>
                 <EventListener event="keyup">
                     {this._keyUp}
                 </EventListener>
@@ -153,6 +143,7 @@ class Diagram extends React.Component {
         const removeTargets = [
             ...diagram.getElementsByClassName("grid"),
             ...diagram.getElementsByClassName("anchor"),
+            ...diagram.getElementsByClassName("selectionRectangle"),
         ]
 
         // visit each target
@@ -250,7 +241,7 @@ class Diagram extends React.Component {
         // grab the used props
         const { setElementAttrs, info } = this.props
 
-        // only fire for moves originating on the diagram when we are building the selection rectangle
+        // only continue if we started dragging on this element
         if (!this.state.point1) {
             return
         }
@@ -267,7 +258,7 @@ class Diagram extends React.Component {
 
     @autobind
     _mouseUp(event) {
-        // only fire for moves originating on the diagram when we are building the selection rectangle
+        // only continue if we started dragging on this element
         if (this.state.point1) {
             // clear the rectangle the selection rectangle
             this.setState({
