@@ -8,10 +8,12 @@ const relativePosition = ({x, y}, info) => {
         info = {pan: {x: 0, y:0}}
     }
 
+    const zoom = info.zoomLevel || 1
+
     // for now, just incorporate the sidebar
     return {
-        x: x - sidebarWidth - info.pan.x,
-        y: y - info.pan.y,
+        x: (x - sidebarWidth - info.pan.x) / zoom,
+        y: (y - info.pan.y ) / zoom,
     }
 }
 

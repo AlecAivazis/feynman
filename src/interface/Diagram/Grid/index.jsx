@@ -8,15 +8,15 @@ import { sidebarWidth } from 'interface/Sidebar/styles'
 
 const Grid = ({ style, browser, info }) => {
     // the number of vertical grid lines (add one to cover the remainder)
-    const nVertical = Math.floor((browser.width - sidebarWidth) / info.gridSize) + 1
+    const nVertical = (Math.floor((browser.width - sidebarWidth) / info.gridSize) + 1) / info.zoomLevel
     // the number of horizontal lines (add one to cover the remainder)
-    const nHorizontal = Math.floor(browser.height / info.gridSize) + 1
+    const nHorizontal = (Math.floor(browser.height / info.gridSize) + 1) / info.zoomLevel
 
     // the 4 edges of the grid
-    const topEdge = browser.height + info.gridSize - info.pan.y
-    const bottomEdge = -info.gridSize - info.pan.y
-    const leftEdge = -info.gridSize - info.pan.x
-    const rightEdge = browser.width + info.gridSize - info.pan.x
+    const topEdge = (browser.height + info.gridSize - info.pan.y) / info.zoomLevel
+    const bottomEdge = (-info.gridSize - info.pan.y) / info.zoomLevel
+    const leftEdge = (-info.gridSize - info.pan.x) / info.zoomLevel
+    const rightEdge = (browser.width + info.gridSize - info.pan.x) / info.zoomLevel
 
     // className is used to remove it during png export
     return (
@@ -28,7 +28,7 @@ const Grid = ({ style, browser, info }) => {
                 return (
                     <path
                         {...styles.gridLine}
-                        key={`${x} ${bottomEdge}`}
+                        key={`${x} ${bottomEdge} - ${ i }`}
                         d={`M ${x} ${bottomEdge} L ${x} ${topEdge}`}
                     />
             )})}
@@ -39,7 +39,7 @@ const Grid = ({ style, browser, info }) => {
                 return (
                     <path
                         {...styles.gridLine}
-                        key={`${leftEdge} ${y}`}
+                        key={`${leftEdge} ${y} - ${i}`}
                         d={`M ${leftEdge} ${y}  L ${rightEdge} ${y} `}
                     />
             )})}

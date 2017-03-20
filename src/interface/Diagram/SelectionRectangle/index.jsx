@@ -1,5 +1,6 @@
 // external imports
 import React from 'react'
+import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 
@@ -34,4 +35,5 @@ const SelectionRectangle = ({ point1, point2 }) => {
     )
 }
 
+const selector = ({info}) => ({info})
 export default SelectionRectangle
