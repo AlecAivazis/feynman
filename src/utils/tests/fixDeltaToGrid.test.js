@@ -3,13 +3,14 @@ import fixDeltaToGrid from '../fixDeltaToGrid'
 
 describe('Utils', function() {
     describe("Fix Delta to Grid Util", function() {
+
         it('doesn\'t round the target with grid size === 0', function() {
             // where we are
             const origin = { x: 0, y: 0}
             // the place to move to
             const next = { x: 52, y: 103}
             // the current info / gridSize
-            const info = {gridSize: 0}
+            const info = {gridSize: 0, zoomLevel: 1}
 
             expect(fixDeltaToGrid({origin, next, info})).to.deep.equal(next)
         })
@@ -20,7 +21,7 @@ describe('Utils', function() {
             // the place to move to
             const next = { x: 52, y: 103}
             // the current info / gridSize
-            const info = { gridSize: 0 }
+            const info = { gridSize: 0, zoomLevel: 1 }
 
             expect(fixDeltaToGrid({origin, next, info})).to.deep.equal(next)
         })
@@ -31,7 +32,7 @@ describe('Utils', function() {
             // the place to move to
             const next = { x: 52, y: 103}
             // the current info / gridSize
-            const info = { gridSize: 50 }
+            const info = { gridSize: 50, zoomLevel: 1 }
 
             expect(fixDeltaToGrid({origin, next, info})).to.deep.equal({
                 x: 50,

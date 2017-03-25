@@ -1,51 +1,42 @@
 // local imports
 import { round } from 'utils'
 
-export default function computeFixedDelta({origin, next, info}) {
-    // compute the difference between the mouse's current location and the previous one
-    const delta = {
-        x: next.x - origin.x,
-        y: next.y - origin.y,
+export default function computeFixedDelta({origin, next, info: { zoomLevel, gridSize }}) {
+
+    // the first thing we have to do is incorporate the zoomLevel
+    const target = {
+        x: next.x / zoomLevel,
+        y: next.y / zoomLevel,
     }
 
-    // the amount to move (this will be halved)
-    let grid
-    // the minimum amount to wait before moving
-    let snapMove = {}
-
-    // if there is a grid
-    if (info.gridSize > 0) {
-        grid = info.gridSize
-        // move the element in units of the grid size
-        snapMove = {
-            x: round(delta.x, grid),
-            y: round(delta.y, grid),
-        }
+    // if there is no grid
+    if (gridSize === 0) {
+        // just move along
+        return target
     }
-    // otherwise there is no grid
+    // otherwise there is a grid to accomodate
     else {
-        grid = 2
-        // move the element to the mouse's location
-        snapMove = {
-            x: delta.x, 
-            y: delta.y
+        // compute the difference between the mouse's current location and the previous one
+        const delta = {
+            x: target.x - origin.x,
+            y: target.y - origin.y,
         }
+
+        // the location to move to
+        const fixed = {...origin}
+
+        // if we have moved the mouse enough in the x direction
+        if (Math.abs(delta.x) > gridSize / 2) {
+            // add one gridSize to element
+            fixed.x += round(delta.x, gridSize)
+        }
+
+        // if we have moved the mouse enough in the x direction
+        if (Math.abs(delta.y) >= gridSize / 2) {
+            // add one gridSize to element
+            fixed.y += round(delta.y, gridSize)
+        }
+
+        return fixed
     }
-
-    // the location to move to
-    const fixed = {...origin}
-
-    // if we have moved the mouse enough in the x direction
-    if (Math.abs(delta.x) > grid/2) {
-        // add one grid to element
-        fixed.x += snapMove.x
-    }
-
-    // if we have moved the mouse enough in the x direction
-    if (Math.abs(delta.y) >= grid/2) {
-        // add one grid to element
-        fixed.y += snapMove.y
-    }
-
-    return fixed
 }
