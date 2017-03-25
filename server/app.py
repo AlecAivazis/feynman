@@ -44,7 +44,7 @@ def latex():
 
     # render the template with the specfied context
     latex = render_template(string_template, **template_context).encode('utf-8')
-
+    print(latex)
     # open a temporary directory where we can put the rendered latex
     with tempfile.TemporaryDirectory() as tempdir:
         # run pdflatex with the output directory pointing to the temporary loc
@@ -72,7 +72,7 @@ def latex():
 @click.option('--debug', default=False)
 def run(port, debug):
     # run the web application with the appropriate configuration
-    app.run(debug=debug, port=port)
+    app.run(debug=debug, port=port, host='0.0.0.0')
 
 
 # if running the file from the command line
