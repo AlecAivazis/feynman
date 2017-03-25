@@ -105,13 +105,11 @@ class Splittable extends React.Component {
                 snap({id: moveTarget, elements,  info, setElementAttrs})
             }
 
-
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
                 x: event.clientX, 
                 y: event.clientY,
             }
-
 
             // the location to move to
             const fixed = fixDeltaToGrid({origin, next: mouse, info})

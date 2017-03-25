@@ -18,9 +18,9 @@ import {
     fixPositionToGrid,
     propagatorsWithLocation,
     diagramBoundingBox,
-    dataUrlToBlob
+    dataUrlToBlob,
+    svgToDataURL,
 } from 'utils'
-import 'utils/svgDataUrl'
 import { EventListener } from 'components'
 import {
     clearSelection,
@@ -164,7 +164,7 @@ class Diagram extends React.Component {
                .setAttribute('transform', `translate(-${bb.x1}, -${bb.y1})`)
 
         // export the diagram as a png
-        const dataUrl = await diagram.toDataURL("image/png")
+        const dataUrl = await svgToDataURL(diagram, "image/png")
 
         // save the data url as a png
         saveAs(dataUrlToBlob(dataUrl), "diagram.png")
