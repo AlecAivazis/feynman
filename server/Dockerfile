@@ -5,7 +5,9 @@ RUN apt update
 RUN apt upgrade -y
 
 # install deps
-RUN apt install -y imagemagick texlive-full
+RUN apt install -y \
+    imagemagick \
+    texlive-full
 
 # copy server source over
 RUN mkdir -p /usr/src/app
@@ -13,6 +15,6 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 
 # run the server
-expose 4000
+EXPOSE 4000
 # start the server at the exposed port
-CMD python3 app.py --port 4000
+ENTRYPOINT ["python3", "app.py", "--port", "4000"]
