@@ -1,0 +1,41 @@
+% this file describes the basic latex file that is used by the interpretter at alec.aivazis
+% author: alec aivazis
+
+\documentclass[varwidth=true, border=1pt]{standalone}
+
+\usepackage{xcolor}
+\usepackage{anyfontsize}
+
+\usepackage{amsmath,amssymb}
+\makeatletter
+\newsavebox\myboxA
+\newsavebox\myboxB
+\newlength\mylenA
+
+% overline with variable width (the second brace)
+\newcommand*\anti[2][1.0]{
+    \sbox{\myboxA}{$\m@th#2$}
+    \setbox\myboxB\null % phantom box
+    \ht\myboxB=\ht\myboxA
+    \dp\myboxB=\dp\myboxA
+    \wd\myboxB=#1\wd\myboxA % scale phantom
+    \sbox\myboxB{$\m@th\overline{\copy\myboxB}$} % overlined phantom
+    \setlength\mylenA{\the\wd\myboxA} % calc width diff
+    \addtolength\mylenA{-\the\wd\myboxB}
+    \ifdim\wd\myboxB<\wd\myboxA
+       \rlap{\hskip 0.5\mylenA\usebox\myboxB}{\usebox\myboxA}
+    \else
+        \hskip -0.5\mylenA\rlap{\usebox\myboxA}{\hskip 0.5\mylenA\usebox\myboxB}
+    \fi
+}
+
+% typedef textrm by request
+\newcommand*\txt[1]{\textrm{ #1 }}
+\makeatother
+
+\begin{document}
+{% block content %}{%endblock%}
+\end{document}
+
+
+% end of file
