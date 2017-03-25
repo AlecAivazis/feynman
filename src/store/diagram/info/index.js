@@ -9,6 +9,7 @@ import {
     TOGGLE_PATTERN_INITIAL_VIS,
     TOGGLE_EXPORT_MODAL,
     PAN_DIAGRAM,
+    SET_ZOOM,
     ZOOM_OUT,
     ZOOM_IN,
 } from 'actions/info'
@@ -118,6 +119,15 @@ export default (state = initialState, {type, payload}) => {
                 x: state.pan.x + (payload.x || 0),
                 y: state.pan.y + (payload.y || 0),
             }
+        }
+    }
+
+    // if the action specifies the zoom level
+    if(type === SET_ZOOM) {
+        return {
+            ...state,
+            // make sure we save what we got
+            zoomLevel: payload
         }
     }
 

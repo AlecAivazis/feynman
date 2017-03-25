@@ -12,6 +12,7 @@ import {
     togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS,
     toggleExportModal, TOGGLE_EXPORT_MODAL,
     panDiagram, PAN_DIAGRAM,
+    setZoom, SET_ZOOM,
     zoomIn, ZOOM_IN,
     zoomOut, ZOOM_OUT,
 } from 'actions/info'
@@ -87,6 +88,13 @@ describe('Action Creators', function() {
             // all we care about is the type
             expect(toggleAnchors()).to.deep.equal({
                 type: TOGGLE_ANCHORS,
+            })
+        })
+
+        it('zoom set', function(){
+            expect(setZoom(1.0)).to.deep.equal({
+                type: SET_ZOOM,
+                payload: 1.0,
             })
         })
 

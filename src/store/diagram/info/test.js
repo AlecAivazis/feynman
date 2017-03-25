@@ -11,6 +11,7 @@ import {
     togglePatternModal,
     toggleExportModal,
     panDiagram,
+    setZoom,
     zoomIn,
     zoomOut,
     TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so
@@ -115,6 +116,13 @@ describe('Reducers', function() {
         })
 
         describe('zoom', function() {
+            it('responds to the SET_ZOOM action', function() {
+                // set zoom level to a specific value
+                const zoomed = reducer(undefined, setZoom(2.0))
+                // make sure we got the value we set
+                expect(zoomed.zoomLevel).to.equal(2.0)
+            })
+
             it('responds to the ZOOM_IN action', function() {
                 // zoom in from the initial state
                 const zoomed = reducer(undefined, zoomIn())
