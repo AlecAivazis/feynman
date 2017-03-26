@@ -5,9 +5,13 @@ RUN apt update && \
     apt upgrade -y && \
     apt install -y \
         imagemagick \
-        texlive-science
-
-RUN apt install -y texlive-latex-extra
+        texlive-latex-recommended \
+        texlive-latex-extra \
+        texlive-science \
+        texlive-math-extra \
+        texlive-latex-extra \
+        texlive-fonts-recommended \
+        texlive-fonts-extra
 
 # copy server source over
 ADD . /go/src/github.com/alecaivazis/feynman

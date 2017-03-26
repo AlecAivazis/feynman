@@ -4,22 +4,29 @@ import (
 	"bytes"
 	"path"
 	"fmt"
-	"os"
 	"os/exec"
+	"os"
 	"io/ioutil"
+	"strconv"
+	"text/template"
 )
 
 // the configuration object for a given render
 type RenderConfig struct {
-	FontSize float32
+	FontSize string
 	Color string
-	BaseLine float32
+	BaseLine string
 	String string
 }
+
+var stringTemplate *template.Template
 
 // RenderLatex takes a string of latex source and returns a readable
 // which contains a png with the result.
 func RenderLatex(conf *RenderConfig) ([]byte, error) {
+	// log our intentions
+	fmt.Println("Rendering string:", conf.String)
+
 	// create a temporary directory we can render the equation inside
 	tempDir, err := ioutil.TempDir("", "")
 	if err != nil {
@@ -27,6 +34,7 @@ func RenderLatex(conf *RenderConfig) ([]byte, error) {
 	}
 	// make sure we clean up when we're done
 	defer os.RemoveAll(tempDir)
+	// fmt.Println(tempDir)
 
 	// filepaths used throughout the process
 	equationFile := path.Join(tempDir, "equation.tex") // holds the equation source
@@ -50,7 +58,9 @@ func RenderLatex(conf *RenderConfig) ([]byte, error) {
 		),
 		exec.Command(
 			"convert",
+			"-density", "300",
 			pdfFile,
+			"-quality", "90",
 			pngFile,
 		),
 	}
@@ -71,15 +81,20 @@ func RenderLatex(conf *RenderConfig) ([]byte, error) {
 // LatexForConfig returns the latex document required to render the given equation
 func LatexForConfig(conf *RenderConfig) []byte {
 	// if there is no fontSize for this render
-	if conf.FontSize == 0 {
+	if conf.FontSize == "" {
 		// use the default
-		conf.FontSize = 5
+		conf.FontSize = "5.0"
 	}
 
 	// if there is no BaseLine for this render
-	if conf.BaseLine == 0 {
+	if conf.BaseLine == "" {
 		// use the default
-		conf.BaseLine = 1.2 * conf.FontSize
+		val, err := strconv.ParseFloat(conf.FontSize, 32)
+		// if nothing went wrnog
+		if err == nil {
+			// compute the baseline from the fontSize
+			conf.BaseLine = strconv.FormatFloat(1.2 * val, 'f', -1, 32)
+		}
 	}
 
 	// if there is no Color for this render
@@ -97,8 +112,21 @@ func LatexForConfig(conf *RenderConfig) []byte {
 	// a buffer to hold the rendered template
 	var doc bytes.Buffer
 	// execute the template
-	latexTemplate.Execute(&doc, conf)
+	stringTemplate.Execute(&doc, conf)
 
 	// return the byte string template
 	return []byte(doc.String())
+}
+
+func init() {
+	// build the template once
+	template, err := template.ParseFiles("templates/base.tex.tmpl", "templates/string.tex.tmpl")
+	// if something went wrong
+	if err != nil {
+		// yell loudly
+		panic(err)
+	}
+
+	// save the compiled template in memory
+	stringTemplate = template
 }

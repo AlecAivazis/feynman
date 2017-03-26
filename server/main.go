@@ -8,14 +8,16 @@ import (
 
 
 func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
-	// we expect the equation to render as the equation query parameter in the request
-	eqn := r.URL.Query().Get("equation")
-	fmt.Println("Rendering equation ", eqn)
+	// the config provided by the user
+	config := &RenderConfig{
+		String: r.URL.Query().Get("string"),
+		FontSize: r.URL.Query().Get("fontSize"),
+		BaseLine: r.URL.Query().Get("baseLine"),
+		Color: r.URL.Query().Get("color"),
+	}
 
 	// create the buffer with the image contents using the local disk for temp files
-	img, err := RenderLatex(&RenderConfig{
-		String: eqn,
-	})
+	img, err := RenderLatex(config)
 	// if something went wrong
 	if err != nil {
 		// send the error to the user as text
