@@ -114,8 +114,8 @@ class Splittable extends React.Component {
             // the location to move to
             const fixed = fixDeltaToGrid({origin, next: mouse, info})
             const delta = {
-                x: fixed.x - origin.x,
-                y: fixed.y - origin.y,
+                x: (fixed.x - origin.x) / info.zoomLevel,
+                y: (fixed.y - origin.y ) / info.zoomLevel,
             }
 
             // move the selected anchors
