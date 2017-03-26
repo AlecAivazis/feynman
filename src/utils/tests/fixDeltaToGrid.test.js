@@ -49,8 +49,8 @@ describe('Utils', function() {
             const info = { gridSize: 0, zoomLevel: 2 }
 
             expect(fixDeltaToGrid({origin, next, info})).to.deep.equal({
-                x: 50,
-                y: 50,
+                x: 100,
+                y: 100,
             })
         })
 
@@ -63,8 +63,8 @@ describe('Utils', function() {
             const info = { gridSize: 50, zoomLevel: 2 }
 
             expect(fixDeltaToGrid({origin, next, info})).to.deep.equal({
-                x: 100,
-                y: 50,
+                x: 200,
+                y: 100,
             })
         })
     })
