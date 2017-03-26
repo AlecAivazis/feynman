@@ -63,7 +63,7 @@ class Splittable extends React.Component {
             // if the altkey was held when the drag started
             if (event.altKey) {
                 // let the user do what they want (they will return the id to follow)
-                const splitResult = split({id, ...relativePosition(origin)})
+                const splitResult = split({id, ...relativePosition(origin, info)})
                 id = splitResult.id
                 type = splitResult.type
             }
@@ -105,19 +105,17 @@ class Splittable extends React.Component {
                 snap({id: moveTarget, elements,  info, setElementAttrs})
             }
 
-
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
-                x: event.clientX, 
+                x: event.clientX,
                 y: event.clientY,
             }
-
 
             // the location to move to
             const fixed = fixDeltaToGrid({origin, next: mouse, info})
             const delta = {
-                x: fixed.x - origin.x,
-                y: fixed.y - origin.y,
+                x: (fixed.x - origin.x) / info.zoomLevel,
+                y: (fixed.y - origin.y ) / info.zoomLevel,
             }
 
             // move the selected anchors

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import autobind from 'autobind-decorator'
 import { saveAs } from 'file-saver'
+import SvgMatrix from 'svg-matrix'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
@@ -17,9 +18,9 @@ import {
     fixPositionToGrid,
     propagatorsWithLocation,
     diagramBoundingBox,
-    dataUrlToBlob
+    dataUrlToBlob,
+    svgToDataURL,
 } from 'utils'
-import 'utils/svgDataUrl'
 import { EventListener } from 'components'
 import {
     clearSelection,
@@ -29,6 +30,7 @@ import {
     setElementAttrs as setAttrs,
     deleteSelection,
 } from 'actions/elements'
+import { panDiagram as panDiagramAction, zoomIn as zoomInAction, zoomOut as zoomOutAction } from 'actions/info'
 import PatternModal from '../PatternModal'
 
 export const exportDiagramImageEvent = 'export-diagram-image'
@@ -39,7 +41,9 @@ class Diagram extends React.Component {
     state = {
         point1: null,
         point2: null,
-        newElement: false
+        newElement: false,
+        spacebarPressed: false,
+        origin: null,
     }
 
     render() {
@@ -53,10 +57,13 @@ class Diagram extends React.Component {
 
         // render the various components of the diagram
         return (
-            <svg ref={ele => this.diagram = ele} style={styles.diagram} style={{...elementStyle, ...style}} onMouseDown={this._mouseDown}>
-
+            <svg
+                ref={ele => this.diagram = ele}
+                style={{...elementStyle, ...style}}
+                onMouseDown={this._mouseDown}
+            >
                 {/* wrap the whole diagram in a group so we can transform the diagram when exporting */}
-                <g className="diagram">
+                <g className="diagram" transform={this.transformString}>
                     {/* order matters here (last shows up on top) */}
                     {info.showGrid && info.gridSize > 0 && <Grid/>}
                     {propagators.map((element, i) => (
@@ -72,29 +79,46 @@ class Diagram extends React.Component {
                             key={anchor.id}
                         />
                     ))}
+
+                    { this.state.point1 && this.state.point2 && !this.state.newElement && (
+                        <SelectionRectangle {...this.state}/>
+                    )}
                 </g>
-
-                { this.state.point1 && this.state.point2 && !this.state.newElement && (
-                    <SelectionRectangle {...this.state} />
-                )}
-
-                {/* Mouse Movement (selection rectangle and element creation) */}
+                {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">
                     {this._mouseMove}
                 </EventListener>
                 <EventListener event="mouseup">
                     {this._mouseUp}
                 </EventListener>
-                <EventListener event="keydown">
-                {this._keyPress}
-                </EventListener>
 
-                {/* When we need to export the diagram as an image */}
+                {/* when we need to export the diagram as an image */}
                 <EventListener event={exportDiagramImageEvent}>
                     {this._exportDiagram}
                 </EventListener>
+
+                {/* track the state of the spacebar for panning and alt for element creation */}
+                <EventListener event="keydown">
+                    {this._keyPress}
+                </EventListener>
+                <EventListener event="keyup">
+                    {this._keyUp}
+                </EventListener>
+
+                {/* when the user scrolls */}
+                <EventListener event="mousewheel">
+                    {this._mouseWheel}
+                </EventListener>
             </svg>
         )
+    }
+
+    get transformString() {
+        const {x , y} = this.props.info.pan
+        return SvgMatrix()
+                .translate(x, y)
+                .scale(this.props.info.zoomLevel)
+                .transformString
     }
 
     @autobind
@@ -119,6 +143,7 @@ class Diagram extends React.Component {
         const removeTargets = [
             ...diagram.getElementsByClassName("grid"),
             ...diagram.getElementsByClassName("anchor"),
+            ...diagram.getElementsByClassName("selectionRectangle"),
         ]
 
         // visit each target
@@ -139,7 +164,7 @@ class Diagram extends React.Component {
                .setAttribute('transform', `translate(-${bb.x1}, -${bb.y1})`)
 
         // export the diagram as a png
-        const dataUrl = await diagram.toDataURL("image/png")
+        const dataUrl = await svgToDataURL(diagram, "image/png")
 
         // save the data url as a png
         saveAs(dataUrlToBlob(dataUrl), "diagram.png")
@@ -159,13 +184,17 @@ class Diagram extends React.Component {
         const loc = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        })
+        }, this.props.info)
 
         // remove the previous selection
         this.props.clearSelection()
         // start the selection rectangle
         this.setState({
-            point1: loc
+            point1: loc,
+            origin: {
+                x: event.clientX,
+                y: event.clientY,
+            }
         })
 
         // if the alt key was being held down
@@ -212,16 +241,63 @@ class Diagram extends React.Component {
         // grab the used props
         const { setElementAttrs, info } = this.props
 
-        // only fire for moves originating on the diagram when we are building the selection rectangle
+        // only continue if we started dragging on this element
         if (!this.state.point1) {
             return
         }
 
+        // if we are holding spacebar
+        if (this.state.spacebarPressed) {
+            this._panDiagram(event)
+        }
+        // otherwise just create the selection rectangle like normal
+        else {
+            this._drawRectangle(event)
+        }
+    }
+
+    @autobind
+    _mouseUp(event) {
+        // only continue if we started dragging on this element
+        if (this.state.point1) {
+            // clear the rectangle the selection rectangle
+            this.setState({
+                point1: null,
+                point2: null,
+                newElement: null,
+                origin: null,
+            })
+        }
+    }
+
+    @autobind
+    _keyPress(event) {
+        // if the key that was pressed was the spacebar, we haven't pressed teh spacebar yet, and we aren't dragging something
+        if (event.which === 32 && !this.state.spacebarPressed && !this.state.point1){
+            this.setState({
+                spacebarPressed: true
+            })
+        // if the user pressed the backspace or the delete key respectively
+        } else if ([8,46].includes(event.which)) {
+            // delete the selected elements
+            this.props.deleteSelectedElements()
+        }
+    }
+
+    @autobind
+    _keyUp(event) {
+        this.setState({
+            spacebarPressed: false
+        })
+    }
+
+    @autobind
+    _drawRectangle(event) {
         // compute the relative position of the mouse
         const point2 = relativePosition({
             x: event.clientX,
             y: event.clientY,
-        })
+        }, this.props.info)
 
 
         // save the second point
@@ -238,11 +314,11 @@ class Diagram extends React.Component {
             // otherwise we are creating a new element
             } else {
                 // move the drag anchor to match the mouse
-                setElementAttrs({
+                this.props.setElementAttrs({
                     type: 'anchors',
                     id: this.state.newElement,
                     ...fixPositionToGrid(
-                        this.state.point2, info.gridSize
+                        this.state.point2, this.props.info.gridSize
                     )
                 })
             }
@@ -250,25 +326,40 @@ class Diagram extends React.Component {
     }
 
     @autobind
-    _mouseUp(event) {
-        // only fire for moves originating on the diagram when we are building the selection rectangle
-        if (this.state.point1) {
-            // clear the rectangle the selection rectangle
-            this.setState({
-                point1: null,
-                point2: null,
-                newElement: null,
-            })
-
+    _panDiagram(event) {
+        // compute the relative position of the mouse
+        const point2 = {
+            x: event.clientX,
+            y: event.clientY,
         }
+
+        // the difference we've moved
+        const pan = {
+            x: point2.x - this.state.origin.x,
+            y: point2.y - this.state.origin.y,
+        }
+
+        // pan the diagram the match the mouse movement
+        this.props.panDiagram(pan)
+
+        // update the origin
+        this.setState({origin: point2})
     }
 
     @autobind
-    _keyPress(event) {
-        // if the user pressed the backspace or the delete key respectively
-        if ([8,46].includes(event.which)) {
-            // delete the selected elements
-            this.props.deleteSelectedElements()
+    _mouseWheel(event) {
+        // don't scroll
+        event.stopPropagation()
+        event.preventDefault()
+
+        // if the user scrolled up
+        if (event.wheelDelta / 120 > 0) {
+            // zoom in
+            this.props.zoomIn()
+        // otherwise we scrolled down
+        } else {
+            // zoom the diagram out
+            this.props.zoomOut()
         }
     }
 }
@@ -285,6 +376,9 @@ const mapDispatchToProps = dispatch => ({
     addAnchors: (...anchors) => dispatch(addAnchors(...anchors)),
     addPropagators: (...props) => dispatch(addPropagators(...props)),
     setElementAttrs: (...attrs) => dispatch(setAttrs(...attrs)),
-    deleteSelectedElements: () => dispatch(deleteSelection())
+    deleteSelectedElements: () => dispatch(deleteSelection()),
+    panDiagram: pan => dispatch(panDiagramAction(pan)),
+    zoomIn: () => dispatch(zoomInAction()),
+    zoomOut: () => dispatch(zoomOutAction()),
 })
 export default connect(selector, mapDispatchToProps)(Diagram)

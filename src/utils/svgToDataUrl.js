@@ -39,8 +39,7 @@
 	¹ http://svgopen.org/2010/papers/62-From_SVG_to_Canvas_and_Back/#svg_to_canvas
 */
 
-SVGElement.prototype.toDataURL = function(type, options) { return new Promise((resolve, reject) => {
-	var _svg = this;
+export default function(_svg, type, options) { return new Promise((resolve, reject) => {
 
 	function debug(s) {
 		// console.log("SVG.toDataURL:", s);

@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import './reset.css'
 import styles from './styles'
 import { Diagram, Sidebar, Title, Toolbar, PatternModal, ExportModal } from '..'
-import DevTools from 'components/DevTools'
 
 // App must be a class-based component because it will recieve a ref
 const App = ({info}) => (

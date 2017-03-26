@@ -103,6 +103,7 @@ class Toolbar extends React.Component {
     _mouseMove(event) {
         // the origin
         const origin = this.state.mouseOrigin
+        const { info } = this.props
         // if the mouse is down
         if (origin) {
             // compute the location of the mouse
@@ -126,7 +127,7 @@ class Toolbar extends React.Component {
                     const { type, ...config } = this.state.elementDragConfig
 
                     // track that we have created an element
-                    dragElement = specMap[type]({...relativePosition(pos), info, elements, config})
+                    dragElement = specMap[type]({...relativePosition(pos, info), info, elements, config})
 
                     // create one with the appropriate spec
                     this.props.placeElement(dragElement.element)
@@ -142,8 +143,8 @@ class Toolbar extends React.Component {
                 })
                 // the distance to move
                 const fixedDelta = {
-                    x: fixed.x - origin.x,
-                    y: fixed.y - origin.y,
+                    x: (fixed.x - origin.x) / info.zoomLevel,
+                    y: (fixed.y - origin.y) / info.zoomLevel,
                 }
 
                 // if there is a non-zero distance to move

@@ -8,7 +8,14 @@ import {
     TOGGLE_PATTERN_MODAL,
     TOGGLE_PATTERN_INITIAL_VIS,
     TOGGLE_EXPORT_MODAL,
+    PAN_DIAGRAM,
+    SET_ZOOM,
+    ZOOM_OUT,
+    ZOOM_IN,
 } from 'actions/info'
+
+export const maxZoom = 2
+export const minZoom = 0.5
 
 // the default state
 export const initialState = {
@@ -21,6 +28,11 @@ export const initialState = {
     showExportModal: false,
     showPatternModal: true, // this must reflect the initial value of `patternModalInitalVis`
     patternModalInitalVis: true,
+    pan: {
+        x: 0,
+        y: 0,
+    },
+    zoomLevel: 1,
 }
 
 // return the diagram reducer
@@ -88,13 +100,51 @@ export default (state = initialState, {type, payload}) => {
             patternModalInitalVis: !state.patternModalInitalVis
         }
     }
-    
+
     // if the action indicates we should toggle the export modal
     if (type === TOGGLE_EXPORT_MODAL) {
-        // inverty the export modal visibility
+        // invert the export modal visibility
         return {
             ...state,
             showExportModal: !state.showExportModal,
+        }
+    }
+
+    // if the action indicates we need to pan the diagram
+    if (type === PAN_DIAGRAM) {
+        // add the partial pan to our current state
+        return {
+            ...state,
+            pan: {
+                x: state.pan.x + (payload.x || 0),
+                y: state.pan.y + (payload.y || 0),
+            }
+        }
+    }
+
+    // if the action specifies the zoom level
+    if(type === SET_ZOOM) {
+        return {
+            ...state,
+            // make sure we save what we got
+            zoomLevel: payload
+        }
+    }
+
+    // if the action designates we need to zoom in
+    if(type === ZOOM_IN) {
+        return {
+            ...state,
+            // make sure we don't go past the max
+            zoomLevel: Math.min(state.zoomLevel + .1, maxZoom)
+        }
+    }
+
+    // if the action designates we need to zoom out
+    if(type === ZOOM_OUT) {
+        return {
+            ...state,
+            zoomLevel: Math.max(state.zoomLevel - .1, minZoom)
         }
     }
 

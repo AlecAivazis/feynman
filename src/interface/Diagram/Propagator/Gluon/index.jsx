@@ -1,8 +1,6 @@
 // external imports
 import React from 'react'
-import SvgMatrix from 'svg-matrix'
 // local imports
-import range from 'utils/range'
 import With from './withEndCaps'
 import Without from './withoutEndcaps'
 

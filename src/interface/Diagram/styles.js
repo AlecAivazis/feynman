@@ -5,6 +5,7 @@ const container = {
     display: 'flex',
     flexGrow: 1,
     cursor: 'default',
+    zIndex: 1,
 }
 
 export default {
@@ -15,11 +16,7 @@ export default {
     containerWithoutGrid: {
         ...container,
     },
-    diagram: {
-        display: 'flex',
-        flexGrow: 1,
-    },
     canvas: {
-        
+
     }
 }

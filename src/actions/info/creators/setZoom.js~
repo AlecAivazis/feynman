@@ -1,0 +1,6 @@
+// local imports
+import { ZOOM_SET } from 'actions/info/types'
+
+export default () => ({
+    type: ZOOM_SET
+})

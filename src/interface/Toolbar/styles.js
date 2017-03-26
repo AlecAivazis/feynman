@@ -13,9 +13,10 @@ export default {
         backgroundColor: 'rgba(50,50,50,0.65)',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        zIndex: 5,
     },
     shadow: {
         ...image,
-        position: 'fixed', 
+        position: 'fixed',
     }
 }

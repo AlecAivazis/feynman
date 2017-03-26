@@ -11,6 +11,10 @@ import {
     togglePatternModal, TOGGLE_PATTERN_MODAL,
     togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS,
     toggleExportModal, TOGGLE_EXPORT_MODAL,
+    panDiagram, PAN_DIAGRAM,
+    setZoom, SET_ZOOM,
+    zoomIn, ZOOM_IN,
+    zoomOut, ZOOM_OUT,
 } from 'actions/info'
 import { fieldName } from '../creators/togglePatternModalInitialVis'
 import LocalStorageMock from './storage.js'
@@ -27,6 +31,17 @@ describe('Action Creators', function() {
             expect(setDiagramTitle(title)).to.deep.equal({
                 type: SET_TITLE,
                 payload: title,
+            })
+        })
+
+        it('pan diagram', function() {
+            // the pan for the diagram
+            const pan = {x: 10}
+
+            // make sure the action is expected
+            expect(panDiagram(pan)).to.deep.equal({
+                type: PAN_DIAGRAM,
+                payload: pan,
             })
         })
 
@@ -73,6 +88,25 @@ describe('Action Creators', function() {
             // all we care about is the type
             expect(toggleAnchors()).to.deep.equal({
                 type: TOGGLE_ANCHORS,
+            })
+        })
+
+        it('zoom set', function(){
+            expect(setZoom(1.0)).to.deep.equal({
+                type: SET_ZOOM,
+                payload: 1.0,
+            })
+        })
+
+        it('zoom in', function(){
+            expect(zoomIn()).to.deep.equal({
+                type: ZOOM_IN,
+            })
+        })
+
+        it('zoom out', function(){
+            expect(zoomOut()).to.deep.equal({
+                type: ZOOM_OUT,
             })
         })
 

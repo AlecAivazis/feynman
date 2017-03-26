@@ -11,5 +11,6 @@ export default {
         textAlign: 'center',
         fontSize: 25,
         fontWeight: 400,
+        zIndex: 5,
     }
 }

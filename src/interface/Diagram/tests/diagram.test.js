@@ -4,9 +4,10 @@ import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 import _ from 'lodash'
 import sinon from 'sinon'
+import SvgMatrix from 'svg-matrix'
 // local imports
 import { createStore } from 'store'
-import { toggleGrid, toggleAnchors, setGridSize } from 'actions/info'
+import { toggleGrid, toggleAnchors, setGridSize, panDiagram } from 'actions/info'
 import { addPropagators, addAnchors, selectElements } from 'actions/elements'
 import { initialState } from 'store/diagram/elements'
 import Diagram, { exportDiagramImageEvent } from '..'
@@ -227,6 +228,25 @@ describe('Interface Components', function() {
 
             // make sure the anchor was told to render selected
             expect(anchor.props().selected).to.be.true
+        })
+
+        it('has the transform to accomodate the diagram pan', function() {
+            // create a verion of the store
+            const store = createStore()
+
+            // pan the diagram in the postive x direction
+            store.dispatch(panDiagram({x: 10}))
+
+            // render the diagram in the wrapper
+            const wrapper = mount(<Test store={store}/>)
+
+            // find the svg element
+            const svg = wrapper.find('g.diagram')
+
+            // make sure the svg element has the transform prop to match the pan
+            expect(svg.props().transform).to.equal(
+               SvgMatrix().translate(10).transformString
+            )
         })
     })
 })
