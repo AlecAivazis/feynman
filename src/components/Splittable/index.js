@@ -107,7 +107,7 @@ class Splittable extends React.Component {
 
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
-                x: event.clientX, 
+                x: event.clientX,
                 y: event.clientY,
             }
 
