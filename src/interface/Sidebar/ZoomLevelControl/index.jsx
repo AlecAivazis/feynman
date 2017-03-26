@@ -26,7 +26,7 @@ const ZoomLevelControl = ({info, dispatch, style, ...unusedProps}) => (
         <div style={styles.header}>
             <Label>zoom</Label>
             <span style={styles.levelIndicator}>
-                {info.zoomLevel}
+                {info.zoomLevel.toFixed(1)}
             </span>
         </div>
         <div style={styles.sliderContainer}>
