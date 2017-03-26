@@ -21,17 +21,9 @@ export default function computeFixedDelta({origin, next, info: { zoomLevel, grid
     // the location to move to
     const fixed = {...origin}
 
-    // if we have moved the mouse enough in the x direction
-    if (Math.abs(delta.x) >= spacing / 2) {
-        // add one spacing to element
-        fixed.x += round(delta.x, spacing)
-    }
-
-    // if we have moved the mouse enough in the x direction
-    if (Math.abs(delta.y) >= spacing / 2) {
-        // add one spacing to element
-        fixed.y += round(delta.y, spacing)
-    }
+    // round the delta to match the grid
+    fixed.x += round(delta.x, spacing)
+    fixed.y += round(delta.y, spacing)
 
     return fixed
 }
