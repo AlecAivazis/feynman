@@ -13,7 +13,7 @@ var entry = [projectPaths.clientEntry]
 // the initial set of plugins
 var plugins = [
     new HtmlWebpackPlugin({
-        template: 'src/index.html'
+        template: 'client/index.html'
     })
 ]
 // if we are building for production
