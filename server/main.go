@@ -2,22 +2,32 @@ package main
 
 import (
 	"fmt"
-
+	"strconv"
 	"net/http"
 )
+
 
 func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
 	// we expect the equation to render as the equation query parameter in the request
 	eqn := r.URL.Query().Get("equation")
-	// if there wasn't one provided
-	if eqn == "" {
-		// use the latex-valid empty string
-		eqn = " "
-	}
 	fmt.Println("Rendering equation ", eqn)
 
-	// render the text and send the resulting image back to the user
-	WriteEquation(w, eqn)
+	// create the buffer with the image contents using the local disk for temp files
+	img, err := RenderLatex(&RenderConfig{
+		String: eqn,
+	})
+	// if something went wrong
+	if err != nil {
+		// send the error to the user as text
+		w.Write([]byte(err.Error()))
+	}
+
+	// since we render the equation as a png, we need to set the appropriate headers
+	w.Header().Set("Content-Type", "image/png")
+	w.Header().Set("Content-Length", strconv.Itoa(len(img)))
+
+	// copy the equation to the response
+	w.Write(img)
 }
 
 
