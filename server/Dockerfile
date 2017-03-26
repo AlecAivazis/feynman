@@ -7,6 +7,8 @@ RUN apt update && \
         imagemagick \
         texlive-science
 
+RUN apt install -y texlive-latex-extra
+
 # copy server source over
 ADD . /go/src/github.com/alecaivazis/feynman
 # install dependencies

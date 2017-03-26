@@ -14,13 +14,10 @@ func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
 		// use the latex-valid empty string
 		eqn = " "
 	}
+	fmt.Println("Rendering equation ", eqn)
 
 	// render the text and send the resulting image back to the user
-	err := WriteEquation(w, eqn)
-	// if something goes wrong
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	WriteEquation(w, eqn)
 }
 
 
