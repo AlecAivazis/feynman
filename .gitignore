@@ -5,6 +5,6 @@
 *.log
 src/server/static/client.js
 .vscode/
-<<<<<<< HEAD
+server/server
 *~
 .tmp/

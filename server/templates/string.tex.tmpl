@@ -1,0 +1,13 @@
+{{/* this file describes the golang template necessary to display a customizable string in LaTeX */}}
+{{/* author: alec aivazis */}}
+
+
+{{define "content" }}
+
+\fontsize{{"{"fontSize"}"}}{{"{"baseLine"}"}}
+\textcolor{{"{"color"}"}}{ {{if isMath}}${{end}}{{equation}}{{if isMath }}${{end}} }
+
+{{end}}
+
+
+{{/* end of file */}}
