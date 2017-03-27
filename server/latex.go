@@ -19,7 +19,7 @@ type RenderConfig struct {
 	String string
 }
 
-var stringTemplate *template.Template
+var stringTemplate, errorTemplate *template.Template
 
 // RenderLatex takes a string of latex source and returns a readable
 // which contains a png with the result.
@@ -129,4 +129,15 @@ func init() {
 
 	// save the compiled template in memory
 	stringTemplate = template
+
+	// build the template once
+	template, err = template.ParseFiles("templates/base.tex.tmpl", "templates/error.tex.tmpl")
+	// if something went wrong
+	if err != nil {
+		// yell loudly
+		panic(err)
+	}
+
+	// save the compiled template in memory
+	errorTemplate = template
 }
