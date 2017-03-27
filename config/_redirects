@@ -1,4 +1,4 @@
 # Redirects from what the browser requests to what we serve
 
 # redirect to the latex service
-/latex      104.196.244.203
+/latex      http://104.196.244.203      200
