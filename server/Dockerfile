@@ -17,7 +17,10 @@ RUN apt update && \
 ADD . /go/src/github.com/alecaivazis/feynman
 # install dependencies
 RUN go get github.com/alecaivazis/feynman/...
-RUN go install github.com/alecaivazis/feynman
+
+WORKDIR $GOPATH/src/github.com/alecaivazis/feynman
+
+RUN go build .
 
 # run the server
 EXPOSE 8081
