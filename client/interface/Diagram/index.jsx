@@ -21,7 +21,7 @@ import {
     dataUrlToBlob,
     svgToDataURL,
 } from 'utils'
-import { EventListener } from 'components'
+import { EventListener, Text } from 'components'
 import {
     clearSelection,
     selectElements,
@@ -84,6 +84,7 @@ class Diagram extends React.Component {
                         <SelectionRectangle {...this.state}/>
                     )}
                 </g>
+
                 {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">
                     {this._mouseMove}
