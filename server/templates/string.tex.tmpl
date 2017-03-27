@@ -1,3 +1,4 @@
-{{define "content"}}
-{{.String}}
-{{end}}
+{% define "content" %}
+\fontsize{{% .FontSize %}}{{% .BaseLine %}}
+\textcolor{{% .Color %}}{{%if .MathMode %}${% end %}{% .String %}{%if .MathMode %}${% end %}}
+{% end %}

@@ -7,19 +7,20 @@ import (
 	"os/exec"
 	"os"
 	"io/ioutil"
-	"strconv"
 	"text/template"
 )
 
 // the configuration object for a given render
 type RenderConfig struct {
-	FontSize string
+	FontSize float64
 	Color string
-	BaseLine string
+	BaseLine float64
 	String string
+	MathMode bool
 }
 
 var stringTemplate *template.Template
+
 
 // RenderLatex takes a string of latex source and returns a readable
 // which contains a png with the result.
@@ -81,20 +82,15 @@ func RenderLatex(conf *RenderConfig) ([]byte, error) {
 // LatexForConfig returns the latex document required to render the given equation
 func LatexForConfig(conf *RenderConfig) []byte {
 	// if there is no fontSize for this render
-	if conf.FontSize == "" {
+	if conf.FontSize == 0 {
 		// use the default
-		conf.FontSize = "5.0"
+		conf.FontSize = 5.0
 	}
 
 	// if there is no BaseLine for this render
-	if conf.BaseLine == "" {
+	if conf.BaseLine == 0 {
 		// use the default
-		val, err := strconv.ParseFloat(conf.FontSize, 32)
-		// if nothing went wrnog
-		if err == nil {
-			// compute the baseline from the fontSize
-			conf.BaseLine = strconv.FormatFloat(1.2 * val, 'f', -1, 32)
-		}
+		conf.BaseLine = 1.2 * conf.FontSize
 	}
 
 	// if there is no Color for this render
@@ -120,13 +116,10 @@ func LatexForConfig(conf *RenderConfig) []byte {
 
 func init() {
 	// build the template once
-	template, err := template.ParseFiles("templates/base.tex.tmpl", "templates/string.tex.tmpl")
-	// if something went wrong
-	if err != nil {
-		// yell loudly
-		panic(err)
-	}
-
-	// save the compiled template in memory
-	stringTemplate = template
+	stringTemplate = template.Must(
+		template.New("base.tex.tmpl").Delims("{%", "%}").ParseFiles(
+			"templates/base.tex.tmpl",
+			"templates/string.tex.tmpl",
+		),
+	)
 }
