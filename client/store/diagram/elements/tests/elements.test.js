@@ -11,6 +11,7 @@ import {
     deleteElements,
     clearElements,
     deleteSelection,
+    addElements,
 } from 'actions/elements'
 import { setGridSize } from 'actions/info'
 import {initialState as intialSelection} from '../selection'
@@ -167,6 +168,29 @@ describe('Reducers', function() {
                 const clearedState = reducer(initialState, clearElements())
                 // make sure there are no elements
                 expect(clearedState).to.deep.equal(initialReducerState)
+            })
+        })
+
+        describe('Add Elements', function() {
+            it('responds to the ADD_ELEMENTS action', function() {
+                // the anchors to add
+                const anchors = {
+                    1: {
+                        type: "anchors",
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    2: {
+                        type: "anchors",
+                        id: 2,
+                        x: 50,
+                        y: 100,
+                    }
+                }
+                const initialState = reducer(undefined, addElements(...Object.values(anchors)))
+                // make sure the anchors were added appropriately
+                expect(initialState.anchors).to.deep.equal(anchors)
             })
         })
 

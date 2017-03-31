@@ -8,7 +8,7 @@ import SelectionSummary from './SelectionSummary'
 import ItemPalette from './ItemPalette'
 import Footer from './Footer'
 import { EventListener } from 'components'
-import { propagatorSpec } from './specs'
+import * as specMap from './specs'
 import {
     placeElement,
     selectElements,
@@ -182,11 +182,6 @@ class Toolbar extends React.Component {
             })
         }
     }
-}
-
-// a dispatch table of element table to spec function
-const specMap = {
-    propagators: propagatorSpec,
 }
 
 const selector = ({diagram: {elements, info}}) => ({elements, info, selection: elements.selection})

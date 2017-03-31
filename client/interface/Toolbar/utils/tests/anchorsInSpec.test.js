@@ -1,6 +1,6 @@
 // local imports
 import { anchorsInSpec } from '..'
-import { propagatorSpec } from '../../specs'
+import * as specMap from '../../specs'
 
 describe('Utils', function() {
     describe('AnchorsInSpec util', function() {
@@ -20,7 +20,7 @@ describe('Utils', function() {
 
         it('returns the anchors in a propagator spec', function () {
             // create a propagator spec
-            const spec = propagatorSpec({
+            const spec = specMap.propagators({
                 x: 50,
                 y: 100,
                 info: { gridSize: 50 },

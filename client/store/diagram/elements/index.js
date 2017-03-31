@@ -9,7 +9,8 @@ import {
     SET_ELEMENT_ATTRS,
     DELETE_ELEMENTS,
     CLEAR_ELEMENTS,
-    DELETE_SELECTION
+    DELETE_SELECTION,
+    ADD_ELEMENTS,
 } from 'actions/elements'
 import { flatMap } from 'utils'
 
@@ -18,7 +19,7 @@ export const initialState = {
     anchors: {},
     propagators: {},
     constraints: [],
-    texts: [],
+    text: {},
     selection: {},
 }
 
@@ -139,6 +140,24 @@ export default (state = initialState, {type, payload}) => {
         }
 
         // return our copy
+        return local
+    }
+
+    // if the action indicates an element to be added
+    if (type === ADD_ELEMENTS) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // pull the type of the element out of each entry
+        for (const {type, ...element} of payload) {
+            // add the element to the store
+            local[type][element.id] = {
+                ...element,
+                type,
+            }
+        }
+
+        // return our local copy
         return local
     }
 
