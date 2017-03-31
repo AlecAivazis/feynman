@@ -85,6 +85,10 @@ class Diagram extends React.Component {
                     )}
                 </g>
 
+                <Text x={50} y={100}>
+                    $a^2$
+                </Text>
+
                 {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">
                     {this._mouseMove}

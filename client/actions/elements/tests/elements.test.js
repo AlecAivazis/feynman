@@ -10,6 +10,7 @@ import {
     deleteSelection,      DELETE_SELECTION,
     placeElement,         PLACE_ELEMENTS,
     loadPattern,          LOAD_PATTERN,
+    addElements,          ADD_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', function() {
@@ -61,6 +62,21 @@ describe('Action Creators', function() {
                 expect(deleteSelection()).to.deep.equal({
                     type: DELETE_SELECTION,
                 })
+            })
+        })
+
+        describe('Add elements', function() {
+            it('is structured appropriately', function() {
+                // the elements to add
+                const elements = [{type: "anchors", x: 50, y: 100}, {type: "propagators", x: 70, y:100}]
+                expect(addElements(...elements)).to.deep.equal({
+                    type: ADD_ELEMENTS,
+                    payload: elements,
+                })
+            })
+
+            it('throws an error if adding an element without a type', function() {
+                expect(() => addElements({x: 50})).to.throw(Error)
             })
         })
 
