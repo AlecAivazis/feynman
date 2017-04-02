@@ -79,15 +79,16 @@ class Diagram extends React.Component {
                             key={anchor.id}
                         />
                     ))}
+                    {Object.values(elements.text).map(({value, x, y, id}) => (
+                        <Text x={x} y={y} key={id}>
+                            {value}
+                        </Text>
+                    ))}
 
                     { this.state.point1 && this.state.point2 && !this.state.newElement && (
                         <SelectionRectangle {...this.state}/>
                     )}
                 </g>
-
-                <Text x={50} y={100}>
-                    $a^2$
-                </Text>
 
                 {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">

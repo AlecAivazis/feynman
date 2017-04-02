@@ -128,7 +128,6 @@ class Toolbar extends React.Component {
 
                     // track that we have created an element
                     dragElement = specMap[type]({...relativePosition(pos, info), info, elements, config})
-
                     // create one with the appropriate spec
                     this.props.placeElement(dragElement.element)
                     // select the element we just created
