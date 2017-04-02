@@ -4,7 +4,7 @@ import React from 'react'
 import { Text } from 'components'
 import { Splittable } from 'components'
 
-const TextElement = ({x, y, value, id}) => (
+const TextElement = ({x, y, value, id, selected}) => (
     <Splittable type="text" id={id}>
         <Text x={x} y={y}>
             {value}

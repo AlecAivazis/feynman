@@ -6,6 +6,7 @@ import _ from 'lodash'
 import styles from './styles'
 import AnchorSummary from './AnchorSummary'
 import PropagatorSummary from './PropagatorSummary'
+import TextSummary from './TextSummary'
 import { flatMap } from 'utils'
 import { deleteElements } from 'actions/elements'
 import ButtonRow from './ButtonRow'
@@ -22,6 +23,8 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
                 && <AnchorSummary anchors={selection.anchors} showDelete={!hideDelete}/>}
             {(selection.propagators || []).length > 0
                 && <PropagatorSummary propagators={selection.propagators} showDelete={!hideDelete}/>}
+            {(selection.text || []).length > 0
+                && <TextSummary text={selection.text} showDelete={!hideDelete}/>}
             {hideDelete &&  (
                 <ButtonRow>
                     <RedButton onClick={deleteElements} style={styles.deleteButton}>
