@@ -22,8 +22,8 @@ type RenderConfig struct {
 var stringTemplate *template.Template
 
 
-// RenderLatex takes a string of latex source and returns a readable
-// which contains a png with the result.
+// RenderLatex takes a string of latex source and returns a byte array
+// with a png displaying the result.
 func RenderLatex(conf *RenderConfig) ([]byte, error) {
 	// log our intentions
 	fmt.Println("Rendering string:", conf.String)

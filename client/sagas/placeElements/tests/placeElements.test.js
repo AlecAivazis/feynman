@@ -1,7 +1,7 @@
 // external imports
 import { put } from 'redux-saga/effects'
 // local imports
-import { addAnchors, addPropagators } from 'actions/elements'
+import { addAnchors, addPropagators, addElements } from 'actions/elements'
 import { placeElementWorker } from '..'
 
 describe('Sagas', function() {
@@ -50,7 +50,7 @@ describe('Sagas', function() {
                     put(addPropagators(...desc.propagators))
                 )
             })
-            
+
             it('can place propagators with inline anchor defs', function() {
                 // the description of the anchor to create
                 const desc = {
@@ -109,6 +109,38 @@ describe('Sagas', function() {
                             anchor1: 1,
                             anchor2: 3
                         }
+                    ))
+                )
+
+                // make sure there isn't anything left
+                expect(gen.next().done).to.be.true
+            })
+
+            it('patterns can include text', function() {
+                // the description of the anchor to create
+                const desc = {
+                    type: 'pattern',
+                    text: [
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 50,
+                            value: "hello"
+                        }
+                    ]
+                }
+
+                // get the generator
+                const gen = placeElementWorker({type: 'hello', payload: desc})
+                const { value } = gen.next()
+
+                // then we have to add the propagators
+                expect(value).to.deep.equal(
+                    put(addElements(
+                        {
+                            type: 'text',
+                            ...desc.text[0]
+                        },
                     ))
                 )
 

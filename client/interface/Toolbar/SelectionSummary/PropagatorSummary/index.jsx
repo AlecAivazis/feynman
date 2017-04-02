@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { Header, SliderRow, Row, Label, MultiRow, ButtonRow } from '..'
+import { Header, SliderRow, Row, Label, MultiRow, ButtonRow, Container } from '..'
 import FermionSummary from './FermionSummary'
 import ElectroWeakSummary from './ElectroWeakSummary'
 import GluonSummary from './GluonSummary'
@@ -29,7 +29,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
 
     // render the component
     return (
-        <div {...unusedProps}>
+        <Container {...unusedProps}>
             <Header>
                 {`${propagators.length} ${propagator} selected`}
             </Header>
@@ -73,7 +73,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
                     </RedButton>
                 </ButtonRow>
             )}
-        </div>
+        </Container>
     )
 }
 const firstValue = ({propagators, param, elements}) => {

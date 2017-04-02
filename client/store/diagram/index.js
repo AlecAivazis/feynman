@@ -38,6 +38,16 @@ export default (state = initialState, {type, payload}) => {
             }
         }
 
+        // if there are any text elements to move
+        if (local.selection.text) {
+            // go over every text element
+            for (const id of local.selection.text) {
+                // add the move to the element
+                local.text[id].x += payload.x
+                local.text[id].y += payload.y || 0
+            }
+        }
+
         return {
             ...state,
             elements: local

@@ -10,6 +10,7 @@ import styles from './styles'
 import Grid from './Grid'
 import Propagator from './Propagator'
 import Anchor from './Anchor'
+import Text from './Text'
 import SelectionRectangle from './SelectionRectangle'
 import {
     relativePosition,
@@ -79,11 +80,19 @@ class Diagram extends React.Component {
                             key={anchor.id}
                         />
                     ))}
+                    {Object.values(elements.text).map(element => (
+                        <Text
+                            {...element}
+                            key={element.id}
+                            selected={selection.text && selection.text.includes(element.id)}
+                        />
+                    ))}
 
                     { this.state.point1 && this.state.point2 && !this.state.newElement && (
                         <SelectionRectangle {...this.state}/>
                     )}
                 </g>
+
                 {/* mouse movement (selection rectangle and element creation) */}
                 <EventListener event="mousemove">
                     {this._mouseMove}

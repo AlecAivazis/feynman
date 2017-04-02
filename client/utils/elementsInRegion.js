@@ -25,8 +25,8 @@ const elementsInRegion = ({elements, region:{point1, point2}}) => {
             // the summary of the element
             const element = {id, type}
 
-            // if we are looking at an anchor
-            if (type === 'anchors') {
+            // if we are looking at an anchor or a text, just compare to their coordinates
+            if(['anchors', 'text'].includes(type)) {
                 // for the anchor to be selected, its coordinates must fall within the region
                 if (rest.x > lowerLeft.x && rest.x < upperRight.x
                         && rest.y > lowerLeft.y && rest.y < upperRight.y) {

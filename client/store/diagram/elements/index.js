@@ -9,7 +9,8 @@ import {
     SET_ELEMENT_ATTRS,
     DELETE_ELEMENTS,
     CLEAR_ELEMENTS,
-    DELETE_SELECTION
+    DELETE_SELECTION,
+    ADD_ELEMENTS,
 } from 'actions/elements'
 import { flatMap } from 'utils'
 
@@ -18,7 +19,7 @@ export const initialState = {
     anchors: {},
     propagators: {},
     constraints: [],
-    texts: [],
+    text: {},
     selection: {},
 }
 
@@ -142,6 +143,24 @@ export default (state = initialState, {type, payload}) => {
         return local
     }
 
+    // if the action indicates an element to be added
+    if (type === ADD_ELEMENTS) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // pull the type of the element out of each entry
+        for (const {type, ...element} of payload) {
+            // add the element to the store
+            local[type][element.id] = {
+                ...element,
+                type,
+            }
+        }
+
+        // return our local copy
+        return local
+    }
+
     // if the action indicates we need to delete the selection
     if (type === DELETE_SELECTION) {
         // create a copy we can play with
@@ -150,11 +169,12 @@ export default (state = initialState, {type, payload}) => {
         // the selected elements
         const selectedAnchors = local.selection.anchors || []
         const selectedPropagators = local.selection.propagators || []
-
+        const selectedText = local.selection.text || []
 
         // create labeled lists of selected elements
         const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
         const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
+        const text = selectedText.map(id => ({id, type: 'text'}))
 
         // the list of propagators we need to include because of related anchors
         const relatedProps = flatMap(selectedAnchors,
@@ -167,7 +187,7 @@ export default (state = initialState, {type, payload}) => {
         )
 
         // for each element we have to delete
-        for (const {type, id} of [...anchors, ...propagators, ...relatedProps]) {
+        for (const {type, id} of [...anchors, ...propagators, ...relatedProps, ...text]) {
             // if that element still exists
             if (local[type][id]) {
                 // remove the element

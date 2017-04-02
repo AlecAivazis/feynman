@@ -1,6 +1,6 @@
 // local imports
 import { anchorsInSpec } from '..'
-import { propagatorSpec } from '../../specs'
+import * as specMap from '../../specs'
 
 describe('Utils', function() {
     describe('AnchorsInSpec util', function() {
@@ -20,7 +20,7 @@ describe('Utils', function() {
 
         it('returns the anchors in a propagator spec', function () {
             // create a propagator spec
-            const spec = propagatorSpec({
+            const spec = specMap.propagators({
                 x: 50,
                 y: 100,
                 info: { gridSize: 50 },
@@ -32,6 +32,14 @@ describe('Utils', function() {
 
             // there should be 2 anchors for any propagator
             expect(anchors).to.have.length(2)
-       })
+        })
+
+        it('handles text types', function() {
+            // the spec for text
+            const spec = {element: {type: 'text', value: 'hello', x: 50, y: 1000}}
+            // there are no anchors in text
+            expect(anchorsInSpec(spec)).to.have.length(0)
+
+        })
     })
 })

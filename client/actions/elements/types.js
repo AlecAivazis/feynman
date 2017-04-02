@@ -1,5 +1,6 @@
 export const ADD_PROPAGATORS = '@feynman/ADD_PROPAGATORS'
 export const ADD_ANCHORS = '@feynman/ADD_ANCHORS'
+export const ADD_ELEMENTS = '@feynman/ADD_ELEMENTS'
 export const SET_ANCHOR_LOCATIONS = '@feynman/SET_ANCHOR_LOCATIONS'
 export const SELECT_ELEMENTS = '@feynman/SELECT_ELEMENTS'
 export const CLEAR_SELECTION = '@feynman/CLEAR_SELECTION'

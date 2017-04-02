@@ -77,17 +77,11 @@ module.exports = {
     plugins: plugins,
     devtool: devtool,
     devServer: {
-      publicPath: 'http://localhost:8080/build/',
       proxy: {
         '/latex': {
           target: "http://104.196.244.203"
         }
       },
-      hot: true,
-      historyApiFallback: true,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      }
     }
 }
 

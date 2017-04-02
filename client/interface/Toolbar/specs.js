@@ -2,9 +2,9 @@
 // to be interpretted by the placeElement saga
 
 // local imports
-import { generateElementId, ceil } from 'utils'
+import { generateElementId, ceil, round } from 'utils'
 
-export const propagatorSpec = ({x, y, info, elements, config}) => {
+export const propagators = ({x, y, info, elements, config}) => {
     // compute two anchor ids to use
     const [anchor1, anchor2] = generateElementId(elements.anchors, 2)
     // compute a propagator id to use
@@ -53,6 +53,29 @@ export const propagatorSpec = ({x, y, info, elements, config}) => {
             {
                 type: "anchors",
                 id: anchor2,
+            }
+        ]
+    }
+}
+
+export const text = ({x, y, info, elements, config}) => {
+    const id = generateElementId(elements.text)
+    return {
+        element: {
+            id,
+            type: "text",
+            value: "text!",
+            x: round(x, info.gridSize),
+            y: round(y, info.gridSize),
+        },
+        select: {
+            id,
+            type: 'text',
+        },
+        remove: [
+            {
+                type: 'text',
+                id,
             }
         ]
     }

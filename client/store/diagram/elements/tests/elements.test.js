@@ -11,6 +11,7 @@ import {
     deleteElements,
     clearElements,
     deleteSelection,
+    addElements,
 } from 'actions/elements'
 import { setGridSize } from 'actions/info'
 import {initialState as intialSelection} from '../selection'
@@ -167,6 +168,29 @@ describe('Reducers', function() {
                 const clearedState = reducer(initialState, clearElements())
                 // make sure there are no elements
                 expect(clearedState).to.deep.equal(initialReducerState)
+            })
+        })
+
+        describe('Add Elements', function() {
+            it('responds to the ADD_ELEMENTS action', function() {
+                // the anchors to add
+                const anchors = {
+                    1: {
+                        type: "anchors",
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    2: {
+                        type: "anchors",
+                        id: 2,
+                        x: 50,
+                        y: 100,
+                    }
+                }
+                const initialState = reducer(undefined, addElements(...Object.values(anchors)))
+                // make sure the anchors were added appropriately
+                expect(initialState.anchors).to.deep.equal(anchors)
             })
         })
 
@@ -455,6 +479,36 @@ describe('Reducers', function() {
                 expect(deleted.selection.anchors).to.have.length(0)
                 // make sure there are no anchors in the reducer
                 expect(Object.keys(deleted.anchors)).to.have.length(0)
+            })
+
+            it('removes selected text elements when deleting selection', function() {
+                // start off with a text element
+                const withText = reducer(undefined, addElements({
+                    type: 'text',
+                    value: 'hello',
+                    x: 50,
+                    y: 50,
+                    id: 1,
+                }))
+
+                // select the text
+                const selected = reducer(withText, selectElements(
+                    {
+                        type: 'text',
+                        id: 1,
+                    }
+                ))
+                // sanity check
+                expect(selected.selection.text).to.have.length(1)
+
+                // delete the selection
+                const deleted = reducer(selected, deleteSelection())
+
+                // make sure the text is no longer selected
+                expect(deleted.selection.text).to.have.length(0)
+                // make sure that the element was actually removed
+                expect(deleted.text[1]).to.not.exist
+
             })
 
             it('removes associated propagators when removing a selected anchor', function() {

@@ -6,15 +6,15 @@ import _ from 'lodash'
 import styles from './styles'
 import AnchorSummary from './AnchorSummary'
 import PropagatorSummary from './PropagatorSummary'
+import TextSummary from './TextSummary'
 import { flatMap } from 'utils'
-import { deleteElements } from 'actions/elements'
+import { deleteSelection } from 'actions/elements'
 import ButtonRow from './ButtonRow'
 import { RedButton } from 'components'
 
 const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) => {
     // hide the individual delete buttons if there is a heteogenous selection
-    const hideDelete = selection.anchors && selection.anchors.length > 0
-                            && selection.propagators && selection.propagators.length > 0
+    const hideDelete = Object.values(selection).filter(ids => ids.length > 0).length > 1
 
     return (
         <div style={{...styles.container, ...style}} {...unusedProps}>
@@ -22,6 +22,8 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
                 && <AnchorSummary anchors={selection.anchors} showDelete={!hideDelete}/>}
             {(selection.propagators || []).length > 0
                 && <PropagatorSummary propagators={selection.propagators} showDelete={!hideDelete}/>}
+            {(selection.text || []).length > 0
+                && <TextSummary text={selection.text} showDelete={!hideDelete}/>}
             {hideDelete &&  (
                 <ButtonRow>
                     <RedButton onClick={deleteElements} style={styles.deleteButton}>
@@ -34,12 +36,7 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
 }
 
 const mapDispatchToProps = (dispatch, {selection}) => ({
-    deleteElements: () => (
-        dispatch(deleteElements(...[
-            ...selection.propagators.map(id => ({type: 'propagators', id})),
-            ...selection.anchors.map(id => ({type: 'anchors', id}))
-        ]))
-    )
+    deleteElements: () => dispatch(deleteSelection())
 })
 
 export default connect(null, mapDispatchToProps)(SelectionSummary)
@@ -51,3 +48,4 @@ export Row from './Row'
 export Label from './Label'
 export Header from './Header'
 export ButtonRow from './ButtonRow'
+export Container from './Container'
