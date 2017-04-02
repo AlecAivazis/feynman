@@ -7,7 +7,8 @@ export const noIdErr = "cannot set location of anchor without explicit id"
 
 export const initialState = {
     anchors: [],
-    propagators: []
+    propagators: [],
+    text: [],
 }
 
 // the reducer slice that manages just the selection state but has reference

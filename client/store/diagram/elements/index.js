@@ -169,11 +169,12 @@ export default (state = initialState, {type, payload}) => {
         // the selected elements
         const selectedAnchors = local.selection.anchors || []
         const selectedPropagators = local.selection.propagators || []
-
+        const selectedText = local.selection.text || []
 
         // create labeled lists of selected elements
         const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
         const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
+        const text = selectedText.map(id => ({id, type: 'text'}))
 
         // the list of propagators we need to include because of related anchors
         const relatedProps = flatMap(selectedAnchors,
@@ -186,7 +187,7 @@ export default (state = initialState, {type, payload}) => {
         )
 
         // for each element we have to delete
-        for (const {type, id} of [...anchors, ...propagators, ...relatedProps]) {
+        for (const {type, id} of [...anchors, ...propagators, ...relatedProps, ...text]) {
             // if that element still exists
             if (local[type][id]) {
                 // remove the element
