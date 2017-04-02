@@ -8,7 +8,7 @@ import AnchorSummary from './AnchorSummary'
 import PropagatorSummary from './PropagatorSummary'
 import TextSummary from './TextSummary'
 import { flatMap } from 'utils'
-import { deleteElements } from 'actions/elements'
+import { deleteSelection } from 'actions/elements'
 import ButtonRow from './ButtonRow'
 import { RedButton } from 'components'
 
@@ -36,12 +36,7 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
 }
 
 const mapDispatchToProps = (dispatch, {selection}) => ({
-    deleteElements: () => (
-        dispatch(deleteElements(...[
-            ...selection.propagators.map(id => ({type: 'propagators', id})),
-            ...selection.anchors.map(id => ({type: 'anchors', id}))
-        ]))
-    )
+    deleteElements: () => dispatch(deleteSelection())
 })
 
 export default connect(null, mapDispatchToProps)(SelectionSummary)
