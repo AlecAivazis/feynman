@@ -322,7 +322,6 @@ describe('Reducers', function() {
 
                 // move the selected anchors
                 const movedState = reducer(selectedState, moveSelectedElements(move))
-                console.log(movedState.elements.text[1])
                 // make sure the selected anchors were moved
                 expect(movedState.elements.text[1].x).to.equal(text.x + move.x)
                 expect(movedState.elements.text[1].y).to.equal(text.y)

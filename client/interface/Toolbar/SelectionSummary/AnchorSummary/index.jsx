@@ -4,12 +4,11 @@ import { connect } from 'react-redux'
 import { SketchPicker } from 'react-color'
 // local imports
 import styles from './styles'
-import { MultiRow, SliderRow, ButtonRow, Row, Label, Header } from '..'
+import { MultiRow, SliderRow, ButtonRow, Row, Label, Header, Container } from '..'
 import { ColorPicker, Button, ToggleButton, RedButton } from 'components'
 import { setElementAttrs, deleteElements, alignSelectedAnchors } from 'actions/elements'
 
 const AnchorSummary = ({
-    style,
     anchors,
     setAttrs,
     elements,
@@ -27,7 +26,7 @@ const AnchorSummary = ({
     const fixed = firstValue({param: 'fixed', anchors, elements})
 
     return (
-        <div style={{...styles.container, ...style}} {...unusedProps}>
+        <Container {...unusedProps}>
             <Header>
                 {`${anchors.length} ${anchor} selected`}
             </Header>
@@ -83,7 +82,7 @@ const AnchorSummary = ({
                     </RedButton>
                 </ButtonRow>
             )}
-        </div>
+        </Container>
     )
 }
 

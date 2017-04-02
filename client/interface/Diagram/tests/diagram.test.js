@@ -231,6 +231,81 @@ describe('Interface Components', function() {
             expect(anchor.props().selected).to.be.true
         })
 
+        it('passes selected state onto the appropriate propagator components', function() {
+            // create a verion of the store
+            const store = createStore()
+
+            // add some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 50,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 1000,
+                }
+            ))
+
+            // and some propagators
+            store.dispatch(addPropagators(
+                {
+                    id: 1,
+                    kind: 'fermion',
+                    anchor1: 1,
+                    anchor2: 2,
+                }
+            ))
+
+            // select the element
+            store.dispatch(selectElements({type: 'propagators', id:1}))
+
+            // render the diagram in the wrapper
+            const wrapper = mount(<Test store={store}/>)
+
+            // find the anchor corresponding to the selected element
+            const anchor = wrapper.find(Propagator)
+
+            // make sure such an element exist
+            expect(anchor).to.not.have.length(0)
+
+            // make sure the anchor was told to render selected
+            expect(anchor.props().selected).to.be.true
+        })
+
+        it('passes selected state onto the appropriate text components', function() {
+            // create a verion of the store
+            const store = createStore()
+
+            // add some anchors
+            store.dispatch(addElements(
+                {
+                    id: 1,
+                    type: 'text',
+                    value: 'hello',
+                    x: 50,
+                    y: 50
+                },
+            ))
+
+            // select the element
+            store.dispatch(selectElements({type: 'text', id:1}))
+
+            // render the diagram in the wrapper
+            const wrapper = mount(<Test store={store}/>)
+
+            // find the anchor corresponding to the selected element
+            const anchor = wrapper.find(Text)
+
+            // make sure such an element exist
+            expect(anchor).to.not.have.length(0)
+
+            // make sure the anchor was told to render selected
+            expect(anchor.props().selected).to.be.true
+        })
+
         it('has the transform to accomodate the diagram pan', function() {
             // create a verion of the store
             const store = createStore()
