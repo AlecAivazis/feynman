@@ -14,8 +14,7 @@ import { RedButton } from 'components'
 
 const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) => {
     // hide the individual delete buttons if there is a heteogenous selection
-    const hideDelete = selection.anchors && selection.anchors.length > 0
-                            && selection.propagators && selection.propagators.length > 0
+    const hideDelete = Object.values(selection).filter(ids => ids.length > 0).length > 1
 
     return (
         <div style={{...styles.container, ...style}} {...unusedProps}>

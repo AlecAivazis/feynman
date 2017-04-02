@@ -145,7 +145,6 @@ export default (state = initialState, {type, payload}) => {
 
     // if the action indicates an element to be added
     if (type === ADD_ELEMENTS) {
-        console.log('adding elements', payload)
         // create a copy we can play with
         const local = _.cloneDeep(state)
 

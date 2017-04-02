@@ -1,7 +1,7 @@
 // local imports
 import elementsInRegion from '../elementsInRegion'
 import { createStore } from 'store'
-import { addAnchors, addPropagators } from 'actions/elements'
+import { addAnchors, addPropagators, addElements } from 'actions/elements'
 
 describe('Utils', function() {
     describe("Elements in Region", function() {
@@ -112,6 +112,50 @@ describe('Utils', function() {
 
             // make sure the result is what we expect
             expect(inside).to.deep.equal([{type: "propagators", id: 1}])
+        })
+
+        it('can locate text elements within a given region', function() {
+            // a store to test with
+            const store = createStore()
+
+            // add some text elements
+            store.dispatch(addElements(
+                {
+                    id: 1,
+                    type: 'text',
+                    x: 50,
+                    y: 100,
+                    value: 'hello'
+                },
+                {
+                    id: 2,
+                    type: 'text',
+                    x: 0,
+                    y: 100,
+                    value: 'hello'
+                },
+            ))
+
+
+            // the region we are looking in
+            const region = {
+                // this is actually upper left in the diagram coordinate system
+                point1: {
+                    x: 40,
+                    y: 90,
+                },
+                // this is actually lower right in the diagram coordinate system
+                point2: {
+                    x: 100,
+                    y: 290,
+                }
+            }
+
+            // figure out the elements in the region
+            const inside = elementsInRegion({elements: store.getState().diagram.elements, region})
+
+            // make sure the result is what we expect
+            expect(inside).to.deep.equal([{type: "text", id: 1}])
         })
     })
 })
