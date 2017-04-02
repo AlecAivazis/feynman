@@ -72,5 +72,11 @@ export const text = ({x, y, info, elements, config}) => {
             id,
             type: 'text',
         },
+        remove: [
+            {
+                type: 'text',
+                id,
+            }
+        ]
     }
 }

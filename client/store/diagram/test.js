@@ -6,6 +6,7 @@ import {
     addPropagators,
     selectElements,
     setElementAttrs,
+    addElements,
 } from 'actions/elements'
 import { setGridSize } from 'actions/info'
 import { createStore } from 'store'
@@ -293,7 +294,39 @@ describe('Reducers', function() {
                 expect(movedState.elements.anchors[1].x).to.equal(anchors[0].x + move.x)
                 expect(movedState.elements.anchors[1].y).to.equal(anchors[0].y)
             })
-        })
 
+            it('can move text elements', function() {
+                // the text element to add to the store
+                const text = {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                    value: "hello world",
+                }
+
+                // add the text element
+                const elementState = reducer(undefined, addElements({type: 'text', ...text}))
+
+                // select a subset of the anchors
+                const selectedState = reducer(elementState, selectElements(
+                    {
+                        type: 'text',
+                        id: text.id,
+                    },
+                ))
+
+                // the move to issue on the selected anchors
+                const move = {
+                    x: 50,
+                }
+
+                // move the selected anchors
+                const movedState = reducer(selectedState, moveSelectedElements(move))
+                console.log(movedState.elements.text[1])
+                // make sure the selected anchors were moved
+                expect(movedState.elements.text[1].x).to.equal(text.x + move.x)
+                expect(movedState.elements.text[1].y).to.equal(text.y)
+            })
+        })
     })
 })
