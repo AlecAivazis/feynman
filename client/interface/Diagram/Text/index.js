@@ -12,7 +12,7 @@ const TextElement = ({x, y, value, id, selected}) => {
 
     return (
         <Splittable type="text" id={id}>
-            <Text x={x} y={y} {...style}>
+            <Text x={x} y={y} {...style} math>
                 {value}
             </Text>
         </Splittable>
