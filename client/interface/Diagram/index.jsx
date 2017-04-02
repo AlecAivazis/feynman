@@ -10,6 +10,7 @@ import styles from './styles'
 import Grid from './Grid'
 import Propagator from './Propagator'
 import Anchor from './Anchor'
+import Text from './Text'
 import SelectionRectangle from './SelectionRectangle'
 import {
     relativePosition,
@@ -21,7 +22,7 @@ import {
     dataUrlToBlob,
     svgToDataURL,
 } from 'utils'
-import { EventListener, Text } from 'components'
+import { EventListener } from 'components'
 import {
     clearSelection,
     selectElements,
@@ -79,10 +80,12 @@ class Diagram extends React.Component {
                             key={anchor.id}
                         />
                     ))}
-                    {Object.values(elements.text).map(({value, x, y, id}) => (
-                        <Text x={x} y={y} key={id}>
-                            {value}
-                        </Text>
+                    {Object.values(elements.text).map(element => (
+                        <Text
+                            {...element}
+                            key={element.id}
+                            selected={selection.text && selection.text.includes(element.id)}
+                        />
                     ))}
 
                     { this.state.point1 && this.state.point2 && !this.state.newElement && (

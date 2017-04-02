@@ -14,7 +14,7 @@ import Diagram, { exportDiagramImageEvent } from '..'
 import Propagator from '../Propagator'
 import Grid from '../Grid'
 import Anchor from '../Anchor'
-import { Text } from 'components'
+import Text from '../Text'
 
 
 // a diagram wrapped in the right context
