@@ -25,9 +25,6 @@ const TextSummary = ({text, deleteElement, elements, setValue, showDelete, ...un
                         <Input
                             style={styles.input}
                             value={value}
-                            onKeyDown={evt =>{
-                                evt.stopPropagation()
-                            }}
                             onChange={evt => {
                                 setValue(id, evt.target.value)
                             }}
