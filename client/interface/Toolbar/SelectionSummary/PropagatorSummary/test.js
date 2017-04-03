@@ -5,11 +5,11 @@ import { Provider } from 'react-redux'
 // local imports
 import { createStore } from 'store'
 import { addAnchors, addPropagators, selectElements } from 'actions/elements'
-import Toolbar from '..'
-import PropagatorSummary from '..'
-import FermionSummary from '../FermionSummary'
-import ElectroWeakSummary from '../ElectroWeakSummary'
-import GluonSummary from '../GluonSummary'
+import Toolbar from '.'
+import PropagatorSummary from '.'
+import FermionSummary from './FermionSummary'
+import ElectroWeakSummary from './ElectroWeakSummary'
+import GluonSummary from './GluonSummary'
 
 describe('Interface Components', function() {
     describe('PropagatorSummary', function() {
@@ -93,7 +93,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(ElectroWeakSummary)).to.have.length(1)
         })
 
-        it("shows a electroweak summary when there is a em propagator selected", function() {
+        it("shows a gluon summary when there is a gluon propagator selected", function() {
             // create a store to test
             const store = createStore()
             // add some anchors
