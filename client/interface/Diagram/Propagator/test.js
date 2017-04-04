@@ -199,6 +199,44 @@ describe('Interface Components', function() {
             expect(location.y).to.exist
         })
 
+        it('can compute the relative coordinates for a label given diagram coordiantes', function() {
+
+            // a store to start out with
+            const store = createStore()
+            // create some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 200
+                }
+            ))
+
+            // add a propagator connecting the anchors
+            store.dispatch(addPropagators({
+                id: 1,
+                kind: 'fermion',
+                anchor1: 1,
+                anchor2: 2,
+                label: 'a'
+            }))
+
+            // we grab the location from a propgator with dereferenced anchors
+            const propagator = propagatorsWithLocation(store.getState().diagram.elements)[0]
+
+            // get the location for the label
+            const location = relLocForLabel({x: 75, y: 150}, propagator)
+
+            // make sure its a valid location
+            expect(location.x).to.exist
+            expect(location.y).to.exist
+        })
+
         it('shows a label for the element if there is a value', function() {
             // a store to start out with
             const store = createStore()

@@ -48,7 +48,7 @@ export const Propagator = ({
             {label && (
                 <Label
                     {...locationForLabel({...element, labelLocation, labelDistance})}
-                    id={element.id}
+                    element={{...element, id}}
                 >
                     {label}
                 </Label>

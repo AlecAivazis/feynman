@@ -75,17 +75,17 @@ class MouseMove extends React.Component {
             // grab the required meta data
             const { info, round }  = this.props
             // the location to move to
-            const fixed = fixDeltaToGrid({origin, next: mouse, info, round})
+            const next = fixDeltaToGrid({origin, next: mouse, info, round})
             const delta = {
-                x: (fixed.x - origin.x) / info.zoomLevel,
-                y: (fixed.y - origin.y ) / info.zoomLevel,
+                x: (next.x - origin.x) / info.zoomLevel,
+                y: (next.y - origin.y ) / info.zoomLevel,
             }
 
             // call the callback
-            this.props.move({ origin, delta, })
+            this.props.move({ origin, next, delta })
 
             // update the place we're dragging from
-            this.setState({origin: fixed})
+            this.setState({origin: next})
         }
     }
 }
