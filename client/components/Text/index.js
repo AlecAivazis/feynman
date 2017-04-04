@@ -1,7 +1,7 @@
 // external imports
 import React from 'react'
 
-const Text = ({math, children, x, y, color}) => {
+const Text = ({math, children, x, y, color, ...unused}) => {
     // the url with the rendered image
     const imgUrl = `/latex?string=${children}&mathMode=${JSON.stringify(math)}&color=${color}`
 
@@ -11,6 +11,7 @@ const Text = ({math, children, x, y, color}) => {
             y={y}
             href={imgUrl}
             xlinkHref={imgUrl}
+            {...unused}
         />
     )
 }

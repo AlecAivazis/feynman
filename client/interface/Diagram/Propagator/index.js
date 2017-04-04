@@ -11,6 +11,7 @@ import { EventListener, Splittable, Text } from 'components'
 import { fixPositionToGrid, generateElementId } from 'utils'
 import { setElementAttrs, addAnchors, addPropagators } from 'actions/elements'
 import locationForLabel from './locationForLabel'
+import Label from './Label'
 
 export const Propagator = ({
     kind,
@@ -45,9 +46,12 @@ export const Propagator = ({
     return (
         <g>
             {label && (
-                <Text {...locationForLabel({...element, labelLocation, labelDistance})}>
+                <Label
+                    {...locationForLabel({...element, labelLocation, labelDistance})}
+                    id={element.id}
+                >
                     {label}
-                </Text>
+                </Label>
             )}
             <Splittable
                 type="propagators"

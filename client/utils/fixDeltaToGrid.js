@@ -1,7 +1,7 @@
 // local imports
 import { round } from 'utils'
 
-export default function computeFixedDelta({origin, next, info: { zoomLevel, gridSize }}) {
+export default function computeFixedDelta({origin, next, round=true, info: { zoomLevel, gridSize }}) {
 
     // if there is no grid
     if (gridSize === 0) {
