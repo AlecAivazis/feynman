@@ -1,9 +1,14 @@
 // external imports
 import React from 'react'
+import queryString from 'query-string'
 
 const Text = ({math, children, x, y, color, ...unused}) => {
     // the url with the rendered image
-    const imgUrl = `/latex?string=${children}&mathMode=${JSON.stringify(math)}&color=${color}`
+    const imgUrl = `/latex?${queryString.stringify({
+       string: children,
+       mathMode: JSON.stringify(math),
+       color,
+    })}`
 
     return (
         <image

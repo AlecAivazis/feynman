@@ -6,7 +6,16 @@ import { ButtonRow } from '../..'
 import { Button, ToggleButton } from 'components'
 import Fermion from 'interface/Diagram/Propagator/Fermion'
 
-const FermionSummary = ({setAttrs, arrow=Fermion.defaultProps.arrow, style, anchor1, anchor2, ...unusedProps}) => (
+const FermionSummary = ({
+    setAttrs,
+    arrow=Fermion.defaultProps.arrow,
+    style,
+    anchor1,
+    anchor2,
+    labelDistance,
+    labelLocation,
+    ...unusedProps
+}) => (
     arrow !== 0 ? (
         <ButtonRow style={{...styles.container, ...style}} {...unusedProps}>
             <Button style={styles.hideButton} onClick={() => setAttrs({arrow: 0})}>
