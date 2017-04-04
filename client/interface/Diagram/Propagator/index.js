@@ -7,9 +7,11 @@ import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import Gluon from './Gluon'
 import Dashed from './Dashed'
-import { EventListener, Splittable } from 'components'
+import { EventListener, Splittable, Text } from 'components'
 import { fixPositionToGrid, generateElementId } from 'utils'
 import { setElementAttrs, addAnchors, addPropagators } from 'actions/elements'
+import locationForLabel from './locationForLabel'
+import Label from './Label'
 
 export const Propagator = ({
     kind,
@@ -21,6 +23,9 @@ export const Propagator = ({
     addAnchor,
     addPropagator,
     setElementAttrs,
+    labelDistance,
+    labelLocation,
+    label,
     ...element
 }) => {
     // a mapping of element kind to component
@@ -39,32 +44,47 @@ export const Propagator = ({
     const styling = selected ? styles.selected : {}
 
     return (
-        <Splittable
-            type="propagators"
-            id={id}
-            split={split({
-                addAnchor,
-                addPropagator,
-                setElementAttrs,
-                info,
-                elements,
-            })}
-        >
-            <Component
-                selected={selected}
-                {...element}
-                {...styling}
-                selected={selected}
-            />
-        </Splittable>
+        <g>
+            {label && (
+                <Label
+                    {...locationForLabel({...element, labelLocation, labelDistance})}
+                    element={{...element, id}}
+                >
+                    {label}
+                </Label>
+            )}
+            <Splittable
+                type="propagators"
+                id={id}
+                split={split({
+                    addAnchor,
+                    addPropagator,
+                    setElementAttrs,
+                    info,
+                    elements,
+                })}
+            >
+                <Component
+                    selected={selected}
+                    {...element}
+                    {...styling}
+                    selected={selected}
+                />
+            </Splittable>
+        </g>
     )
 }
 
-Propagator.defaultProps = {
+export const defaultProps = {
     strokeWidth: 2,
     stroke: "black",
-    selected: false
+    selected: false,
+    labelDistance: 30,
+    labelLocation: 0.5,
+    label: "",
 }
+
+Propagator.defaultProps = defaultProps
 
 export const split = ({info, elements, addAnchor, addPropagator, setElementAttrs}) => ({id, x, y}) => {
     // we need two unique ids for the split and the branch

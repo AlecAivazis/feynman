@@ -6,7 +6,7 @@ import { Header, SliderRow, Row, Label, MultiRow, ButtonRow, Container } from '.
 import FermionSummary from './FermionSummary'
 import ElectroWeakSummary from './ElectroWeakSummary'
 import GluonSummary from './GluonSummary'
-import { ColorPicker, Select, Option, RedButton } from 'components'
+import { ColorPicker, Select, Option, RedButton, Input } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs, deleteElements } from 'actions/elements'
 import styles from './styles'
@@ -33,6 +33,18 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
             <Header>
                 {`${propagators.length} ${propagator} selected`}
             </Header>
+            {propagators.length === 1 && (
+                <ButtonRow>
+                    <Label style={styles.labelLabel}>label:</Label>
+                    <Input
+                        style={styles.labelInput}
+                        value={head.label || ''}
+                        onChange={evt =>
+                            setAttrs({label: evt.target.value})
+                        }
+                    />
+                </ButtonRow>
+            )}
             <Row>
                 <Label>color:</Label>
                 <ColorPicker
