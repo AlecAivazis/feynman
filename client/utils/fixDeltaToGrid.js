@@ -3,8 +3,8 @@ import { round as roundTo } from 'utils'
 
 export default function computeFixedDelta({origin, next, round=true, info: { zoomLevel, gridSize }}) {
 
-    // if there is no grid
-    if (gridSize === 0) {
+    // if there is no grid or we aren't supposed to round
+    if (gridSize === 0 || !round) {
         // just move along
         return next
     }

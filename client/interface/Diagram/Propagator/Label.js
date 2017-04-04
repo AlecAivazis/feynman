@@ -13,7 +13,7 @@ class PropagatorLabel extends React.Component {
         const {x, y, children, id} = this.props
 
         return (
-            <MouseMove move={this._mouseMove}>
+            <MouseMove move={this._mouseMove} round={false}>
                 <Text x={x} y={y}>
                     {children}
                 </Text>
