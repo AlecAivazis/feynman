@@ -13,6 +13,7 @@ import Gluon from './Gluon'
 import locationForLabel from './locationForLabel'
 import { propagatorsWithLocation } from 'utils'
 import { Text } from 'components'
+import relLocForLabel from './relLocForLabel'
 
 describe('Interface Components', function() {
     describe('Diagram Element', function() {
@@ -233,8 +234,8 @@ describe('Interface Components', function() {
             const location = relLocForLabel({x: 75, y: 150}, propagator)
 
             // make sure its a valid location
-            expect(location.x).to.exist
-            expect(location.y).to.exist
+            expect(location.labelDistance).to.exist
+            expect(location.labelLocation).to.exist
         })
 
         it('shows a label for the element if there is a value', function() {
