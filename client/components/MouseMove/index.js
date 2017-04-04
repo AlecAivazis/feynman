@@ -1,11 +1,12 @@
 // external imports
 import React from 'react'
 import autobind from 'autobind-decorator'
+import { connect } from 'react-redux'
 // local imports
 import { EventListener } from 'components'
 import { fixDeltaToGrid } from 'utils'
 
-class move extends React.Component {
+class MouseMove extends React.Component {
 
     static propTypes = {
         down: React.PropTypes.func,
@@ -14,6 +15,7 @@ class move extends React.Component {
     }
 
     static defaultProps = {
+        round: false,
         down: () => {},
         up: () => {},
         move: () => {},
@@ -60,7 +62,7 @@ class move extends React.Component {
 
     @autobind
     _move(event) {
-        // save a refer to the origin in case we need it later
+        // save a reference to the origin in case we need it later
         const { origin } = this.state
         // if we are holding the mouse down
         if (origin) {
@@ -70,8 +72,10 @@ class move extends React.Component {
                 y: event.clientY,
             }
 
+            // grab the required meta data
+            const { info, round }  = this.props
             // the location to move to
-            const fixed = fixDeltaToGrid({origin, next: mouse, info, round: false})
+            const fixed = fixDeltaToGrid({origin, next: mouse, info, round})
             const delta = {
                 x: (fixed.x - origin.x) / info.zoomLevel,
                 y: (fixed.y - origin.y ) / info.zoomLevel,
@@ -86,4 +90,5 @@ class move extends React.Component {
     }
 }
 
-export default move
+const selector = ({diagram: {info}}) => ({info})
+export default connect(selector)(MouseMove)

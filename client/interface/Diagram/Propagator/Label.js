@@ -9,7 +9,7 @@ class PropagatorLabel extends React.Component {
         const {x, y, children, id} = this.props
 
         return (
-            <MouseMove onMove={this._mouseMove}>
+            <MouseMove move={this._mouseMove}>
                 <Text x={x} y={y}>
                     {children}
                 </Text>
@@ -18,8 +18,8 @@ class PropagatorLabel extends React.Component {
     }
 
     @autobind
-    _mouseMove({origin, dx}){
-
+    _mouseMove({origin, delta}){
+       console.log("moving", origin, delta)
     }
 }
 
