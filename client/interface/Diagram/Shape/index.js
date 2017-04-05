@@ -20,10 +20,14 @@ const Shape = ({kind, ...element}) => {
 
 Shape.propTypes = {
     kind: React.PropTypes.string,
+    color: React.PropTypes.string,
+    r: React.PropTypes.number,
 }
 
 Shape.defaultProps = {
-    kind: "parton"
+    kind: "parton",
+    color: "black",
+    r: 20,
 }
 
 export default Shape

@@ -9,8 +9,4 @@ const Parton = ({x, y, r}) => (
     />
 )
 
-Parton.defaultProps = {
-    r: 20,
-}
-
 export default Parton
