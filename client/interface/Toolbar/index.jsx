@@ -126,12 +126,20 @@ class Toolbar extends React.Component {
                     // grab the type of the element we dragged
                     const { type, ...config } = this.state.elementDragConfig
 
+                    // find the spec for the element
+                    const spec = specMap[type]
+                    // if its a type we didn't recognize
+                    if(typeof spec === 'undefined') {
+                        // yell loudly
+                        throw new Error(`Could not find element spec while dragging a ${type} from the toolbar.`)
+                    }
+
                     // track that we have created an element
                     dragElement = specMap[type]({...relativePosition(pos, info), info, elements, config})
                     // create one with the appropriate spec
                     this.props.placeElement(dragElement.element)
                     // select the element we just created
-                    this.props.selectElement(dragElement.select)
+                    this.props.selectElement(dragElement.select || dragElement.element)
                 }
 
                 // the fixed target
@@ -162,7 +170,7 @@ class Toolbar extends React.Component {
                     // clear the current selection
                     this.props.clearSelection()
                     // delete it
-                    this.props.deleteElements(...this.state.dragElement.remove)
+                    this.props.deleteElements(...(this.state.dragElement.remove || [this.state.dragElement.element]))
 
                     // clear the drag element state
                     dragElement = null

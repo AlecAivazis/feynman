@@ -68,15 +68,7 @@ export const text = ({x, y, info, elements, config}) => {
             x: round(x, info.gridSize),
             y: round(y, info.gridSize),
         },
-        select: {
-            id,
-            type: 'text',
-        },
-        remove: [
-            {
-                type: 'text',
-                id,
-            }
-        ]
     }
 }
+
+
