@@ -511,6 +511,36 @@ describe('Reducers', function() {
 
             })
 
+            it('removes selected shapes elements when deleting selection', function() {
+                // start off with a text element
+                const withShapes = reducer(undefined, addElements({
+                    type: 'shapes',
+                    kind: 'parton',
+                    x: 50,
+                    y: 50,
+                    id: 1,
+                }))
+
+                // select the shapes
+                const selected = reducer(withShapes, selectElements(
+                    {
+                        type: 'shapes',
+                        id: 1,
+                    }
+                ))
+                // sanity check
+                expect(selected.selection.shapes).to.have.length(1)
+
+                // delete the selection
+                const deleted = reducer(selected, deleteSelection())
+
+                // make sure the shapes is no longer selected
+                expect(deleted.selection.shapes).to.have.length(0)
+                // make sure that the element was actually removed
+                expect(deleted.shapes[1]).to.not.exist
+
+            })
+
             it('removes associated propagators when removing a selected anchor', function() {
                 // add some anchors
                 const withAnchors = reducer(undefined, addAnchors(

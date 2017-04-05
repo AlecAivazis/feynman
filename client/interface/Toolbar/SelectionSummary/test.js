@@ -5,10 +5,11 @@ import { Provider } from 'react-redux'
 // local imports
 import { createStore } from 'store'
 import { addAnchors, selectElements, addPropagators, addElements } from 'actions/elements'
-import SelectionSummary from '..'
-import AnchorSummary from '../AnchorSummary'
-import PropagatorSummary from '../PropagatorSummary'
-import TextSummary from '../TextSummary'
+import SelectionSummary from '.'
+import AnchorSummary from './AnchorSummary'
+import PropagatorSummary from './PropagatorSummary'
+import TextSummary from './TextSummary'
+import ShapeSummary from './ShapeSummary'
 import { RedButton } from 'components'
 
 describe('Interface Components', function() {
@@ -256,6 +257,41 @@ describe('Interface Components', function() {
                 )
 
                 const summary = wrapper.find(TextSummary)
+                // make sure there is an anchor summary preset
+                expect(summary).to.have.length(1)
+            })
+
+            it('shows a shape summary when there is one selected', function() {
+                // a store to test with
+                const store = createStore()
+
+                // and a propagator
+                store.dispatch(addElements({
+                    type: 'shapes',
+                    value: 'fermion',
+                    x: 50,
+                    y: 100,
+                    id: 1,
+                }))
+
+                // select an anchor and a propagator
+                store.dispatch(selectElements(
+                    {
+                        type: 'shapes',
+                        id: 1,
+                    },
+                ))
+
+                // mount the summary with the given selection
+                const wrapper = mount(
+                    <Provider store={store}>
+                        <SelectionSummary
+                            selection={store.getState().diagram.elements.selection}
+                        />
+                    </Provider>
+                )
+
+                const summary = wrapper.find(ShapeSummary)
                 // make sure there is an anchor summary preset
                 expect(summary).to.have.length(1)
             })
