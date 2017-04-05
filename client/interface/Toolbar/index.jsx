@@ -131,7 +131,7 @@ class Toolbar extends React.Component {
                     // if its a type we didn't recognize
                     if(typeof spec === 'undefined') {
                         // yell loudly
-                        throw new Error(`Could not find element spec while dragging a ${type} from the toolbar.`)
+                        throw new Error(`Could not find element spec while dragging a '${type}' from the toolbar.`)
                     }
 
                     // track that we have created an element

@@ -9,6 +9,7 @@ export const initialState = {
     anchors: [],
     propagators: [],
     text: [],
+    shapes: [],
 }
 
 // the reducer slice that manages just the selection state but has reference

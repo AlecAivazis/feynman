@@ -3,8 +3,8 @@ import React from 'react'
 
 const Parton = ({x, y, r}) => (
     <circle
-        x={x}
-        y={y}
+        cx={x}
+        cy={y}
         r={r}
     />
 )

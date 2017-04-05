@@ -25,7 +25,7 @@ const ItemPalette = ({ togglePatterns, style, onMouseDown, ...unusedProps }) => 
                 Drag and drop items to add them to a canvas
             </h2>
             <div style={styles.palette}>
-                <Item image={circle} config={{type: "shape"}} />
+                <Item image={circle} config={{type: "shapes", kind: "parton"}} />
                 <Item image={gluon} config={{type: "propagators", kind: "gluon"}} />
                 <Item image={dashed} config={{type: "propagators", kind: "dashed"}} />
                 <Item image={line} config={{type: "propagators", kind: "fermion"}} />
