@@ -43,8 +43,18 @@ export default (state = initialState, {type, payload}) => {
             // go over every text element
             for (const id of local.selection.text) {
                 // add the move to the element
-                local.text[id].x += payload.x
+                local.text[id].x += payload.x || 0
                 local.text[id].y += payload.y || 0
+            }
+        }
+
+        // if there are any shapes to move
+        if(local.selection.shapes) {
+            // go over every shapes element
+            for (const id of local.selection.shapes) {
+                // add the move to the element
+                local.shapes[id].x += payload.x || 0
+                local.shapes[id].y += payload.y || 0
             }
         }
 

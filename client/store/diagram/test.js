@@ -326,6 +326,38 @@ describe('Reducers', function() {
                 expect(movedState.elements.text[1].x).to.equal(text.x + move.x)
                 expect(movedState.elements.text[1].y).to.equal(text.y)
             })
+
+            it('can can move shapes', function() {
+                // the shape element to add to the store
+                const shape = {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                    kind: "parton",
+                }
+
+                // add the shape element
+                const elementState = reducer(undefined, addElements({type: 'shapes', ...shape}))
+
+                // select a subset of the anchors
+                const selectedState = reducer(elementState, selectElements(
+                    {
+                        type: 'shapes',
+                        id: shape.id,
+                    },
+                ))
+
+                // the move to issue on the selected anchors
+                const move = {
+                    x: 50,
+                }
+
+                // move the selected anchors
+                const movedState = reducer(selectedState, moveSelectedElements(move))
+                // make sure the selected anchors were moved
+                expect(movedState.elements.shapes[1].x).to.equal(shape.x + move.x)
+                expect(movedState.elements.shapes[1].y).to.equal(shape.y)
+            })
         })
     })
 })

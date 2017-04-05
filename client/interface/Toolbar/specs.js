@@ -58,6 +58,7 @@ export const propagators = ({x, y, info, elements, config}) => {
     }
 }
 
+// the default spec used for single elements that are positioned at one location
 export const element = ({x, y, info, elements, config, type}) => ({
     element: {
         id: generateElementId(elements[type]),
