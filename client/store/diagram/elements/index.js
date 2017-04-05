@@ -18,9 +18,9 @@ import { flatMap } from 'utils'
 export const initialState = {
     anchors: {},
     propagators: {},
-    constraints: [],
     text: {},
     selection: {},
+    shapes: {},
 }
 
 export default (state = initialState, {type, payload}) => {

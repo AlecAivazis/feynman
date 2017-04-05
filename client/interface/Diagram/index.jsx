@@ -11,6 +11,7 @@ import Grid from './Grid'
 import Propagator from './Propagator'
 import Anchor from './Anchor'
 import Text from './Text'
+import Shape from './Shape'
 import SelectionRectangle from './SelectionRectangle'
 import {
     relativePosition,
@@ -85,6 +86,12 @@ class Diagram extends React.Component {
                             {...element}
                             key={element.id}
                             selected={selection.text && selection.text.includes(element.id)}
+                        />
+                    ))}
+                    {Object.values(elements.shapes).map(element => (
+                        <Shape
+                            {...element}
+                            key={element.id}
                         />
                     ))}
 
