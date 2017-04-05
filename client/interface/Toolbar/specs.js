@@ -58,30 +58,12 @@ export const propagators = ({x, y, info, elements, config}) => {
     }
 }
 
-export const text = ({x, y, info, elements, config}) => {
-    const id = generateElementId(elements.text)
-    return {
-        element: {
-            id,
-            type: "text",
-            value: "text!",
-            x: round(x, info.gridSize),
-            y: round(y, info.gridSize),
-        },
+export const element = ({x, y, info, elements, config, type}) => ({
+    element: {
+        id: generateElementId(elements[type]),
+        type,
+        ...config,
+        x: round(x, info.gridSize),
+        y: round(y, info.gridSize),
     }
-}
-
-export const shapes = ({x, y, info, elements, config}) => {
-    const id = generateElementId(elements.shapes)
-
-    return {
-        element: {
-            id,
-            type: "shapes",
-            ...config,
-            x: round(x, info.gridSize),
-            y: round(y, info.gridSize),
-        }
-    }
-}
-
+})

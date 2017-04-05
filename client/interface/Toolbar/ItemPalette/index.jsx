@@ -30,7 +30,7 @@ const ItemPalette = ({ togglePatterns, style, onMouseDown, ...unusedProps }) => 
                 <Item image={dashed} config={{type: "propagators", kind: "dashed"}} />
                 <Item image={line} config={{type: "propagators", kind: "fermion"}} />
                 <Item image={em} config={{type: "propagators", kind: "em"}} />
-                <Item image={text} config={{type: "text", value: "text"}} />
+                <Item image={text} config={{type: "text", value: "text!"}} />
             </div>
             <div style={styles.patternButtonContainer}>
                 <Button onClick={togglePatterns} style={styles.patternButton}>
