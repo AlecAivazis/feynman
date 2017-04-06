@@ -87,7 +87,7 @@ class Toolbar extends React.Component {
         // for each each we created
         for (const {id} of anchorsInSpec(this.state.dragElement)) {
             // perform any merges on overlapping anchors
-            this.props.mergeAnchors(id)
+            this.props.mergeAnchors({type: "anchors", id})
         }
 
         // clear any references we made while dragging

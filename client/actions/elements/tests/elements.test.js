@@ -86,7 +86,7 @@ describe('Action Creators', function() {
                 expect(mergeElements(1)).to.deep.equal({
                     type: MERGE_ELEMENTS,
                     payload: {
-                        id: 1,
+                        source: 1,
                         select: false,
                     }
                 })
@@ -104,7 +104,7 @@ describe('Action Creators', function() {
                 expect(mergeElements(1, true)).to.deep.equal({
                     type: MERGE_ELEMENTS,
                     payload: {
-                        id: 1,
+                        source: 1,
                         select: true,
                     }
                 })

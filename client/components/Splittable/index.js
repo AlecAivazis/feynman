@@ -139,7 +139,10 @@ class Splittable extends React.Component {
         // if this component was being dragged
         if (origin && moveType === 'anchors') {
             // tell the store to clean up any overlapping elements (and select the resulting element)
-            mergeElements(moveTarget, true)
+            mergeElements({
+                type: moveType,
+                id: moveTarget
+            }, true)
         }
 
         // track the state of the mouse
@@ -173,7 +176,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     selectElement: ({id, type}) => dispatch(selectElements({type, id})),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
     // tell the store to merge overlapping elements
-    mergeElements: (id, select) => dispatch(mergeElements(id, select)),
+    mergeElements: (...args) => dispatch(mergeElements(...args)),
     // update particular attributes of elements
     setElementAttrs: (...attrs) => dispatch(setElementAttrs(...attrs)),
 

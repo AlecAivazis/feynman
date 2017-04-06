@@ -46,7 +46,7 @@ describe('Reducers', function() {
                 ))
 
                 // tell the reducer to merge itself
-                const mergedState = reducer(anchorState, mergeElements(1))
+                const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}))
 
                 // make sure there are only two anchors left
                 expect(Object.values(mergedState.anchors)).to.have.length(2)
@@ -99,7 +99,7 @@ describe('Reducers', function() {
                 ))
 
                 // tell the store to merge elements onto anchor 1
-                const mergedState = reducer(propagatorState, mergeElements(1))
+                const mergedState = reducer(propagatorState, mergeElements({type: "anchors", id: 1}))
 
                 // since that should replace anchor 1, the propagotr's anchor1 value should be 2
                 expect(mergedState.propagators[1].anchor1).to.equal(2)
@@ -125,10 +125,37 @@ describe('Reducers', function() {
                 ))
 
                 // tell the reducer to merge itself
-                const mergedState = reducer(anchorState, mergeElements(1, true))
+                const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}, true))
 
                 // make sure the resulting selection contains just the target
                 expect(mergedState.selection.anchors).to.deep.equal([2])
+            })
+
+            it('applies constraints if there is an overlap between an anchor and parton', function() {
+                // start off with some anchors
+                const anchorState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 50,
+                    }
+                ))
+
+                // add a propagator
+                const constraintShape = reducer(anchorState, addElements(
+                    {
+                        type: 'shapes',
+                        kind: "parton",
+                        id: 1,
+                        x: 75,
+                        y: 50,
+                    }
+                ))
+
+                // tell the store to merge elements onto anchor 1
+                const mergedState = reducer(constraintShape, mergeElements({type: "anchors", id: 1}))
+
+                //
             })
 
             it('barfs if merging onto an undefined id', function() {
@@ -136,7 +163,7 @@ describe('Reducers', function() {
             })
 
             it('barfs if merging onto a non-existant id', function() {
-                expect(() => reducer(undefined, mergeElements(1))).to.throw(Error)
+                expect(() => reducer(undefined, mergeElements({type: "anchors"}))).to.throw(Error)
             })
         })
 

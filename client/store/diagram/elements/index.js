@@ -27,16 +27,17 @@ export default (state = initialState, {type, payload}) => {
 
     // if the action indicates we need to dedupe the elements
     if (type === MERGE_ELEMENTS) {
+        console.log(payload)
         // the payload is the id of the anchor we need to merge with
-        const {id:sourceId, select=false} = payload
+        const {source:from, select=false} = payload
 
         // make a deep copy of the state that we can play with
         const local = _.cloneDeep(state)
-        const source = local.anchors[sourceId]
+        const source = local[from.type][from.id]
 
         // if the payload is undefined or there isn't an anchor with that id
         if (!source) {
-            throw new Error(`Could not find anchor with id ${sourceId}`)
+            throw new Error(`Could not find ${from.type} with id ${from.id}`)
         }
 
         // a list of duplicated elements
@@ -45,7 +46,7 @@ export default (state = initialState, {type, payload}) => {
         // for each anchor
         for (const anchor of Object.values(local.anchors)) {
             // if the anchor is in the same location as our target
-            if (anchor.id !== sourceId &&
+            if (anchor.id !== from.id &&
                     anchor.x === source.x && anchor.y === source.y) {
                 // add the anchor's id to the list
                 dupes.push(anchor.id)
@@ -60,18 +61,18 @@ export default (state = initialState, {type, payload}) => {
             // visit each propagator to replace anchor references
             for (const propagator of Object.values(local.propagators)) {
                 // if anchor1 is a reference to this element
-                if (propagator.anchor1 === sourceId) {
+                if (propagator.anchor1 === from.id) {
                     // then the anchor1 needs to become the element replacing the source
                     propagator.anchor1 = mergeTarget
                 // otherwise if anchor2 is a reference to this element
-                } else if (propagator.anchor2 === sourceId) {
+                } else if (propagator.anchor2 === from.id) {
                     // then the anchor2 needs to become the element replacing the source
                     propagator.anchor2 = mergeTarget
                 }
             }
 
             // remove the entry in the anchors object for the original anchor
-            Reflect.deleteProperty(local.anchors, sourceId)
+            Reflect.deleteProperty(local.anchors, from.id)
 
             // if we are supposed to select the resulting element
             if (select) {

@@ -31,8 +31,8 @@ const ShapeSummary = ({shapes, elements, setAttrs}) => {
             <SliderRow
                 label="radius"
                 value={head.r || Shape.defaultProps.r}
-                min={10}
-                max={30}
+                min={5}
+                max={50}
                 step={5}
                 onChange={r => setAttrs({r})}
             />
