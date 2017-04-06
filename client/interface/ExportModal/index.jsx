@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { propagatorsWithLocation } from 'utils'
+import { elementsWithLocations } from 'utils'
 import { Overlay, Code, Button } from 'components'
 import { toggleExportModal } from 'actions/info'
 import styles from './styles'
@@ -20,7 +20,7 @@ const ExportModal = ({elements, hideModal}) => (
         Here's your diagram:
         <Code>
             \begin{'{feynman}'} <br/>
-            {propagatorsWithLocation(elements).map(propagator => (
+            {elementsWithLocations(elements).propagators.map(propagator => (
                 <LatexPropagator {...propagator} key={propagator.id} />
             ))}
             \end{'{feynman}'}<br/>

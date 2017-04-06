@@ -18,7 +18,7 @@ import {
     elementsInRegion,
     generateElementId,
     fixPositionToGrid,
-    propagatorsWithLocation,
+    elementsWithLocations,
     diagramBoundingBox,
     dataUrlToBlob,
     svgToDataURL,
@@ -55,7 +55,7 @@ class Diagram extends React.Component {
         const elementStyle = info.showGrid ? styles.containerWithGrid : styles.containerWithoutGrid
 
         // figure the concrete locations for each propgators (dereference the anchors)
-        const propagators = propagatorsWithLocation(elements)
+        const { propagators } = elementsWithLocations(elements)
 
         // render the various components of the diagram
         return (

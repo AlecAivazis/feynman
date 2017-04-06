@@ -23,7 +23,7 @@ export const initialState = {
     shapes: {},
 }
 import Shape from 'interface/Diagram/Shape'
-const defaultR = Shape.defaultProps.r
+const { r:defaultR, kind:defaultKind } = Shape.defaultProps
 
 export default (state = initialState, {type, payload}) => {
 
@@ -63,7 +63,7 @@ export default (state = initialState, {type, payload}) => {
         // so we can break when we find a shape
         for (const anchor of Object.values(local.anchors)) {
             // try to find a parton that overlaps
-            const shapeMatch = Object.values(local.shapes).find(({kind, x,  y, r = defaultR}) =>{
+            const shapeMatch = Object.values(local.shapes).find(({kind = defaultKind, x,  y, r = defaultR}) =>{
                 // compute the distance between the anchor and the shape
                 const dx = anchor.x - x
                 const dy = anchor.y - y
