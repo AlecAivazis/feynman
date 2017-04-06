@@ -83,12 +83,8 @@ class Toolbar extends React.Component {
 
     @autobind
     _mouseUp(event) {
-        // TODO: make mergeElements action creator take multiple target
-        // for each each we created
-        for (const {id} of anchorsInSpec(this.state.dragElement)) {
-            // perform any merges on overlapping anchors
-            this.props.mergeAnchors({type: "anchors", id})
-        }
+        // clean up any changes we left behind
+        this.props.mergeAnchors()
 
         // clear any references we made while dragging
         this.setState({

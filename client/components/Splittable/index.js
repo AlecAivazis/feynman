@@ -137,7 +137,7 @@ class Splittable extends React.Component {
         const { mergeElements } = this.props
 
         // if this component was being dragged
-        if (origin && moveType === 'anchors') {
+        if (origin) {
             // tell the store to clean up any overlapping elements (and select the resulting element)
             mergeElements({
                 type: moveType,
