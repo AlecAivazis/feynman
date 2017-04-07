@@ -27,7 +27,7 @@ Shape.propTypes = {
 Shape.defaultProps = {
     kind: "parton",
     color: "black",
-    r: 20,
+    r: 25,
 }
 
 export default Shape

@@ -6,6 +6,7 @@ import autobind from 'autobind-decorator'
 import { saveAs } from 'file-saver'
 import SvgMatrix from 'svg-matrix'
 // local imports
+import { brightBlue } from 'colors'
 import styles from './styles'
 import Grid from './Grid'
 import Propagator from './Propagator'
@@ -64,6 +65,24 @@ class Diagram extends React.Component {
                 style={{...elementStyle, ...style}}
                 onMouseDown={this._mouseDown}
             >
+                {/* patterns used in the application */}
+                <pattern x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse" id="pattern-parton-lines" viewBox="0 0 10 10">
+                    <path
+                        d="M10-5-10,15M15,0,0,15M0-5-20,15"
+                        fill="none"
+                        stroke="#b8b8b8"
+                        style={{strokeWidth: 2}}
+                    />
+                </pattern>
+                <pattern x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse" id="pattern-parton-lines-selected" viewBox="0 0 10 10">
+                    <path
+                        d="M10-5-10,15M15,0,0,15M0-5-20,15"
+                        fill="none"
+                        stroke={brightBlue}
+                        style={{strokeWidth: 2}}
+                    />
+                </pattern>
+
                 {/* wrap the whole diagram in a group so we can transform the diagram when exporting */}
                 <g className="diagram" transform={this.transformString}>
                     {/* order matters here (last shows up on top) */}
@@ -91,6 +110,7 @@ class Diagram extends React.Component {
                     {Object.values(elements.shapes).map(element => (
                         <Shape
                             {...element}
+                            selected={selection.shapes && selection.shapes.includes(element.id)}
                             key={element.id}
                         />
                     ))}
