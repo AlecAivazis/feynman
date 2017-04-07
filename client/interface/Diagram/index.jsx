@@ -55,7 +55,7 @@ class Diagram extends React.Component {
         const elementStyle = info.showGrid ? styles.containerWithGrid : styles.containerWithoutGrid
 
         // figure the concrete locations for each propgators (dereference the anchors)
-        const { propagators } = elementsWithLocations(elements)
+        const { propagators, anchors } = elementsWithLocations(elements)
 
         // render the various components of the diagram
         return (
@@ -68,14 +68,14 @@ class Diagram extends React.Component {
                 <g className="diagram" transform={this.transformString}>
                     {/* order matters here (last shows up on top) */}
                     {info.showGrid && info.gridSize > 0 && <Grid/>}
-                    {propagators.map((element, i) => (
+                    {propagators.map(element => (
                         <Propagator
                             {...element}
-                            key={i}
+                            key={element.id}
                             selected={selection.propagators && selection.propagators.includes(element.id)}
                         />
                     ))}
-                    {info.showAnchors && Object.values(elements.anchors).map(anchor => (
+                    {info.showAnchors && anchors.map(anchor => (
                         <Anchor {...anchor}
                             selected={selection.anchors && selection.anchors.includes(anchor.id)}
                             key={anchor.id}

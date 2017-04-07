@@ -1,3 +1,4 @@
+import constrainLocationToShape from './constrainLocationToShape'
 
 // elementsWithLocations returns the list of elements configuration
 // with concrete (dereferenced) values. This means that first anchors are
@@ -13,7 +14,11 @@ const elementsWithLocations = elements => {
 
             // if the anchor is constrained to a shape
             if (next.constraint) {
-                console.log('has constraint')
+                // use the constrained location instead
+                coordinates = constrainLocationToShape({
+                    location: coordinates,
+                    shape: elements.shapes[next.constraint],
+                })
             }
 
             return {

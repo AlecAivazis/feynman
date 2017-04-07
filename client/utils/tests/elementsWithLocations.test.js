@@ -65,7 +65,7 @@ describe('Interface Components', function() {
 
             // add a shape to constrain the anchor
             store.dispatch(addElements({
-                type: 'shape',
+                type: 'shapes',
                 id: 1,
                 x: 50,
                 y: 100,
