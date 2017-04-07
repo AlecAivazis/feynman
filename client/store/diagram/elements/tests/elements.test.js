@@ -588,7 +588,6 @@ describe('Reducers', function() {
                 expect(deleted.selection.text).to.have.length(0)
                 // make sure that the element was actually removed
                 expect(deleted.text[1]).to.not.exist
-
             })
 
             it('removes selected shapes elements when deleting selection', function() {
@@ -618,6 +617,43 @@ describe('Reducers', function() {
                 expect(deleted.selection.shapes).to.have.length(0)
                 // make sure that the element was actually removed
                 expect(deleted.shapes[1]).to.not.exist
+
+            })
+
+            it('deleting a constraint removes any references', function() {
+                // add some anchors to a store to start
+                const initialState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                        constraint: 1,
+                    },
+                ))
+
+                // add the constraint
+                const withConstraint = reducer(initialState, addElements({
+                    type: 'shapes',
+                    kind: 'parton',
+                    x: 50,
+                    y: 50,
+                    id: 1,
+                }))
+
+                // select the element
+                const selectedState = reducer(initialState, selectElements(
+                    {type: 'shapes', id: 1},
+                    {type: 'anchors', id: 2},
+                ))
+
+                // sanity check
+                expect(selectedState.selection.anchors).to.have.length(2)
+
+                // delete the element
+                const deletedState = reducer(selectedState, deleteSelection())
+
+                // make sure there that there one element selected
+                expect(deletedState.anchors[1]).to.not.exist
 
             })
 
