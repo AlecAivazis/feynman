@@ -1,5 +1,5 @@
 // local imports
-import constrainLocactionToShape from '../constrainLocactionToShape'
+import constrainLocactionToShape from '../constrainLocationToShape'
 
 describe('Utils', function() {
     describe('Constrain Location to Shape', function() {

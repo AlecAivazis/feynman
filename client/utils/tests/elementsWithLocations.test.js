@@ -86,16 +86,10 @@ describe('Interface Components', function() {
                         id: 1,
                         x: 100,
                         y: 100,
+                        constraint: 1,
                     },
                 ],
-                shapes: [
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                        r: 50
-                    }
-                ]
+                propagators: [],
             })
         })
 
