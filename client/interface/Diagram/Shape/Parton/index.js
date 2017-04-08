@@ -3,13 +3,13 @@ import React from 'react'
 // local imports
 import { brightBlue}  from 'colors'
 
-const Parton = ({x, y, r, selected}) => (
+const Parton = ({x, y, r, selected, color}) => (
     <circle
         cx={x}
         cy={y}
         r={r}
         fill={`url(#pattern-parton-lines${selected ? '-selected' : ''})`}
-        stroke={selected ? brightBlue : "#000000"}
+        stroke={selected ? brightBlue : color}
         style={{strokeWidth: 2}}
     />
 )
