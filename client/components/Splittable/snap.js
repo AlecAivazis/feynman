@@ -1,11 +1,11 @@
 // local imports
 import { fixPositionToGrid } from 'utils'
 
-export const snapAnchor = ({id, elements, info, setElementAttrs}) => (
+export const snapElement = ({id, elements, info, setElementAttrs, type}) => (
     setElementAttrs({
         id,
-        type: 'anchors',
-        ...fixPositionToGrid(elements.anchors[id], info.gridSize),
+        type,
+        ...fixPositionToGrid(elements[type][id], info.gridSize),
     })
 )
 
@@ -16,7 +16,7 @@ export const snapPropagator = ({ setElementAttrs, elements, info:{gridSize}, id}
     // save references to the two anchors
     const anchor1 = elements.anchors[anchor1Id]
     const anchor2 = elements.anchors[anchor2Id]
-    
+
     // the list of changes
     const moves = []
 
@@ -32,7 +32,7 @@ export const snapPropagator = ({ setElementAttrs, elements, info:{gridSize}, id}
             ...anchor1Loc,
         })
     }
-    
+
     // if the second anchor is not fixed
     if (!anchor2.fixed) {
         // compute the new location for anchor2

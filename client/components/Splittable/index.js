@@ -7,7 +7,7 @@ import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { selectElements, mergeElements, moveSelectedElements, setElementAttrs } from 'actions/elements'
 import { throttle, fixDeltaToGrid, round } from 'utils'
 import { EventListener } from 'components'
-import { snapAnchor, snapPropagator } from './snap'
+import { snapElement, snapPropagator } from './snap'
 
 class Splittable extends React.Component {
 
@@ -95,15 +95,11 @@ class Splittable extends React.Component {
 
             // the mapping of type to snap utils
             const snap = {
-                'anchors': snapAnchor,
                 'propagators': snapPropagator,
-            }[moveType]
+            }[moveType] || snapElement
 
-            // if we are moving an element that we need to snap to the grid first
-            if (snap) {
-                // make sure the anchor starts from the grid
-                snap({id: moveTarget, elements,  info, setElementAttrs})
-            }
+            // make sure the element starts from the grid
+            snap({id: moveTarget, elements,  info, setElementAttrs, type: moveType})
 
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
