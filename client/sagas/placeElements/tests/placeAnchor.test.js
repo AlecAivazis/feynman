@@ -18,12 +18,12 @@ describe('Sagas', function() {
                 // get the generator
                 const gen = placeAnchor(desc)
                 // the only thing we have to do is create the anchor
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addAnchors(desc))
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).to.be.true
+                expect(gen.next().done).toBeTruthy
             })
         })
     })

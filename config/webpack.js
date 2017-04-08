@@ -52,10 +52,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'babel',
-                include: projectPaths.sourceDir,
-                query: {
-                    extends: projectPaths.babelConfig
-                }
+                include: projectPaths.sourceDir
             }, {
                 test: /\.css$/,
                 loaders: ['style', 'css'],

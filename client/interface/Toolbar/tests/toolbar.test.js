@@ -32,7 +32,7 @@ describe('Interface Components', function() {
             )
 
             // expect there to be no anchor summaries
-            expect(wrapper.find(SelectionSummary)).to.have.length(0)
+            expect(wrapper.find(SelectionSummary)).toHaveLength(0)
 
             // select the anchors
             store.dispatch(selectElements({
@@ -41,7 +41,7 @@ describe('Interface Components', function() {
             }))
 
             // expect there to be an anchor summary
-            expect(wrapper.find(SelectionSummary)).to.have.length(1)
+            expect(wrapper.find(SelectionSummary)).toHaveLength(1)
         })
 
         it('shows the item palette when there is no selection', function() {
@@ -55,7 +55,7 @@ describe('Interface Components', function() {
             )
 
             // there should be an item palette showing
-            expect(wrapper.find(ItemPalette)).to.have.length(1)
+            expect(wrapper.find(ItemPalette)).toHaveLength(1)
         })
 
         it('has a button to toggle the pattern model', function() {
@@ -74,13 +74,13 @@ describe('Interface Components', function() {
             const button = wrapper.find(Button)
 
             // make sure there is only one so we know we're clicking on the right thing
-            expect(button).to.have.length(1)
+            expect(button).toHaveLength(1)
 
             // simulate the click
             button.simulate('click')
 
             // make sure the modal's visibilty has been inverted
-            expect(store.getState().diagram.info.showPatternModal).to.equal(!defaulState)
+            expect(store.getState().diagram.info.showPatternModal).toEqual(!defaulState)
         })
     })
 })

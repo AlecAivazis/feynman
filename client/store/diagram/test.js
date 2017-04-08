@@ -29,11 +29,11 @@ describe('Reducers', function() {
         })
 
         it('has the info reducer', function() {
-            expect(store.getState().diagram.info).to.exist
+            expect(store.getState().diagram.info).toBeDefined()
         })
 
         it('has the elements reducer', function() {
-            expect(store.getState().diagram.elements).to.exist
+            expect(store.getState().diagram.elements).toBeDefined()
         })
 
         describe("Moving elements", function() {
@@ -83,13 +83,13 @@ describe('Reducers', function() {
                 const movedState = reducer(selectedState, moveSelectedElements(move))
 
                 // make sure the selected anchors were moved
-                expect(movedState.elements.anchors[1].x).to.equal(anchors[0].x + move.x)
-                expect(movedState.elements.anchors[1].y).to.equal(anchors[0].y + move.y)
-                expect(movedState.elements.anchors[2].x).to.equal(anchors[1].x + move.x)
-                expect(movedState.elements.anchors[2].y).to.equal(anchors[1].y + move.y)
+                expect(movedState.elements.anchors[1].x).toEqual(anchors[0].x + move.x)
+                expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y + move.y)
+                expect(movedState.elements.anchors[2].x).toEqual(anchors[1].x + move.x)
+                expect(movedState.elements.anchors[2].y).toEqual(anchors[1].y + move.y)
                 // make sure the non-selected anchor wasn't moved
-                expect(movedState.elements.anchors[3].x).to.equal(anchors[2].x)
-                expect(movedState.elements.anchors[3].y).to.equal(anchors[2].y)
+                expect(movedState.elements.anchors[3].x).toEqual(anchors[2].x)
+                expect(movedState.elements.anchors[3].y).toEqual(anchors[2].y)
             })
 
             it('can move selected propagators', function() {
@@ -143,13 +143,13 @@ describe('Reducers', function() {
                 const movedState = reducer(selectedState, moveSelectedElements(move))
 
                 // make sure the appropriate anchors were moved
-                expect(movedState.elements.anchors[1].x).to.equal(anchors[0].x + move.x)
-                expect(movedState.elements.anchors[1].y).to.equal(anchors[0].y + move.y)
-                expect(movedState.elements.anchors[2].x).to.equal(anchors[1].x + move.x)
-                expect(movedState.elements.anchors[2].y).to.equal(anchors[1].y + move.y)
+                expect(movedState.elements.anchors[1].x).toEqual(anchors[0].x + move.x)
+                expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y + move.y)
+                expect(movedState.elements.anchors[2].x).toEqual(anchors[1].x + move.x)
+                expect(movedState.elements.anchors[2].y).toEqual(anchors[1].y + move.y)
                 // make sure the non-selected anchor wasn't moved
-                expect(movedState.elements.anchors[3].x).to.equal(anchors[2].x)
-                expect(movedState.elements.anchors[3].y).to.equal(anchors[2].y)
+                expect(movedState.elements.anchors[3].x).toEqual(anchors[2].x)
+                expect(movedState.elements.anchors[3].y).toEqual(anchors[2].y)
             })
 
             it("can move with partial payload", function() {
@@ -182,8 +182,8 @@ describe('Reducers', function() {
                 const movedState = reducer(selectedState, moveSelectedElements(move))
 
                 // make sure the selected anchors were moved
-                expect(movedState.elements.anchors[1].x).to.equal(anchors[0].x + move.x)
-                expect(movedState.elements.anchors[1].y).to.equal(anchors[0].y)
+                expect(movedState.elements.anchors[1].x).toEqual(anchors[0].x + move.x)
+                expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
             it('moving selected elements does not affect pinned anchors', function() {
@@ -218,8 +218,8 @@ describe('Reducers', function() {
                 const movedState = reducer(selectedState, moveSelectedElements(move))
 
                 // make sure the selected anchors were moved
-                expect(movedState.elements.anchors[1].x).to.equal(anchors[0].x)
-                expect(movedState.elements.anchors[1].y).to.equal(anchors[0].y)
+                expect(movedState.elements.anchors[1].x).toEqual(anchors[0].x)
+                expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
             it('moving an element snaps to grid', function() {
@@ -252,8 +252,8 @@ describe('Reducers', function() {
                 const movedState = reducer(selectedState, moveSelectedElements(move))
 
                 // make sure the selected anchors were moved
-                expect(movedState.elements.anchors[1].x).to.equal(round(anchors[0].x + move.x, movedState.info.gridSize))
-                expect(movedState.elements.anchors[1].y).to.equal(anchors[0].y)
+                expect(movedState.elements.anchors[1].x).toEqual(round(anchors[0].x + move.x, movedState.info.gridSize))
+                expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
             it('moving an anchor with no grid works as expected', function() {
@@ -291,8 +291,8 @@ describe('Reducers', function() {
                 const movedState = reducer(selectedState, moveSelectedElements(move))
 
                 // make sure the selected anchors were moved
-                expect(movedState.elements.anchors[1].x).to.equal(anchors[0].x + move.x)
-                expect(movedState.elements.anchors[1].y).to.equal(anchors[0].y)
+                expect(movedState.elements.anchors[1].x).toEqual(anchors[0].x + move.x)
+                expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
             it('can move text elements', function() {
@@ -323,8 +323,8 @@ describe('Reducers', function() {
                 // move the selected anchors
                 const movedState = reducer(selectedState, moveSelectedElements(move))
                 // make sure the selected anchors were moved
-                expect(movedState.elements.text[1].x).to.equal(text.x + move.x)
-                expect(movedState.elements.text[1].y).to.equal(text.y)
+                expect(movedState.elements.text[1].x).toEqual(text.x + move.x)
+                expect(movedState.elements.text[1].y).toEqual(text.y)
             })
 
             it('can can move shapes', function() {
@@ -355,8 +355,8 @@ describe('Reducers', function() {
                 // move the selected anchors
                 const movedState = reducer(selectedState, moveSelectedElements(move))
                 // make sure the selected anchors were moved
-                expect(movedState.elements.shapes[1].x).to.equal(shape.x + move.x)
-                expect(movedState.elements.shapes[1].y).to.equal(shape.y)
+                expect(movedState.elements.shapes[1].x).toEqual(shape.x + move.x)
+                expect(movedState.elements.shapes[1].y).toEqual(shape.y)
             })
         })
     })

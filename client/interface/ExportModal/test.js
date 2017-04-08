@@ -46,7 +46,7 @@ describe('Interface Components', function() {
 
         it('Creates a LatexPropagator for each element in the store', function() {
             // make sure there are as many propagators rendered
-            wrapper.find(LatexPropagator).should.have.length(
+            expect(wrapper.find(LatexPropagator)).toHaveLength(
                 // as there are in the store
                 Object.values(store.getState().diagram.elements.propagators).length
             )
@@ -57,10 +57,10 @@ describe('Interface Components', function() {
             const props = wrapper.find(LatexPropagator).props()
 
             // make sure the coordinates were injected to the propagator
-            expect(props.x1).to.equal(anchors[1].x)
-            expect(props.y1).to.equal(anchors[1].y)
-            expect(props.x2).to.equal(anchors[2].x)
-            expect(props.y2).to.equal(anchors[2].y)
+            expect(props.x1).toEqual(anchors[1].x)
+            expect(props.y1).toEqual(anchors[1].y)
+            expect(props.x2).toEqual(anchors[2].x)
+            expect(props.y2).toEqual(anchors[2].y)
         })
     })
 })

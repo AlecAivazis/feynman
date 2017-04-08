@@ -18,7 +18,7 @@ describe('Utils', function() {
                y: 50,
            }
 
-            expect(constrainLocactionToShape({shape, location})).to.deep.equal({
+            expect(constrainLocactionToShape({shape, location})).toEqual({
                 x: 100,
                 y: 50,
             })

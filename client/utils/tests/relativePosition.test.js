@@ -8,7 +8,7 @@ describe('Utils', function() {
             const info = {pan: {x: 0, y: 0}}
             // for now, the only difference between absolute and diagram coordinates
             // is the sidebar width
-            expect(relativePosition({x: 50, y: 100}, info)).to.deep.equal({
+            expect(relativePosition({x: 50, y: 100}, info)).toEqual({
                 x: 50 - sidebarWidth,
                 y: 100,
             })
@@ -24,7 +24,7 @@ describe('Utils', function() {
             }
             // for now, the only difference between absolute and diagram coordinates
             // is the sidebar width
-            expect(relativePosition({x: 50, y: 100}, info)).to.deep.equal({
+            expect(relativePosition({x: 50, y: 100}, info)).toEqual({
                 x: 50 - sidebarWidth - info.pan.x,
                 y: 100 - info.pan.y,
             })

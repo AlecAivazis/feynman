@@ -28,7 +28,7 @@ describe('Reducers', function() {
                 store.dispatch(addPropagators(propagator))
 
                 // make sure the state matches expectation
-                expect(store.getState().diagram.elements.propagators).to.deep.equal(
+                expect(store.getState().diagram.elements.propagators).toEqual(
                     {
                         ...initialState.propagators,
                         1: propagator
@@ -50,7 +50,7 @@ describe('Reducers', function() {
                 }
 
                 // make sure the state matches expectation
-                expect( () => store.dispatch(addPropagators(propagator))).to.throw(Error)
+                expect( () => store.dispatch(addPropagators(propagator))).toThrow(Error)
             })
 
             it('barfs when adding a propagator with no type', function() {
@@ -70,7 +70,7 @@ describe('Reducers', function() {
                 }
 
                 // make sure the state matches expectation
-                expect( () => store.dispatch(addPropagators(propagator))).to.throw(Error)
+                expect( () => store.dispatch(addPropagators(propagator))).toThrow(Error)
             })
 
             it('barfs when adding a propagator with no id', function() {
@@ -89,7 +89,7 @@ describe('Reducers', function() {
                     anchor2: 2,
                 }
                 // add the propagator to the store
-                expect(() => store.dispatch(addPropagators(propagator))).to.throw(Error)
+                expect(() => store.dispatch(addPropagators(propagator))).toThrow(Error)
 
             })
         })

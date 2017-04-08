@@ -64,17 +64,17 @@ describe('Interface Components', function() {
 
                 const anchorSummary = wrapper.find(AnchorSummary)
                 // make sure the showDelete props is false
-                expect(anchorSummary.props().showDelete).to.be.false
+                expect(anchorSummary.props().showDelete).not.toBeTruthy
 
 
                 const propagatorSummary = wrapper.find(PropagatorSummary)
                 // make sure there is an anchor summary preset
-                expect(propagatorSummary).to.exist
+                expect(propagatorSummary).toBeDefined()
                 // make sure the showDelete props is false
-                expect(propagatorSummary.props().showDelete).to.be.false
+                expect(propagatorSummary.props().showDelete).not.toBeTruthy
 
                 // make sure there is only one red button visible
-                expect(wrapper.find(RedButton)).to.have.length(1)
+                expect(wrapper.find(RedButton)).toHaveLength(1)
             })
 
             it('hides the text delete button when there is a multiple kinds of selection', function() {
@@ -127,15 +127,15 @@ describe('Interface Components', function() {
 
                 const anchorSummary = wrapper.find(AnchorSummary)
                 // make sure the showDelete props is false
-                expect(anchorSummary.props().showDelete).to.be.false
+                expect(anchorSummary.props().showDelete).not.toBeTruthy
 
 
                 const textSummary = wrapper.find(TextSummary)
                 // make sure the showDelete props is false
-                expect(textSummary.props().showDelete).to.be.false
+                expect(textSummary.props().showDelete).not.toBeTruthy
 
                 // make sure there is only one red button visible
-                expect(wrapper.find(RedButton)).to.have.length(1)
+                expect(wrapper.find(RedButton)).toHaveLength(1)
             })
 
             it('shows an anchor summary when there is one selected', function() {
@@ -175,7 +175,7 @@ describe('Interface Components', function() {
 
                 const anchorSummary = wrapper.find(AnchorSummary)
                 // make sure there is an anchor summary preset
-                expect(anchorSummary).to.have.length(1)
+                expect(anchorSummary).toHaveLength(1)
             })
 
             it('shows a propagator summary when there is one selected', function() {
@@ -223,7 +223,7 @@ describe('Interface Components', function() {
 
                 const summary = wrapper.find(PropagatorSummary)
                 // make sure there is an anchor summary preset
-                expect(summary).to.have.length(1)
+                expect(summary).toHaveLength(1)
             })
 
             it('shows a text summary when there is one selected', function() {
@@ -258,7 +258,7 @@ describe('Interface Components', function() {
 
                 const summary = wrapper.find(TextSummary)
                 // make sure there is an anchor summary preset
-                expect(summary).to.have.length(1)
+                expect(summary).toHaveLength(1)
             })
 
             it('shows a shape summary when there is one selected', function() {
@@ -293,7 +293,7 @@ describe('Interface Components', function() {
 
                 const summary = wrapper.find(ShapeSummary)
                 // make sure there is an anchor summary preset
-                expect(summary).to.have.length(1)
+                expect(summary).toHaveLength(1)
             })
         })
     })

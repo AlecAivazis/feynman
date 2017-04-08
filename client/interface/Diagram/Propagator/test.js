@@ -28,7 +28,7 @@ describe('Interface Components', function() {
                 </Provider>
             )
             // make sure there is a fermion
-            expect(wrapper.find(ElectroWeak)).to.have.length(1)
+            expect(wrapper.find(ElectroWeak)).toHaveLength(1)
         })
 
         it('renders a Fermion', function() {
@@ -41,7 +41,7 @@ describe('Interface Components', function() {
                 </Provider>
             )
             // make sure there is a fermion
-            expect(wrapper.find(Fermion)).to.have.length(1)
+            expect(wrapper.find(Fermion)).toHaveLength(1)
         })
 
         it('renders a gluon', function() {
@@ -54,7 +54,7 @@ describe('Interface Components', function() {
                 </Provider>
             )
             // make sure there is a fermion
-            expect(wrapper.find(Gluon)).to.have.length(1)
+            expect(wrapper.find(Gluon)).toHaveLength(1)
 
         })
 
@@ -82,7 +82,7 @@ describe('Interface Components', function() {
                     continue
                 }
                 // make sure the prop matches the default value
-                expect(props[config]).to.equal(defaultConfig[config])
+                expect(props[config]).toEqual(defaultConfig[config])
             }
         })
 
@@ -160,7 +160,7 @@ describe('Interface Components', function() {
             // click on the propagator
             wrapper.find(Fermion).simulate('mousedown')
 
-            expect(store.getState().diagram.elements.selection.propagators).to.deep.equal([1])
+            expect(store.getState().diagram.elements.selection.propagators).toEqual([1])
         })
 
         it('can compute the location for a label for a propagator', function() {
@@ -196,8 +196,8 @@ describe('Interface Components', function() {
             const location = locationForLabel(propagator)
 
             // make sure its a valid location
-            expect(location.x).to.exist
-            expect(location.y).to.exist
+            expect(location.x).toBeDefined()
+            expect(location.y).toBeDefined()
         })
 
         it('can compute the relative coordinates for a label given diagram coordiantes', function() {
@@ -234,8 +234,8 @@ describe('Interface Components', function() {
             const location = relLocForLabel({x: 75, y: 150}, propagator)
 
             // make sure its a valid location
-            expect(location.labelDistance).to.exist
-            expect(location.labelLocation).to.exist
+            expect(location.labelDistance).toBeDefined()
+            expect(location.labelLocation).toBeDefined()
         })
 
         it('shows a label for the element if there is a value', function() {
@@ -275,7 +275,7 @@ describe('Interface Components', function() {
             const label = wrapper.find(Text)
 
             // sanity check
-            expect(label).to.have.length(1)
+            expect(label).toHaveLength(1)
 
             // we grab the location from a propgator with dereferenced anchors
             const propagator = elementsWithLocations(store.getState().diagram.elements).propagators[0]
@@ -286,9 +286,9 @@ describe('Interface Components', function() {
             const labelProps = label.props()
 
             // make sure it was passed the right props
-            expect(labelProps.x).to.equal(labelLocation.x)
-            expect(labelProps.y).to.equal(labelLocation.y)
-            expect(labelProps.children).to.equal('a')
+            expect(labelProps.x).toEqual(labelLocation.x)
+            expect(labelProps.y).toEqual(labelLocation.y)
+            expect(labelProps.children).toEqual('a')
         })
     })
 })

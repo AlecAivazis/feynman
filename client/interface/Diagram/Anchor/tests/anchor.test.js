@@ -20,46 +20,6 @@ const Test = (props) =>(
 
 describe('Interface Components', function() {
     describe('Anchor', function() {
-        it('updates the appropriate entry in the store when dragged (snaps to grid)', function() {
-            this.skip()
-            // a store to test with
-            const store = createStore()
-            // add an anchor
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 50
-                }
-            ))
-
-            // mount the anchor/diagram combo
-            const wrapper = mount(<Test store={store} />)
-
-            // obtain a reference to the dnd backend
-            const backend = wrapper.get(0).getManager().getBackend()
-            // get the handler id of the anchor
-            const sourceId = wrapper.find(DraggableAnchor).get(0).getHandlerId()
-
-            // the location to move the anchor to
-            const move = {x: 398, y: 205}
-
-            // move the anchor 50 to the right
-            backend.simulateBeginDrag([sourceId], {
-                clientOffset: move, // this should be offset by sidebarWidth
-                getSourceClientOffset: () => ({x: 0, y: 0})
-            })
-
-            const info = {pan: {x: 0, y: 0}}
-
-            // figure out the move in the diagram coordinates
-            const expectedMove = fixPositionToGrid(relativePosition(move, info), store.getState().diagram.info.gridSize)
-
-            // make sure the anchor was moved to the appropriate place
-            expect(store.getState().diagram.elements.anchors[1].x).to.equal(expectedMove.x)
-            expect(store.getState().diagram.elements.anchors[1].y).to.equal(expectedMove.y)
-        })
-
         it('clicking on the anchor selects it', function() {
                         // a store to test with
             const store = createStore()
@@ -78,7 +38,7 @@ describe('Interface Components', function() {
             wrapper.find(ConnectedAnchor).simulate('mouseDown')
 
             // make sure there is only one selected element
-            expect(store.getState().diagram.elements.selection.anchors).to.deep.equal([1])
+            expect(store.getState().diagram.elements.selection.anchors).toEqual([1])
         })
 
         it('gets mounted with default config', function() {
@@ -109,7 +69,7 @@ describe('Interface Components', function() {
                 if (config === 'fixed') continue
 
                 // make sure the prop matches the default value
-                expect(props[config]).to.equal(defaultConfig[config])
+                expect(props[config]).toEqual(defaultConfig[config])
             }
         })
 
@@ -140,7 +100,7 @@ describe('Interface Components', function() {
             wrapper.find(ConnectedAnchor).at(0).simulate('mouseDown')
 
             // make sure the selection has both entries still
-            expect(store.getState().diagram.elements.selection.anchors).to.deep.equal([1,2])
+            expect(store.getState().diagram.elements.selection.anchors).toEqual([1,2])
         })
     })
 })

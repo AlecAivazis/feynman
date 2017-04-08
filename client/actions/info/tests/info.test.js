@@ -28,7 +28,7 @@ describe('Action Creators', function() {
             const title = 'hello'
 
             // make sure the action is expected
-            expect(setDiagramTitle(title)).to.deep.equal({
+            expect(setDiagramTitle(title)).toEqual({
                 type: SET_TITLE,
                 payload: title,
             })
@@ -39,7 +39,7 @@ describe('Action Creators', function() {
             const pan = {x: 10}
 
             // make sure the action is expected
-            expect(panDiagram(pan)).to.deep.equal({
+            expect(panDiagram(pan)).toEqual({
                 type: PAN_DIAGRAM,
                 payload: pan,
             })
@@ -47,21 +47,21 @@ describe('Action Creators', function() {
 
         it('toggle the grid', function() {
             // all we care about is the type
-            expect(togglePatternModal()).to.deep.equal({
+            expect(togglePatternModal()).toEqual({
                 type: TOGGLE_PATTERN_MODAL,
             })
         })
 
         it('toggle the grid', function() {
             // all we care about is the type
-            expect(toggleGrid()).to.deep.equal({
+            expect(toggleGrid()).toEqual({
                 type: TOGGLE_GRID,
             })
         })
 
         it('toggle the export modal', function() {
             // all we care about is the type
-            expect(toggleExportModal()).to.deep.equal({
+            expect(toggleExportModal()).toEqual({
                 type: TOGGLE_EXPORT_MODAL,
             })
         })
@@ -71,7 +71,7 @@ describe('Action Creators', function() {
             const size = 20
 
             // all we care about is the type
-            expect(setGridSize(size)).to.deep.equal({
+            expect(setGridSize(size)).toEqual({
                 type: SET_GRID_SIZE,
                 payload: size
             })
@@ -79,33 +79,33 @@ describe('Action Creators', function() {
 
         it('toggle the hotkeys', function() {
             // all we care about is the type
-            expect(toggleHotkeys()).to.deep.equal({
+            expect(toggleHotkeys()).toEqual({
                 type: TOGGLE_HOTKEYS,
             })
         })
 
         it('toggle the anchors', function() {
             // all we care about is the type
-            expect(toggleAnchors()).to.deep.equal({
+            expect(toggleAnchors()).toEqual({
                 type: TOGGLE_ANCHORS,
             })
         })
 
         it('zoom set', function(){
-            expect(setZoom(1.0)).to.deep.equal({
+            expect(setZoom(1.0)).toEqual({
                 type: SET_ZOOM,
                 payload: 1.0,
             })
         })
 
         it('zoom in', function(){
-            expect(zoomIn()).to.deep.equal({
+            expect(zoomIn()).toEqual({
                 type: ZOOM_IN,
             })
         })
 
         it('zoom out', function(){
-            expect(zoomOut()).to.deep.equal({
+            expect(zoomOut()).toEqual({
                 type: ZOOM_OUT,
             })
         })
@@ -122,7 +122,7 @@ describe('Action Creators', function() {
                 // create an instance of the thunk with the mocked storage
                 thunk = togglePatternModalInitialVis(storage)
                 // we need a dispatch we can check against
-                dispatch = sinon.spy()
+                dispatch = jest.fn()
             })
 
             it('inverts the current state in local storage', function() {
@@ -130,7 +130,7 @@ describe('Action Creators', function() {
                 thunk(dispatch, store.getState)
 
                 // make sure dispatch was called with the correct action
-                dispatch.should.have.been.calledWith({
+                expect(dispatch).toHaveBeenCalledWith({
                     type: TOGGLE_PATTERN_INITIAL_VIS,
                 })
             })
@@ -140,7 +140,7 @@ describe('Action Creators', function() {
                 thunk(dispatch, store.getState)
 
                 // make sure dispatch was called with the correct action
-                storage.getItem(fieldName).should.deep.equal(
+                expect(storage.getItem(fieldName)).toEqual(
                     !store.getState().diagram.info.patternModalInitalVis
                 )
             })

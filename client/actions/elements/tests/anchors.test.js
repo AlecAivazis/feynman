@@ -23,7 +23,7 @@ describe('Action Creators', function() {
                 }
 
                 // make sure dispatch was called with the appropriate body
-                expect(addAnchors(anchor)).to.deep.equal({
+                expect(addAnchors(anchor)).toEqual({
                     type: ADD_ANCHORS,
                     payload: [anchor]
                 })
@@ -45,7 +45,7 @@ describe('Action Creators', function() {
                 ]
 
                 // make sure dispatch was called with the appropriate body
-                expect(addAnchors(...anchors)).to.deep.equal({
+                expect(addAnchors(...anchors)).toEqual({
                     type: ADD_ANCHORS,
                     payload: anchors
                 })
@@ -60,7 +60,7 @@ describe('Action Creators', function() {
                 }
 
                 // make sure dispatch was called with the appropriate body
-                expect(setAnchorLocations(anchor)).to.deep.equal({
+                expect(setAnchorLocations(anchor)).toEqual({
                     type: SET_ANCHOR_LOCATIONS,
                     payload: [anchor]
                 })
@@ -82,18 +82,18 @@ describe('Action Creators', function() {
                 ]
 
                 // make sure dispatch was called with the appropriate body
-                expect(setAnchorLocations(...anchors)).to.deep.equal({
+                expect(setAnchorLocations(...anchors)).toEqual({
                     type: SET_ANCHOR_LOCATIONS,
                     payload: anchors
                 })
             })
 
             it('align selected anchors', function() {
-                expect(alignSelectedAnchors('vertical')).to.deep.equal({
+                expect(alignSelectedAnchors('vertical')).toEqual({
                     type: ALIGN_SELECTED_ANCHORS,
                     payload: 'vertical',
                 })
-            }) 
+            })
         })
     })
 })

@@ -46,7 +46,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there is a grid
-            expect(wrapper.find(Grid)).to.have.length(1)
+            expect(wrapper.find(Grid)).toHaveLength(1)
         })
 
         it('hides the grid when the store says so', function() {
@@ -66,7 +66,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there is a grid
-            expect(wrapper.find(Grid)).to.have.length(0)
+            expect(wrapper.find(Grid)).toHaveLength(0)
         })
 
         it('hides the grid when the gridSize is zero', function() {
@@ -89,7 +89,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there is a grid
-            expect(wrapper.find(Grid)).to.have.length(0)
+            expect(wrapper.find(Grid)).toHaveLength(0)
         })
 
         it('produces a propagator for each entry in the store', function() {
@@ -132,7 +132,7 @@ describe('Interface Components', function() {
             const expected = Object.values(initialState.propagators).length + 2
 
             // make sure there are two fermions in the diagram
-            expect(wrapper.find(Propagator)).to.have.length(expected)
+            expect(wrapper.find(Propagator)).toHaveLength(expected)
         })
 
         it('renders Anchors when appropriate', function() {
@@ -162,7 +162,7 @@ describe('Interface Components', function() {
             const wrapper = mount(<Test store={store}/>)
 
             // make sure there are two Anchors in the diagram
-            expect(wrapper.find(Anchor)).to.have.length(2)
+            expect(wrapper.find(Anchor)).toHaveLength(2)
         })
 
         it('clicking on diagram clears selection', function() {
@@ -193,7 +193,7 @@ describe('Interface Components', function() {
             wrapper.find(Diagram).simulate('mouseDown')
 
             // make sure the selection is clear
-            expect(store.getState().diagram.elements.selection.anchors).to.have.length(0)
+            expect(store.getState().diagram.elements.selection.anchors).toHaveLength(0)
         })
 
         it('passes selected state onto the appropriate anchor components', function() {
@@ -226,10 +226,10 @@ describe('Interface Components', function() {
             })
 
             // make sure such an element exist
-            expect(anchor).to.not.have.length(0)
+            expect(anchor).not.toHaveLength(0)
 
             // make sure the anchor was told to render selected
-            expect(anchor.props().selected).to.be.true
+            expect(anchor.props().selected).toBeTruthy
         })
 
         it('passes selected state onto the appropriate propagator components', function() {
@@ -270,10 +270,10 @@ describe('Interface Components', function() {
             const anchor = wrapper.find(Propagator)
 
             // make sure such an element exist
-            expect(anchor).to.not.have.length(0)
+            expect(anchor).not.toHaveLength(0)
 
             // make sure the anchor was told to render selected
-            expect(anchor.props().selected).to.be.true
+            expect(anchor.props().selected).toBeTruthy
         })
 
         it('passes selected state onto the appropriate text components', function() {
@@ -301,10 +301,10 @@ describe('Interface Components', function() {
             const anchor = wrapper.find(Text)
 
             // make sure such an element exist
-            expect(anchor).to.not.have.length(0)
+            expect(anchor).not.toHaveLength(0)
 
             // make sure the anchor was told to render selected
-            expect(anchor.props().selected).to.be.true
+            expect(anchor.props().selected).toBeTruthy
         })
 
         it('has the transform to accomodate the diagram pan', function() {
@@ -321,7 +321,7 @@ describe('Interface Components', function() {
             const svg = wrapper.find('g.diagram')
 
             // make sure the svg element has the transform prop to match the pan
-            expect(svg.props().transform).to.equal(
+            expect(svg.props().transform).toEqual(
                SvgMatrix().translate(10).transformString
             )
         })
@@ -352,7 +352,7 @@ describe('Interface Components', function() {
             const wrapper = mount(<Test store={store}/>)
 
             // make sure there are two text elements
-            expect(wrapper.find(Text)).to.have.length(2)
+            expect(wrapper.find(Text)).toHaveLength(2)
         })
 
         it('renders a shape for each entry in the store', function() {
@@ -381,7 +381,7 @@ describe('Interface Components', function() {
             const wrapper = mount(<Test store={store}/>)
 
             // make sure there are two text elements
-            expect(wrapper.find(Shape)).to.have.length(2)
+            expect(wrapper.find(Shape)).toHaveLength(2)
 
         })
     })

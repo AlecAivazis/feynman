@@ -21,7 +21,7 @@ describe('"Reusable" Components', function() {
             )
 
             // make sure there is a div in the view
-            expect(wrapper.find('div')).to.have.length(1)
+            expect(wrapper.find('div')).toHaveLength(1)
         })
 
         it('barfs if there are multiple children', function() {
@@ -40,7 +40,7 @@ describe('"Reusable" Components', function() {
             )
 
             // make sure that fails
-            expect(wrapper).to.throw(Error)
+            expect(wrapper).toThrow(Error)
         })
     })
 })

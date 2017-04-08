@@ -10,7 +10,7 @@ describe('Action Creators', function() {
                 // update a field
                 storage.setItem("hello", "world")
                 // make sure we updated the internal data structure
-                expect(storage.value.hello).to.equal('world')
+                expect(storage.value.hello).toEqual('world')
             })
 
             it('can retrieve fields', function() {
@@ -19,7 +19,7 @@ describe('Action Creators', function() {
                 // update an internal field
                 storage.value.hello = "world"
                 // make sure we updated the internal data structure
-                expect(storage.getItem("hello")).to.equal('world')
+                expect(storage.getItem("hello")).toEqual('world')
             })
 
             it("can be cleared", function() {
@@ -30,7 +30,7 @@ describe('Action Creators', function() {
                 // clear the storage object
                 storage.clear()
                 // make sure the field updated is empty
-                expect(storage.getItem("hello")).to.not.exist
+                expect(storage.getItem("hello")).not.toBeDefined()
             })
         })
     })

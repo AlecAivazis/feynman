@@ -15,7 +15,7 @@ describe('Action Creators', function() {
                 }
 
                 // make sure the action reflects the expectation
-                expect(addPropagators(propagator)).to.deep.equal({
+                expect(addPropagators(propagator)).toEqual({
                     type: ADD_PROPAGATORS,
                     payload: [propagator],
                 })
@@ -35,7 +35,7 @@ describe('Action Creators', function() {
                 ]
 
                 // make sure the action reflects the expectation
-                expect(addPropagators(...propagators)).to.deep.equal({
+                expect(addPropagators(...propagators)).toEqual({
                     type: ADD_PROPAGATORS,
                     payload: propagators,
                 })

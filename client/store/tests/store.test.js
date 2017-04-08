@@ -5,7 +5,7 @@ import store, { createStore } from '..'
 describe('Application store', function() {
     it('is a valid redux store', function() {
         const store = createStore()
-        expect(store.getState()).to.exist
+        expect(store.getState()).toBeDefined()
     })
 
     describe('Factory', function() {
@@ -13,7 +13,7 @@ describe('Application store', function() {
             // create a mock store
             const mockStore = createStore()
             // make sure it has the info reducer
-            expect(mockStore.getState().diagram.elements.propagators).to.exist
+            expect(mockStore.getState().diagram.elements.propagators).toBeDefined()
         })
     })
 })
