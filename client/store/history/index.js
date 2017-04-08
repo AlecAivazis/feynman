@@ -4,12 +4,17 @@ import { Map, Stack, fromJS } from 'immutable'
 // history is implemented as a store enhancer (higher-order reducer)
 export default function historyEnhancer(reducer) {
     // the reducer's initial state
-    const wrappedInitial = reducer({}, undefined)
+    const wrappedInitial = reducer(undefined, {})
     // the initial state of the enhanced reducer
     const initialState = {
         history: Map({
-            head: 1,
-            log: Stack.of([fromJS(wrappedInitial)])
+            head: 0,
+            log: Stack.of([
+                Map({
+                    message: '',
+                    state: fromJS(wrappedInitial),
+                })
+            ])
         })
     }
 
