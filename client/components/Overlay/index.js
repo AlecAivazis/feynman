@@ -1,5 +1,6 @@
 // external imports
 import React from 'react'
+import PropTypes from 'prop-types'
 // local imports
 import styles from './styles'
 import Header from './Header'
@@ -20,9 +21,9 @@ const Overlay = ({addon, title, children, hide, onClick, style, ...unusedProps})
 )
 
 Overlay.PropTypes = {
-    hide: React.PropTypes.func.isRequired,
-    addon: React.PropTypes.element,
-    style: React.PropTypes.object,
+    hide: PropTypes.func.isRequired,
+    addon: PropTypes.element,
+    style: PropTypes.object,
 }
 
 export default Overlay

@@ -1,5 +1,6 @@
 // external imports
 import React from 'react'
+import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 // local imports
@@ -12,9 +13,9 @@ import { snapElement, snapPropagator } from './snap'
 class Splittable extends React.Component {
 
     static propsTypes = {
-        element: React.PropTypes.string.isRequired,
-        split: React.PropTypes.func.isRequired,
-        type: React.PropTypes.string.isRequired
+        element: PropTypes.string.isRequired,
+        split: PropTypes.func.isRequired,
+        type: PropTypes.string.isRequired
     }
 
     static defaultProps = {

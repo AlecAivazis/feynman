@@ -1,14 +1,15 @@
 // external imports
 import React from 'react'
+import PropTypes from 'prop-types'
 // local imports
 import styles from './styles'
 
 
 const PaletteItem = ({style, image, element, onMouseDown, config, ...unusedProps}) => (
-    <div 
-        style={{...styles.paletteItem, ...style}} 
+    <div
+        style={{...styles.paletteItem, ...style}}
         onMouseDown={event => onMouseDown({image, event, config})}
-        {...unusedProps} 
+        {...unusedProps}
     >
         {/* the static image */}
         <img style={styles.image} src={image}/>
@@ -16,9 +17,9 @@ const PaletteItem = ({style, image, element, onMouseDown, config, ...unusedProps
 )
 
 PaletteItem.propTypes = {
-    style: React.PropTypes.string,
-    image: React.PropTypes.string,
-    config: React.PropTypes.object.isRequired
+    style: PropTypes.string,
+    image: PropTypes.string,
+    config: PropTypes.object.isRequired
 }
 
 export default PaletteItem

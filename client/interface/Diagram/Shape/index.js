@@ -1,5 +1,6 @@
 // external imports
 import React from 'react'
+import PropTypes from 'prop-types'
 // local imports
 import { Splittable } from 'components'
 import Parton from './Parton'
@@ -19,9 +20,9 @@ const Shape = ({kind, ...element}) => {
 }
 
 Shape.propTypes = {
-    kind: React.PropTypes.string,
-    color: React.PropTypes.string,
-    r: React.PropTypes.number,
+    kind: PropTypes.string,
+    color: PropTypes.string,
+    r: PropTypes.number,
 }
 
 Shape.defaultProps = {

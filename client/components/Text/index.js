@@ -1,5 +1,6 @@
 // external imports
 import React from 'react'
+import PropTypes from 'prop-types'
 import queryString from 'query-string'
 
 const Text = ({math, children, x, y, color, ...unused}) => {
@@ -27,11 +28,11 @@ Text.defaultProps = {
 }
 
 Text.propTypes = {
-    math: React.PropTypes.bool,
-    children: React.PropTypes.string,
-    color: React.PropTypes.string,
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
+    math: PropTypes.bool,
+    children: PropTypes.string,
+    color: PropTypes.string,
+    x: PropTypes.number,
+    y: PropTypes.number,
 }
 
 export default Text

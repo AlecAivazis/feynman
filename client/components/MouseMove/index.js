@@ -1,5 +1,6 @@
 // external imports
 import React from 'react'
+import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 // local imports
@@ -9,9 +10,9 @@ import { fixDeltaToGrid } from 'utils'
 class MouseMove extends React.Component {
 
     static propTypes = {
-        down: React.PropTypes.func,
-        up: React.PropTypes.func,
-        move: React.PropTypes.func,
+        down: PropTypes.func,
+        up: PropTypes.func,
+        move: PropTypes.func,
     }
 
     static defaultProps = {
