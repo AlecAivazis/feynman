@@ -8,3 +8,4 @@ src/server/static/client.js
 server/server
 *~
 .tmp/
+coverage/
