@@ -67,6 +67,7 @@ describe('Utils', function() {
             store.dispatch(addElements({
                 type: 'shapes',
                 id: 1,
+                kind: 'parton',
                 x: 50,
                 y: 50,
                 r: 50
@@ -75,8 +76,8 @@ describe('Utils', function() {
             // add an anchor that will b e constrained to the shape
             store.dispatch(addAnchors({
                 id: 1,
-                x: 110,
-                y: 100,
+                x: 50,
+                y: 110,
                 constraint: 1,
             }))
 
@@ -84,7 +85,7 @@ describe('Utils', function() {
                 anchors: [
                     {
                         id: 1,
-                        x: 100,
+                        x: 50,
                         y: 100,
                         constraint: 1,
                     },

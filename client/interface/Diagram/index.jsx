@@ -87,19 +87,6 @@ class Diagram extends React.Component {
                 <g className="diagram" transform={this.transformString}>
                     {/* order matters here (last shows up on top) */}
                     {info.showGrid && info.gridSize > 0 && <Grid/>}
-                    {propagators.map(element => (
-                        <Propagator
-                            {...element}
-                            key={element.id}
-                            selected={selection.propagators && selection.propagators.includes(element.id)}
-                        />
-                    ))}
-                    {info.showAnchors && anchors.map(anchor => (
-                        <Anchor {...anchor}
-                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
-                            key={anchor.id}
-                        />
-                    ))}
                     {Object.values(elements.text).map(element => (
                         <Text
                             {...element}
@@ -112,6 +99,19 @@ class Diagram extends React.Component {
                             {...element}
                             selected={selection.shapes && selection.shapes.includes(element.id)}
                             key={element.id}
+                        />
+                    ))}
+                    {propagators.map(element => (
+                        <Propagator
+                            {...element}
+                            key={element.id}
+                            selected={selection.propagators && selection.propagators.includes(element.id)}
+                        />
+                    ))}
+                    {info.showAnchors && anchors.map(anchor => (
+                        <Anchor {...anchor}
+                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
+                            key={anchor.id}
                         />
                     ))}
 
