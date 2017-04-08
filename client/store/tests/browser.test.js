@@ -1,9 +1,9 @@
 // local imports
 import { createStore } from 'store'
 
-describe('Reducers', function() {
-    describe('Browser reducer', function() {
-        it('has width attribute', function() {
+describe('Reducers', () => {
+    describe('Browser reducer', () => {
+        test('has width attribute', () => {
             // create a store to test with
             const mock = createStore()
 
@@ -11,7 +11,7 @@ describe('Reducers', function() {
             expect(mock.getState().browser.width).toEqual(window.innerWidth)
         })
 
-        it('has height attribute', function() {
+        test('has height attribute', () => {
             // create a store to test with
             const mock = createStore()
 

@@ -3,9 +3,9 @@ import elementsInRegion from '../elementsInRegion'
 import { createStore } from 'store'
 import { addAnchors, addPropagators, addElements } from 'actions/elements'
 
-describe('Utils', function() {
-    describe("Elements in Region", function() {
-        it('can locate anchors within a given region', function() {
+describe('Utils', () => {
+    describe('Elements in Region', () => {
+        test('can locate anchors within a given region', () => {
             // a store to test with
             const store = createStore()
 
@@ -49,7 +49,7 @@ describe('Utils', function() {
             expect(inside).toEqual([{type: "anchors", id: 1}, {type: "anchors", id: 2}])
         })
 
-        it('can locate propagators within a given region', function() {
+        test('can locate propagators within a given region', () => {
             // a store to test with
             const store = createStore()
 
@@ -114,7 +114,7 @@ describe('Utils', function() {
             expect(inside).toEqual([{type: "propagators", id: 1}])
         })
 
-        it('can locate text elements within a given region', function() {
+        test('can locate text elements within a given region', () => {
             // a store to test with
             const store = createStore()
 

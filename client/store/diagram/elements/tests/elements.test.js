@@ -18,11 +18,11 @@ import {initialState as intialSelection} from '../selection'
 import {initialState as initialReducerState} from '..'
 
 
-describe('Reducers', function() {
-    describe('Elements reducer', function() {
-        describe('Merging', function() {
+describe('Reducers', () => {
+    describe('Elements reducer', () => {
+        describe('Merging', () => {
 
-            it('merges anchors that are located at the same location', function() {
+            test('merges anchors that are located at the same location', () => {
                 // the location of the conflict
                 const coords = {
                     x: 50,
@@ -64,7 +64,7 @@ describe('Reducers', function() {
                 expect(Object.values(mergedState.anchors)).toHaveLength(2)
             })
 
-            it('replaces anchor references when merging', function() {
+            test('replaces anchor references when merging', () => {
                 // the location of the conflict
                 const coords = {
                     x: 50,
@@ -105,7 +105,7 @@ describe('Reducers', function() {
                 expect(mergedState.propagators[1].anchor1).toEqual(1)
             })
 
-            it('can select the resulting element after merge', function() {
+            test('can select the resulting element after merge', () => {
                 // the location of the conflict
                 const coords = {
                     x: 50,
@@ -131,7 +131,7 @@ describe('Reducers', function() {
                 expect(mergedState.selection.anchors).toEqual([1])
             })
 
-            it('merges multiple elements at once', function() {
+            test('merges multiple elements at once', () => {
                 // the location of the conflict
                 const coords = {
                     x: 50,
@@ -182,7 +182,7 @@ describe('Reducers', function() {
                 expect(mergedState.anchors[5]).not.toBeDefined()
             })
 
-            it('applies constraints if there is an overlap between an anchor and parton', function() {
+            test('applies constraints if there is an overlap between an anchor and parton', () => {
                 // start off with some anchors
                 const anchorState = reducer(undefined, addAnchors(
                     {
@@ -211,25 +211,25 @@ describe('Reducers', function() {
                 expect(mergedState.anchors[1].constraint).toEqual(1)
             })
 
-            it('barfs if merging onto an undefined id', function() {
+            test('barfs if merging onto an undefined id', () => {
                 expect(() => reducer(undefined, mergeElements(undefined, true))).toThrow(Error)
             })
 
-            it('barfs if merging onto a non-existant id', function() {
+            test('barfs if merging onto a non-existant id', () => {
                 expect(() => reducer(undefined, mergeElements({type: "anchors"}, true))).toThrow(Error)
             })
         })
 
 
-        describe('Misc', function() {
-            it('has a default value', function() {
+        describe('Misc', () => {
+            test('has a default value', () => {
                 // pass an undefined current state
                 const val = reducer(undefined, {type: "init"})
                 // expect the default initial state
                 expect(val).toBeDefined()
             })
 
-            it('can clear all elements', function() {
+            test('can clear all elements', () => {
                 // add some anchors to a store
                 const initialState = reducer(undefined, addAnchors(
                     {
@@ -251,8 +251,8 @@ describe('Reducers', function() {
             })
         })
 
-        describe('Add Elements', function() {
-            it('responds to the ADD_ELEMENTS action', function() {
+        describe('Add Elements', () => {
+            test('responds to the ADD_ELEMENTS action', () => {
                 // the anchors to add
                 const anchors = {
                     1: {
@@ -274,9 +274,9 @@ describe('Reducers', function() {
             })
         })
 
-        describe('Update Elements', function() {
+        describe('Update Elements', () => {
 
-            it('responds to the SET_ELEMENT_ATTRS action', function() {
+            test('responds to the SET_ELEMENT_ATTRS action', () => {
                 // add some anchors to a store
                 const initialState = reducer(undefined, addAnchors(
                     {
@@ -302,7 +302,7 @@ describe('Reducers', function() {
                 expect(updatedState.anchors[1].x).toEqual(100)
             })
 
-            it('barfs if there is no id given', function() {
+            test('barfs if there is no id given', () => {
                 // the invalid action
                 const action = setElementAttrs({
                     type: 'foo',
@@ -312,7 +312,7 @@ describe('Reducers', function() {
                 expect(() => reducer(undefined, action)).toThrow(Error)
             })
 
-            it('barfs if there is no type given', function() {
+            test('barfs if there is no type given', () => {
                 // the invalid action
                 const action = setElementAttrs({
                     id: 1,
@@ -322,7 +322,7 @@ describe('Reducers', function() {
                 expect(() => reducer(undefined, action)).toThrow(Error)
             })
 
-            it('barfs if appropriate element cannot be found', function() {
+            test('barfs if appropriate element cannot be found', () => {
                 // the invalid action
                 const action = setElementAttrs({
                     type: 'foo',
@@ -334,8 +334,8 @@ describe('Reducers', function() {
             })
         })
 
-        describe('Delete', function() {
-            it('can delete elements', function() {
+        describe('Delete', () => {
+            test('can delete elements', () => {
                 // add some anchors to a store
                 const initialState = reducer(undefined, addAnchors(
                     {
@@ -360,7 +360,7 @@ describe('Reducers', function() {
                 expect(deletedState.anchors[1]).not.toBeDefined()
             })
 
-            it('throws an error when removing an element that doesn\'t exist', function() {
+            test('throws an error when removing an element that doesn\'t exist', () => {
                 // the action to delete elements
                 const action = deleteElements({
                     type: 'anchors',
@@ -371,7 +371,7 @@ describe('Reducers', function() {
                 expect(() => reducer(initialState, action)).toThrow(Error)
             })
 
-            it('removes associated propagators when removing an anchor', function() {
+            test('removes associated propagators when removing an anchor', () => {
                 // add some anchors to a store
                 const initialState = reducer(undefined, addAnchors(
                     {
@@ -422,7 +422,7 @@ describe('Reducers', function() {
                 expect(Object.keys(deletedState.propagators)).toHaveLength(1)
             })
 
-            it('deleting a selcted object deselects it', function() {
+            test('deleting a selcted object deselects it', () => {
                 // add some anchors to a store to start
                 const initialState = reducer(undefined, addAnchors(
                     {
@@ -455,8 +455,8 @@ describe('Reducers', function() {
         })
 
 
-        describe('Selection', function() {
-            it('responds to the SELECT_ELEMENTS action', function() {
+        describe('Selection', () => {
+            test('responds to the SELECT_ELEMENTS action', () => {
                 // add some anchors
                 const addAction = addAnchors(
                     {
@@ -493,7 +493,7 @@ describe('Reducers', function() {
                 expect(val.selection.anchors).toEqual(selection.map(({id}) => id))
             })
 
-            it('throws an error if selecting an anchor that doesn\'t exist', function() {
+            test('throws an error if selecting an anchor that doesn\'t exist', () => {
                 // the selection
                 const selection = [
                     {
@@ -507,7 +507,7 @@ describe('Reducers', function() {
                 expect(() => reducer(undefined, action)).toThrow(Error)
             })
 
-            it('responds to the CLEAR_SELECTION action', function() {
+            test('responds to the CLEAR_SELECTION action', () => {
                 // add some anchors
                 const addAction = addAnchors({
                     id: 1,
@@ -533,7 +533,7 @@ describe('Reducers', function() {
                 expect(clearedState.selection).toEqual(intialSelection)
             })
 
-            it('removes anchors with the DELETE_SELECTION action', function() {
+            test('removes anchors with the DELETE_SELECTION action', () => {
                 // add some anchors
                 const addAction = addAnchors({
                     id: 1,
@@ -561,7 +561,7 @@ describe('Reducers', function() {
                 expect(Object.keys(deleted.anchors)).toHaveLength(0)
             })
 
-            it('removes selected text elements when deleting selection', function() {
+            test('removes selected text elements when deleting selection', () => {
                 // start off with a text element
                 const withText = reducer(undefined, addElements({
                     type: 'text',
@@ -590,7 +590,7 @@ describe('Reducers', function() {
                 expect(deleted.text[1]).not.toBeDefined()
             })
 
-            it('removes selected shapes elements when deleting selection', function() {
+            test('removes selected shapes elements when deleting selection', () => {
                 // start off with a text element
                 const withShapes = reducer(undefined, addElements({
                     type: 'shapes',
@@ -620,7 +620,7 @@ describe('Reducers', function() {
 
             })
 
-            it('deleting a constraint removes any references', function() {
+            test('deleting a constraint removes any references', () => {
                 // add some anchors to a store to start
                 const initialState = reducer(undefined, addAnchors(
                     {
@@ -656,7 +656,7 @@ describe('Reducers', function() {
 
             })
 
-            it('removes associated propagators when removing a selected anchor', function() {
+            test('removes associated propagators when removing a selected anchor', () => {
                 // add some anchors
                 const withAnchors = reducer(undefined, addAnchors(
                     {

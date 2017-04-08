@@ -2,9 +2,9 @@
 import relativePosition from '../relativePosition'
 import { sidebarWidth } from 'interface/Sidebar/styles'
 
-describe('Utils', function() {
-    describe("Relative Position Util", function() {
-        it("Can correct coordinates", function() {
+describe('Utils', () => {
+    describe('Relative Position Util', () => {
+        test('Can correct coordinates', () => {
             const info = {pan: {x: 0, y: 0}}
             // for now, the only difference between absolute and diagram coordinates
             // is the sidebar width
@@ -14,7 +14,7 @@ describe('Utils', function() {
             })
         })
 
-        it('incorporate diagram pan in relative calculation', function() {
+        test('incorporate diagram pan in relative calculation', () => {
             const info = {
                 // the mock pan
                 pan: {

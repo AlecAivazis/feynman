@@ -15,10 +15,10 @@ import { elementsWithLocations } from 'utils'
 import { Text } from 'components'
 import relLocForLabel from './relLocForLabel'
 
-describe('Interface Components', function() {
-    describe('Diagram Element', function() {
+describe('Interface Components', () => {
+    describe('Diagram Element', () => {
 
-        it('renders an ElectroWeak', function() {
+        test('renders an ElectroWeak', () => {
             const store = createStore()
 
             // render a fermion through the diagram element
@@ -31,7 +31,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(ElectroWeak)).toHaveLength(1)
         })
 
-        it('renders a Fermion', function() {
+        test('renders a Fermion', () => {
             const store = createStore()
 
             // render a fermion through the diagram element
@@ -44,7 +44,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Fermion)).toHaveLength(1)
         })
 
-        it('renders a gluon', function() {
+        test('renders a gluon', () => {
             const store = createStore()
 
             // render a fermion through the diagram element
@@ -58,7 +58,7 @@ describe('Interface Components', function() {
 
         })
 
-        it('passes default config onto the rendered propagator', function() {
+        test('passes default config onto the rendered propagator', () => {
             const store = createStore()
 
             // render a fermion through the diagram element
@@ -86,7 +86,7 @@ describe('Interface Components', function() {
             }
         })
 
-        it('renders with selected prop equal true when appropriate', function() {
+        test('renders with selected prop equal true when appropriate', () => {
             // a store to start out with
             const store = createStore()
             // create some anchors
@@ -125,7 +125,7 @@ describe('Interface Components', function() {
             const props = fermion.props()
         })
 
-        it('can be selected with click', function() {
+        test('can be selected with click', () => {
             // a store to start out with
             const store = createStore()
             // create some anchors
@@ -163,7 +163,7 @@ describe('Interface Components', function() {
             expect(store.getState().diagram.elements.selection.propagators).toEqual([1])
         })
 
-        it('can compute the location for a label for a propagator', function() {
+        test('can compute the location for a label for a propagator', () => {
             // a store to start out with
             const store = createStore()
             // create some anchors
@@ -200,7 +200,7 @@ describe('Interface Components', function() {
             expect(location.y).toBeDefined()
         })
 
-        it('can compute the relative coordinates for a label given diagram coordiantes', function() {
+        test('can compute the relative coordinates for a label given diagram coordiantes', () => {
 
             // a store to start out with
             const store = createStore()
@@ -238,7 +238,7 @@ describe('Interface Components', function() {
             expect(location.labelLocation).toBeDefined()
         })
 
-        it('shows a label for the element if there is a value', function() {
+        test('shows a label for the element if there is a value', () => {
             // a store to start out with
             const store = createStore()
             // create some anchors

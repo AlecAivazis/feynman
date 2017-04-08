@@ -7,10 +7,10 @@ import Title from '..'
 import { createStore } from 'store'
 import { setDiagramTitle } from 'actions/info'
 
-describe('Interface Components', function() {
+describe('Interface Components', () => {
 
-    describe('Title Component', function() {
-        it('shows the title of the diagram', function() {
+    describe('Title Component', () => {
+        test('shows the title of the diagram', () => {
             // create a store to test with
             const store = createStore()
             // the title of the diagram

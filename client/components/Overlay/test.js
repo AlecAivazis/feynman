@@ -5,9 +5,9 @@ import { shallow, mount } from 'enzyme'
 import Overlay from '.'
 import Header from './Header'
 
-describe('"Reusable" Components', function() {
-    describe('Overlay', function() {
-        it('clicking on the background calls hide', function() {
+describe('"Reusable" Components', () => {
+    describe('Overlay', () => {
+        test('clicking on the background calls hide', () => {
             // a spy to track if hide is called
             const spy = jest.fn()
 
@@ -25,7 +25,7 @@ describe('"Reusable" Components', function() {
             expect(spy).toHaveBeenCalled()
         })
 
-        it('clicking on the content does not call hide', function() {
+        test('clicking on the content does not call hide', () => {
             // a spy to track if hide is called
             const spy = jest.fn()
 
@@ -43,7 +43,7 @@ describe('"Reusable" Components', function() {
             expect(spy).not.toHaveBeenCalled()
         })
 
-        it('places addon prop in the dom', function() {
+        test('places addon prop in the dom', () => {
             // the addon to the pass to the overlay
             const Foo = () => <div/>
             // we have to pass an instanstiated component

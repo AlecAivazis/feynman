@@ -6,29 +6,29 @@ import {
     redo,     REDO,
 } from 'actions/history'
 
-describe('Action Creators', function() {
-    describe('History', function() {
-        it('can commit the store with a message', function() {
+describe('Action Creators', () => {
+    describe('History', () => {
+        test('can commit the store with a message', () => {
             expect(commit('hello world')).toEqual({
                 type: COMMIT,
                 payload: 'hello world'
             })
         })
 
-        it('can goto a specific commit', function() {
+        test('can goto a specific commit', () => {
             expect(goto(123)).toEqual({
                 type: GOTO,
                 payload: 123
             })
         })
 
-        it('can undo history', function() {
+        test('can undo history', () => {
             expect(undo()).toEqual({
                 type: UNDO,
             })
         })
 
-        it('can redo history', function() {
+        test('can redo history', () => {
             expect(redo()).toEqual({
                 type: REDO,
             })

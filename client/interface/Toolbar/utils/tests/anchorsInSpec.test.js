@@ -2,16 +2,16 @@
 import { anchorsInSpec } from '..'
 import * as specMap from '../../specs'
 
-describe('Utils', function() {
-    describe('AnchorsInSpec util', function() {
-        it('gracefully handles null spec', function() {
+describe('Utils', () => {
+    describe('AnchorsInSpec util', () => {
+        test('gracefully handles null spec', () => {
             // create an invalid spec
             const spec = null
             // searching through this spec should generate an error
             expect(anchorsInSpec(spec)).toEqual([])
         })
 
-        it('returns the anchors in a propagator spec', function () {
+        test('returns the anchors in a propagator spec', () => {
             // create a propagator spec
             const spec = specMap.propagators({
                 x: 50,
@@ -27,14 +27,14 @@ describe('Utils', function() {
             expect(anchors).toHaveLength(2)
         })
 
-        it('handles text types', function() {
+        test('handles text types', () => {
             // the spec for text
             const spec = {element: {type: 'text', value: 'hello', x: 50, y: 1000}}
             // there are no anchors in text
             expect(anchorsInSpec(spec)).toHaveLength(0)
         })
 
-        it('handles shapes types', function() {
+        test('handles shapes types', () => {
             // the spec for text
             const spec = {element: {type: 'shapes', kind: 'parton', x: 50, y: 1000}}
             // there are no anchors in text

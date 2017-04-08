@@ -4,9 +4,9 @@ import { mount } from 'enzyme'
 // local imports
 import ColorPicker, { Picker, colors } from '.'
 
-describe('"Reusable" Components', function() {
-    describe('Color picker', function() {
-        it('starts off hidden', function() {
+describe('"Reusable" Components', () => {
+    describe('Color picker', () => {
+        test('starts off hidden', () => {
             // render the color picker
             const wrapper = mount(
                 <ColorPicker />
@@ -16,7 +16,7 @@ describe('"Reusable" Components', function() {
             expect(wrapper.find(Picker)).toHaveLength(0)
         })
 
-        it('becomes visible when the user clicks on the thumbnail', function() {
+        test('becomes visible when the user clicks on the thumbnail', () => {
             // render the color picker
             const wrapper = mount(
                 <ColorPicker />
@@ -29,7 +29,7 @@ describe('"Reusable" Components', function() {
             expect(wrapper.find(Picker)).toHaveLength(1)
         })
 
-        it('passes the correct value to the onChange handler', function() {
+        test('passes the correct value to the onChange handler', () => {
             // the color to test against
             const color = colors[0]
 

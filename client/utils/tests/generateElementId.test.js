@@ -4,9 +4,9 @@ import { addAnchors } from 'actions/elements'
 import { generateElementId } from '..'
 import range from '../range'
 
-describe('Utils', function() {
-    describe('Generate Element Id Util', function() {
-        it('can generate a unique id from an empty state', function() {
+describe('Utils', () => {
+    describe('Generate Element Id Util', () => {
+        test('can generate a unique id from an empty state', () => {
             // create a store to test with
             const { anchors } = createStore().getState().diagram.elements
             // generate an id for the anchor
@@ -16,7 +16,7 @@ describe('Utils', function() {
             expect(anchors[id]).not.toBeDefined()
         })
 
-        it('can generate a non-conflicting id with a non-empty state', function() {
+        test('can generate a non-conflicting id with a non-empty state', () => {
             // create a state to test with
             const store = createStore()
 
@@ -39,7 +39,7 @@ describe('Utils', function() {
             expect(anchors[id]).not.toBeDefined()
         })
 
-        it('can generate multiple unique ids', function() {
+        test('can generate multiple unique ids', () => {
             // create a state to test with
             const { anchors } = createStore().getState().diagram.elements
 

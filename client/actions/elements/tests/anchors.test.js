@@ -9,10 +9,10 @@ const emptyState = jest.fn().mockReturnValue({
     }
 })
 
-describe('Action Creators', function() {
-    describe('Elements', function() {
-        describe('Anchors', function() {
-            it('add single anchor', function() {
+describe('Action Creators', () => {
+    describe('Elements', () => {
+        describe('Anchors', () => {
+            test('add single anchor', () => {
                 // the configuration for the anchor to add
                 const anchor = {
                     id: 1,
@@ -27,7 +27,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('add multiple anchors', function() {
+            test('add multiple anchors', () => {
                 // the configuration for the anchor to add
                 const anchors = [
                     {
@@ -49,7 +49,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('set single anchor location', function() {
+            test('set single anchor location', () => {
                 // the configuration for the anchor to add
                 const anchor = {
                     id: 1,
@@ -64,7 +64,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('set multiple anchor locations', function() {
+            test('set multiple anchor locations', () => {
                 // the configuration for the anchor to add
                 const anchors = [
                     {
@@ -86,7 +86,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('align selected anchors', function() {
+            test('align selected anchors', () => {
                 expect(alignSelectedAnchors('vertical')).toEqual({
                     type: ALIGN_SELECTED_ANCHORS,
                     payload: 'vertical',

@@ -4,10 +4,10 @@ import { put } from 'redux-saga/effects'
 import { addAnchors, addPropagators, addElements } from 'actions/elements'
 import { placeElementWorker } from '..'
 
-describe('Sagas', function() {
-    describe('Place Elements', function() {
-        describe('Diagram', function() {
-            it('can place a full diagram', function() {
+describe('Sagas', () => {
+    describe('Place Elements', () => {
+        describe('Diagram', () => {
+            test('can place a full diagram', () => {
                 // the description of the anchor to create
                 const desc = {
                     type: 'pattern',
@@ -51,7 +51,7 @@ describe('Sagas', function() {
                 )
             })
 
-            it('can place propagators with inline anchor defs', function() {
+            test('can place propagators with inline anchor defs', () => {
                 // the description of the anchor to create
                 const desc = {
                     type: 'pattern',
@@ -116,7 +116,7 @@ describe('Sagas', function() {
                 expect(gen.next().done).toBeTruthy
             })
 
-            it('patterns can include text', function() {
+            test('patterns can include text', () => {
                 // the description of the anchor to create
                 const desc = {
                     type: 'pattern',
@@ -149,8 +149,8 @@ describe('Sagas', function() {
             })
         })
 
-        describe('Shapes', function() {
-            it('patterns place shapes before anchors to avoid null constraint references', function() {
+        describe('Shapes', () => {
+            test('patterns place shapes before anchors to avoid null constraint references', () => {
                 // the description of the anchor to create
                 const desc = {
                     type: 'pattern',

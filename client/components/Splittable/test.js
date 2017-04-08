@@ -6,9 +6,9 @@ import { Provider } from 'react-redux'
 import { createStore } from 'store'
 import Splittable from '../Splittable'
 
-describe('"Reusable" Components', function() {
-    describe('Splittable', function() {
-        it('renders its child', function() {
+describe('"Reusable" Components', () => {
+    describe('Splittable', () => {
+        test('renders its child', () => {
             // render a wrapped div
             const wrapper = mount(
                 <Provider store={createStore()}>
@@ -24,7 +24,7 @@ describe('"Reusable" Components', function() {
             expect(wrapper.find('div')).toHaveLength(1)
         })
 
-        it('barfs if there are multiple children', function() {
+        test('barfs if there are multiple children', () => {
             // render a splittable around two divs
             const wrapper = () => mount(
                 <Provider store={createStore()}>

@@ -1,9 +1,9 @@
 // local imports
 import round from '../round'
 
-describe('Utils', function() {
-    describe('Round util', function() {
-        it('returns correct value', function () {
+describe('Utils', () => {
+    describe('Round util', () => {
+        test('returns correct value', () => {
             // the table of test cases
             const table = [
                 [5, 10, 10],

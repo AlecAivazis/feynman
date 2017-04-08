@@ -4,10 +4,10 @@ import { put } from 'redux-saga/effects'
 import { addAnchors } from 'actions/elements'
 import placeAnchor from '../placeAnchor'
 
-describe('Sagas', function() {
-    describe('Place Elements', function() {
-        describe('Anchors', function() {
-            it('can place an anchor', function() {
+describe('Sagas', () => {
+    describe('Place Elements', () => {
+        describe('Anchors', () => {
+            test('can place an anchor', () => {
                 // the description of the anchor to create
                 const desc = {
                     id: 1,

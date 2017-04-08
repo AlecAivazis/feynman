@@ -13,10 +13,10 @@ import {
     addElements,          ADD_ELEMENTS,
 } from 'actions/elements'
 
-describe('Action Creators', function() {
-    describe('Elements', function() {
-        describe('Selection', function() {
-            it('select single element', function() {
+describe('Action Creators', () => {
+    describe('Elements', () => {
+        describe('Selection', () => {
+            test('select single element', () => {
                 // the elements to select
                 const selection = {
                     type: 'anchor',
@@ -30,7 +30,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('select mulitple elements', function() {
+            test('select mulitple elements', () => {
                 // the elements to select
                 const selection = [
                     {
@@ -50,14 +50,14 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('clears selection', function() {
+            test('clears selection', () => {
                 // check the structure of the selection anction
                 expect(clearSelection()).toEqual({
                     type: CLEAR_SELECTION,
                 })
             })
 
-            it('delete selection', function() {
+            test('delete selection', () => {
                 // make sure the action has the correct structure
                 expect(deleteSelection()).toEqual({
                     type: DELETE_SELECTION,
@@ -65,8 +65,8 @@ describe('Action Creators', function() {
             })
         })
 
-        describe('Add elements', function() {
-            it('is structured appropriately', function() {
+        describe('Add elements', () => {
+            test('is structured appropriately', () => {
                 // the elements to add
                 const elements = [{type: "anchors", x: 50, y: 100}, {type: "propagators", x: 70, y:100}]
                 expect(addElements(...elements)).toEqual({
@@ -75,13 +75,13 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('throws an error if adding an element without a type', function() {
+            test('throws an error if adding an element without a type', () => {
                 expect(() => addElements({x: 50})).toThrow(Error)
             })
         })
 
-        describe('Other', function() {
-            it('merge elements', function() {
+        describe('Other', () => {
+            test('merge elements', () => {
                 // just check the type of the action
                 expect(mergeElements(1)).toEqual({
                     type: MERGE_ELEMENTS,
@@ -92,14 +92,14 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('clear elements', function() {
+            test('clear elements', () => {
                 // just check the type of the action
                 expect(clearElements()).toEqual({
                     type: CLEAR_ELEMENTS
                 })
             })
 
-            it('merge elements with selection', function() {
+            test('merge elements with selection', () => {
                 // just check the type of the action
                 expect(mergeElements(1, true)).toEqual({
                     type: MERGE_ELEMENTS,
@@ -110,7 +110,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('place element', function() {
+            test('place element', () => {
                 expect(placeElement({hello:'world'})).toEqual({
                     type: PLACE_ELEMENTS,
                     payload: {
@@ -119,7 +119,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('load pattern', function() {
+            test('load pattern', () => {
                 // a pattern fixture
                 const pattern = {name:"hello"}
                 // check the structure of the action
@@ -129,7 +129,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('set single element attrs', function() {
+            test('set single element attrs', () => {
                 // the elements to select
                 const attr = {
                     id: 2,
@@ -143,7 +143,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('set multiple elements attrs', function() {
+            test('set multiple elements attrs', () => {
                 // the elements to select
                 const attrs = [
                     {
@@ -163,7 +163,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('can delete single element', function() {
+            test('can delete single element', () => {
                 // the delete payload
                 const del = {type: 'anchors', id: 1}
                 // test the structure of the action
@@ -173,7 +173,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('can delete multiple elements', function() {
+            test('can delete multiple elements', () => {
                 // the delete payload
                 const del = [
                     {type: 'anchors', id: 1},
@@ -186,7 +186,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('move selected anchors', function() {
+            test('move selected anchors', () => {
                 // the move order
                 const move = {
                     x: 50,

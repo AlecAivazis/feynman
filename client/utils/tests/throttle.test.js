@@ -1,9 +1,9 @@
 // local imports
 import throttle from '../throttle'
 
-describe('Utils', function() {
-    describe('Throttle decorator util', function() {
-        it('can throttle a class method', function () {
+describe('Utils', () => {
+    describe('Throttle decorator util', () => {
+        test('can throttle a class method', () => {
             // a spy to count invocations
             const spy = jest.fn()
 

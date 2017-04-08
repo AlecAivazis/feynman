@@ -1,13 +1,13 @@
 // local imports
 import ceil from '../ceil'
 
-describe('Utils', function() {
-    describe('Ceil to util', function() {
-        it('returns the correct value', function () {
+describe('Utils', () => {
+    describe('Ceil to util', () => {
+        test('returns the correct value', () => {
             expect(ceil(75, 50)).toEqual(100)
         })
 
-        it('handles zero', function() {
+        test('handles zero', () => {
             expect(ceil(75, 0)).toEqual(75)
         })
     })

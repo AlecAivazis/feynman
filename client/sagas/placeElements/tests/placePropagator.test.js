@@ -4,10 +4,10 @@ import { put } from 'redux-saga/effects'
 import { addAnchors, addPropagators } from 'actions/elements'
 import placePropagator from '../placePropagator'
 
-describe('Sagas', function() {
-    describe('Place Elements', function() {
-        describe('Propagators', function() {
-            it('can place a propagator of a given kind', function() {
+describe('Sagas', () => {
+    describe('Place Elements', () => {
+        describe('Propagators', () => {
+            test('can place a propagator of a given kind', () => {
                 // the description of the propagator to create
                 const desc = {
                     id: 1,
@@ -45,7 +45,7 @@ describe('Sagas', function() {
                 expect(gen.next().done).toBeTruthy
             })
 
-            it('can place a propagator associated with a given anchor', function() {
+            test('can place a propagator associated with a given anchor', () => {
                 // the description for the propagator to create
                 const desc = {
                     id: 1,
@@ -66,7 +66,7 @@ describe('Sagas', function() {
                 expect(gen.next().done).toBeTruthy
             })
 
-            it('can create a heterogenous propagator (anchor reference and creation)', function() {
+            test('can create a heterogenous propagator (anchor reference and creation)', () => {
                 // the description of the propagator to create
                 const desc = {
                     id: 1,

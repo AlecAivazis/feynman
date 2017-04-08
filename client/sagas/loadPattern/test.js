@@ -4,9 +4,9 @@ import { put } from 'redux-saga/effects'
 import { loadPatternWorker } from '.'
 import { loadPattern, placeElement, clearElements } from 'actions/elements'
 
-describe('Sagas', function() {
-    describe('Load Pattern', function() {
-        it('loads a pattern over the current state', function() {
+describe('Sagas', () => {
+    describe('Load Pattern', () => {
+        test('loads a pattern over the current state', () => {
             // the description of the anchor to create
             const desc = {
                 elements: "hello"

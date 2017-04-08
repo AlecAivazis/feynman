@@ -4,9 +4,9 @@ import { createStore } from 'store'
 import { addAnchors, addPropagators } from 'actions/elements'
 import { diagramBoundingBox } from '..'
 
-describe('Utils', function() {
-    describe("Diagram Bounding Box", function() {
-        it('can compute the bounding box of a collection of anchors', function() {
+describe('Utils', () => {
+    describe('Diagram Bounding Box', () => {
+        test('can compute the bounding box of a collection of anchors', () => {
             // a store to test with
             const store = createStore()
 
@@ -41,7 +41,7 @@ describe('Utils', function() {
             }
         })
 
-        it('includes dimensions', function() {
+        test('includes dimensions', () => {
             // a store to test with
             const store = createStore()
 

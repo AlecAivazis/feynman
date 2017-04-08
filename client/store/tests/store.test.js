@@ -2,14 +2,14 @@
 import store, { createStore } from '..'
 
 
-describe('Application store', function() {
-    it('is a valid redux store', function() {
+describe('Application store', () => {
+    test('is a valid redux store', () => {
         const store = createStore()
         expect(store.getState()).toBeDefined()
     })
 
-    describe('Factory', function() {
-        it('produces an app store', function() {
+    describe('Factory', () => {
+        test('produces an app store', () => {
             // create a mock store
             const mockStore = createStore()
             // make sure it has the info reducer
