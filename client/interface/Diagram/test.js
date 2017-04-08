@@ -10,11 +10,12 @@ import { createStore } from 'store'
 import { toggleGrid, toggleAnchors, setGridSize, panDiagram } from 'actions/info'
 import { addPropagators, addAnchors, selectElements, addElements } from 'actions/elements'
 import { initialState } from 'store/diagram/elements'
-import Diagram, { exportDiagramImageEvent } from '..'
-import Propagator from '../Propagator'
-import Grid from '../Grid'
-import Anchor from '../Anchor'
-import Text from '../Text'
+import Diagram, { exportDiagramImageEvent } from '.'
+import Propagator from './Propagator'
+import Grid from './Grid'
+import Anchor from './Anchor'
+import Text from './Text'
+import Shape from './Shape'
 
 
 // a diagram wrapped in the right context
@@ -352,6 +353,36 @@ describe('Interface Components', function() {
 
             // make sure there are two text elements
             expect(wrapper.find(Text)).to.have.length(2)
+        })
+
+        it('renders a shape for each entry in the store', function() {
+            // create a verion of the store
+            const store = createStore()
+
+            // add some anchors
+            store.dispatch(addElements(
+                {
+                    type: 'shapes',
+                    id: 1,
+                    x: 50,
+                    y: 50,
+                    r: 10,
+                },
+                {
+                    type: 'shapes',
+                    id: 2,
+                    x: 500,
+                    y: 50,
+                    r: 10,
+                }
+            ))
+
+            // render the diagram in the wrapper
+            const wrapper = mount(<Test store={store}/>)
+
+            // make sure there are two text elements
+            expect(wrapper.find(Shape)).to.have.length(2)
+
         })
     })
 })

@@ -58,25 +58,13 @@ export const propagators = ({x, y, info, elements, config}) => {
     }
 }
 
-export const text = ({x, y, info, elements, config}) => {
-    const id = generateElementId(elements.text)
-    return {
-        element: {
-            id,
-            type: "text",
-            value: "text!",
-            x: round(x, info.gridSize),
-            y: round(y, info.gridSize),
-        },
-        select: {
-            id,
-            type: 'text',
-        },
-        remove: [
-            {
-                type: 'text',
-                id,
-            }
-        ]
+// the default spec used for single elements that are positioned at one location
+export const element = ({x, y, info, elements, config, type}) => ({
+    element: {
+        id: generateElementId(elements[type]),
+        type,
+        ...config,
+        x: round(x, info.gridSize),
+        y: round(y, info.gridSize),
     }
-}
+})

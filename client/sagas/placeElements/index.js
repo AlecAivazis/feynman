@@ -5,6 +5,7 @@ import { PLACE_ELEMENTS } from 'actions/elements/types'
 import placePropagator from './placePropagator'
 import placeAnchor from './placeAnchor'
 import placeText from './placeText'
+import placeShapes from './placeShapes'
 import { flatMap } from 'utils'
 
 // the dispatch table mapping element type to the saga that creates it
@@ -12,6 +13,7 @@ const dispatch = {
     propagators: placePropagator,
     anchors: placeAnchor,
     text: placeText,
+    shapes: placeShapes,
 }
 
 export function* placeElementWorker({type:action, payload: {type, ...element}}) {
@@ -30,6 +32,15 @@ export function* placeElementWorker({type:action, payload: {type, ...element}}) 
 
         // the anchors to add
         const anchors = element.anchors ? [...element.anchors, ...associatedAnchors] : associatedAnchors
+
+        //// add elements
+
+        // if there are shapes to add, we have to do it first
+        // to avoid null constraint references
+        if (element.shapes) {
+            // add the text elements
+            yield* dispatch.shapes(...element.shapes)
+        }
 
         // if there are anchors to add
         if (anchors.length > 0) {

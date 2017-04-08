@@ -7,7 +7,7 @@ import MultiRow from '../MultiRow'
 import Row from '../Row'
 import Label from '../Label'
 
-const SliderRow = ({label, value, onChange, initial, ...unusedProps}) => (
+const SliderRow = ({label, value, onChange, initial, max, min, step, ...unusedProps}) => (
     <MultiRow style={{marginBottom: 25}}>
         <Row style={{marginBottom: 0}}>
             <Label>{label}:</Label>
@@ -20,9 +20,9 @@ const SliderRow = ({label, value, onChange, initial, ...unusedProps}) => (
         <Row style={styles.sliderRow}>
             <Slider
                 value={value}
-                min={1}
-                max={10}
-                step={1}
+                min={min}
+                max={max}
+                step={step}
                 onChange={onChange}
             />
         </Row>

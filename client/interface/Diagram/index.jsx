@@ -6,18 +6,20 @@ import autobind from 'autobind-decorator'
 import { saveAs } from 'file-saver'
 import SvgMatrix from 'svg-matrix'
 // local imports
+import { brightBlue } from 'colors'
 import styles from './styles'
 import Grid from './Grid'
 import Propagator from './Propagator'
 import Anchor from './Anchor'
 import Text from './Text'
+import Shape from './Shape'
 import SelectionRectangle from './SelectionRectangle'
 import {
     relativePosition,
     elementsInRegion,
     generateElementId,
     fixPositionToGrid,
-    propagatorsWithLocation,
+    elementsWithLocations,
     diagramBoundingBox,
     dataUrlToBlob,
     svgToDataURL,
@@ -54,7 +56,7 @@ class Diagram extends React.Component {
         const elementStyle = info.showGrid ? styles.containerWithGrid : styles.containerWithoutGrid
 
         // figure the concrete locations for each propgators (dereference the anchors)
-        const propagators = propagatorsWithLocation(elements)
+        const { propagators, anchors } = elementsWithLocations(elements)
 
         // render the various components of the diagram
         return (
@@ -63,28 +65,53 @@ class Diagram extends React.Component {
                 style={{...elementStyle, ...style}}
                 onMouseDown={this._mouseDown}
             >
+                {/* patterns used in the application */}
+                <pattern x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse" id="pattern-parton-lines" viewBox="0 0 10 10">
+                    <path
+                        d="M10-5-10,15M15,0,0,15M0-5-20,15"
+                        fill="none"
+                        stroke="#b8b8b8"
+                        style={{strokeWidth: 2}}
+                    />
+                </pattern>
+                <pattern x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse" id="pattern-parton-lines-selected" viewBox="0 0 10 10">
+                    <path
+                        d="M10-5-10,15M15,0,0,15M0-5-20,15"
+                        fill="none"
+                        stroke={brightBlue}
+                        style={{strokeWidth: 2}}
+                    />
+                </pattern>
+
                 {/* wrap the whole diagram in a group so we can transform the diagram when exporting */}
                 <g className="diagram" transform={this.transformString}>
                     {/* order matters here (last shows up on top) */}
                     {info.showGrid && info.gridSize > 0 && <Grid/>}
-                    {propagators.map((element, i) => (
-                        <Propagator
-                            {...element}
-                            key={i}
-                            selected={selection.propagators && selection.propagators.includes(element.id)}
-                        />
-                    ))}
-                    {info.showAnchors && Object.values(elements.anchors).map(anchor => (
-                        <Anchor {...anchor}
-                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
-                            key={anchor.id}
-                        />
-                    ))}
                     {Object.values(elements.text).map(element => (
                         <Text
                             {...element}
                             key={element.id}
                             selected={selection.text && selection.text.includes(element.id)}
+                        />
+                    ))}
+                    {Object.values(elements.shapes).map(element => (
+                        <Shape
+                            {...element}
+                            selected={selection.shapes && selection.shapes.includes(element.id)}
+                            key={element.id}
+                        />
+                    ))}
+                    {propagators.map(element => (
+                        <Propagator
+                            {...element}
+                            key={element.id}
+                            selected={selection.propagators && selection.propagators.includes(element.id)}
+                        />
+                    ))}
+                    {info.showAnchors && anchors.map(anchor => (
+                        <Anchor {...anchor}
+                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
+                            key={anchor.id}
                         />
                     ))}
 

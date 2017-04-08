@@ -11,7 +11,7 @@ import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import Gluon from './Gluon'
 import locationForLabel from './locationForLabel'
-import { propagatorsWithLocation } from 'utils'
+import { elementsWithLocations } from 'utils'
 import { Text } from 'components'
 import relLocForLabel from './relLocForLabel'
 
@@ -190,7 +190,7 @@ describe('Interface Components', function() {
             }))
 
             // we grab the location from a propgator with dereferenced anchors
-            const propagator = propagatorsWithLocation(store.getState().diagram.elements)[0]
+            const propagator = elementsWithLocations(store.getState().diagram.elements).propagators[0]
 
             // get the location for the label
             const location = locationForLabel(propagator)
@@ -228,7 +228,7 @@ describe('Interface Components', function() {
             }))
 
             // we grab the location from a propgator with dereferenced anchors
-            const propagator = propagatorsWithLocation(store.getState().diagram.elements)[0]
+            const propagator = elementsWithLocations(store.getState().diagram.elements).propagators[0]
 
             // get the location for the label
             const location = relLocForLabel({x: 75, y: 150}, propagator)
@@ -278,7 +278,7 @@ describe('Interface Components', function() {
             expect(label).to.have.length(1)
 
             // we grab the location from a propgator with dereferenced anchors
-            const propagator = propagatorsWithLocation(store.getState().diagram.elements)[0]
+            const propagator = elementsWithLocations(store.getState().diagram.elements).propagators[0]
             // the expected location for the label
             const labelLocation = locationForLabel(propagator)
 

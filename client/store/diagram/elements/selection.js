@@ -1,7 +1,8 @@
 // exteranl imports
 import _ from 'lodash'
 // local imports
-import { SELECT_ELEMENTS, CLEAR_SELECTION, } from 'actions/elements'
+import { SELECT_ELEMENTS, CLEAR_SELECTION, DELETE_SELECTION } from 'actions/elements'
+import { flatMap } from 'utils'
 
 export const noIdErr = "cannot set location of anchor without explicit id"
 
@@ -9,6 +10,7 @@ export const initialState = {
     anchors: [],
     propagators: [],
     text: [],
+    shapes: [],
 }
 
 // the reducer slice that manages just the selection state but has reference

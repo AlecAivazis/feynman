@@ -7,7 +7,7 @@ import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { selectElements, mergeElements, moveSelectedElements, setElementAttrs } from 'actions/elements'
 import { throttle, fixDeltaToGrid, round } from 'utils'
 import { EventListener } from 'components'
-import { snapAnchor, snapPropagator } from './snap'
+import { snapElement, snapPropagator } from './snap'
 
 class Splittable extends React.Component {
 
@@ -95,15 +95,11 @@ class Splittable extends React.Component {
 
             // the mapping of type to snap utils
             const snap = {
-                'anchors': snapAnchor,
                 'propagators': snapPropagator,
-            }[moveType]
+            }[moveType] || snapElement
 
-            // if we are moving an element that we need to snap to the grid first
-            if (snap) {
-                // make sure the anchor starts from the grid
-                snap({id: moveTarget, elements,  info, setElementAttrs})
-            }
+            // make sure the element starts from the grid
+            snap({id: moveTarget, elements,  info, setElementAttrs, type: moveType})
 
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
@@ -137,9 +133,12 @@ class Splittable extends React.Component {
         const { mergeElements } = this.props
 
         // if this component was being dragged
-        if (origin && moveType === 'anchors') {
+        if (origin) {
             // tell the store to clean up any overlapping elements (and select the resulting element)
-            mergeElements(moveTarget, true)
+            mergeElements({
+                type: moveType,
+                id: moveTarget
+            }, true)
         }
 
         // track the state of the mouse
@@ -173,7 +172,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     selectElement: ({id, type}) => dispatch(selectElements({type, id})),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
     // tell the store to merge overlapping elements
-    mergeElements: (id, select) => dispatch(mergeElements(id, select)),
+    mergeElements: (...args) => dispatch(mergeElements(...args)),
     // update particular attributes of elements
     setElementAttrs: (...attrs) => dispatch(setElementAttrs(...attrs)),
 

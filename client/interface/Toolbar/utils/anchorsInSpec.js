@@ -13,13 +13,8 @@ export default function anchorsInSpec(doc) {
         // there are two anchors in a propagator labeled anchor1 and anchor2
         return [spec.anchor1, spec.anchor2]
     }
-    // if we are looking at text
-    if (type === 'text') {
-        // there are no anchors in a text element
-        return []
-    }
     // otherwise its a type we don't recognize
     else {
-        throw new Error(`Cannot find anchors in spec with type ${type}.`)
+        return []
     }
 }

@@ -7,6 +7,7 @@ import styles from './styles'
 import AnchorSummary from './AnchorSummary'
 import PropagatorSummary from './PropagatorSummary'
 import TextSummary from './TextSummary'
+import ShapeSummary from './ShapeSummary'
 import { flatMap } from 'utils'
 import { deleteSelection } from 'actions/elements'
 import ButtonRow from './ButtonRow'
@@ -24,6 +25,8 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
                 && <PropagatorSummary propagators={selection.propagators} showDelete={!hideDelete}/>}
             {(selection.text || []).length > 0
                 && <TextSummary text={selection.text} showDelete={!hideDelete}/>}
+            {(selection.shapes || []).length > 0
+                && <ShapeSummary shapes={selection.shapes} showDelete={!hideDelete}/>}
             {hideDelete &&  (
                 <ButtonRow>
                     <RedButton onClick={deleteElements} style={styles.deleteButton}>

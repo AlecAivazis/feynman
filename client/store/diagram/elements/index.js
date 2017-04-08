@@ -18,69 +18,148 @@ import { flatMap } from 'utils'
 export const initialState = {
     anchors: {},
     propagators: {},
-    constraints: [],
     text: {},
     selection: {},
+    shapes: {},
 }
+import Shape from 'interface/Diagram/Shape'
+const { r:defaultR, kind:defaultKind } = Shape.defaultProps
 
 export default (state = initialState, {type, payload}) => {
 
     // if the action indicates we need to dedupe the elements
     if (type === MERGE_ELEMENTS) {
-        // the payload is the id of the anchor we need to merge with
-        const {id:sourceId, select=false} = payload
 
         // make a deep copy of the state that we can play with
         const local = _.cloneDeep(state)
-        const source = local.anchors[sourceId]
 
-        // if the payload is undefined or there isn't an anchor with that id
-        if (!source) {
-            throw new Error(`Could not find anchor with id ${sourceId}`)
-        }
+        // the list of unique anchors
+        const uniqAnchors = {}
+        // a map of old anchor ids to their replacement
+        const anchorReplaceMap = {}
 
-        // a list of duplicated elements
-        const dupes = []
-
-        // for each anchor
+        // check anchors for "conflicts"
         for (const anchor of Object.values(local.anchors)) {
-            // if the anchor is in the same location as our target
-            if (anchor.id !== sourceId &&
-                    anchor.x === source.x && anchor.y === source.y) {
-                // add the anchor's id to the list
-                dupes.push(anchor.id)
+            // since an anchor is defined in this context by its location we
+            // need to see if there is another anchor with the same location
+            // in the unique list
+            const match = Object.values(uniqAnchors).find(({x, y}) => anchor.x === x && anchor.y === y)
+            // if there was a such match
+            if (match) {
+               // then we have to replace references to this anchor with the unique one
+               anchorReplaceMap[anchor.id] = match.id
+            }
+            // otherwise there was no match
+            else {
+                // then add the anchor to the list
+                uniqAnchors[anchor.id] = anchor
             }
         }
 
-        // the element we are going to merge onto
-        const mergeTarget = dupes[0]
+        // assign the unique set of anchors to the local copy
+        local.anchors = uniqAnchors
 
-        // if there are any dupes
-        if (dupes.length > 0) {
-            // visit each propagator to replace anchor references
-            for (const propagator of Object.values(local.propagators)) {
-                // if anchor1 is a reference to this element
-                if (propagator.anchor1 === sourceId) {
-                    // then the anchor1 needs to become the element replacing the source
-                    propagator.anchor1 = mergeTarget
-                // otherwise if anchor2 is a reference to this element
-                } else if (propagator.anchor2 === sourceId) {
-                    // then the anchor2 needs to become the element replacing the source
-                    propagator.anchor2 = mergeTarget
-                }
+        // each anchor can be constrained by at most one shape, so loop over anchors first
+        // so we can break when we find a shape
+        for (const anchor of Object.values(local.anchors)) {
+            // try to find a parton that overlaps
+            const shapeMatch = Object.values(local.shapes).find(({kind = defaultKind, x,  y, r = defaultR}) =>{
+                // compute the distance between the anchor and the shape
+                const dx = anchor.x - x
+                const dy = anchor.y - y
+                // if we are looking at a parton and the point is within our radius
+                return kind === 'parton' && Math.sqrt(dx*dx + dy*dy) <= r
+            })
+            // if there is a match
+            if (shapeMatch) {
+                // constrain the anchor to the shape
+                anchor.constraint = shapeMatch.id
+            }
+        }
+
+        // we might have to clean up references in propagators
+        for (const propagator of Object.values(local.propagators)) {
+            // if the propagators anchor1 needs to be replaced
+            if (anchorReplaceMap[propagator.anchor1]) {
+                // assign the appropriate replacement
+                propagator.anchor1 = anchorReplaceMap[propagator.anchor1]
+            }
+            // if the propagators anchor2 needs to be replaced
+            if (anchorReplaceMap[propagator.anchor2]) {
+                // assign the appropriate replacement
+                propagator.anchor2 = anchorReplaceMap[propagator.anchor2]
+            }
+        }
+
+        // // the payload is the id of the anchor we need to merge with
+        const {source:from, select=false} = payload
+        if (select && from.type === 'anchors') {
+            if (!from.id) {
+                throw new Error("Cannot select anchor after merging from an undefined element.")
             }
 
-            // remove the entry in the anchors object for the original anchor
-            Reflect.deleteProperty(local.anchors, sourceId)
-
-            // if we are supposed to select the resulting element
-            if (select) {
-                // use the mergeTarget as the only selection
-                local.selection.anchors = [mergeTarget]
-            }
+            // the element to select
+            const element = anchorReplaceMap[from.id]  || from.id
+            // use the mergeTarget as the only selection
+            local.selection.anchors = [element]
         }
 
         // return the new state
+        return local
+    }
+
+    // if the action indicates we need to delete the selection
+    // NOTE: this is here because the selection partial returns the selection
+    //       and this mutates the entire element store.
+    if (type === DELETE_SELECTION) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // the selected elements
+        const selectedAnchors = local.selection.anchors || []
+        const selectedPropagators = local.selection.propagators || []
+        const selectedText = local.selection.text || []
+        const selectedShapes = local.selection.shapes || []
+
+        // create labeled lists of selected elements
+        const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
+        const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
+        const text = selectedText.map(id => ({id, type: 'text'}))
+        const shapes = selectedShapes.map(id => ({id, type: "shapes"}))
+
+        // the list of propagators we need to include because of related anchors
+        const relatedProps = flatMap(selectedAnchors,
+            id => (
+                // the list of propagators with this id
+                (Object.values(local.propagators) || [])
+                       .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
+                       .map(({id}) => ({id, type: 'propagators'}))
+            )
+        )
+
+        // for each element we have to delete
+        for (const {type, id} of [...anchors, ...propagators, ...relatedProps, ...text, ...shapes]) {
+            // if that element still exists
+            if (local[type][id]) {
+                // remove the element
+                Reflect.deleteProperty(local[type], id)
+            }
+        }
+
+        // we need to make sure to clean up references to the shapes that we just removed
+        // one primary place for this is in the constraint field of anchors
+        for (const anchor of Object.values(local.anchors)) {
+            // if this anchor is constrained
+            if (anchor.constraint) {
+                // remove the constraint from the anchor
+                Reflect.deleteProperty(anchor, 'constraint')
+            }
+        }
+
+        // clear the selection
+        local.selection = initialSelection
+
+        // we're done here
         return local
     }
 
@@ -158,46 +237,6 @@ export default (state = initialState, {type, payload}) => {
         }
 
         // return our local copy
-        return local
-    }
-
-    // if the action indicates we need to delete the selection
-    if (type === DELETE_SELECTION) {
-        // create a copy we can play with
-        const local = _.cloneDeep(state)
-
-        // the selected elements
-        const selectedAnchors = local.selection.anchors || []
-        const selectedPropagators = local.selection.propagators || []
-        const selectedText = local.selection.text || []
-
-        // create labeled lists of selected elements
-        const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
-        const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
-        const text = selectedText.map(id => ({id, type: 'text'}))
-
-        // the list of propagators we need to include because of related anchors
-        const relatedProps = flatMap(selectedAnchors,
-            id => (
-                // the list of propagators with this id
-                (Object.values(local.propagators) || [])
-                       .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
-                       .map(({id}) => ({id, type: 'propagators'}))
-            )
-        )
-
-        // for each element we have to delete
-        for (const {type, id} of [...anchors, ...propagators, ...relatedProps, ...text]) {
-            // if that element still exists
-            if (local[type][id]) {
-                // remove the element
-                Reflect.deleteProperty(local[type], id)
-            }
-        }
-
-        // clear the selection
-        local.selection = initialSelection
-        // we're done here
         return local
     }
 

@@ -148,5 +148,50 @@ describe('Sagas', function() {
                 expect(gen.next().done).to.be.true
             })
         })
+
+        describe('Shapes', function() {
+            it('patterns place shapes before anchors to avoid null constraint references', function() {
+                // the description of the anchor to create
+                const desc = {
+                    type: 'pattern',
+                    anchors: [
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 60,
+                        }
+                    ],
+                    shapes: [
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 50,
+                            kind: "parton"
+                        }
+                    ]
+                }
+
+                // get the generator
+                const gen = placeElementWorker({type: 'hello', payload: desc})
+
+                // first make sure we added tests to avoid null constraint references
+                expect(gen.next().value).to.deep.equal(
+                    put(addElements(
+                        {
+                            type: 'shapes',
+                            ...desc.shapes[0]
+                        },
+                    ))
+                )
+
+                // then we add the anchors
+                expect(gen.next().value).to.deep.equal(
+                    put(addAnchors(...desc.anchors))
+                )
+
+                // make sure there isn't anything left
+                expect(gen.next().done).to.be.true
+            })
+        })
     })
 })

@@ -18,7 +18,7 @@ import {
     mergeElements,
 } from 'actions/elements'
 import { togglePatternModal } from 'actions/info'
-import { fixDeltaToGrid, relativePosition } from 'utils'
+import { fixDeltaToGrid, relativePosition, generateElementId, round } from 'utils'
 import { anchorsInSpec } from './utils'
 
 // WARNING: This component is is way more complicated that originally thought necessary.
@@ -83,12 +83,8 @@ class Toolbar extends React.Component {
 
     @autobind
     _mouseUp(event) {
-        // TODO: make mergeElements action creator take multiple target
-        // for each each we created
-        for (const {id} of anchorsInSpec(this.state.dragElement)) {
-            // perform any merges on overlapping anchors
-            this.props.mergeAnchors(id)
-        }
+        // clean up any changes we left behind
+        this.props.mergeAnchors()
 
         // clear any references we made while dragging
         this.setState({
@@ -126,12 +122,20 @@ class Toolbar extends React.Component {
                     // grab the type of the element we dragged
                     const { type, ...config } = this.state.elementDragConfig
 
+                    // make sure its a valid type
+                    if (!elements[type]) {
+                        throw new Error("Encounted unknown type " + type)
+                    }
+
+                    // find the spec for the element
+                    let spec = specMap[type] || specMap.element
+
                     // track that we have created an element
-                    dragElement = specMap[type]({...relativePosition(pos, info), info, elements, config})
+                    dragElement = spec({...relativePosition(pos, info), info, elements, config, type})
                     // create one with the appropriate spec
                     this.props.placeElement(dragElement.element)
                     // select the element we just created
-                    this.props.selectElement(dragElement.select)
+                    this.props.selectElement(dragElement.select || dragElement.element)
                 }
 
                 // the fixed target
@@ -162,7 +166,7 @@ class Toolbar extends React.Component {
                     // clear the current selection
                     this.props.clearSelection()
                     // delete it
-                    this.props.deleteElements(...this.state.dragElement.remove)
+                    this.props.deleteElements(...(this.state.dragElement.remove || [this.state.dragElement.element]))
 
                     // clear the drag element state
                     dragElement = null
