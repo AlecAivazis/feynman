@@ -1,7 +1,6 @@
 // external imports
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import sinon from 'sinon'
 // local imports
 import Overlay from '.'
 import Header from './Header'

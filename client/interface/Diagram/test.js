@@ -3,7 +3,6 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 import _ from 'lodash'
-import sinon from 'sinon'
 import SvgMatrix from 'svg-matrix'
 // local imports
 import { createStore } from 'store'

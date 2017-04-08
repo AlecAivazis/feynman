@@ -1,4 +1,3 @@
-import sinon from 'sinon'
 import 'babel-polyfill'
 // local imports
 import {

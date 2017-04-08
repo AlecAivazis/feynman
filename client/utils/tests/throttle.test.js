@@ -1,5 +1,3 @@
-// external imports
-import sinon from 'sinon'
 // local imports
 import throttle from '../throttle'
 
