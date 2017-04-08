@@ -1,7 +1,6 @@
 // external imports
 import React from 'react'
 import { mount } from 'enzyme'
-import sinon from 'sinon'
 // local imports
 import ColorPicker, { Picker, colors } from '.'
 

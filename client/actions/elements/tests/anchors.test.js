@@ -1,11 +1,9 @@
-// external imports
-import sinon from 'sinon'
 // local imports
 import { addAnchors, setAnchorLocations, alignSelectedAnchors } from '../creators'
 import { ADD_ANCHORS, SET_ANCHOR_LOCATIONS, ALIGN_SELECTED_ANCHORS } from '../types'
 
 // a stub for an empty getState
-const emptyState = sinon.stub().returns({
+const emptyState = jest.fn().mockReturnValue({
     elements: {
         anchors: []
     }

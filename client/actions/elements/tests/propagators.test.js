@@ -1,5 +1,3 @@
-// external imports
-import sinon from 'sinon'
 // local imports
 import { addPropagators, ADD_PROPAGATORS } from '..'
 
