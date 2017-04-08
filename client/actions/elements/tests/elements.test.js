@@ -24,7 +24,7 @@ describe('Action Creators', function() {
                 }
 
                 // check the structure of the selection anction
-                expect(selectElements(selection)).to.deep.equal({
+                expect(selectElements(selection)).toEqual({
                     type: SELECT_ELEMENTS,
                     payload: [selection]
                 })
@@ -44,7 +44,7 @@ describe('Action Creators', function() {
                 ]
 
                 // check the structure of the selection anction
-                expect(selectElements(...selection)).to.deep.equal({
+                expect(selectElements(...selection)).toEqual({
                     type: SELECT_ELEMENTS,
                     payload: selection
                 })
@@ -52,14 +52,14 @@ describe('Action Creators', function() {
 
             it('clears selection', function() {
                 // check the structure of the selection anction
-                expect(clearSelection()).to.deep.equal({
+                expect(clearSelection()).toEqual({
                     type: CLEAR_SELECTION,
                 })
             })
 
             it('delete selection', function() {
                 // make sure the action has the correct structure
-                expect(deleteSelection()).to.deep.equal({
+                expect(deleteSelection()).toEqual({
                     type: DELETE_SELECTION,
                 })
             })
@@ -69,21 +69,21 @@ describe('Action Creators', function() {
             it('is structured appropriately', function() {
                 // the elements to add
                 const elements = [{type: "anchors", x: 50, y: 100}, {type: "propagators", x: 70, y:100}]
-                expect(addElements(...elements)).to.deep.equal({
+                expect(addElements(...elements)).toEqual({
                     type: ADD_ELEMENTS,
                     payload: elements,
                 })
             })
 
             it('throws an error if adding an element without a type', function() {
-                expect(() => addElements({x: 50})).to.throw(Error)
+                expect(() => addElements({x: 50})).toThrow(Error)
             })
         })
 
         describe('Other', function() {
             it('merge elements', function() {
                 // just check the type of the action
-                expect(mergeElements(1)).to.deep.equal({
+                expect(mergeElements(1)).toEqual({
                     type: MERGE_ELEMENTS,
                     payload: {
                         source: 1,
@@ -94,14 +94,14 @@ describe('Action Creators', function() {
 
             it('clear elements', function() {
                 // just check the type of the action
-                expect(clearElements()).to.deep.equal({
+                expect(clearElements()).toEqual({
                     type: CLEAR_ELEMENTS
                 })
             })
 
             it('merge elements with selection', function() {
                 // just check the type of the action
-                expect(mergeElements(1, true)).to.deep.equal({
+                expect(mergeElements(1, true)).toEqual({
                     type: MERGE_ELEMENTS,
                     payload: {
                         source: 1,
@@ -111,7 +111,7 @@ describe('Action Creators', function() {
             })
 
             it('place element', function() {
-                expect(placeElement({hello:'world'})).to.deep.equal({
+                expect(placeElement({hello:'world'})).toEqual({
                     type: PLACE_ELEMENTS,
                     payload: {
                         hello: "world"
@@ -123,7 +123,7 @@ describe('Action Creators', function() {
                 // a pattern fixture
                 const pattern = {name:"hello"}
                 // check the structure of the action
-                expect(loadPattern(pattern)).to.deep.equal({
+                expect(loadPattern(pattern)).toEqual({
                     type: LOAD_PATTERN,
                     payload: pattern
                 })
@@ -137,7 +137,7 @@ describe('Action Creators', function() {
                 }
 
                 // check the structure of the set action
-                expect(setElementAttrs(attr)).to.deep.equal({
+                expect(setElementAttrs(attr)).toEqual({
                     type: SET_ELEMENT_ATTRS,
                     payload: [attr]
                 })
@@ -157,7 +157,7 @@ describe('Action Creators', function() {
                 ]
 
                 // check the structure of the set action
-                expect(setElementAttrs(...attrs)).to.deep.equal({
+                expect(setElementAttrs(...attrs)).toEqual({
                     type: SET_ELEMENT_ATTRS,
                     payload: attrs
                 })
@@ -167,7 +167,7 @@ describe('Action Creators', function() {
                 // the delete payload
                 const del = {type: 'anchors', id: 1}
                 // test the structure of the action
-                expect(deleteElements(del)).to.deep.equal({
+                expect(deleteElements(del)).toEqual({
                     type: DELETE_ELEMENTS,
                     payload: [del]
                 })
@@ -180,7 +180,7 @@ describe('Action Creators', function() {
                     {type: 'anchors', id: 2},
                 ]
                 // test the structure of the action
-                expect(deleteElements(...del)).to.deep.equal({
+                expect(deleteElements(...del)).toEqual({
                     type: DELETE_ELEMENTS,
                     payload: del
                 })
@@ -193,7 +193,7 @@ describe('Action Creators', function() {
                     y: 50
                 }
 
-                expect(moveSelectedElements(move)).to.deep.equal({
+                expect(moveSelectedElements(move)).toEqual({
                     type: MOVE_SELECTED_ELEMENTS,
                     payload: move,
                 })

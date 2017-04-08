@@ -14,7 +14,7 @@ describe('"Reusable" Components', function() {
             )
 
             // make sure there is no Picker visible
-            expect(wrapper.find(Picker)).to.have.length(0)
+            expect(wrapper.find(Picker)).toHaveLength(0)
         })
 
         it('becomes visible when the user clicks on the thumbnail', function() {
@@ -27,7 +27,7 @@ describe('"Reusable" Components', function() {
             wrapper.find('.colorThumbnail').simulate('click')
 
             // make sure there is no Picker visible
-            expect(wrapper.find(Picker)).to.have.length(1)
+            expect(wrapper.find(Picker)).toHaveLength(1)
         })
 
         it('passes the correct value to the onChange handler', function() {
@@ -35,7 +35,7 @@ describe('"Reusable" Components', function() {
             const color = colors[0]
 
             // something to inspect what's passed to the onChange handler
-            const spy = sinon.spy()
+            const spy = jest.fn()
 
             // render the color picker
             const wrapper = mount(
@@ -48,7 +48,7 @@ describe('"Reusable" Components', function() {
             wrapper.find('Swatch').at(0).simulate('click')
 
             // make sure the spy was correctly called
-            spy.should.have.been.calledWith(color)
+            expect(spy).toHaveBeenCalledWith(color)
         })
     })
 })

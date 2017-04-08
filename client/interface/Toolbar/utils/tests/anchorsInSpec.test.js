@@ -8,7 +8,7 @@ describe('Utils', function() {
             // create an invalid spec
             const spec = null
             // searching through this spec should generate an error
-            expect(anchorsInSpec(spec)).to.deep.equal([])
+            expect(anchorsInSpec(spec)).toEqual([])
         })
 
         it('returns the anchors in a propagator spec', function () {
@@ -24,21 +24,21 @@ describe('Utils', function() {
             const anchors = anchorsInSpec(spec)
 
             // there should be 2 anchors for any propagator
-            expect(anchors).to.have.length(2)
+            expect(anchors).toHaveLength(2)
         })
 
         it('handles text types', function() {
             // the spec for text
             const spec = {element: {type: 'text', value: 'hello', x: 50, y: 1000}}
             // there are no anchors in text
-            expect(anchorsInSpec(spec)).to.have.length(0)
+            expect(anchorsInSpec(spec)).toHaveLength(0)
         })
 
         it('handles shapes types', function() {
             // the spec for text
             const spec = {element: {type: 'shapes', kind: 'parton', x: 50, y: 1000}}
             // there are no anchors in text
-            expect(anchorsInSpec(spec)).to.have.length(0)
+            expect(anchorsInSpec(spec)).toHaveLength(0)
         })
     })
 })

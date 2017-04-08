@@ -16,17 +16,17 @@ describe('Sagas', function() {
             const gen = loadPatternWorker(loadPattern(desc))
 
             // the first thing to do is clear all visible elements
-            expect(gen.next().value).to.deep.equal(
+            expect(gen.next().value).toEqual(
                 put(clearElements())
             )
 
             // the next thing is to place the elements
-            expect(gen.next().value).to.deep.equal(
+            expect(gen.next().value).toEqual(
                 put(placeElement(desc.elements))
             )
 
             // make sure there isn't anything left
-            expect(gen.next().done).to.be.true
+            expect(gen.next().done).toBeTruthy
         })
     })
 })

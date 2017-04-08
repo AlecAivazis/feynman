@@ -27,7 +27,7 @@ describe('Reducers', function() {
 
             it('responds to the ADD_ANCHOR reducer', function() {
                 // make sure the state matches expectation
-                expect(store.getState().diagram.elements.anchors).to.deep.equal({
+                expect(store.getState().diagram.elements.anchors).toEqual({
                     [initialAnchor.id]: initialAnchor
                 })
             })
@@ -51,7 +51,7 @@ describe('Reducers', function() {
                 store.dispatch(addAnchors(...anchors))
 
                 // make sure the state matches expectation
-                expect(store.getState().diagram.elements.anchors).to.deep.equal({
+                expect(store.getState().diagram.elements.anchors).toEqual({
                     [initialAnchor.id]: initialAnchor,
                     [anchors[0].id]: anchors[0],
                     [anchors[1].id]: anchors[1],
@@ -68,7 +68,7 @@ describe('Reducers', function() {
                 }))
 
                 // make sure the id-conflicting action throws an error
-                expect(action).to.throw(Error)
+                expect(action).toThrow(Error)
             })
 
             it('can vertically align selected anchors', function() {
@@ -94,8 +94,8 @@ describe('Reducers', function() {
                 const expected = (100 + initialAnchor.x) / 2
 
                 // expect both anchors to have moved to the midpoint
-                expect(anchors[1].x).to.equal(expected)
-                expect(anchors[2].x).to.equal(expected)
+                expect(anchors[1].x).toEqual(expected)
+                expect(anchors[2].x).toEqual(expected)
             })
 
             it('can horizontally align selected anchors', function() {
@@ -126,14 +126,14 @@ describe('Reducers', function() {
                 const expected = (100 + initialAnchor.y) / 2
 
                 // expect both anchors to have moved to the midpoint
-                expect(anchors[1].y).to.equal(expected)
-                expect(anchors[2].y).to.equal(expected)
+                expect(anchors[1].y).toEqual(expected)
+                expect(anchors[2].y).toEqual(expected)
                 // and the third anchor to not have moved
-                expect(anchors[3].y).to.equal(500)
+                expect(anchors[3].y).toEqual(500)
             })
 
             it('barfs if aligning in an invalid direction', function() {
-                expect(() => store.dispatch(alignSelectedAnchors('foo'))).to.throw(Error)
+                expect(() => store.dispatch(alignSelectedAnchors('foo'))).toThrow(Error)
             })
 
         })

@@ -13,7 +13,7 @@ describe('Utils', function() {
             const id = generateElementId(anchors)
 
             // make sure the id is not taken
-            expect(anchors[id]).to.not.exist
+            expect(anchors[id]).not.toBeDefined()
         })
 
         it('can generate a non-conflicting id with a non-empty state', function() {
@@ -36,7 +36,7 @@ describe('Utils', function() {
             const id = generateElementId(anchors)
 
             // make sure the id is not taken
-            expect(anchors[id]).to.not.exist
+            expect(anchors[id]).not.toBeDefined()
         })
 
         it('can generate multiple unique ids', function() {
@@ -49,7 +49,7 @@ describe('Utils', function() {
             const ids = new Set(generateElementId(anchors, nIds))
 
             // make sure we have the correct number of unique ids
-            expect(ids.size).to.equal(nIds)
+            expect(ids.size).toEqual(nIds)
 
         })
     })

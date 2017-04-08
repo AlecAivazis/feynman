@@ -6,7 +6,7 @@ describe('Utils', function() {
         it("can correct coordinates", function() {
             // for now, the only difference between absolute and diagram coordinates
             // is the sidebar width
-            expect(fixPositionToGrid({x: 48, y: 102}, 50)).to.deep.equal({
+            expect(fixPositionToGrid({x: 48, y: 102}, 50)).toEqual({
                 x: 50,
                 y: 100,
             })
@@ -15,7 +15,7 @@ describe('Utils', function() {
         it ('doesn\'t round when gridsize is 0', function() {
             // for now, the only difference between absolute and diagram coordinates
             // is the sidebar width
-            expect(fixPositionToGrid({x: 48, y: 102}, 0)).to.deep.equal({
+            expect(fixPositionToGrid({x: 48, y: 102}, 0)).toEqual({
                 x: 48,
                 y: 102,
             })

@@ -51,7 +51,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there is a fermion summary
-            expect(wrapper.find(FermionSummary)).to.have.length(1)
+            expect(wrapper.find(FermionSummary)).toHaveLength(1)
         })
 
         it("shows a electroweak summary when there is a em propagator selected", function() {
@@ -91,7 +91,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there is a fermion summary
-            expect(wrapper.find(ElectroWeakSummary)).to.have.length(1)
+            expect(wrapper.find(ElectroWeakSummary)).toHaveLength(1)
         })
 
         it("shows a gluon summary when there is a gluon propagator selected", function() {
@@ -131,7 +131,7 @@ describe('Interface Components', function() {
             )
 
             // make sure there is a fermion summary
-            expect(wrapper.find(GluonSummary)).to.have.length(1)
+            expect(wrapper.find(GluonSummary)).toHaveLength(1)
         })
 
         it('hides the label input when there are multiple propgators selected', function() {
@@ -195,7 +195,7 @@ describe('Interface Components', function() {
             const input = wrapper.find(Input)
 
             // sanity check
-            expect(input).to.have.length(0)
+            expect(input).toHaveLength(0)
         })
     })
 })

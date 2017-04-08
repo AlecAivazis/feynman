@@ -31,7 +31,7 @@ describe('Utils', function() {
                 anchor2: 2,
             }))
 
-            expect(elementsWithLocations(store.getState().diagram.elements)).to.deep.equal({
+            expect(elementsWithLocations(store.getState().diagram.elements)).toEqual({
                 anchors: [
                     {
                         id: 1,
@@ -81,7 +81,7 @@ describe('Utils', function() {
                 constraint: 1,
             }))
 
-            expect(elementsWithLocations(store.getState().diagram.elements)).to.deep.equal({
+            expect(elementsWithLocations(store.getState().diagram.elements)).toEqual({
                 anchors: [
                     {
                         id: 1,

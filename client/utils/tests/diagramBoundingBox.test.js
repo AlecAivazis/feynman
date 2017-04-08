@@ -33,11 +33,11 @@ describe('Utils', function() {
             // make sure each anchor is contained in the bounding box
             for (const anchor of anchors) {
                 // make sure that the x value is contained in the box
-                expect(anchor.x).to.be.above(bb.x1)
-                expect(anchor.x).to.be.below(bb.x2)
+                expect(anchor.x).toBeGreaterThan(bb.x1)
+                expect(anchor.x).toBeLessThan(bb.x2)
                 // make sure that the y value is contained in the box
-                expect(anchor.y).to.be.above(bb.y1)
-                expect(anchor.y).to.be.below(bb.y2)
+                expect(anchor.y).toBeGreaterThan(bb.y1)
+                expect(anchor.y).toBeLessThan(bb.y2)
             }
         })
 
@@ -66,8 +66,8 @@ describe('Utils', function() {
             const bb = diagramBoundingBox(store.getState().diagram.elements)
 
             // make suree there is a height and width at least as big as the known value
-            expect(bb.width).to.be.at.least(anchors[1].x - anchors[0].x)
-            expect(bb.height).to.be.at.least(anchors[1].y - anchors[0].y)
+            expect(bb.width).toBeGreaterThanOrEqual(anchors[1].x - anchors[0].x)
+            expect(bb.height).toBeGreaterThanOrEqual(anchors[1].y - anchors[0].y)
         })
     })
 })

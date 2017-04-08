@@ -10,7 +10,7 @@ describe('"Reusable" Components', function() {
     describe('Overlay', function() {
         it('clicking on the background calls hide', function() {
             // a spy to track if hide is called
-            const spy = sinon.spy()
+            const spy = jest.fn()
 
             // mount the overlay
             const wrapper = shallow(
@@ -23,12 +23,12 @@ describe('"Reusable" Components', function() {
             wrapper.find('aside').simulate('click')
 
             // make sure the spy was called
-            spy.should.have.been.called
+            expect(spy).toHaveBeenCalled()
         })
 
         it('clicking on the content does not call hide', function() {
             // a spy to track if hide is called
-            const spy = sinon.spy()
+            const spy = jest.fn()
 
             // mount the overlay
             const wrapper = shallow(
@@ -41,7 +41,7 @@ describe('"Reusable" Components', function() {
             wrapper.find('section').simulate('click')
 
             // make sure the spy was called
-            spy.should.not.have.been.called
+            expect(spy).not.toHaveBeenCalled()
         })
 
         it('places addon prop in the dom', function() {
@@ -51,7 +51,7 @@ describe('"Reusable" Components', function() {
             const addon = <Foo />
 
             // a spy to track if hide is called
-            const spy = sinon.spy()
+            const spy = jest.fn()
 
             // mount the overlay
             const wrapper = mount(
@@ -61,7 +61,7 @@ describe('"Reusable" Components', function() {
             )
 
             // make sure the addon was rendere
-            expect(wrapper.find(Foo)).to.have.length(1)
+            expect(wrapper.find(Foo)).toHaveLength(1)
         })
     })
 })

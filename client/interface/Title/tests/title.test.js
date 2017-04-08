@@ -31,7 +31,7 @@ describe('Interface Components', function() {
                 <h1>
                     {title}
                 </h1>
-            )).to.be.true
+            )).toBeTruthy
         })
     })
 })

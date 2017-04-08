@@ -1,3 +1,5 @@
+// external imports
+import _ from 'lodash'
 // local imports
 import infoReducer from './info'
 import elementsReducer from './elements'

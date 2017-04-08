@@ -23,7 +23,7 @@ describe('Reducers', function() {
             // pass an undefined current state
             const val = reducer(undefined, {type: "init"})
             // expect the default initial state
-            expect(val).to.deep.equal(initialState)
+            expect(val).toEqual(initialState)
         })
 
         it('responds to the SET_TITLE action', function() {
@@ -32,7 +32,7 @@ describe('Reducers', function() {
             // get the mutated state after changing the title
             const state = reducer(undefined, action)
             // make sure the title matches the expectation
-            expect(state.title).to.equal('hello')
+            expect(state.title).toEqual('hello')
         })
 
         it('responds to the TOGGLE_GRID action', function() {
@@ -41,7 +41,7 @@ describe('Reducers', function() {
             // get the mutated state after toggling the grid
             const state = reducer(undefined, action)
             // make sure the title matches the expectation
-            expect(state.showGrid).to.equal(!initialState.showGrid)
+            expect(state.showGrid).toEqual(!initialState.showGrid)
         })
 
         it('responds to the SET_GRID_SIZE action', function() {
@@ -50,7 +50,7 @@ describe('Reducers', function() {
             // get the mutated state after changing the grid size
             const state = reducer(undefined, action)
             // make sure the title matches the expectation
-            expect(state.gridSize).to.equal(20)
+            expect(state.gridSize).toEqual(20)
 
         })
 
@@ -60,7 +60,7 @@ describe('Reducers', function() {
             // get the mutated state after toggling the grid
             const state = reducer(undefined, action)
             // make sure the title matches the expectation
-            expect(state.showHotkeys).to.equal(!initialState.showHotkeys)
+            expect(state.showHotkeys).toEqual(!initialState.showHotkeys)
         })
 
         it('responds to the TOGGLE_ANCHORS action', function() {
@@ -69,7 +69,7 @@ describe('Reducers', function() {
             // get the mutated state after toggling the grid
             const state = reducer(undefined, action)
             // make sure the title matches the expectation
-            expect(state.showAnchors).to.equal(!initialState.showAnchors)
+            expect(state.showAnchors).toEqual(!initialState.showAnchors)
         })
 
         it('responds to the TOGGLE_PATTERN_MODAL action', function() {
@@ -78,7 +78,7 @@ describe('Reducers', function() {
             // get the mutated state after toggling the pattern modal
             const state = reducer(undefined, action)
             // make sure the title matches the expectation
-            expect(state.showPatternModal).to.equal(!initialState.showPatternModal)
+            expect(state.showPatternModal).toEqual(!initialState.showPatternModal)
         })
 
         it('responds to the TOGGLE_PATTERN_INITIAL_VIS action', function() {
@@ -89,7 +89,7 @@ describe('Reducers', function() {
             // get the mutated state after toggling the visibility
             const mutated = reducer(undefined, action)
             // make sure the internal state flipped
-            expect(mutated.patternModalInitalVis).to.equal(!initialState.patternModalInitalVis)
+            expect(mutated.patternModalInitalVis).toEqual(!initialState.patternModalInitalVis)
         })
 
         it('responds to the TOGGLE_EXPORT_MODAL action', function() {
@@ -98,7 +98,7 @@ describe('Reducers', function() {
             // get the state after toggling the modal
             const state = reducer(undefined, action)
             // make sure the state look like we expect
-            expect(state.showExportModal).to.equal(!initialState.showExportModal)
+            expect(state.showExportModal).toEqual(!initialState.showExportModal)
         })
 
         describe('panning', function() {
@@ -106,12 +106,12 @@ describe('Reducers', function() {
                 // get the state of the reducer after panning
                 const state = reducer(undefined, panDiagram({x: 10, y: 5}))
                 // make sure the state updated as expected
-                expect(state.pan).to.deep.equal({x: 10, y: 5})
+                expect(state.pan).toEqual({x: 10, y: 5})
 
                 // pan again
                 const secondPan = reducer(state, panDiagram({x: -10, y: -5}))
                 // make sure we added teh results
-                expect(secondPan.pan).to.deep.equal({x: 0, y: 0})
+                expect(secondPan.pan).toEqual({x: 0, y: 0})
             })
         })
 
@@ -120,29 +120,29 @@ describe('Reducers', function() {
                 // set zoom level to a specific value
                 const zoomed = reducer(undefined, setZoom(2.0))
                 // make sure we got the value we set
-                expect(zoomed.zoomLevel).to.equal(2.0)
+                expect(zoomed.zoomLevel).toEqual(2.0)
             })
 
             it('responds to the ZOOM_IN action', function() {
                 // zoom in from the initial state
                 const zoomed = reducer(undefined, zoomIn())
                 // make sure we incremented the zoom level correctly
-                expect(zoomed.zoomLevel).to.equal(1.1)
+                expect(zoomed.zoomLevel).toEqual(1.1)
                 // zoom in again
                 const zoomed2 = reducer(zoomed, zoomIn())
                 // make sure we incremented the zoom level correctly
-                expect(zoomed2.zoomLevel.toFixed(1)).to.equal(1.2.toFixed(1))
+                expect(zoomed2.zoomLevel.toFixed(1)).toEqual(1.2.toFixed(1))
             })
 
             it('responds to the ZOOM_OUT action', function() {
                 // zoom out from the initial state
                 const zoomed = reducer(undefined, zoomOut())
                 // make sure we incremented the zoom level correctly
-                expect(zoomed.zoomLevel).to.deep.equal(0.9)
+                expect(zoomed.zoomLevel).toEqual(0.9)
                 // zoom out again
                 const zoomed2 = reducer(zoomed, zoomOut())
                 // make sure we incremented the zoom level correctly
-                expect(zoomed2.zoomLevel).to.deep.equal(0.8)
+                expect(zoomed2.zoomLevel).toEqual(0.8)
             })
 
             it('responds to both zooms', function() {
@@ -151,7 +151,7 @@ describe('Reducers', function() {
                 // zoom out again
                 const zoomed2 = reducer(zoomed, zoomIn())
                 // make sure we incremented the zoom level correctly
-                expect(zoomed2.zoomLevel).to.deep.equal(1)
+                expect(zoomed2.zoomLevel).toEqual(1)
             })
 
             it('does not zoom in past 2', function() {
@@ -170,7 +170,7 @@ describe('Reducers', function() {
                 const zoomed11 = reducer(zoomed10, zoomIn())
 
                 // make sure we didn't go above 2
-                expect(zoomed11.zoomLevel.toFixed(1)).to.equal(2.0.toFixed(1))
+                expect(zoomed11.zoomLevel.toFixed(1)).toEqual(2.0.toFixed(1))
             })
 
             it('does not zoom out past 0.5', function () {
@@ -189,7 +189,7 @@ describe('Reducers', function() {
                 const zoomed11 = reducer(zoomed10, zoomOut())
 
                 // make sure we didn't go above 2
-                expect(zoomed11.zoomLevel.toFixed(1)).to.equal(0.5.toFixed(1))
+                expect(zoomed11.zoomLevel.toFixed(1)).toEqual(0.5.toFixed(1))
             })
         })
     })

@@ -12,7 +12,7 @@ describe('Utils', function() {
             // the current info / gridSize
             const info = {gridSize: 0, zoomLevel: 1}
 
-            expect(fixDeltaToGrid({origin, next, info})).to.deep.equal(next)
+            expect(fixDeltaToGrid({origin, next, info})).toEqual(next)
         })
 
         it('doesn\'t round the target with grid size === 0', function() {
@@ -23,7 +23,7 @@ describe('Utils', function() {
             // the current info / gridSize
             const info = { gridSize: 0, zoomLevel: 1 }
 
-            expect(fixDeltaToGrid({origin, next, info})).to.deep.equal(next)
+            expect(fixDeltaToGrid({origin, next, info})).toEqual(next)
         })
 
         it('rounds the location snapped to grid when appropriate', function() {
@@ -34,7 +34,7 @@ describe('Utils', function() {
             // the current info / gridSize
             const info = { gridSize: 50, zoomLevel: 1 }
 
-            expect(fixDeltaToGrid({origin, next, info})).to.deep.equal({
+            expect(fixDeltaToGrid({origin, next, info})).toEqual({
                 x: 50,
                 y: 100,
             })
@@ -48,7 +48,7 @@ describe('Utils', function() {
             // the current info / gridSize
             const info = { gridSize: 0, zoomLevel: 2 }
 
-            expect(fixDeltaToGrid({origin, next, info})).to.deep.equal({
+            expect(fixDeltaToGrid({origin, next, info})).toEqual({
                 x: 100,
                 y: 100,
             })
@@ -62,7 +62,7 @@ describe('Utils', function() {
             // the current info / gridSize
             const info = { gridSize: 50, zoomLevel: 2 }
 
-            expect(fixDeltaToGrid({origin, next, info})).to.deep.equal({
+            expect(fixDeltaToGrid({origin, next, info})).toEqual({
                 x: 200,
                 y: 100,
             })

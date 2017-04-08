@@ -15,7 +15,7 @@ describe('Utils', function() {
             // loop over every row in the table
             for (const [n, to, expected] of table){
                 // make sure the result matches expectation
-                expect(round(n, to)).to.equal(expected)
+                expect(round(n, to)).toEqual(expected)
             }
         })
     })

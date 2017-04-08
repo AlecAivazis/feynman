@@ -28,12 +28,12 @@ describe('Sagas', function() {
                 const gen = placePropagator(desc)
 
                 // the first thing we have to do is create the two anchors
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addAnchors(desc.anchor1, desc.anchor2))
                 )
 
                 // then we have to create a propagator with the right kind linking the two
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addPropagators({
                         ...desc,
                         anchor1: desc.anchor1.id,
@@ -42,7 +42,7 @@ describe('Sagas', function() {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).to.be.true
+                expect(gen.next().done).toBeTruthy
             })
 
             it('can place a propagator associated with a given anchor', function() {
@@ -58,12 +58,12 @@ describe('Sagas', function() {
                 const gen = placePropagator(desc)
 
                 // all that needs to happen is that we create the single propagator
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addPropagators(desc))
                 )
 
                 // there shouldn't be anything left
-                expect(gen.next().done).to.be.true
+                expect(gen.next().done).toBeTruthy
             })
 
             it('can create a heterogenous propagator (anchor reference and creation)', function() {
@@ -83,12 +83,12 @@ describe('Sagas', function() {
                 const gen = placePropagator(desc)
 
                 // the first thing we have to do is create the two anchors
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addAnchors(desc.anchor1))
                 )
 
                 // then we have to create a propagator with the right kind linking the two
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addPropagators({
                         ...desc,
                         anchor1: desc.anchor1.id,
@@ -97,7 +97,7 @@ describe('Sagas', function() {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).to.be.true
+                expect(gen.next().done).toBeTruthy
 
             })
         })

@@ -46,7 +46,7 @@ describe('Utils', function() {
             const inside = elementsInRegion({elements: store.getState().diagram.elements, region})
 
             // make sure the result is what we expect
-            expect(inside).to.deep.equal([{type: "anchors", id: 1}, {type: "anchors", id: 2}])
+            expect(inside).toEqual([{type: "anchors", id: 1}, {type: "anchors", id: 2}])
         })
 
         it('can locate propagators within a given region', function() {
@@ -111,7 +111,7 @@ describe('Utils', function() {
             const inside = elementsInRegion({elements: store.getState().diagram.elements, region})
 
             // make sure the result is what we expect
-            expect(inside).to.deep.equal([{type: "propagators", id: 1}])
+            expect(inside).toEqual([{type: "propagators", id: 1}])
         })
 
         it('can locate text elements within a given region', function() {
@@ -155,7 +155,7 @@ describe('Utils', function() {
             const inside = elementsInRegion({elements: store.getState().diagram.elements, region})
 
             // make sure the result is what we expect
-            expect(inside).to.deep.equal([{type: "text", id: 1}])
+            expect(inside).toEqual([{type: "text", id: 1}])
         })
     })
 })

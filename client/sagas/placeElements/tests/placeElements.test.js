@@ -42,11 +42,11 @@ describe('Sagas', function() {
                 // get the generator
                 const gen = placeElementWorker({type: 'hello', payload: desc})
                 // first we have to create the anchors
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addAnchors(...desc.anchors))
                 )
                 // then we have to add the propagators
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addPropagators(...desc.propagators))
                 )
             })
@@ -90,12 +90,12 @@ describe('Sagas', function() {
                 // get the generator
                 const gen = placeElementWorker({type: 'hello', payload: desc})
                 // first we have to create the anchors
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addAnchors(...desc.anchors, desc.propagators[1].anchor2))
                 )
 
                 // then we have to add the propagators
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addPropagators(
                         {
                             id: 1,
@@ -113,7 +113,7 @@ describe('Sagas', function() {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).to.be.true
+                expect(gen.next().done).toBeTruthy
             })
 
             it('patterns can include text', function() {
@@ -135,7 +135,7 @@ describe('Sagas', function() {
                 const { value } = gen.next()
 
                 // then we have to add the propagators
-                expect(value).to.deep.equal(
+                expect(value).toEqual(
                     put(addElements(
                         {
                             type: 'text',
@@ -145,7 +145,7 @@ describe('Sagas', function() {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).to.be.true
+                expect(gen.next().done).toBeTruthy
             })
         })
 
@@ -175,7 +175,7 @@ describe('Sagas', function() {
                 const gen = placeElementWorker({type: 'hello', payload: desc})
 
                 // first make sure we added tests to avoid null constraint references
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addElements(
                         {
                             type: 'shapes',
@@ -185,12 +185,12 @@ describe('Sagas', function() {
                 )
 
                 // then we add the anchors
-                expect(gen.next().value).to.deep.equal(
+                expect(gen.next().value).toEqual(
                     put(addAnchors(...desc.anchors))
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).to.be.true
+                expect(gen.next().done).toBeTruthy
             })
         })
     })

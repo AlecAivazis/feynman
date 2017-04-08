@@ -49,19 +49,19 @@ describe('Reducers', function() {
                 const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}))
 
                 // make sure there are only two anchors left
-                expect(Object.values(mergedState.anchors)).to.have.length(2)
+                expect(Object.values(mergedState.anchors)).toHaveLength(2)
 
                 // make sure the first entry does not exist
-                expect(mergedState.anchors[1].x).to.equal(coords.x)
-                expect(mergedState.anchors[1].y).to.equal(coords.y)
+                expect(mergedState.anchors[1].x).toEqual(coords.x)
+                expect(mergedState.anchors[1].y).toEqual(coords.y)
                 // make sure the second is valid
-                expect(mergedState.anchors[2]).to.not.exist
+                expect(mergedState.anchors[2]).not.toBeDefined()
                 // make sure the third was left untouched
-                expect(mergedState.anchors[3].x).to.equal(300)
-                expect(mergedState.anchors[3].y).to.equal(500)
+                expect(mergedState.anchors[3].x).toEqual(300)
+                expect(mergedState.anchors[3].y).toEqual(500)
 
                 // make sure there are no anchors left over
-                expect(Object.values(mergedState.anchors)).to.have.length(2)
+                expect(Object.values(mergedState.anchors)).toHaveLength(2)
             })
 
             it('replaces anchor references when merging', function() {
@@ -102,7 +102,7 @@ describe('Reducers', function() {
                 const mergedState = reducer(propagatorState, mergeElements())
 
                 // since that should replace anchor 2, the propagotr's anchor1 value should be 1
-                expect(mergedState.propagators[1].anchor1).to.equal(1)
+                expect(mergedState.propagators[1].anchor1).toEqual(1)
             })
 
             it('can select the resulting element after merge', function() {
@@ -128,7 +128,7 @@ describe('Reducers', function() {
                 const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}, true))
 
                 // make sure the resulting selection contains just the target
-                expect(mergedState.selection.anchors).to.deep.equal([1])
+                expect(mergedState.selection.anchors).toEqual([1])
             })
 
             it('merges multiple elements at once', function() {
@@ -168,18 +168,18 @@ describe('Reducers', function() {
                 const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}))
 
                 // make sure the first entry is still around
-                expect(mergedState.anchors[1].x).to.equal(coords.x)
-                expect(mergedState.anchors[1].y).to.equal(coords.y)
+                expect(mergedState.anchors[1].x).toEqual(coords.x)
+                expect(mergedState.anchors[1].y).toEqual(coords.y)
                 // make sure the second doesn't exist
-                expect(mergedState.anchors[2]).to.not.exist
+                expect(mergedState.anchors[2]).not.toBeDefined()
                 // make sure the third was left untouched
-                expect(mergedState.anchors[3].x).to.equal(300)
-                expect(mergedState.anchors[3].y).to.equal(500)
+                expect(mergedState.anchors[3].x).toEqual(300)
+                expect(mergedState.anchors[3].y).toEqual(500)
                 // make sure 4 is still around too
-                expect(mergedState.anchors[4].x).to.equal(500)
-                expect(mergedState.anchors[4].y).to.equal(500)
+                expect(mergedState.anchors[4].x).toEqual(500)
+                expect(mergedState.anchors[4].y).toEqual(500)
                 // and that 5 was removed
-                expect(mergedState.anchors[5]).to.not.exist
+                expect(mergedState.anchors[5]).not.toBeDefined()
             })
 
             it('applies constraints if there is an overlap between an anchor and parton', function() {
@@ -208,15 +208,15 @@ describe('Reducers', function() {
                 const mergedState = reducer(constraintShape, mergeElements({type: "anchors", id: 1}))
 
                 // make sure the appropriate anchor got the constraints
-                expect(mergedState.anchors[1].constraint).to.equal(1)
+                expect(mergedState.anchors[1].constraint).toEqual(1)
             })
 
             it('barfs if merging onto an undefined id', function() {
-                expect(() => reducer(undefined, mergeElements(undefined, true))).to.throw(Error)
+                expect(() => reducer(undefined, mergeElements(undefined, true))).toThrow(Error)
             })
 
             it('barfs if merging onto a non-existant id', function() {
-                expect(() => reducer(undefined, mergeElements({type: "anchors"}, true))).to.throw(Error)
+                expect(() => reducer(undefined, mergeElements({type: "anchors"}, true))).toThrow(Error)
             })
         })
 
@@ -226,7 +226,7 @@ describe('Reducers', function() {
                 // pass an undefined current state
                 const val = reducer(undefined, {type: "init"})
                 // expect the default initial state
-                expect(val).to.exist
+                expect(val).toBeDefined()
             })
 
             it('can clear all elements', function() {
@@ -247,7 +247,7 @@ describe('Reducers', function() {
                 // clear all elements
                 const clearedState = reducer(initialState, clearElements())
                 // make sure there are no elements
-                expect(clearedState).to.deep.equal(initialReducerState)
+                expect(clearedState).toEqual(initialReducerState)
             })
         })
 
@@ -270,7 +270,7 @@ describe('Reducers', function() {
                 }
                 const initialState = reducer(undefined, addElements(...Object.values(anchors)))
                 // make sure the anchors were added appropriately
-                expect(initialState.anchors).to.deep.equal(anchors)
+                expect(initialState.anchors).toEqual(anchors)
             })
         })
 
@@ -299,7 +299,7 @@ describe('Reducers', function() {
                 }))
 
                 // make sure the appropriate anchor was updated
-                expect(updatedState.anchors[1].x).to.equal(100)
+                expect(updatedState.anchors[1].x).toEqual(100)
             })
 
             it('barfs if there is no id given', function() {
@@ -309,7 +309,7 @@ describe('Reducers', function() {
                     x: 5
                 })
                 // make sure it throw an error
-                expect(() => reducer(undefined, action)).to.throw(Error)
+                expect(() => reducer(undefined, action)).toThrow(Error)
             })
 
             it('barfs if there is no type given', function() {
@@ -319,7 +319,7 @@ describe('Reducers', function() {
                     x: 5
                 })
                 // make sure it throw an error
-                expect(() => reducer(undefined, action)).to.throw(Error)
+                expect(() => reducer(undefined, action)).toThrow(Error)
             })
 
             it('barfs if appropriate element cannot be found', function() {
@@ -330,7 +330,7 @@ describe('Reducers', function() {
                     x: 5
                 })
                 // make sure it throw an error
-                expect(() => reducer(undefined, action)).to.throw(Error)
+                expect(() => reducer(undefined, action)).toThrow(Error)
             })
         })
 
@@ -357,7 +357,7 @@ describe('Reducers', function() {
                 }))
 
                 // make sure anchor 1 doesn't exist
-                expect(deletedState.anchors[1]).to.not.exist
+                expect(deletedState.anchors[1]).not.toBeDefined()
             })
 
             it('throws an error when removing an element that doesn\'t exist', function() {
@@ -368,7 +368,7 @@ describe('Reducers', function() {
                 })
 
                 // delete one of those anchors
-                expect(() => reducer(initialState, action)).to.throw(Error)
+                expect(() => reducer(initialState, action)).toThrow(Error)
             })
 
             it('removes associated propagators when removing an anchor', function() {
@@ -419,7 +419,7 @@ describe('Reducers', function() {
                 }))
 
                 // make sure there are no propagators left
-                expect(Object.keys(deletedState.propagators)).to.have.length(1)
+                expect(Object.keys(deletedState.propagators)).toHaveLength(1)
             })
 
             it('deleting a selcted object deselects it', function() {
@@ -444,13 +444,13 @@ describe('Reducers', function() {
                 ))
 
                 // sanity check
-                expect(selectedState.selection.anchors).to.have.length(2)
+                expect(selectedState.selection.anchors).toHaveLength(2)
 
                 // delete the element
                 const deletedState = reducer(selectedState, deleteElements({type: 'anchors', id: 1}))
 
                 // make sure there that there one element selected
-                expect(deletedState.selection.anchors).to.deep.equal([2])
+                expect(deletedState.selection.anchors).toEqual([2])
             })
         })
 
@@ -490,7 +490,7 @@ describe('Reducers', function() {
                 const val = reducer(state, selectAction)
 
                 // make sure the selection is present
-                expect(val.selection.anchors).to.deep.equal(selection.map(({id}) => id))
+                expect(val.selection.anchors).toEqual(selection.map(({id}) => id))
             })
 
             it('throws an error if selecting an anchor that doesn\'t exist', function() {
@@ -504,7 +504,7 @@ describe('Reducers', function() {
                 // the action to throw
                 const action = selectElements(...selection)
 
-                expect(() => reducer(undefined, action)).to.throw(Error)
+                expect(() => reducer(undefined, action)).toThrow(Error)
             })
 
             it('responds to the CLEAR_SELECTION action', function() {
@@ -524,13 +524,13 @@ describe('Reducers', function() {
                 )
                 const selected = reducer(withAnchors, selectAction)
                 // sanity check
-                expect(selected.selection.anchors).to.have.length(1)
+                expect(selected.selection.anchors).toHaveLength(1)
 
                 // clear the selection
                 const clearedState = reducer(selected, clearSelection())
 
                 // make sure the selection is emtpy
-                expect(clearedState.selection).to.deep.equal(intialSelection)
+                expect(clearedState.selection).toEqual(intialSelection)
             })
 
             it('removes anchors with the DELETE_SELECTION action', function() {
@@ -550,15 +550,15 @@ describe('Reducers', function() {
                 )
                 const selected = reducer(withAnchors, selectAction)
                 // sanity check
-                expect(selected.selection.anchors).to.have.length(1)
+                expect(selected.selection.anchors).toHaveLength(1)
 
                 // delete the selection
                 const deleted = reducer(selected, deleteSelection())
 
                 // make sure there are no selected anchors
-                expect(deleted.selection.anchors).to.have.length(0)
+                expect(deleted.selection.anchors).toHaveLength(0)
                 // make sure there are no anchors in the reducer
-                expect(Object.keys(deleted.anchors)).to.have.length(0)
+                expect(Object.keys(deleted.anchors)).toHaveLength(0)
             })
 
             it('removes selected text elements when deleting selection', function() {
@@ -579,15 +579,15 @@ describe('Reducers', function() {
                     }
                 ))
                 // sanity check
-                expect(selected.selection.text).to.have.length(1)
+                expect(selected.selection.text).toHaveLength(1)
 
                 // delete the selection
                 const deleted = reducer(selected, deleteSelection())
 
                 // make sure the text is no longer selected
-                expect(deleted.selection.text).to.have.length(0)
+                expect(deleted.selection.text).toHaveLength(0)
                 // make sure that the element was actually removed
-                expect(deleted.text[1]).to.not.exist
+                expect(deleted.text[1]).not.toBeDefined()
             })
 
             it('removes selected shapes elements when deleting selection', function() {
@@ -608,15 +608,15 @@ describe('Reducers', function() {
                     }
                 ))
                 // sanity check
-                expect(selected.selection.shapes).to.have.length(1)
+                expect(selected.selection.shapes).toHaveLength(1)
 
                 // delete the selection
                 const deleted = reducer(selected, deleteSelection())
 
                 // make sure the shapes is no longer selected
-                expect(deleted.selection.shapes).to.have.length(0)
+                expect(deleted.selection.shapes).toHaveLength(0)
                 // make sure that the element was actually removed
-                expect(deleted.shapes[1]).to.not.exist
+                expect(deleted.shapes[1]).not.toBeDefined()
 
             })
 
@@ -646,13 +646,13 @@ describe('Reducers', function() {
                 ))
 
                 // sanity check
-                expect(selectedState.selection.shapes).to.have.length(1)
+                expect(selectedState.selection.shapes).toHaveLength(1)
 
                 // delete the element
                 const deletedState = reducer(selectedState, deleteSelection())
 
                 // make sure there that there one element selected
-                expect(deletedState.anchors[1].constraint).to.not.exist
+                expect(deletedState.anchors[1].constraint).not.toBeDefined()
 
             })
 
@@ -687,17 +687,17 @@ describe('Reducers', function() {
                     }
                 ))
                 // sanity check
-                expect(selected.selection.anchors).to.have.length(1)
+                expect(selected.selection.anchors).toHaveLength(1)
 
                 // delete the selection
                 const deleted = reducer(selected, deleteSelection())
 
                 // make sure there are no selected anchors
-                expect(deleted.selection.anchors).to.have.length(0)
+                expect(deleted.selection.anchors).toHaveLength(0)
                 // make sure there are no anchors in the reducer
-                expect(Object.keys(deleted.anchors)).to.have.length(1)
+                expect(Object.keys(deleted.anchors)).toHaveLength(1)
                 // and that we deleted the propagator
-                expect(Object.keys(deleted.propagators)).to.have.length(0)
+                expect(Object.keys(deleted.propagators)).toHaveLength(0)
             })
         })
     })
