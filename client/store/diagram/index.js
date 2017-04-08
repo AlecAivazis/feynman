@@ -67,6 +67,7 @@ export default (state = initialState, {type, payload}) => {
     }
 
     return {
+        ...state,
         elements: elementsReducer(state.elements, {type, payload}),
         info: infoReducer(state.info, {type, payload})
     }
