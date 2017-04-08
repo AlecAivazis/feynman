@@ -80,7 +80,6 @@ describe('Utils', function() {
                 constraint: 1,
             }))
 
-            console.log(JSON.stringify(elementsWithLocations(store.getState().diagram.elements)))
             expect(elementsWithLocations(store.getState().diagram.elements)).to.deep.equal({
                 anchors: [
                     {
