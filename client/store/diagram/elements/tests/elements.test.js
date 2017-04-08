@@ -641,13 +641,12 @@ describe('Reducers', function() {
                 }))
 
                 // select the element
-                const selectedState = reducer(initialState, selectElements(
+                const selectedState = reducer(withConstraint, selectElements(
                     {type: 'shapes', id: 1},
-                    {type: 'anchors', id: 2},
                 ))
 
                 // sanity check
-                expect(selectedState.selection.anchors).to.have.length(2)
+                expect(selectedState.selection.anchors).to.have.length(1)
 
                 // delete the element
                 const deletedState = reducer(selectedState, deleteSelection())

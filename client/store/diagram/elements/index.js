@@ -108,6 +108,61 @@ export default (state = initialState, {type, payload}) => {
         return local
     }
 
+    // if the action indicates we need to delete the selection
+    // NOTE: this is here because the selection partial returns the selection
+    //       and this mutates the entire element store.
+    if (type === DELETE_SELECTION) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // the selected elements
+        const selectedAnchors = local.selection.anchors || []
+        const selectedPropagators = local.selection.propagators || []
+        const selectedText = local.selection.text || []
+        const selectedShapes = local.selection.shapes || []
+
+        // create labeled lists of selected elements
+        const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
+        const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
+        const text = selectedText.map(id => ({id, type: 'text'}))
+        const shapes = selectedShapes.map(id => ({id, type: "shapes"}))
+
+        // the list of propagators we need to include because of related anchors
+        const relatedProps = flatMap(selectedAnchors,
+            id => (
+                // the list of propagators with this id
+                (Object.values(local.propagators) || [])
+                       .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
+                       .map(({id}) => ({id, type: 'propagators'}))
+            )
+        )
+
+        // for each element we have to delete
+        for (const {type, id} of [...anchors, ...propagators, ...relatedProps, ...text, ...shapes]) {
+            // if that element still exists
+            if (local[type][id]) {
+                // remove the element
+                Reflect.deleteProperty(local[type], id)
+            }
+        }
+
+        // we need to make sure to clean up references to the shapes that we just removed
+        // one primary place for this is in the constraint field of anchors
+        for (const anchor of Object.values(local.anchors)) {
+            // if this anchor is constrained
+            if (anchor.constraint) {
+                // remove the constraint from the anchor
+                Reflect.deleteProperty(anchor, 'constraint')
+            }
+        }
+
+        // clear the selection
+        local.selection = initialSelection
+
+        // we're done here
+        return local
+    }
+
     // if the payload represents updates in various element attributes
     if (type === SET_ELEMENT_ATTRS) {
         // create a copy we can play with
@@ -182,48 +237,6 @@ export default (state = initialState, {type, payload}) => {
         }
 
         // return our local copy
-        return local
-    }
-
-    // if the action indicates we need to delete the selection
-    if (type === DELETE_SELECTION) {
-        // create a copy we can play with
-        const local = _.cloneDeep(state)
-
-        // the selected elements
-        const selectedAnchors = local.selection.anchors || []
-        const selectedPropagators = local.selection.propagators || []
-        const selectedText = local.selection.text || []
-        const selectedShapes = local.selection.shapes || []
-
-        // create labeled lists of selected elements
-        const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
-        const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
-        const text = selectedText.map(id => ({id, type: 'text'}))
-        const shapes = selectedShapes.map(id => ({id, type: "shapes"}))
-
-        // the list of propagators we need to include because of related anchors
-        const relatedProps = flatMap(selectedAnchors,
-            id => (
-                // the list of propagators with this id
-                (Object.values(local.propagators) || [])
-                       .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
-                       .map(({id}) => ({id, type: 'propagators'}))
-            )
-        )
-
-        // for each element we have to delete
-        for (const {type, id} of [...anchors, ...propagators, ...relatedProps, ...text, ...shapes]) {
-            // if that element still exists
-            if (local[type][id]) {
-                // remove the element
-                Reflect.deleteProperty(local[type], id)
-            }
-        }
-
-        // clear the selection
-        local.selection = initialSelection
-        // we're done here
         return local
     }
 
