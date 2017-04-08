@@ -1,5 +1,6 @@
 // external impots
 import { Stack, Map, fromJS } from 'immutable'
+import _ from 'lodash'
 // local imports
 import historyEnhancer from '.'
 import { commit, undo, redo, goto } from 'actions/history'
@@ -7,9 +8,9 @@ import { commit, undo, redo, goto } from 'actions/history'
 describe('Reducers', () => {
     describe('History Store Enhancer', () => {
         // the initial state of our mock wrapped reducer
-        const reducerInitial = {hello: 'world'}
+        const reducerInitial = {innerState: 'world'}
         // the reducer to wrap
-        const reducer = (state=reducerInitial, {type, payload}) => type === 'test' ? ({...state, hello: payload}) : state
+        const reducer = (state=reducerInitial, {type, payload}) => type === 'test' ? ({...state, innerState: payload}) : state
         const reducerAction = payload => ({type: 'test', payload})
         // wrap the reducer
         const wrapped = historyEnhancer(reducer)
@@ -35,7 +36,7 @@ describe('Reducers', () => {
                 log: Stack.of(
                     Map({
                         message: '',
-                        state: fromJS(reducerInitial),
+                        state: reducerInitial,
                     })
                 )
             }))
@@ -51,45 +52,55 @@ describe('Reducers', () => {
                 log: Stack.of(
                     Map({
                         message: "hello",
-                        state: fromJS(reducerInitial),
+                        state: reducerInitial,
                     })
                 )
             }))
         })
 
-        test('committing a new state bumps the head and adds the current state to the log', () => {
+        test('committing a appends the current state to the log', () => {
             // mutate the state and commit it
-            const mutated = wrapped(initial, reducerAction('after'))
-            // save the user state before we committed
-            const { history: _, ...before } = mutated
-            const { history } = wrapped(mutated, commit('test msg'))
+            const middle = wrapped(initial, reducerAction('middle state'))
+            const committed = wrapped(middle, commit('test msg'))
 
-            // the head of the log
-            const headIndex = history.get('head')
-            const head = history.get('log').peek(headIndex)
+            // mutate the state and commit it
+            let final = wrapped(committed, reducerAction('final state'))
+            const { state, history } = wrapped(final, commit('test msg2'))
 
-            // make sure the head has been increased
-            expect(headIndex).toEqual(1)
-            // make sure the head of the log has the right state
-            expect(head.get('state')).toMatchObject(before)
+            // make sure the head still points to the most recent value
+            expect(history.get('head')).toEqual(0)
+
+            // and that the rest of the log
+            expect(history.get('log').get(2).get('state')).toMatchObject(
+                _.omit(initial, 'history')
+            )
+            expect(history.get('log').get(1).get('state')).toMatchObject(
+                _.omit(committed, 'history')
+            )
+            expect(history.get('log').get(0).get('state')).toMatchObject(
+                _.omit(state, 'history')
+            )
         })
 
-        test('undo reduces the head by one and mutates the state', () => {
+        test('undo bumps the head by one and mutates the state', () => {
             // perform a mutation
             const mutated = wrapped(initial, reducerAction('moon'))
-            const {history: _, ...state} = mutated
-
             // commit the new state and return to the original location
             const committed = wrapped(mutated, commit('test msg'))
-            const {history, ...undoState} = wrapped(committed, undo())
+
+            const mutated2 = wrapped(committed, reducerAction('moon2'))
+            const committed2 = wrapped(mutated2, commit('test msg2'))
+
+            const {history, ...undoState} = wrapped(committed2, undo())
 
             // make sure we are back where we started
-            expect(undoState).toEqual(reducerInitial)
+            expect(undoState).toEqual(_.omit(committed, 'history'))
+
             // make sure the head has been increased (this wont exist so dont go further)
             expect(history.get('head')).toEqual(1)
         })
 
-        test('redo bumps the head bumps the head by one and mutates the state', function() {
+        test('redo reduces the head bumps the head by one and mutates the state', function() {
             // perform a mutation
             const mutated = wrapped(initial, reducerAction('moon'))
             const {history: _, ...state} = mutated
@@ -100,7 +111,7 @@ describe('Reducers', () => {
             const {history, ...redoState} = wrapped(undoState, redo())
 
             // make sure the head has been increased (this wont exist so dont go further)
-            expect(history.get('head')).toEqual(2)
+            expect(history.get('head')).toEqual(-1)
             // make sure we are back where we belong
             expect(redoState).toEqual(state)
         })
