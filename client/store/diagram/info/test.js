@@ -17,16 +17,16 @@ import {
     TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so
 } from 'actions/info'           // import the type directly
 
-describe('Reducers', function() {
-    describe('Info reducer', function() {
-        it('has a reasonable default', function() {
+describe('Reducers', () => {
+    describe('Info reducer', () => {
+        test('has a reasonable default', () => {
             // pass an undefined current state
             const val = reducer(undefined, {type: "init"})
             // expect the default initial state
             expect(val).toEqual(initialState)
         })
 
-        it('responds to the SET_TITLE action', function() {
+        test('responds to the SET_TITLE action', () => {
             // create an action corresponding to changing the title
             const action = setDiagramTitle('hello')
             // get the mutated state after changing the title
@@ -35,7 +35,7 @@ describe('Reducers', function() {
             expect(state.title).toEqual('hello')
         })
 
-        it('responds to the TOGGLE_GRID action', function() {
+        test('responds to the TOGGLE_GRID action', () => {
             // create an action corresponding to toggling the grid
             const action = toggleGrid()
             // get the mutated state after toggling the grid
@@ -44,7 +44,7 @@ describe('Reducers', function() {
             expect(state.showGrid).toEqual(!initialState.showGrid)
         })
 
-        it('responds to the SET_GRID_SIZE action', function() {
+        test('responds to the SET_GRID_SIZE action', () => {
             // create an action corresponding to the set grid size
             const action = setGridSize(20)
             // get the mutated state after changing the grid size
@@ -54,7 +54,7 @@ describe('Reducers', function() {
 
         })
 
-        it('responds to the TOGGLE_HOTKEYS action', function() {
+        test('responds to the TOGGLE_HOTKEYS action', () => {
             // create an action corresponding to toggling the grid
             const action = toggleHotkeys()
             // get the mutated state after toggling the grid
@@ -63,7 +63,7 @@ describe('Reducers', function() {
             expect(state.showHotkeys).toEqual(!initialState.showHotkeys)
         })
 
-        it('responds to the TOGGLE_ANCHORS action', function() {
+        test('responds to the TOGGLE_ANCHORS action', () => {
             // create an action corresponding to toggling the grid
             const action = toggleAnchors()
             // get the mutated state after toggling the grid
@@ -72,7 +72,7 @@ describe('Reducers', function() {
             expect(state.showAnchors).toEqual(!initialState.showAnchors)
         })
 
-        it('responds to the TOGGLE_PATTERN_MODAL action', function() {
+        test('responds to the TOGGLE_PATTERN_MODAL action', () => {
             // create an action corresponding to toggling the pattern modal
             const action = togglePatternModal()
             // get the mutated state after toggling the pattern modal
@@ -81,7 +81,7 @@ describe('Reducers', function() {
             expect(state.showPatternModal).toEqual(!initialState.showPatternModal)
         })
 
-        it('responds to the TOGGLE_PATTERN_INITIAL_VIS action', function() {
+        test('responds to the TOGGLE_PATTERN_INITIAL_VIS action', () => {
             // create an action corresponding to toggle the initial visibility of the pattern modal
             const action = {
                 type: TOGGLE_PATTERN_INITIAL_VIS,
@@ -92,7 +92,7 @@ describe('Reducers', function() {
             expect(mutated.patternModalInitalVis).toEqual(!initialState.patternModalInitalVis)
         })
 
-        it('responds to the TOGGLE_EXPORT_MODAL action', function() {
+        test('responds to the TOGGLE_EXPORT_MODAL action', () => {
             // create the action to toggle the xport modal
             const action = toggleExportModal()
             // get the state after toggling the modal
@@ -101,8 +101,8 @@ describe('Reducers', function() {
             expect(state.showExportModal).toEqual(!initialState.showExportModal)
         })
 
-        describe('panning', function() {
-            it('incrementally pans', function() {
+        describe('panning', () => {
+            test('incrementally pans', () => {
                 // get the state of the reducer after panning
                 const state = reducer(undefined, panDiagram({x: 10, y: 5}))
                 // make sure the state updated as expected
@@ -115,15 +115,15 @@ describe('Reducers', function() {
             })
         })
 
-        describe('zoom', function() {
-            it('responds to the SET_ZOOM action', function() {
+        describe('zoom', () => {
+            test('responds to the SET_ZOOM action', () => {
                 // set zoom level to a specific value
                 const zoomed = reducer(undefined, setZoom(2.0))
                 // make sure we got the value we set
                 expect(zoomed.zoomLevel).toEqual(2.0)
             })
 
-            it('responds to the ZOOM_IN action', function() {
+            test('responds to the ZOOM_IN action', () => {
                 // zoom in from the initial state
                 const zoomed = reducer(undefined, zoomIn())
                 // make sure we incremented the zoom level correctly
@@ -134,7 +134,7 @@ describe('Reducers', function() {
                 expect(zoomed2.zoomLevel.toFixed(1)).toEqual(1.2.toFixed(1))
             })
 
-            it('responds to the ZOOM_OUT action', function() {
+            test('responds to the ZOOM_OUT action', () => {
                 // zoom out from the initial state
                 const zoomed = reducer(undefined, zoomOut())
                 // make sure we incremented the zoom level correctly
@@ -145,7 +145,7 @@ describe('Reducers', function() {
                 expect(zoomed2.zoomLevel).toEqual(0.8)
             })
 
-            it('responds to both zooms', function() {
+            test('responds to both zooms', () => {
                 // zoom out from the initial state
                 const zoomed = reducer(undefined, zoomOut())
                 // zoom out again
@@ -154,7 +154,7 @@ describe('Reducers', function() {
                 expect(zoomed2.zoomLevel).toEqual(1)
             })
 
-            it('does not zoom in past 2', function() {
+            test('does not zoom in past 2', () => {
                 // zoom in from the initial state
                 const zoomed = reducer(undefined, zoomIn())
                 // zoom in again
@@ -173,7 +173,7 @@ describe('Reducers', function() {
                 expect(zoomed11.zoomLevel.toFixed(1)).toEqual(2.0.toFixed(1))
             })
 
-            it('does not zoom out past 0.5', function () {
+            test('does not zoom out past 0.5', () => {
                 // zoom in from the initial state
                 const zoomed = reducer(undefined, zoomOut())
                 // zoom in again

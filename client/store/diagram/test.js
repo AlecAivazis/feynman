@@ -12,8 +12,8 @@ import { setGridSize } from 'actions/info'
 import { createStore } from 'store'
 import { round } from 'utils'
 
-describe('Reducers', function() {
-    describe('Diagram', function() {
+describe('Reducers', () => {
+    describe('Diagram', () => {
         // a store to test with
         let store
         // with one anchor
@@ -28,17 +28,17 @@ describe('Reducers', function() {
             store = createStore()
         })
 
-        it('has the info reducer', function() {
+        test('has the info reducer', () => {
             expect(store.getState().diagram.info).toBeDefined()
         })
 
-        it('has the elements reducer', function() {
+        test('has the elements reducer', () => {
             expect(store.getState().diagram.elements).toBeDefined()
         })
 
-        describe("Moving elements", function() {
+        describe('Moving elements', () => {
 
-            it("can move selected anchors", function(){
+            test('can move selected anchors', () => {
                 // the anchors we are going to start off with
                 const anchors = [
                     {
@@ -92,7 +92,7 @@ describe('Reducers', function() {
                 expect(movedState.elements.anchors[3].y).toEqual(anchors[2].y)
             })
 
-            it('can move selected propagators', function() {
+            test('can move selected propagators', () => {
                 // the anchors we are going to start off with
                 const anchors = [
                     {
@@ -152,7 +152,7 @@ describe('Reducers', function() {
                 expect(movedState.elements.anchors[3].y).toEqual(anchors[2].y)
             })
 
-            it("can move with partial payload", function() {
+            test('can move with partial payload', () => {
                 // the anchors we are going to start off with
                 const anchors = [
                     {
@@ -186,7 +186,7 @@ describe('Reducers', function() {
                 expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
-            it('moving selected elements does not affect pinned anchors', function() {
+            test('moving selected elements does not affect pinned anchors', () => {
                 // the anchors we are going to start off with
                 const anchors = [
                     {
@@ -222,7 +222,7 @@ describe('Reducers', function() {
                 expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
-            it('moving an element snaps to grid', function() {
+            test('moving an element snaps to grid', () => {
                 // the anchors we are going to start off with
                 const anchors = [
                     {
@@ -256,7 +256,7 @@ describe('Reducers', function() {
                 expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
-            it('moving an anchor with no grid works as expected', function() {
+            test('moving an anchor with no grid works as expected', () => {
                 // start off with a diagram with no grid
                 const diagram = reducer(undefined, setGridSize(0))
 
@@ -295,7 +295,7 @@ describe('Reducers', function() {
                 expect(movedState.elements.anchors[1].y).toEqual(anchors[0].y)
             })
 
-            it('can move text elements', function() {
+            test('can move text elements', () => {
                 // the text element to add to the store
                 const text = {
                     id: 1,
@@ -327,7 +327,7 @@ describe('Reducers', function() {
                 expect(movedState.elements.text[1].y).toEqual(text.y)
             })
 
-            it('can can move shapes', function() {
+            test('can can move shapes', () => {
                 // the shape element to add to the store
                 const shape = {
                     id: 1,

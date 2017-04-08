@@ -10,9 +10,9 @@ import Toolbar from '..'
 import SelectionSummary from '../SelectionSummary'
 import ItemPalette from '../ItemPalette'
 
-describe('Interface Components', function() {
-    describe('Toolbar', function() {
-        it('shows an SelectionSummary when there is an anchor selected', function() {
+describe('Interface Components', () => {
+    describe('Toolbar', () => {
+        test('shows an SelectionSummary when there is an anchor selected', () => {
             // a store to test with
             const store = createStore()
             // add an anchor
@@ -44,7 +44,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(SelectionSummary)).toHaveLength(1)
         })
 
-        it('shows the item palette when there is no selection', function() {
+        test('shows the item palette when there is no selection', () => {
             // a store to test with
             const store = createStore()
             // render the toolbar
@@ -58,7 +58,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(ItemPalette)).toHaveLength(1)
         })
 
-        it('has a button to toggle the pattern model', function() {
+        test('has a button to toggle the pattern model', () => {
             // a store to test with
             const store = createStore()
             // save a reference to the default pattern modal state

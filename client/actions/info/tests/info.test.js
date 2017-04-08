@@ -20,9 +20,9 @@ import LocalStorageMock from './storage.js'
 import { createStore } from 'store'
 
 
-describe('Action Creators', function() {
-    describe('Info', function() {
-        it('change diagram title', function() {
+describe('Action Creators', () => {
+    describe('Info', () => {
+        test('change diagram title', () => {
             // the title to change the diagram to
             const title = 'hello'
 
@@ -33,7 +33,7 @@ describe('Action Creators', function() {
             })
         })
 
-        it('pan diagram', function() {
+        test('pan diagram', () => {
             // the pan for the diagram
             const pan = {x: 10}
 
@@ -44,28 +44,28 @@ describe('Action Creators', function() {
             })
         })
 
-        it('toggle the grid', function() {
+        test('toggle the grid', () => {
             // all we care about is the type
             expect(togglePatternModal()).toEqual({
                 type: TOGGLE_PATTERN_MODAL,
             })
         })
 
-        it('toggle the grid', function() {
+        test('toggle the grid', () => {
             // all we care about is the type
             expect(toggleGrid()).toEqual({
                 type: TOGGLE_GRID,
             })
         })
 
-        it('toggle the export modal', function() {
+        test('toggle the export modal', () => {
             // all we care about is the type
             expect(toggleExportModal()).toEqual({
                 type: TOGGLE_EXPORT_MODAL,
             })
         })
 
-        it('set the grid size', function() {
+        test('set the grid size', () => {
             // the new size for the grid
             const size = 20
 
@@ -76,40 +76,40 @@ describe('Action Creators', function() {
             })
         })
 
-        it('toggle the hotkeys', function() {
+        test('toggle the hotkeys', () => {
             // all we care about is the type
             expect(toggleHotkeys()).toEqual({
                 type: TOGGLE_HOTKEYS,
             })
         })
 
-        it('toggle the anchors', function() {
+        test('toggle the anchors', () => {
             // all we care about is the type
             expect(toggleAnchors()).toEqual({
                 type: TOGGLE_ANCHORS,
             })
         })
 
-        it('zoom set', function(){
+        test('zoom set', () => {
             expect(setZoom(1.0)).toEqual({
                 type: SET_ZOOM,
                 payload: 1.0,
             })
         })
 
-        it('zoom in', function(){
+        test('zoom in', () => {
             expect(zoomIn()).toEqual({
                 type: ZOOM_IN,
             })
         })
 
-        it('zoom out', function(){
+        test('zoom out', () => {
             expect(zoomOut()).toEqual({
                 type: ZOOM_OUT,
             })
         })
 
-        describe('Toggle Pattern Initial Visibility Thunk', function() {
+        describe('Toggle Pattern Initial Visibility Thunk', () => {
 
             // some mocks, fixtures, and spies
             let store, storage, thunk, dispatch
@@ -124,7 +124,7 @@ describe('Action Creators', function() {
                 dispatch = jest.fn()
             })
 
-            it('inverts the current state in local storage', function() {
+            test('inverts the current state in local storage', () => {
                 // call the thunk
                 thunk(dispatch, store.getState)
 
@@ -134,7 +134,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('inverts the current state in local storage', function() {
+            test('inverts the current state in local storage', () => {
                 // call the thunk
                 thunk(dispatch, store.getState)
 

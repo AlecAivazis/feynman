@@ -18,9 +18,9 @@ const Test = (props) =>(
 )
 
 
-describe('Interface Components', function() {
-    describe('Anchor', function() {
-        it('clicking on the anchor selects it', function() {
+describe('Interface Components', () => {
+    describe('Anchor', () => {
+        test('clicking on the anchor selects it', () => {
                         // a store to test with
             const store = createStore()
             // add an anchor
@@ -41,7 +41,7 @@ describe('Interface Components', function() {
             expect(store.getState().diagram.elements.selection.anchors).toEqual([1])
         })
 
-        it('gets mounted with default config', function() {
+        test('gets mounted with default config', () => {
             // a store to test with
             const store = createStore()
             // add an anchor
@@ -73,7 +73,7 @@ describe('Interface Components', function() {
             }
         })
 
-        it('clicking on a group of selected anchors does not deselect the group', function(){
+        test('clicking on a group of selected anchors does not deselect the group', () => {
             // a store to test with
             const store = createStore()
             // add an anchor

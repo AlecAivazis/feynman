@@ -1,9 +1,9 @@
 // local imports
 import fixPositionToGrid from '../fixPositionToGrid'
 
-describe('Utils', function() {
-    describe("Fix Position to Grid Util", function() {
-        it("can correct coordinates", function() {
+describe('Utils', () => {
+    describe('Fix Position to Grid Util', () => {
+        test('can correct coordinates', () => {
             // for now, the only difference between absolute and diagram coordinates
             // is the sidebar width
             expect(fixPositionToGrid({x: 48, y: 102}, 50)).toEqual({

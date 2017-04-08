@@ -1,9 +1,9 @@
 // local imports
 import constrainLocactionToShape from '../constrainLocationToShape'
 
-describe('Utils', function() {
-    describe('Constrain Location to Shape', function() {
-        it('constrains locaction to circle', function () {
+describe('Utils', () => {
+    describe('Constrain Location to Shape', () => {
+        test('constrains locaction to circle', () => {
            // the shape to constraint it to
            const shape = {
                kind: "parton",

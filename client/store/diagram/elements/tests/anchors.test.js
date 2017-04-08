@@ -4,11 +4,11 @@ import reducer, { initialState } from '..'
 import { addAnchors, setAnchorLocations, selectElements, alignSelectedAnchors } from 'actions/elements'
 import { noIdErr } from '../anchors'
 
-describe('Reducers', function() {
+describe('Reducers', () => {
 
-    describe('Elements reducer', function() {
+    describe('Elements reducer', () => {
 
-        describe('Anchors', function() {
+        describe('Anchors', () => {
             // a store to test with
             let store
             // with one anchor
@@ -25,14 +25,14 @@ describe('Reducers', function() {
                 store.dispatch(addAnchors(initialAnchor))
             })
 
-            it('responds to the ADD_ANCHOR reducer', function() {
+            test('responds to the ADD_ANCHOR reducer', () => {
                 // make sure the state matches expectation
                 expect(store.getState().diagram.elements.anchors).toEqual({
                     [initialAnchor.id]: initialAnchor
                 })
             })
 
-            it('can add multiple anchors with ADD_ANCHOR', function() {
+            test('can add multiple anchors with ADD_ANCHOR', () => {
                 // the anchor to test
                 const anchors = [
                     {
@@ -58,7 +58,7 @@ describe('Reducers', function() {
                 })
             })
 
-            it('barfs if there is an anchor id conflict', function() {
+            test('barfs if there is an anchor id conflict', () => {
 
                 // the action to add the id-conflicting anchor
                 const action = () => store.dispatch(addAnchors({
@@ -71,7 +71,7 @@ describe('Reducers', function() {
                 expect(action).toThrow(Error)
             })
 
-            it('can vertically align selected anchors', function() {
+            test('can vertically align selected anchors', () => {
                 // add the propagator to the store
                 store.dispatch(addAnchors(
                     {
@@ -98,7 +98,7 @@ describe('Reducers', function() {
                 expect(anchors[2].x).toEqual(expected)
             })
 
-            it('can horizontally align selected anchors', function() {
+            test('can horizontally align selected anchors', () => {
                 // add the propagator to the store
                 store.dispatch(addAnchors(
                     {
@@ -132,7 +132,7 @@ describe('Reducers', function() {
                 expect(anchors[3].y).toEqual(500)
             })
 
-            it('barfs if aligning in an invalid direction', function() {
+            test('barfs if aligning in an invalid direction', () => {
                 expect(() => store.dispatch(alignSelectedAnchors('foo'))).toThrow(Error)
             })
 

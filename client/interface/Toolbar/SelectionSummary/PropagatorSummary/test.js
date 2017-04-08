@@ -12,9 +12,9 @@ import ElectroWeakSummary from './ElectroWeakSummary'
 import GluonSummary from './GluonSummary'
 import { Input } from 'components'
 
-describe('Interface Components', function() {
-    describe('PropagatorSummary', function() {
-        it("shows a fermion summary when there is a fermion selected", function() {
+describe('Interface Components', () => {
+    describe('PropagatorSummary', () => {
+        test('shows a fermion summary when there is a fermion selected', () => {
             // create a store to test
             const store = createStore()
             // add some anchors
@@ -54,7 +54,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(FermionSummary)).toHaveLength(1)
         })
 
-        it("shows a electroweak summary when there is a em propagator selected", function() {
+        test('shows a electroweak summary when there is a em propagator selected', () => {
             // create a store to test
             const store = createStore()
             // add some anchors
@@ -94,7 +94,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(ElectroWeakSummary)).toHaveLength(1)
         })
 
-        it("shows a gluon summary when there is a gluon propagator selected", function() {
+        test('shows a gluon summary when there is a gluon propagator selected', () => {
             // create a store to test
             const store = createStore()
             // add some anchors
@@ -134,7 +134,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(GluonSummary)).toHaveLength(1)
         })
 
-        it('hides the label input when there are multiple propgators selected', function() {
+        test('hides the label input when there are multiple propgators selected', () => {
             // create a store to test
             const store = createStore()
             // add some anchors

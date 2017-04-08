@@ -12,10 +12,10 @@ import TextSummary from './TextSummary'
 import ShapeSummary from './ShapeSummary'
 import { RedButton } from 'components'
 
-describe('Interface Components', function() {
-    describe('Toolbar', function() {
-        describe('Selection Summary', function() {
-            it('hides the anchor and propagator delete buttons on heterogenous selections', function() {
+describe('Interface Components', () => {
+    describe('Toolbar', () => {
+        describe('Selection Summary', () => {
+            test('hides the anchor and propagator delete buttons on heterogenous selections', () => {
                 // a store to test with
                 const store = createStore()
 
@@ -77,7 +77,7 @@ describe('Interface Components', function() {
                 expect(wrapper.find(RedButton)).toHaveLength(1)
             })
 
-            it('hides the text delete button when there is a multiple kinds of selection', function() {
+            test('hides the text delete button when there is a multiple kinds of selection', () => {
                 // a store to test with
                 const store = createStore()
 
@@ -138,7 +138,7 @@ describe('Interface Components', function() {
                 expect(wrapper.find(RedButton)).toHaveLength(1)
             })
 
-            it('shows an anchor summary when there is one selected', function() {
+            test('shows an anchor summary when there is one selected', () => {
                 // a store to test with
                 const store = createStore()
 
@@ -178,7 +178,7 @@ describe('Interface Components', function() {
                 expect(anchorSummary).toHaveLength(1)
             })
 
-            it('shows a propagator summary when there is one selected', function() {
+            test('shows a propagator summary when there is one selected', () => {
                 // a store to test with
                 const store = createStore()
 
@@ -226,7 +226,7 @@ describe('Interface Components', function() {
                 expect(summary).toHaveLength(1)
             })
 
-            it('shows a text summary when there is one selected', function() {
+            test('shows a text summary when there is one selected', () => {
                 // a store to test with
                 const store = createStore()
 
@@ -261,7 +261,7 @@ describe('Interface Components', function() {
                 expect(summary).toHaveLength(1)
             })
 
-            it('shows a shape summary when there is one selected', function() {
+            test('shows a shape summary when there is one selected', () => {
                 // a store to test with
                 const store = createStore()
 

@@ -4,11 +4,11 @@ import reducer, { initialState } from '..'
 import { addPropagators, addAnchors } from 'actions/elements'
 
 
-describe('Reducers', function() {
-    describe('Elements reducer', function() {
-        describe('Propagators', function() {
+describe('Reducers', () => {
+    describe('Elements reducer', () => {
+        describe('Propagators', () => {
 
-            it('responds to the ADD_PROPAGATORS action', function() {
+            test('responds to the ADD_PROPAGATORS action', () => {
                 // a store to test with
                 const store = createStore()
                 // add the anchors to the store
@@ -36,7 +36,7 @@ describe('Reducers', function() {
                 )
             })
 
-            it('barfs when adding a propagator that refers to a non-existing anchor', function() {
+            test('barfs when adding a propagator that refers to a non-existing anchor', () => {
                 // a store to test with
                 const store = createStore()
                 // add a propagator
@@ -53,7 +53,7 @@ describe('Reducers', function() {
                 expect( () => store.dispatch(addPropagators(propagator))).toThrow(Error)
             })
 
-            it('barfs when adding a propagator with no type', function() {
+            test('barfs when adding a propagator with no type', () => {
                 // a store to test with
                 const store = createStore()
                 // add the anchors to the store
@@ -73,7 +73,7 @@ describe('Reducers', function() {
                 expect( () => store.dispatch(addPropagators(propagator))).toThrow(Error)
             })
 
-            it('barfs when adding a propagator with no id', function() {
+            test('barfs when adding a propagator with no id', () => {
                 // a store to test with
                 const store = createStore()
                 // add the anchors to the store

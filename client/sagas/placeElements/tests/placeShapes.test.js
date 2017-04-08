@@ -4,10 +4,10 @@ import { put } from 'redux-saga/effects'
 import { addElements } from 'actions/elements'
 import placeShapes from '../placeShapes'
 
-describe('Sagas', function() {
-    describe('Place Elements', function() {
-        describe('Shape', function() {
-            it('can place a shape element', function() {
+describe('Sagas', () => {
+    describe('Place Elements', () => {
+        describe('Shape', () => {
+            test('can place a shape element', () => {
                 // the description of the anchor to create
                 const desc = {
                     id: 1,

@@ -8,8 +8,8 @@ import { addAnchors, addPropagators } from 'actions/elements'
 import ExportModal from '.'
 import LatexPropagator from './Propagator'
 
-describe('Interface Components', function() {
-    describe('Export Modal', function() {
+describe('Interface Components', () => {
+    describe('Export Modal', () => {
         let store, wrapper, anchors
         beforeEach(function() {
             anchors = {
@@ -44,7 +44,7 @@ describe('Interface Components', function() {
             )
         })
 
-        it('Creates a LatexPropagator for each element in the store', function() {
+        test('Creates a LatexPropagator for each element in the store', () => {
             // make sure there are as many propagators rendered
             expect(wrapper.find(LatexPropagator)).toHaveLength(
                 // as there are in the store
@@ -52,7 +52,7 @@ describe('Interface Components', function() {
             )
         })
 
-        it('Passes the anchor location to rendered propagators', function() {
+        test('Passes the anchor location to rendered propagators', () => {
             // the props passed to the propagator
             const props = wrapper.find(LatexPropagator).props()
 

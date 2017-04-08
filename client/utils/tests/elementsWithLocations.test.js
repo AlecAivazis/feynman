@@ -3,9 +3,9 @@ import { createStore } from 'store'
 import { addAnchors, addPropagators, addElements } from 'actions/elements'
 import { elementsWithLocations } from '..'
 
-describe('Utils', function() {
-    describe('Elements with Location', function() {
-        it('can generate the correct concrete locations for non-constrained propagators', function() {
+describe('Utils', () => {
+    describe('Elements with Location', () => {
+        test('can generate the correct concrete locations for non-constrained propagators', () => {
             // a store to test with
             const store = createStore()
 
@@ -59,7 +59,7 @@ describe('Utils', function() {
             })
         })
 
-        it('constrains anchors to their appropriate shapes', function() {
+        test('constrains anchors to their appropriate shapes', () => {
             // a store to test with
             const store = createStore()
 

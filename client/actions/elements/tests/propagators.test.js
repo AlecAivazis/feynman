@@ -2,10 +2,10 @@
 import { addPropagators, ADD_PROPAGATORS } from '..'
 
 
-describe('Action Creators', function() {
-    describe('Elements', function() {
-        describe('Propagators', function() {
-            it('add single propagator', function() {
+describe('Action Creators', () => {
+    describe('Elements', () => {
+        describe('Propagators', () => {
+            test('add single propagator', () => {
                 // the configuration for the propagator
                 const propagator = {
                     anchor1: 1,
@@ -19,7 +19,7 @@ describe('Action Creators', function() {
                 })
             })
 
-            it('add multiple propagators', function() {
+            test('add multiple propagators', () => {
                 // the configuration for the propagator
                 const propagators = [
                     {

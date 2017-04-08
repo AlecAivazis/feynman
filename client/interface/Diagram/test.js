@@ -24,11 +24,11 @@ const Test = (props) => (
     </Provider>
 )
 
-describe('Interface Components', function() {
+describe('Interface Components', () => {
 
-    describe('Diagram', function() {
+    describe('Diagram', () => {
 
-        it('shows the grid when the store says so', function() {
+        test('shows the grid when the store says so', () => {
             // create a verion of the store
             const store = createStore()
             // if the grid is supposed to be hidden
@@ -48,7 +48,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Grid)).toHaveLength(1)
         })
 
-        it('hides the grid when the store says so', function() {
+        test('hides the grid when the store says so', () => {
             // create a verion of the store
             const store = createStore()
             // if the grid is supposed to be shown
@@ -68,7 +68,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Grid)).toHaveLength(0)
         })
 
-        it('hides the grid when the gridSize is zero', function() {
+        test('hides the grid when the gridSize is zero', () => {
             // create a verion of the store
             const store = createStore()
             // make sure the grid would show otherwise
@@ -91,7 +91,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Grid)).toHaveLength(0)
         })
 
-        it('produces a propagator for each entry in the store', function() {
+        test('produces a propagator for each entry in the store', () => {
             // create a store to test with
             const store = createStore()
 
@@ -134,7 +134,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Propagator)).toHaveLength(expected)
         })
 
-        it('renders Anchors when appropriate', function() {
+        test('renders Anchors when appropriate', () => {
             // create a verion of the store
             const store = createStore()
             // if anchors are supposed to be hidden
@@ -164,7 +164,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Anchor)).toHaveLength(2)
         })
 
-        it('clicking on diagram clears selection', function() {
+        test('clicking on diagram clears selection', () => {
             // create a verion of the store
             const store = createStore()
 
@@ -195,7 +195,7 @@ describe('Interface Components', function() {
             expect(store.getState().diagram.elements.selection.anchors).toHaveLength(0)
         })
 
-        it('passes selected state onto the appropriate anchor components', function() {
+        test('passes selected state onto the appropriate anchor components', () => {
             // create a verion of the store
             const store = createStore()
 
@@ -231,7 +231,7 @@ describe('Interface Components', function() {
             expect(anchor.props().selected).toBeTruthy
         })
 
-        it('passes selected state onto the appropriate propagator components', function() {
+        test('passes selected state onto the appropriate propagator components', () => {
             // create a verion of the store
             const store = createStore()
 
@@ -275,7 +275,7 @@ describe('Interface Components', function() {
             expect(anchor.props().selected).toBeTruthy
         })
 
-        it('passes selected state onto the appropriate text components', function() {
+        test('passes selected state onto the appropriate text components', () => {
             // create a verion of the store
             const store = createStore()
 
@@ -306,7 +306,7 @@ describe('Interface Components', function() {
             expect(anchor.props().selected).toBeTruthy
         })
 
-        it('has the transform to accomodate the diagram pan', function() {
+        test('has the transform to accomodate the diagram pan', () => {
             // create a verion of the store
             const store = createStore()
 
@@ -325,7 +325,7 @@ describe('Interface Components', function() {
             )
         })
 
-        it('renders text elements for each entry in the store', function() {
+        test('renders text elements for each entry in the store', () => {
             // create a verion of the store
             const store = createStore()
 
@@ -354,7 +354,7 @@ describe('Interface Components', function() {
             expect(wrapper.find(Text)).toHaveLength(2)
         })
 
-        it('renders a shape for each entry in the store', function() {
+        test('renders a shape for each entry in the store', () => {
             // create a verion of the store
             const store = createStore()
 

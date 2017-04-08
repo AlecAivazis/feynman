@@ -1,10 +1,10 @@
 // local imports
 import Storage from './storage'
 
-describe('Action Creators', function() {
-    describe('Info', function() {
-        describe('Storage mock', function() {
-            it('can set field', function() {
+describe('Action Creators', () => {
+    describe('Info', () => {
+        describe('Storage mock', () => {
+            test('can set field', () => {
                 // instantiate a storage object to test
                 const storage = new Storage()
                 // update a field
@@ -13,7 +13,7 @@ describe('Action Creators', function() {
                 expect(storage.value.hello).toEqual('world')
             })
 
-            it('can retrieve fields', function() {
+            test('can retrieve fields', () => {
                 // instantiate a storage object to test
                 const storage = new Storage()
                 // update an internal field
@@ -22,7 +22,7 @@ describe('Action Creators', function() {
                 expect(storage.getItem("hello")).toEqual('world')
             })
 
-            it("can be cleared", function() {
+            test('can be cleared', () => {
                 // instantiate a storage object to test
                 const storage = new Storage()
                 // update the internal data structure
