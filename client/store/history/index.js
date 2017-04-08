@@ -90,17 +90,15 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
 
         // if we have to go to a specific commit
         if (type === GOTO) {
-            // the current head
-            const newHead = payload
             // retrieve the appropriate entry in the log
-            const entry = history.get('log').get(newHead)
+            const entry = history.get('log').get(payload)
             // get the state stored within
             const state = entry.get('state')
 
             // return the appropriate state and decrement the head
             return {
                 ...state,
-                history: history.set('head', newHead)
+                history: history.set('head', payload)
             }
 
         }
