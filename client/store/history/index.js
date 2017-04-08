@@ -24,45 +24,58 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             log: Stack.of(
                 Map({
                     message: config.initialMessage,
-                    state: fromJS(wrappedInitial),
+                    state: wrappedInitial,
                 })
             )
         })
     }
 
-    return ({history: oldHistory, ...state} = initialState, {type, payload}) => {
+    return ({history, ...state} = initialState, {type, payload}) => {
 
         // the next state of the store
         const next = reducer(state, {type, payload})
 
         // if we have to commit a new state to the log
         if (type === COMMIT) {
+            const newHead = Math.max(history.get('head') - 1, 0)
             // the new entry in the commit log
             const entry = Map({
                 message: payload,
                 state,
             })
-            // the current head
-            const head = oldHistory.get('head')
+
             // the log after the commit needs to include this entry and clear everything after
-            const log = oldHistory.get('log')
-                            // clear everything after the current head
-                            .slice(0, head + 1)
-                            .push(entry)
+            const log = history.get('log').push(entry)
 
             // return the previous state with the current one appended to the log
             return {
-                ...state,
-                history: oldHistory
-                            .set('head', head + 1)
+                ...next,
+                history: history
+                            .set('head', newHead)
                             .set('log', log)
+            }
+        }
+
+        // if we have to step back in history
+        if (type === UNDO) {
+            // the current head
+            const newHead = history.get('head') + 1
+            // retrieve the appropriate entry in the log
+            const entry = history.get('log').get(newHead)
+            // get the state stored within
+            const state = entry.get('state')
+
+            // return the appropriate state and decrement the head
+            return {
+                ...state,
+                history: history.set('head', newHead)
             }
         }
 
         // we didn't change anything so just pass along whatever the wrapper reducer gave us
         return {
             ...next,
-            history: oldHistory,
+            history: history,
         }
     }
 }
