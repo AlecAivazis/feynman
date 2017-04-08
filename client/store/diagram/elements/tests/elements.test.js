@@ -646,13 +646,13 @@ describe('Reducers', function() {
                 ))
 
                 // sanity check
-                expect(selectedState.selection.anchors).to.have.length(1)
+                expect(selectedState.selection.shapes).to.have.length(1)
 
                 // delete the element
                 const deletedState = reducer(selectedState, deleteSelection())
 
                 // make sure there that there one element selected
-                expect(deletedState.anchors[1]).to.not.exist
+                expect(deletedState.anchors[1].constraint).to.not.exist
 
             })
 

@@ -14,12 +14,14 @@ const elementsWithLocations = elements => {
 
             // if the anchor is constrained to a shape
             if (next.constraint) {
+                console.log('has constraint!')
                 // use the constrained location instead
                 coordinates = constrainLocationToShape({
                     location: coordinates,
                     shape: elements.shapes[next.constraint],
                 })
             }
+            console.log(coordinates)
 
             return {
                 ...prev,
