@@ -72,7 +72,8 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
         // if we have to go forward in history
         if (type === REDO) {
             // the current head
-            const newHead = history.get('head') - 1
+            const head = history.get('head')
+            const newHead = head > 0 ? head - 1 : 0
             // retrieve the appropriate entry in the log
             const entry = history.get('log').get(newHead)
 
