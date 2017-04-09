@@ -35,6 +35,7 @@ import {
 } from 'actions/elements'
 import { panDiagram as panDiagramAction, zoomIn as zoomInAction, zoomOut as zoomOutAction } from 'actions/info'
 import PatternModal from '../PatternModal'
+import { undo, redo } from 'actions/history'
 
 export const exportDiagramImageEvent = 'export-diagram-image'
 
@@ -308,6 +309,7 @@ class Diagram extends React.Component {
 
     @autobind
     _keyPress(event) {
+        event.preventDefault()
         // if the key that was pressed was the spacebar, we haven't pressed teh spacebar yet, and we aren't dragging something
         if (event.which === 32 && !this.state.spacebarPressed && !this.state.point1){
             this.setState({
@@ -317,6 +319,17 @@ class Diagram extends React.Component {
         } else if ([8,46].includes(event.which)) {
             // delete the selected elements
             this.props.deleteSelectedElements()
+        }
+        // if the user pressed ctrl+z
+        if (event.ctrlKey && event.which === 90) {
+            // if they actually pressed shift + ctrl + z
+            if (event.shiftKey) {
+                this.props.redo()
+            // otherwise they just pressed ctrl + x
+            } else {
+                this.props.undo()
+            }
+
         }
     }
 
@@ -416,5 +429,7 @@ const mapDispatchToProps = dispatch => ({
     panDiagram: pan => dispatch(panDiagramAction(pan)),
     zoomIn: () => dispatch(zoomInAction()),
     zoomOut: () => dispatch(zoomOutAction()),
+    redo: () => dispatch(redo()),
+    undo: () => dispatch(undo()),
 })
 export default connect(selector, mapDispatchToProps)(Diagram)

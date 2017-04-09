@@ -124,11 +124,16 @@ describe('Reducers', () => {
         })
 
         test('gracefully handles redoing before the end of time', () => {
+            const committed = wrapped(initial, commit('first msg'))
+            const committed2 = wrapped(committed, commit('first msg'))
+            // undo when when there isn't anything before
+            const undoState = wrapped(committed2, undo())
             // redo when when there isn't anything after
-            const redoState = wrapped(initial, redo())
+            const redoState = wrapped(undoState, redo())
+            const redoState2 = wrapped(redoState, redo())
 
             // make sure the head has been set
-            expect(redoState.history.get('head')).toEqual(0)
+            expect(redoState2.history.get('head')).toEqual(0)
         })
     })
 })
