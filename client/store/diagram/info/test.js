@@ -14,6 +14,7 @@ import {
     setZoom,
     zoomIn,
     zoomOut,
+    toggleHistory,
     TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so
 } from 'actions/info'           // import the type directly
 
@@ -51,7 +52,15 @@ describe('Reducers', () => {
             const state = reducer(undefined, action)
             // make sure the title matches the expectation
             expect(state.gridSize).toEqual(20)
+        })
 
+        test('responds to the TOGGLE_HISTORY action', () => {
+            // create an action corresponding to toggling the grid
+            const action = toggleHistory()
+            // get the mutated state after toggling the grid
+            const state = reducer(undefined, action)
+            // make sure the title matches the expectation
+            expect(state.showHistory).toEqual(!initialState.showHistory)
         })
 
         test('responds to the TOGGLE_HOTKEYS action', () => {
