@@ -8,9 +8,11 @@ import styles from './styles'
 
 const HistorySummary = ({info, history, dispatch, toggle, style}) => (
     <Collapsible title="History" active={info.showHistory} style={style} toggle={toggle}>
-        <div style={styles.container}>
-            this is not implemented yet
-        </div>
+        {history.get('log').map(({message}, i) => (
+            <div>
+                {i}: {message}
+            </div>
+        ))}
     </Collapsible>
 )
 

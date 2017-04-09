@@ -21,12 +21,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
     const initialState = {
         history: Map({
             head: 0,
-            log: Stack.of(
-                Map({
-                    message: config.initialMessage,
-                    state: wrappedInitial,
-                })
-            )
+            log: Stack()
         })
     }
 
