@@ -15,4 +15,4 @@ cache:
 
 # command to run tests
 script:
-  - npm run test
+  - npm run test:coverage
