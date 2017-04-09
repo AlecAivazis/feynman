@@ -43,12 +43,14 @@ export default {
             {
                 id: 1,
                 kind: 'fermion',
+                label: 'l',
                 anchor1: 2,
                 anchor2: 1,
             },
             {
                 id: 2,
                 kind: 'fermion',
+                label: '\\anti{l}',
                 anchor1: 3,
                 anchor2: 2,
             },
@@ -56,18 +58,21 @@ export default {
                 id: 3,
                 kind: 'em',
                 stroke: blue,
+                label: 'Z',
                 anchor1: 2,
                 anchor2: 5,
             },
             {
                 id: 4,
                 kind: 'fermion',
+                label: 'l',
                 anchor1: 4,
                 anchor2: 5,
             },
             {
                 id: 5,
                 kind: 'fermion',
+                label: '\\anti{l}',
                 anchor1: 5,
                 anchor2: 6,
             }
