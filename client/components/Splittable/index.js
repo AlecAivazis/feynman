@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 // local imports
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import { selectElements, mergeElements, moveSelectedElements, setElementAttrs } from 'actions/elements'
+import { commit } from 'actions/history'
 import { throttle, fixDeltaToGrid, round } from 'utils'
 import { EventListener } from 'components'
 import { snapElement, snapPropagator } from './snap'
@@ -135,6 +136,9 @@ class Splittable extends React.Component {
 
         // if this component was being dragged
         if (origin) {
+            this.props.commitWithMessage(
+                `moved ${moveType} ${moveTarget} to ${origin.x}, ${origin.y}`
+            )
             // tell the store to clean up any overlapping elements (and select the resulting element)
             mergeElements({
                 type: moveType,
@@ -176,6 +180,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     mergeElements: (...args) => dispatch(mergeElements(...args)),
     // update particular attributes of elements
     setElementAttrs: (...attrs) => dispatch(setElementAttrs(...attrs)),
+    commitWithMessage: msg => dispatch(commit(msg)),
 
 })
 export default connect(selector, mapDispatchToProps)(Splittable)
