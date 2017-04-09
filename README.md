@@ -2,7 +2,13 @@
 A javascript application for creating feynman diagrams. Live at [feynman.aivazis.com](http://feynman.aivazis.com).
 
 This repo started as a migration of my [original](https://github.com/AlecAivazis/feynman-old) feynman diagram 
-application to a leaner flask server. It then evolved from a badly written angular 1.2 application to a less-badly
-written react/redux app. There is still [some work](https://github.com/AlecAivazis/feynman/projects/1) to do before I can flip the switch on the deployed version, but stay tuned!
+application to a leaner flask server. It then evolved from a [badly written angular 1.2 application](https://github.com/AlecAivazis/feynman/tree/angular1.x) to a less-badly written react/redux app. During that time,
+the backend was also rewritten to golang. 
 
-A preview of the new react-driven application can be found [here](https://feynman.netlify.com/).
+
+## Running the Tests
+The tests are written using jest. To run them, download the package's dependencies and run them:
+
+```
+yarn && npm run test
+```
