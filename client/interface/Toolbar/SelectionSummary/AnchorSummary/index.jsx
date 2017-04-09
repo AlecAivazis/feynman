@@ -7,7 +7,7 @@ import styles from './styles'
 import { MultiRow, SliderRow, ButtonRow, Row, Label, Header, Container } from '..'
 import { ColorPicker, Button, ToggleButton, RedButton } from 'components'
 import { setElementAttrs, deleteElements, alignSelectedAnchors } from 'actions/elements'
-import { commit } from 'actions/history'
+import { withCommit } from 'actions/history'
 
 const AnchorSummary = ({
     anchors,
@@ -109,14 +109,13 @@ const mapDispatchToProps = (dispatch, {anchors}) => ({
         ))
     ),
     deleteAnchors: () => (
-        dispatch(deleteElements(
+        dispatch(withCommit(deleteElements(
             ...anchors.map(id => ({type: 'anchors', id}))
-        ))
+        ), 'removed anchors from diagram'))
     ),
     alignAnchors: dir => () => (
         dispatch(alignSelectedAnchors(dir))
     ),
-    commitWithMessage: msg => dispatch(commit(msg)),
 })
 
 // the anchor summary needs the elements object
