@@ -1,9 +1,10 @@
 // local imports
 import {
-    commit,   COMMIT,
-    goto,     GOTO,
-    undo,     UNDO,
-    redo,     REDO,
+    commit,       COMMIT,
+    goto,         GOTO,
+    undo,         UNDO,
+    redo,         REDO,
+    withCommit,   WITH_COMMIT
 } from 'actions/history'
 
 describe('Action Creators', () => {
@@ -31,6 +32,19 @@ describe('Action Creators', () => {
         test('can redo history', () => {
             expect(redo()).toEqual({
                 type: REDO,
+            })
+        })
+
+        test('with commit', () => {
+            // the action to dispatch
+            const action = {hello: 'world'}
+
+            expect(withCommit(action, 'msg')).toEqual({
+                type: WITH_COMMIT,
+                payload: {
+                    action,
+                    message: 'msg'
+                }
             })
         })
     })

@@ -209,13 +209,12 @@ describe('Interface Components', () => {
             ))
 
             // select the element
-            // store.dispatch(selectElements({type: 'anchors', id:1}))
+            store.dispatch(selectElements({type: 'anchors', id:1}))
 
             // render the diagram in the wrapper
             const wrapper = mount(<Test store={store}/>)
-
             // make sure the anchor was told to render selected
-            expect(wrapper.find(Anchor).props().selected).toBeTruthy
+            expect(wrapper.find(Anchor).props().selected).toBeTruthy()
         })
 
         test('passes selected state onto the appropriate propagator components', () => {
@@ -259,7 +258,7 @@ describe('Interface Components', () => {
             expect(anchor).not.toHaveLength(0)
 
             // make sure the anchor was told to render selected
-            expect(anchor.props().selected).toBeTruthy
+            expect(anchor.props().selected).toBeTruthy()
         })
 
         test('passes selected state onto the appropriate text components', () => {
@@ -290,7 +289,7 @@ describe('Interface Components', () => {
             expect(anchor).not.toHaveLength(0)
 
             // make sure the anchor was told to render selected
-            expect(anchor.props().selected).toBeTruthy
+            expect(anchor.props().selected).toBeTruthy()
         })
 
         test('has the transform to accomodate the diagram pan', () => {

@@ -42,7 +42,7 @@ describe('Sagas', () => {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).toBeTruthy
+                expect(gen.next().done).toBeTruthy()
             })
 
             test('can place a propagator associated with a given anchor', () => {
@@ -63,7 +63,7 @@ describe('Sagas', () => {
                 )
 
                 // there shouldn't be anything left
-                expect(gen.next().done).toBeTruthy
+                expect(gen.next().done).toBeTruthy()
             })
 
             test('can create a heterogenous propagator (anchor reference and creation)', () => {
@@ -97,7 +97,7 @@ describe('Sagas', () => {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).toBeTruthy
+                expect(gen.next().done).toBeTruthy()
 
             })
         })

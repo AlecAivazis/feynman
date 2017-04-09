@@ -24,6 +24,7 @@ import {
     dataUrlToBlob,
     svgToDataURL,
 } from 'utils'
+import { withCommit } from 'actions/history'
 import { EventListener } from 'components'
 import {
     clearSelection,
@@ -309,19 +310,24 @@ class Diagram extends React.Component {
 
     @autobind
     _keyPress(event) {
-        event.preventDefault()
         // if the key that was pressed was the spacebar, we haven't pressed teh spacebar yet, and we aren't dragging something
         if (event.which === 32 && !this.state.spacebarPressed && !this.state.point1){
+            event.preventDefault()
             this.setState({
                 spacebarPressed: true
             })
         // if the user pressed the backspace or the delete key respectively
         } else if ([8,46].includes(event.which)) {
-            // delete the selected elements
-            this.props.deleteSelectedElements()
+            event.preventDefault()
+            // if we have any elements selected
+            if(Object.values(this.props.selection).filter(arr => arr.length > 0).length > 0) {
+                // delete the selected elements and commit the change
+                this.props.withCommit(deleteSelection(), 'removed selected elements')
+            }
         }
         // if the user pressed ctrl+z
         if (event.ctrlKey && event.which === 90) {
+            event.preventDefault()
             // if they actually pressed shift + ctrl + z
             if (event.shiftKey) {
                 this.props.redo()
@@ -425,11 +431,11 @@ const mapDispatchToProps = dispatch => ({
     addAnchors: (...anchors) => dispatch(addAnchors(...anchors)),
     addPropagators: (...props) => dispatch(addPropagators(...props)),
     setElementAttrs: (...attrs) => dispatch(setAttrs(...attrs)),
-    deleteSelectedElements: () => dispatch(deleteSelection()),
     panDiagram: pan => dispatch(panDiagramAction(pan)),
     zoomIn: () => dispatch(zoomInAction()),
     zoomOut: () => dispatch(zoomOutAction()),
     redo: () => dispatch(redo()),
     undo: () => dispatch(undo()),
+    withCommit: (action, msg) => dispatch(withCommit(action, msg)),
 })
 export default connect(selector, mapDispatchToProps)(Diagram)
