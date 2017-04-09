@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 import { setElementAttrs, deleteSelection } from 'actions/elements'
+import { withCommit } from 'actions/history'
 import { ButtonRow, Row, Label, Header, Container } from '..'
 import { Input, RedButton } from 'components'
 
@@ -39,7 +40,6 @@ const TextSummary = ({text, deleteElement, elements, setValue, showDelete, ...un
                     </RedButton>
                 </ButtonRow>
             )}
-
         </Container>
     )
 }
@@ -49,7 +49,7 @@ const mapDispatchToProps = dispatch => ({
     setValue: (id, value) => dispatch(
         setElementAttrs({type: 'text', id, value})
     ),
-    deleteElement: () => dispatch(deleteSelection()),
+    deleteElement: () => dispatch(withCommit(deleteSelection(), 'removed text from diagram')),
 })
 
 export default connect(selector, mapDispatchToProps)(TextSummary)

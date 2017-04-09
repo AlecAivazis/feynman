@@ -10,6 +10,7 @@ import TextSummary from './TextSummary'
 import ShapeSummary from './ShapeSummary'
 import { flatMap } from 'utils'
 import { deleteSelection } from 'actions/elements'
+import { withCommit } from 'actions/history'
 import ButtonRow from './ButtonRow'
 import { RedButton } from 'components'
 
@@ -39,7 +40,7 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
 }
 
 const mapDispatchToProps = (dispatch, {selection}) => ({
-    deleteElements: () => dispatch(deleteSelection())
+    deleteElements: () => dispatch(withCommit(deleteSelection(), "removed selected elements from diagram"))
 })
 
 export default connect(null, mapDispatchToProps)(SelectionSummary)

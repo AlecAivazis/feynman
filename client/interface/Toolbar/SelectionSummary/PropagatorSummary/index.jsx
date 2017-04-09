@@ -9,6 +9,7 @@ import GluonSummary from './GluonSummary'
 import { ColorPicker, Select, Option, RedButton, Input } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs, deleteElements } from 'actions/elements'
+import { withCommit } from 'actions/history'
 import styles from './styles'
 
 const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, showDelete=true, ...unusedProps}) => {
@@ -108,9 +109,9 @@ const mapDispatchToProps = (dispatch, {propagators}) => ({
         ))
     ),
     deletePropagators: () => (
-        dispatch(deleteElements(
+        dispatch(withCommit(deleteElements(
             ...propagators.map(id => ({type: 'propagators', id}))
-        ))
+        ), 'removed propagators from diagram'))
     ),
 })
 const selector = ({diagram: {elements}}) => ({elements})
