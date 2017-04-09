@@ -107,5 +107,28 @@ describe('Reducers', () => {
             // make sure the state of the reducer is what we expect
             expect(_.omit(gotoState, 'history')).toMatchObject(_.omit(committed, 'history'))
         })
+
+        test('gracefully handles undoing before the dawn of time', () => {
+            const committed = wrapped(initial, commit('first msg'))
+            // undo when when there isn't anything before
+            const undoState = wrapped(committed, undo())
+
+            // stanity check
+            expect(undoState.history.get('head')).toEqual(0)
+
+            // one more undo, this is before the start of time
+            const undoStateFinal = wrapped(undoState, undo())
+
+            // make sure the head has been set
+            expect(undoStateFinal.history.get('head')).toEqual(0)
+        })
+
+        test('gracefully handles redoing before the end of time', () => {
+            // redo when when there isn't anything after
+            const redoState = wrapped(initial, redo())
+
+            // make sure the head has been set
+            expect(redoState.history.get('head')).toEqual(0)
+        })
     })
 })

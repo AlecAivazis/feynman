@@ -55,7 +55,8 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
         // if we have to step back in history
         if (type === UNDO) {
             // the current head
-            const newHead = history.get('head') + 1
+            const head = history.get('head')
+            const newHead = head === history.get('log').size - 1 ? head : head + 1
             // retrieve the appropriate entry in the log
             const entry = history.get('log').get(newHead)
             // get the state stored within
@@ -74,6 +75,15 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             const newHead = history.get('head') - 1
             // retrieve the appropriate entry in the log
             const entry = history.get('log').get(newHead)
+
+            // if we passed the end of time
+            if (!entry) {
+                return {
+                    ...next,
+                    history
+                }
+            }
+
             // get the state stored within
             const state = entry.get('state')
 
