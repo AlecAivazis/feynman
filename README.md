@@ -1,4 +1,5 @@
 # feynman
+[![Build Status](https://travis-ci.org/AlecAivazis/feynman.svg?branch=master)](https://travis-ci.org/AlecAivazis/feynman)
 [![Coverage Status](https://coveralls.io/repos/github/AlecAivazis/feynman/badge.svg?branch=feat%2Fcoverage)](https://coveralls.io/github/AlecAivazis/feynman?branch=feat%2Fcoverage)
 
 A javascript application for creating feynman diagrams. Live at [feynman.aivazis.com](http://feynman.aivazis.com).
