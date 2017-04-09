@@ -13,6 +13,7 @@ import {
     ADD_ELEMENTS,
 } from 'actions/elements'
 import { flatMap } from 'utils'
+import withHistory from '../../history'
 
 // the initial state of elements
 export const initialState = {
@@ -25,7 +26,7 @@ export const initialState = {
 import Shape from 'interface/Diagram/Shape'
 const { r:defaultR, kind:defaultKind } = Shape.defaultProps
 
-export default (state = initialState, {type, payload}) => {
+export default withHistory((state = initialState, {type, payload}) => {
 
     // if the action indicates we need to dedupe the elements
     if (type === MERGE_ELEMENTS) {
@@ -247,4 +248,4 @@ export default (state = initialState, {type, payload}) => {
         propagators: propagatorsPartial(state, {type, payload}),
         selection: selectionPartial(state, {type, payload}),
     }
-}
+})
