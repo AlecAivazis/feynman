@@ -15,10 +15,11 @@
   },
   "scripts": {
     "build": "webpack --config config/webpack.js",
-    "build-production": "NODE_ENV=production npm run build && cp config/_redirects build/",
+    "build:production": "NODE_ENV=production npm run build && cp config/_redirects build/",
     "dev": "webpack-dev-server --inline --hot --config config/webpack.js --content-base build/",
+    "test": "NODE_ENV=test jest",
     "test:watch": "npm run test -- --watch",
-    "test": "NODE_ENV=test jest"
+    "test:coverage": "npm run test -- --coverage"
   },
   "jest": {
     "modulePaths": [
