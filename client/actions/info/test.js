@@ -1,21 +1,22 @@
 import 'babel-polyfill'
 // local imports
 import {
-    setDiagramTitle, SET_TITLE,
-    toggleGrid, TOGGLE_GRID,
-    setGridSize, SET_GRID_SIZE,
-    toggleHotkeys, TOGGLE_HOTKEYS,
-    toggleAnchors, TOGGLE_ANCHORS,
-    selectElements, SELECT_ELEMENTS,
-    togglePatternModal, TOGGLE_PATTERN_MODAL,
+    setDiagramTitle,              SET_TITLE,
+    toggleGrid,                   TOGGLE_GRID,
+    setGridSize,                  SET_GRID_SIZE,
+    toggleHotkeys,                TOGGLE_HOTKEYS,
+    toggleAnchors,                TOGGLE_ANCHORS,
+    selectElements,               SELECT_ELEMENTS,
+    togglePatternModal,           TOGGLE_PATTERN_MODAL,
+    toggleHistory,                TOGGLE_HISTORY,
     togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS,
-    toggleExportModal, TOGGLE_EXPORT_MODAL,
-    panDiagram, PAN_DIAGRAM,
-    setZoom, SET_ZOOM,
-    zoomIn, ZOOM_IN,
-    zoomOut, ZOOM_OUT,
+    toggleExportModal,            TOGGLE_EXPORT_MODAL,
+    panDiagram,                   PAN_DIAGRAM,
+    setZoom,                      SET_ZOOM,
+    zoomIn,                       ZOOM_IN,
+    zoomOut,                      ZOOM_OUT,
 } from 'actions/info'
-import { fieldName } from '../creators/togglePatternModalInitialVis'
+import { fieldName } from './creators/togglePatternModalInitialVis'
 import LocalStorageMock from './storage.js'
 import { createStore } from 'store'
 
@@ -80,6 +81,13 @@ describe('Action Creators', () => {
             // all we care about is the type
             expect(toggleHotkeys()).toEqual({
                 type: TOGGLE_HOTKEYS,
+            })
+        })
+
+        test('toggle the history', () => {
+            // all we care about is the type
+            expect(toggleHistory()).toEqual({
+                type: TOGGLE_HISTORY,
             })
         })
 

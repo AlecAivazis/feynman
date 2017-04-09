@@ -4,6 +4,7 @@ import {
     TOGGLE_GRID,
     SET_GRID_SIZE,
     TOGGLE_HOTKEYS,
+    TOGGLE_HISTORY,
     TOGGLE_ANCHORS,
     TOGGLE_PATTERN_MODAL,
     TOGGLE_PATTERN_INITIAL_VIS,
@@ -71,6 +72,15 @@ export default (state = initialState, {type, payload}) => {
         return {
             ...state,
             showHotkeys: !state.showHotkeys
+        }
+    }
+
+    // if the action indicates we should toggle the history
+    if (type === TOGGLE_HISTORY) {
+        // change the history visibility
+        return {
+            ...state,
+            showHistory: !state.showHistory
         }
     }
 
