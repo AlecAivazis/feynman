@@ -31,9 +31,10 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
     }
 
     return ({history, ...state} = initialState, {type, payload}) => {
-
+        // the user's state
+        const userState = Object.values(state).length > 0 ? state : undefined
         // the next state of the store
-        const next = reducer(state, {type, payload})
+        const next = reducer(userState, {type, payload})
 
         // if we have to commit a new state to the log
         if (type === COMMIT) {

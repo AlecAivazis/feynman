@@ -229,6 +229,13 @@ describe('Reducers', () => {
                 expect(val).toBeDefined()
             })
 
+            test('has the history enhancer', () => {
+                // pass an undefined current state
+                const val = reducer(undefined, {type: "init"})
+                // expect the default initial state
+                expect(val.history).toBeDefined()
+            })
+
             test('can clear all elements', () => {
                 // add some anchors to a store
                 const initialState = reducer(undefined, addAnchors(
@@ -247,7 +254,7 @@ describe('Reducers', () => {
                 // clear all elements
                 const clearedState = reducer(initialState, clearElements())
                 // make sure there are no elements
-                expect(clearedState).toEqual(initialReducerState)
+                expect(clearedState).toMatchObject(initialReducerState)
             })
         })
 
