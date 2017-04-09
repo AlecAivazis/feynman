@@ -24,7 +24,7 @@ export const initialState = {
     showGrid: true,
     gridSize: 50,
     showAnchors: true,
-    showHistory: false,
+    showHistory: true,
     showHotkeys: true,
     showExportModal: false,
     showPatternModal: true, // this must reflect the initial value of `patternModalInitalVis`

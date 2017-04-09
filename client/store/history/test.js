@@ -30,35 +30,7 @@ describe('Reducers', () => {
             expect(wrappedState).toMatchObject(reducerState)
         })
 
-        test('head and log accomodate reducer initial state', () => {
-            expect(initial.history).toEqual(Map({
-                head: 0,
-                log: Stack.of(
-                    Map({
-                        message: '',
-                        state: reducerInitial,
-                    })
-                )
-            }))
-        })
-
-        test('can set initial message', () => {
-            // wrap the reducer
-            const reducerWithMessage = historyEnhancer(reducer, {initialMessage: "hello"})
-            initial = reducerWithMessage(undefined, {})
-
-            expect(initial.history).toEqual(Map({
-                head: 0,
-                log: Stack.of(
-                    Map({
-                        message: "hello",
-                        state: reducerInitial,
-                    })
-                )
-            }))
-        })
-
-        test('committing a appends the current state to the log', () => {
+        test('committing appends the current state to the log', () => {
             // mutate the state and commit it
             const middle = wrapped(initial, reducerAction('middle state'))
             const committed = wrapped(middle, commit('test msg'))
@@ -69,11 +41,7 @@ describe('Reducers', () => {
 
             // make sure the head still points to the most recent value
             expect(history.get('head')).toEqual(0)
-
             // and that the rest of the log
-            expect(history.get('log').get(2).get('state')).toMatchObject(
-                _.omit(initial, 'history')
-            )
             expect(history.get('log').get(1).get('state')).toMatchObject(
                 _.omit(committed, 'history')
             )
@@ -101,19 +69,21 @@ describe('Reducers', () => {
         })
 
         test('redo reduces the head bumps the head by one and mutates the state', function() {
+            // commit the initial state
+            const committed = wrapped(initial, commit('test msg'))
             // perform a mutation
-            const mutated = wrapped(initial, reducerAction('moon'))
+            const mutated = wrapped(committed, reducerAction('moon'))
 
             // commit the new state, return to the original location, and then move forward one
-            const committed = wrapped(mutated, commit('test msg'))
-            const undoState = wrapped(committed, undo())
+            const committed2 = wrapped(mutated, commit('test msg'))
+            const undoState = wrapped(committed2, undo())
 
             const {history, ...redoState} = wrapped(undoState, redo())
 
             // make sure the head has been increased back to the most recent change
             expect(history.get('head')).toEqual(0)
             // make sure we are back where we belong
-            expect(redoState).toEqual(_.omit(committed, 'history'))
+            expect(redoState).toEqual(_.omit(mutated, 'history'))
         })
 
         test('goto sets the head to a specific index', () => {
