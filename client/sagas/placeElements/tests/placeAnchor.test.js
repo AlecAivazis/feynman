@@ -23,7 +23,7 @@ describe('Sagas', () => {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).toBeTruthy
+                expect(gen.next().done).toBeTruthy()
             })
         })
     })

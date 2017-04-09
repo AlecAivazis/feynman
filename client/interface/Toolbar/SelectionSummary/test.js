@@ -64,14 +64,14 @@ describe('Interface Components', () => {
 
                 const anchorSummary = wrapper.find(AnchorSummary)
                 // make sure the showDelete props is false
-                expect(anchorSummary.props().showDelete).not.toBeTruthy
+                expect(anchorSummary.props().showDelete).not.toBeTruthy()
 
 
                 const propagatorSummary = wrapper.find(PropagatorSummary)
                 // make sure there is an anchor summary preset
                 expect(propagatorSummary).toBeDefined()
                 // make sure the showDelete props is false
-                expect(propagatorSummary.props().showDelete).not.toBeTruthy
+                expect(propagatorSummary.props().showDelete).not.toBeTruthy()
 
                 // make sure there is only one red button visible
                 expect(wrapper.find(RedButton)).toHaveLength(1)
@@ -127,12 +127,12 @@ describe('Interface Components', () => {
 
                 const anchorSummary = wrapper.find(AnchorSummary)
                 // make sure the showDelete props is false
-                expect(anchorSummary.props().showDelete).not.toBeTruthy
+                expect(anchorSummary.props().showDelete).not.toBeTruthy()
 
 
                 const textSummary = wrapper.find(TextSummary)
                 // make sure the showDelete props is false
-                expect(textSummary.props().showDelete).not.toBeTruthy
+                expect(textSummary.props().showDelete).not.toBeTruthy()
 
                 // make sure there is only one red button visible
                 expect(wrapper.find(RedButton)).toHaveLength(1)

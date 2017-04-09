@@ -7,6 +7,7 @@ import styles from './styles'
 import { MultiRow, SliderRow, ButtonRow, Row, Label, Header, Container } from '..'
 import { ColorPicker, Button, ToggleButton, RedButton } from 'components'
 import { setElementAttrs, deleteElements, alignSelectedAnchors } from 'actions/elements'
+import { commit } from 'actions/history'
 
 const AnchorSummary = ({
     anchors,
@@ -90,7 +91,7 @@ const firstValue = ({anchors, param, elements}) => {
     // go over every anchor
     for (const id of anchors) {
         // the fill of the anchor
-        const val = elements.anchors[id][param]
+        const val = (elements.anchors[id] || {})[param]
         // if the anchor has a fill
         if (val) {
             // use it
@@ -114,7 +115,8 @@ const mapDispatchToProps = (dispatch, {anchors}) => ({
     ),
     alignAnchors: dir => () => (
         dispatch(alignSelectedAnchors(dir))
-    )
+    ),
+    commitWithMessage: msg => dispatch(commit(msg)),
 })
 
 // the anchor summary needs the elements object

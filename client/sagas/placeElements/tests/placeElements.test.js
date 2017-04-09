@@ -113,7 +113,7 @@ describe('Sagas', () => {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).toBeTruthy
+                expect(gen.next().done).toBeTruthy()
             })
 
             test('patterns can include text', () => {
@@ -145,7 +145,7 @@ describe('Sagas', () => {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).toBeTruthy
+                expect(gen.next().done).toBeTruthy()
             })
         })
 
@@ -190,7 +190,7 @@ describe('Sagas', () => {
                 )
 
                 // make sure there isn't anything left
-                expect(gen.next().done).toBeTruthy
+                expect(gen.next().done).toBeTruthy()
             })
         })
     })

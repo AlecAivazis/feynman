@@ -49,6 +49,8 @@ class Splittable extends React.Component {
 
         // save a reference to the selected elements
         const selected = elements.selection[type]
+        // we need to track if we created a new element
+        let action = null
 
         const origin = {
             x: event.clientX,
@@ -66,6 +68,12 @@ class Splittable extends React.Component {
             if (event.altKey) {
                 // let the user do what they want (they will return the id to follow)
                 const splitResult = split({id, ...relativePosition(origin, info)})
+                // if the resulting id is different
+                if (splitResult.id !== id) {
+                    // we created a new element
+                    action = 'create'
+                }
+
                 id = splitResult.id
                 type = splitResult.type
             }
@@ -81,6 +89,8 @@ class Splittable extends React.Component {
             // and the id of the element we are moving
             moveTarget: id,
             moveType: type,
+            // track our action
+            action,
         })
     }
 
@@ -121,6 +131,7 @@ class Splittable extends React.Component {
             // save the current location for the next time we move the element
             this.setState({
                 origin: fixed,
+                action: this.state.action !== 'create' ? 'move' : 'create'
             })
         }
     }
@@ -131,27 +142,27 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // used state
-        const { origin, moveTarget, moveType } = this.state
+        const { action, moveTarget, moveType, origin } = this.state
         const { mergeElements } = this.props
 
         // if this component was being dragged
-        if (origin) {
-            this.props.commitWithMessage(
-                `moved ${moveType} ${moveTarget} to ${origin.x}, ${origin.y}`
-            )
-            // tell the store to clean up any overlapping elements (and select the resulting element)
-            mergeElements({
-                type: moveType,
-                id: moveTarget
-            }, true)
+        if (origin && moveTarget && moveType) {
+            // log the appropriate commit message
+            if (action === 'move') {
+                this.props.commitWithMessage(`moved ${moveType}`)
+            } else if (action === 'create') {
+                this.props.commitWithMessage(`added a branch to ${moveType}`)
+            }
         }
 
         // track the state of the mouse
         this.setState({
             // clear the drag target
             moveTarget: null,
+            moveType: null,
             // we are no longer holding the mouse down
-            origin: false
+            origin: false,
+            created: false,
         })
     }
 
