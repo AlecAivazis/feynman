@@ -5,6 +5,9 @@ This repo started as a migration of my [original](https://github.com/AlecAivazis
 application to a leaner flask server. It then evolved from a [badly written angular 1.2 application](https://github.com/AlecAivazis/feynman/tree/angular1.x) to a less-badly written react/redux app. During that time,
 the backend was also rewritten to golang. 
 
+
+# Frontend "Stack"
+
 Currently, the frontend is a React application powered by redux and relies on both 
 [redux-thunk](https://github.com/gaearon/redux-thunk) and [redux-saga](https://github.com/redux-saga/redux-saga) 
-to handle asynchronous actions a
+to handle asynchronous actions. 
