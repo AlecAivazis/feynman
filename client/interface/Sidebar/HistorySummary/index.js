@@ -6,23 +6,22 @@ import { Collapsible } from 'components'
 import { toggleHistory } from 'actions/info'
 import { goto } from 'actions/history'
 import styles from './styles'
+import Entry from './Entry'
 
-const HistorySummary = ({info, history, dispatch, toggle, goTo, style}) => (
+
+const HistorySummary = ({info, history, toggle, goTo, style}) => (
     <Collapsible title="History" active={info.showHistory} style={style} toggle={toggle}>
         <div style={styles.container}>
             {history.get('log').toJS().map((entry, index) => (
-                <div
+                <Entry
                     onClick={() => goTo(index)}
-                    style={index === history.get('head') ? styles.selectedEntry : styles.historyEntry}
+                    active={index === history.get('head')}
+                    length={history.get('log').size}
+                    index={index}
                     key={index}
                 >
-                    <div style={styles.historyIndex}>
-                        {history.get('log').size - index} :
-                    </div>
-                    <div style={styles.historyMessage}>
-                        {` ${entry['message']}`}
-                    </div>
-                </div>
+                    {entry}
+                </Entry>
             ))}
         </div>
     </Collapsible>
