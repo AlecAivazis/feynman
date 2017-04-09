@@ -11,6 +11,7 @@ import {
     placeElement,         PLACE_ELEMENTS,
     loadPattern,          LOAD_PATTERN,
     addElements,          ADD_ELEMENTS,
+    splitElement,         SPLIT_ELEMENT,
 } from 'actions/elements'
 
 describe('Action Creators', () => {
@@ -96,6 +97,17 @@ describe('Action Creators', () => {
                 // just check the type of the action
                 expect(clearElements()).toEqual({
                     type: CLEAR_ELEMENTS
+                })
+            })
+
+            test('split element', () => {
+                const element = {id: 1, x: 50, y: 50}
+                const location = {x: 50, y: 50}
+
+                // just check the type of the action
+                expect(splitElement({element, location})).toEqual({
+                    type: SPLIT_ELEMENT,
+                    payload: {element, location}
                 })
             })
 
