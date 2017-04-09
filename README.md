@@ -1,4 +1,6 @@
 # feynman
+[![Coverage Status](https://coveralls.io/repos/github/AlecAivazis/feynman/badge.svg?branch=feat%2Fcoverage)](https://coveralls.io/github/AlecAivazis/feynman?branch=feat%2Fcoverage)
+
 A javascript application for creating feynman diagrams. Live at [feynman.aivazis.com](http://feynman.aivazis.com).
 
 This repo started as a migration of my [original](https://github.com/AlecAivazis/feynman-old) feynman diagram 
