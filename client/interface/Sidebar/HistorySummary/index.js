@@ -8,7 +8,6 @@ import { goto } from 'actions/history'
 import styles from './styles'
 import Entry from './Entry'
 
-
 const HistorySummary = ({info, history, toggle, goTo, style}) => (
     <Collapsible title="History" active={info.showHistory} style={style} toggle={toggle}>
         <div style={styles.container}>

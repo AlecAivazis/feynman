@@ -17,6 +17,7 @@ import {
     moveSelectedElements ,
     mergeElements,
 } from 'actions/elements'
+import { commit } from 'actions/history'
 import { togglePatternModal } from 'actions/info'
 import { fixDeltaToGrid, relativePosition, generateElementId, round } from 'utils'
 import { anchorsInSpec } from './utils'
@@ -85,6 +86,14 @@ class Toolbar extends React.Component {
     _mouseUp(event) {
         // clean up any changes we left behind
         this.props.mergeAnchors()
+
+        // if we deposited an item
+        if (this.state.mouseOrigin && !this.state.shadow.show) {
+            // commit the state
+            this.props.commitWithMessage(
+                `placed ${this.state.elementDragConfig.type} from item palette.`
+            )
+        }
 
         // clear any references we made while dragging
         this.setState({
@@ -195,5 +204,6 @@ const mapDispatchToProps = dispatch => ({
     clearSelection: () => dispatch(clearSelection()),
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
     mergeAnchors: element => dispatch(mergeElements(element)),
+    commitWithMessage: msg => dispatch(commit(msg)),
 })
 export default connect(selector, mapDispatchToProps)(Toolbar)
