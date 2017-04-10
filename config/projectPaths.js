@@ -10,7 +10,7 @@ var rootDir = path.join(__dirname, '..')
 var configDir = path.join(rootDir, 'config')
 var buildDir = path.join(rootDir, 'build')
 var sourceDir = path.join(rootDir, 'client')
-var clientEntry = path.join(sourceDir, 'index.jsx')
+var clientEntry = path.join(sourceDir, 'index.js')
 var clientBuild = path.join(buildDir, 'client.js')
 var indexTemplate = path.join(sourceDir, 'index.html')
 
