@@ -10,13 +10,15 @@ const splitMap = {
     shapes: splitShape,
 }
 
-export function* splitElementWorker({type, payload: {element, location}}) {
+export function* splitElementWorker({type, payload: {element, location, connectTo}}) {
+    console.log('hello')
     // try to get the appropriate handler for the element type
     const splitFn = splitMap[element.type]
     // if there is a function to call
     if(splitFn) {
+        console.log(connectTo)
         // padd the element and location along
-        yield* splitFn({element, location})
+        yield* splitFn({element, location, connectTo})
     }
 }
 

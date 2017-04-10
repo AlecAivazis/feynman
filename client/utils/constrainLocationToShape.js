@@ -1,4 +1,4 @@
-import Shape from 'interface/Diagram/Shape'
+import { Shape } from 'interface/Diagram/Shape'
 
 const constrainLocationToShape = ({location, shape}) => {
     // if we are constrained the location to a circular shape

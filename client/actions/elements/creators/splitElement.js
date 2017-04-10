@@ -1,7 +1,7 @@
 // local imports
 import { SPLIT_ELEMENT } from 'actions/elements'
 
-export default ({element, location}) => ({
+export default ({element, location, connectTo}) => ({
     type: SPLIT_ELEMENT,
-    payload: {element, location},
+    payload: {element, location, connectTo},
 })

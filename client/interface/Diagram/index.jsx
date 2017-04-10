@@ -403,6 +403,10 @@ class Diagram extends React.Component {
 
     @autobind
     _mouseWheel(event) {
+        // only fire for clicks originating on the diagram
+        if (event.target.nodeName !== 'svg') {
+            return
+        }
         // don't scroll
         event.stopPropagation()
         event.preventDefault()

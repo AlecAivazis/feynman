@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import Shape from 'interface/Diagram/Shape'
+import { Shape } from 'interface/Diagram/Shape'
 import { ColorPicker } from 'components'
 import { setElementAttrs } from 'actions/elements'
 import { Container, Label, Header, Row, SliderRow } from '..'

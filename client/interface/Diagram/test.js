@@ -14,7 +14,7 @@ import Propagator from './Propagator'
 import Grid from './Grid'
 import Anchor from './Anchor'
 import Text from './Text'
-import Shape from './Shape'
+import { Shape } from './Shape'
 
 
 // a diagram wrapped in the right context

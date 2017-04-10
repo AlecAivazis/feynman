@@ -23,7 +23,7 @@ export const initialState = {
     selection: {},
     shapes: {},
 }
-import Shape from 'interface/Diagram/Shape'
+import { Shape } from 'interface/Diagram/Shape'
 const { r:defaultR, kind:defaultKind } = Shape.defaultProps
 
 export default withHistory((state = initialState, {type, payload}) => {
