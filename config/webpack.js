@@ -14,20 +14,37 @@ var entry = [projectPaths.clientEntry]
 var plugins = [
     new HtmlWebpackPlugin({
         template: 'client/index.html'
-    })
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: process.env.NODE_ENV || 'dev',
+    }),
 ]
 // if we are building for production
 if (process.env.NODE_ENV === 'production') {
     // use production plugins
     plugins.push(
-        new webpack.DefinePlugin({
-          'process.env': {
-            NODE_ENV: JSON.stringify('production')
-          }
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            debug: false
         }),
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.DedupePlugin()
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                screw_ie8: true,
+                conditionals: true,
+                unused: true,
+                comparisons: true,
+                sequences: true,
+                dead_code: true,
+                evaluate: true,
+                if_return: true,
+                join_vars: true,
+            },
+            output: {
+                comments: false,
+            },
+        })
     )
 } else {
     // use source maps
@@ -48,27 +65,28 @@ module.exports = {
         filename: 'client.js',
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 include: projectPaths.sourceDir
             }, {
                 test: /\.css$/,
-                loaders: ['style', 'css'],
+                use: ['style-loader', 'css-loader'],
             }, {
                 test: /\.(png|jpg|ttf)$/,
-                loader: 'url',
+                loader: 'url-loader',
                 query: {limit: 10000000},
             },
 
         ],
     },
     resolve: {
-        extensions: ['', '.jsx', '.js', ".ts", ".tsx"],
-        root: [
+        extensions: ['.jsx', '.js'],
+        modules: [
             projectPaths.sourceDir,
             projectPaths.rootDir,
+            'node_modules',
         ],
     },
     plugins: plugins,

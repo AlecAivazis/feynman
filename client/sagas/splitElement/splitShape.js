@@ -14,7 +14,6 @@ export default function* splitShape({element, location, connectTo}) {
 
     // compute the constrained location
     const constrained = constrainLocationToShape({shape: element, location})
-    console.log(element, location, constrained)
 
     // generate 2 anchor ids
     const [ anchor1, second ] = generateElementId(state.anchors, 2)
