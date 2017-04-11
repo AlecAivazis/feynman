@@ -43,6 +43,16 @@ export const Propagator = ({
     // use the selected styling when appropriate
     const styling = selected ? styles.selected : {}
 
+    // compute the distance for the label
+    const dx = element.x1 - element.x2
+    const dy = element.y1 - element.y2
+    const distance = Math.sqrt((dx*dx) + (dy*dy))
+    // if the distance is too small to show anything meaninful
+    if (distance < 5) {
+        // don't render anything
+        return null
+    }
+
     return (
         <g>
             {label && (

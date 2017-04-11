@@ -200,6 +200,42 @@ describe('Interface Components', () => {
             expect(location.y).toBeDefined()
         })
 
+        test('doesn\'t render a propagator if there is no distance to draw', function() {// a store to start out with
+            const store = createStore()
+            // create some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                },
+                {
+                    id: 2,
+                    x: 50,
+                    y: 100,
+                }
+            ))
+
+            // add a propagator connecting the anchors
+            store.dispatch(addPropagators({
+                id: 1,
+                kind: 'fermion',
+                anchor1: 1,
+                anchor2: 2,
+                label: 'a'
+            }))
+
+            // render a fermion through the diagram element
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Diagram />
+                </Provider>
+            )
+
+            // make sure there is no text
+            expect(wrapper.find(Text)).toHaveLength(0)
+        })
+
         test('can compute the relative coordinates for a label given diagram coordiantes', () => {
 
             // a store to start out with
