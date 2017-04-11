@@ -61,7 +61,6 @@ class Splittable extends React.Component {
         if (selected && selected.indexOf(id) > -1 ) {
 
         }
-
         // otherwise we are moving a non-selected anchor
         else {
             // if the altkey was held when the drag started
@@ -151,8 +150,6 @@ class Splittable extends React.Component {
                 this.props.commitWithMessage(`moved ${moveType}`)
             } else if (action === 'create') {
                 this.props.commitWithMessage(`added a branch to ${moveType}`)
-            } else {
-                this.props.commitWithMessage(`merged ${moveType} onto another.`)
             }
         }
 
