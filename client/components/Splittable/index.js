@@ -146,7 +146,6 @@ class Splittable extends React.Component {
         // if this component was being dragged
         if (origin && moveTarget && moveType) {
             this.props.mergeElements()
-            console.log('hello')
             // log the appropriate commit message
             if (action === 'move') {
                 this.props.commitWithMessage(`moved ${moveType}`)
