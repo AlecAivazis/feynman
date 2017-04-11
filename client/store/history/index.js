@@ -33,7 +33,6 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
 
         // if we have to commit a new state to the log
         if (type === COMMIT) {
-            const newHead = Math.max(history.get('head') - 1, 0)
             // the new entry in the commit log
             const entry = Map({
                 message: payload,
@@ -41,13 +40,15 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             })
 
             // the log after the commit needs to include this entry and clear everything after
-            const log = history.get('log').push(entry)
+            let log = history.get('log')
+            // add the entry to the top of the current location in the log
+            log = log.takeLast(log.size - history.get('head')).push(entry)
 
-            // return the previous state with the current one appended to the log
+            // return the previous state with the current one appended to the log (head goes to 0)
             return {
                 ...next,
                 history: history
-                            .set('head', newHead)
+                            .set('head', 0)
                             .set('log', log)
             }
         }

@@ -135,5 +135,30 @@ describe('Reducers', () => {
             // make sure the head has been set
             expect(redoState2.history.get('head')).toEqual(0)
         })
+
+        test('committing removes the future log', () => {
+            // perform and commit a mutation
+            const mutated = wrapped(initial, reducerAction('first state'))
+            const committed = wrapped(mutated, commit('first msg'))
+            // perform and commit a mutation
+            const mutated2 = wrapped(committed, reducerAction('second state'))
+            const committed2 = wrapped(mutated2, commit('second msg'))
+            // perform and commit a mutation
+            const mutated3 = wrapped(committed2, reducerAction('third state'))
+            const committed3 = wrapped(mutated3, commit('third msg'))
+
+            // perform 2 undos
+            const undo1 = wrapped(committed3, undo())
+            const undo2 = wrapped(undo1, undo())
+
+            // perform and commit a mutation
+            const mutated4 = wrapped(undo2, reducerAction('fourh state'))
+            const { history } = wrapped(mutated4, commit('fourh msg'))
+
+            // make sure there is only 2 commits in the log
+            expect(history.get('log').size).toEqual(2)
+            // and that we're still looking at the most recent
+            expect(history.get('head')).toEqual(0)
+        })
     })
 })
