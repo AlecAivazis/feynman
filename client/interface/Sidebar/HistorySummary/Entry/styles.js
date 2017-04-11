@@ -14,14 +14,14 @@ export default {
         color: lightBlue,
     },
     index: {
-        width: '12%',
+        width: '15%',
         display: 'flex',
         alignItems: 'flex-end',
         flexDirection: 'column',
         paddingRight: 5,
     },
     message: {
-        width: '87%',
+        width: '85%',
         display: 'flex',
     },
 }
