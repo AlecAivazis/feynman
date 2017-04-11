@@ -84,11 +84,11 @@ class Toolbar extends React.Component {
 
     @autobind
     _mouseUp(event) {
-        // clean up any changes we left behind
-        this.props.mergeAnchors()
-
         // if we deposited an item
         if (this.state.mouseOrigin && !this.state.shadow.show) {
+            // clean up any changes we left behind
+            this.props.mergeAnchors()
+
             // commit the state
             this.props.commitWithMessage(
                 `placed ${this.state.elementDragConfig.type} from item palette.`

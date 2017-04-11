@@ -24,7 +24,6 @@ import {
     dataUrlToBlob,
     svgToDataURL,
 } from 'utils'
-import { withCommit } from 'actions/history'
 import { EventListener } from 'components'
 import {
     clearSelection,
@@ -36,7 +35,7 @@ import {
 } from 'actions/elements'
 import { panDiagram as panDiagramAction, zoomIn as zoomInAction, zoomOut as zoomOutAction } from 'actions/info'
 import PatternModal from '../PatternModal'
-import { undo, redo } from 'actions/history'
+import { undo, redo, withCommit, commit } from 'actions/history'
 
 export const exportDiagramImageEvent = 'export-diagram-image'
 
@@ -267,6 +266,8 @@ class Diagram extends React.Component {
                 }
             )
 
+            this.props.commit("added element to diagram")
+
             // make sure we move the element
             this.setState({
                 newElement: dragAnchor
@@ -440,6 +441,7 @@ const mapDispatchToProps = dispatch => ({
     zoomOut: () => dispatch(zoomOutAction()),
     redo: () => dispatch(redo()),
     undo: () => dispatch(undo()),
+    commit: msg => dispatch(commit(msg)),
     withCommit: (action, msg) => dispatch(withCommit(action, msg)),
 })
 export default connect(selector, mapDispatchToProps)(Diagram)
