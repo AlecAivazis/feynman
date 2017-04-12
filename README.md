@@ -10,7 +10,7 @@ the backend was also rewritten to golang.
 
 
 ## Running the Tests
-The tests are written using jest. To run them, download the package's dependencies and run them:
+The tests are written using jest:
 
 ```
 yarn && npm run test
