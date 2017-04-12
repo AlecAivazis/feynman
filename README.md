@@ -6,7 +6,7 @@ A javascript application for creating feynman diagrams. Live at [feynman.aivazis
 
 This repo started as a migration of my [original](https://github.com/AlecAivazis/feynman-old) feynman diagram 
 application to a leaner flask server. It then evolved from a [badly written angular 1.2 application](https://github.com/AlecAivazis/feynman/tree/angular1.x) to a less-badly written react/redux app. During that time,
-the backend (responsible for rendering the latex) was also rewritten from python to golang. 
+the backend (responsible for rendering latex) was also rewritten from python to golang. 
 
 
 ## Running the Tests
