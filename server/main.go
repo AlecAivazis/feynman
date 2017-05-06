@@ -41,6 +41,9 @@ func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func renderDiagramHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("rendering diagram")
+	w.Header().Set("Content-Disposition", "attachment; filename=diagram.png")
+
 	// the config provided by the user
 	config := &RenderConfig{
 		String: r.URL.Query().Get("string"),

@@ -9,3 +9,4 @@ server/server
 *~
 .tmp/
 coverage/
+server/diagram.*

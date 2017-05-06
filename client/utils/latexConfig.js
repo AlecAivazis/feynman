@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { round as roundTo } from 'utils'
+import { round as roundTo, elementsWithLocations } from 'utils'
 
 // round a number to the tenths place to show in latex (package assumes grid of 50)
 const round = n => (Math.round(n / 50 * 10) / 10).toFixed(2)
@@ -19,10 +19,10 @@ const kindMap = {
 
 // a mapping of keys to transformations when turning the values to their latex equivalent
 const valueMap = {
-    stroke: val => val.slice(1, val.length)
+    stroke: val => val.slice(2, val.length-1)
 }
 
-const LatexPropagator = ({
+const propagatorConfig = ({
     info,
     id,
     x1,
@@ -41,7 +41,7 @@ const LatexPropagator = ({
             // use the entry in the config map if it exists
             const key = configMap[prop] || prop
             // make sure to transform the value appropriately if we have to
-            let value = propagator[prop]
+            let value = `$${propagator[prop]}$`
             value = valueMap[prop] ? valueMap[prop](value) : value
 
             // join them in the appropriate manner
@@ -53,12 +53,25 @@ const LatexPropagator = ({
     const position = `{${round(x1)}, ${round(y1)}}` +
                      `{${round(x2)}, ${round(y2)}}`
 
-    return (
-        <div>
-            &nbsp;&nbsp;&nbsp;&nbsp;\{kindMap[kind] || kind}{`[${config}]`}{position}
-        </div>
-    )
+    return `\\${kindMap[kind] || kind}[${config}]${position}`
 }
 
-const selector = ({diagram: {info}}) => ({info})
-export default connect(selector)(LatexPropagator)
+// latexConfig returns the string for the diagram object
+export default elements => {
+    // make location more concrete
+    const elementsWithLoc = elementsWithLocations(elements)
+    // the diagram as we know it
+    let diagram = '\\begin{feynman}'
+
+    // add the propagators
+    for (const propagator of elementsWithLoc.propagators) {
+        // add the diagram config
+        diagram += propagatorConfig(propagator)
+    }
+
+    // close off the diagram
+    diagram += '\\end{feynman}'
+
+    // return the diagram string
+    return diagram
+}

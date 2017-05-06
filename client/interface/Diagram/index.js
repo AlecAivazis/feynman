@@ -200,6 +200,23 @@ class Diagram extends React.Component {
         diagram.getElementsByClassName('diagram')[0]
                .setAttribute('transform', `translate(-${bb.x1}, -${bb.y1})`)
 
+        // for each image in the diagram we're exporting
+        for (const img of diagram.getElementsByTagName('image')) {
+            const image = new Image(img)
+            console.log(image)
+            image.setAttribute('href', img.href)
+            const canvas = document.createElement('CANVAS')
+            const ctx = canvas.getContext('2d')
+            ctx.drawImage(img, 0, 0)
+            const dataURL = canvas.toDataURL("image/png")
+            console.log(dataURL)
+            // img.href = dataURL
+            img.setAttribute('xlink:href', dataURL)
+            img.setAttribute('href', dataURL)
+        }
+
+        console.log(diagram)
+
         // export the diagram as a png
         const dataUrl = await svgToDataURL(diagram, "image/png")
 
