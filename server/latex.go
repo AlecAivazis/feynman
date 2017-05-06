@@ -23,17 +23,15 @@ type RenderConfig struct {
 }
 
 type BaseTemplateConfig struct {
-	Content string
+	Content     string
+	ExtraConfig string
 }
 
 var baseTemplate, stringTemplate, diagramTemplate, errorTemplate *template.Template
 
 // RenderLatex takes a string of latex source and returns a byte array
 // with a png displaying the result.
-func renderLatex(template *template.Template, conf *RenderConfig) ([]byte, error) {
-	// log our intentions
-	fmt.Println("Rendering string:", conf.String)
-
+func renderLatex(template *template.Template, conf *RenderConfig, baseConf *BaseTemplateConfig) ([]byte, error) {
 	// create a temporary directory we can render the equation inside
 	tempDir, err := ioutil.TempDir("", "")
 	if err != nil {
@@ -47,7 +45,7 @@ func renderLatex(template *template.Template, conf *RenderConfig) ([]byte, error
 	pdfFile := path.Join(tempDir, "equation.pdf")      // the pdf created along the way
 	pngFile := path.Join(tempDir, "equation.png")      // the final png
 
-	config, err := latexForConfig(template, conf)
+	config, err := latexForConfig(template, conf, baseConf)
 	// if something went wrong
 	if err != nil {
 		// bubble up
@@ -92,7 +90,7 @@ func renderLatex(template *template.Template, conf *RenderConfig) ([]byte, error
 }
 
 // LatexForConfig returns the latex document required to render the given equation
-func latexForConfig(template *template.Template, conf *RenderConfig) ([]byte, error) {
+func latexForConfig(template *template.Template, conf *RenderConfig, baseConfig *BaseTemplateConfig) ([]byte, error) {
 	// if there is no fontSize for this render
 	if conf.FontSize == 0 {
 		// use the default
@@ -122,12 +120,13 @@ func latexForConfig(template *template.Template, conf *RenderConfig) ([]byte, er
 	if template != nil {
 		// execute the template
 		template.Execute(&diagram, conf)
-		fmt.Println(diagram.String())
+
+		// assign the rendered template to the config
+		baseConfig.Content = diagram.String()
+
 		// the full document
 		var doc bytes.Buffer
-		baseTemplate.Execute(&doc, BaseTemplateConfig{
-			Content: diagram.String(),
-		})
+		baseTemplate.Execute(&doc, baseConfig)
 
 		// return the byte string template
 		return []byte(doc.String()), nil
@@ -136,9 +135,9 @@ func latexForConfig(template *template.Template, conf *RenderConfig) ([]byte, er
 	return []byte{}, errors.New("You must provide a template to render")
 }
 
-func writeLatex(w http.ResponseWriter, template *template.Template, config *RenderConfig) {
+func writeLatex(w http.ResponseWriter, template *template.Template, config *RenderConfig, baseConfig *BaseTemplateConfig) {
 	// create the buffer with the image contents
-	img, err := renderLatex(template, config)
+	img, err := renderLatex(template, config, baseConfig)
 	// if something went wrong
 	if err != nil {
 		// send the error to the user as text
