@@ -19,7 +19,9 @@ const kindMap = {
 
 // a mapping of keys to transformations when turning the values to their latex equivalent
 const valueMap = {
-    stroke: val => val.slice(2, val.length-1)
+    stroke: val => val.slice(2, val.length-1),
+    labelDistance: val => round(parseFloat(val.slice(1, val.length-1))),
+    labelLocation: val => round(parseFloat(val.slice(1, val.length-1))),
 }
 
 export const propagatorConfig = ({
