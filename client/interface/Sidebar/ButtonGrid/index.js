@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import { ToggleButton, Button } from 'components'
 import { toggleGrid, toggleAnchors, toggleExportModal } from 'actions/info'
-import { exportDiagramImageEvent } from 'interface/Diagram'
 import { latexConfig } from 'utils'
 
 
