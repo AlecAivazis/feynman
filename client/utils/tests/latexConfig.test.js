@@ -1,5 +1,5 @@
 // local imports
-import latexConfig from '../latexConfig'
+import { latexConfig } from '../latexConfig'
 import { addAnchors, addPropagators } from 'actions/elements'
 import { createStore } from 'store'
 
