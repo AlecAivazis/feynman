@@ -93,12 +93,11 @@ module.exports = {
     devtool: devtool,
     devServer: {
       proxy: {
-        '/latex': {
-          target: "http://104.196.244.203"
-        }
+        '/': {
+          target: "http://localhost:8081"
+        },
       },
     }
 }
-
 
 // end of file

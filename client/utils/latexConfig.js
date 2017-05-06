@@ -22,7 +22,7 @@ const valueMap = {
     stroke: val => val.slice(2, val.length-1)
 }
 
-const propagatorConfig = ({
+export const propagatorConfig = ({
     info,
     id,
     x1,
@@ -57,7 +57,7 @@ const propagatorConfig = ({
 }
 
 // latexConfig returns the string for the diagram object
-export default elements => {
+export const latexConfig = elements => {
     // make location more concrete
     const elementsWithLoc = elementsWithLocations(elements)
     // the diagram as we know it
