@@ -31,18 +31,23 @@ func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
 		MathMode: mathMode,
 	}
 
+	// log our intentions
+	fmt.Println("Rendering string:", config.String)
+
 	// respond with the string template
-	writeLatex(w, stringTemplate, config)
+	writeLatex(w, stringTemplate, config, &BaseTemplateConfig{
+		ExtraConfig: "varwidth=true,",
+	})
 }
 
 func renderDiagramHandler(w http.ResponseWriter, r *http.Request) {
 	// the config provided by the user
 	config := &RenderConfig{
-		String: `a`,
+		String: r.URL.Query().Get("string"),
 	}
 
 	// respond with the string template
-	writeLatex(w, diagramTemplate, config)
+	writeLatex(w, diagramTemplate, config, &BaseTemplateConfig{})
 }
 
 func main() {
