@@ -67,6 +67,12 @@ export const propagatorConfig = ({
     return `\\${kindMap[kind] || kind}[${config}]${position}`
 }
 
+const partonConfig = ({x, y, r = 25}) => `\\parton[${round(x, 50)},${round(y, 50)}]{${round(r, 50)}}`
+
+export const shapeConfig = ({kind, ...shape}) => ({
+   parton: partonConfig,
+})[kind](shape)
+
 // latexConfig returns the string for the diagram object
 export const latexConfig = elements => {
     // make location more concrete
@@ -82,6 +88,11 @@ export const latexConfig = elements => {
     for (const propagator of elementsWithLoc.propagators) {
         // add the diagram config
         diagram += propagatorConfig(propagator, boundingBox)
+    }
+    // add the shapes
+    for (const propagator of Object.values(elements.shapes)) {
+        // add the diagram config
+        diagram += shapeConfig(propagator, boundingBox)
     }
 
     // close off the diagram
