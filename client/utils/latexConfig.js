@@ -67,11 +67,26 @@ export const propagatorConfig = ({
     return `\\${kindMap[kind] || kind}[${config}]${position}`
 }
 
-const partonConfig = ({x, y, r = 25}) => `\\parton[${round(x, 50)},${round(y, 50)}]{${round(r, 50)}}`
+const partonConfig = ({x, y, r = 25}, bb) => {
+    // get the right coordinates in latex space
+    const rel = transformCoords({x, y}, bb)
 
-export const shapeConfig = ({kind, ...shape}) => ({
+    // return the latex string
+    return `\\parton[${round(rel.x, 50)},${round(rel.y, 50)}]{${round(r, 50)}}`
+}
+
+const textConfig = ({x, y, value}, bb) => {
+    // get the right coordinates in latex space
+    const rel = transformCoords({x, y}, bb)
+
+    // return the latex string
+    return `\\text[${round(rel.x, 50)},${round(rel.y, 50)}]{${value}}`
+}
+
+
+export const shapeConfig = ({kind, ...shape}, bb) => ({
    parton: partonConfig,
-})[kind](shape)
+})[kind](shape, bb)
 
 // latexConfig returns the string for the diagram object
 export const latexConfig = elements => {
@@ -90,9 +105,14 @@ export const latexConfig = elements => {
         diagram += propagatorConfig(propagator, boundingBox)
     }
     // add the shapes
-    for (const propagator of Object.values(elements.shapes)) {
+    for (const shape of Object.values(elements.shapes)) {
         // add the diagram config
-        diagram += shapeConfig(propagator, boundingBox)
+        diagram += shapeConfig(shape, boundingBox)
+    }
+    // add the texts
+    for (const text of Object.values(elements.text)) {
+        // add the diagram config
+        diagram += textConfig(text, boundingBox)
     }
 
     // close off the diagram

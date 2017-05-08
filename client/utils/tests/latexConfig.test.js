@@ -43,6 +43,20 @@ describe('Utils', () => {
             // a store to test with
             const store = createStore()
 
+            // add anchors in known location
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 50,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 100,
+                },
+            ))
+
             // add a shape with known configuration
             store.dispatch(addElements({
                 type: "shapes",
@@ -53,7 +67,40 @@ describe('Utils', () => {
             }))
 
             // the expected configuration
-            const partonCofig = "\\parton[1.00,1.00]{1.00}"
+            const partonCofig = "\\parton[0.00,0.00]{1.00}"
+            const computed = latexConfig(store.getState().diagram.elements)
+
+            expect(computed).toContain(partonCofig)
+        })
+
+        test('can compute the config for a text element', () => {
+            // a store to test with
+            const store = createStore()
+
+            // add anchors in known location
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 50,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 100,
+                },
+            ))
+
+            // add a shape with known configuration
+            store.dispatch(addElements({
+                type: "text",
+                x: 50,
+                y: 50,
+                value: "hello!",
+            }))
+
+            // the expected configuration
+            const partonCofig = "\\text[0.00,0.00]{hello!}"
             const computed = latexConfig(store.getState().diagram.elements)
 
             expect(computed).toContain(partonCofig)
