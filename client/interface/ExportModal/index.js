@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { elementsWithLocations, diagramBoundingBox, propagatorConfig, shapeConfig} from 'utils'
+import { elementsWithLocations, diagramBoundingBox, propagatorConfig, shapeConfig, textConfig} from 'utils'
 import { Overlay, Code, Button } from 'components'
 import { toggleExportModal } from 'actions/info'
 import styles from './styles'
@@ -29,6 +29,11 @@ const ExportModal = ({elements, hideModal}) => {
                 {Object.values(elements.shapes).map(shape => (
                     <div>
                         &nbsp;&nbsp;&nbsp;&nbsp;{shapeConfig(shape, bb)}
+                    </div>
+                ))}
+                {Object.values(elements.text).map(text => (
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{textConfig(text, bb)}
                     </div>
                 ))}
                 \end{'{feynman}'}<br/>
