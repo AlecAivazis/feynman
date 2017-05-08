@@ -33,10 +33,10 @@ describe('Utils', () => {
             }))
 
             // the expected propagator string
-            const propagatorConfig = "\\fermion[label=$l$]{1.00, 1.00}{2.00, 2.00}"
+            const propagatorConfig = "\\fermion[label=$l$]{0.00, 1.00}{1.00, 0.00}"
             const computed = latexConfig(store.getState().diagram.elements)
-
-            expect(latexConfig(store.getState().diagram.elements).includes(propagatorConfig)).toBeTruthy()
+            console.log(computed)
+            expect(computed.includes(propagatorConfig)).toBeTruthy()
         })
     })
 })
