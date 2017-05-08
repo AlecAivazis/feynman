@@ -2,11 +2,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { elementsWithLocations, diagramBoundingBox } from 'utils'
+import { elementsWithLocations, diagramBoundingBox, propagatorConfig, shapeConfig} from 'utils'
 import { Overlay, Code, Button } from 'components'
 import { toggleExportModal } from 'actions/info'
 import styles from './styles'
-import LatexPropagator from './Propagator'
 
 // the link for the corresponding latex package
 const latexPackageLocation = 'https://storage.googleapis.com/aivazis-static-assets/feynman/feynman.sty'
@@ -23,7 +22,14 @@ const ExportModal = ({elements, hideModal}) => {
             <Code>
                 \begin{'{feynman}'} <br/>
                 {elementsWithLocations(elements).propagators.map(propagator => (
-                    <LatexPropagator {...propagator} bb={bb} key={propagator.id} />
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{propagatorConfig(propagator, bb)}
+                    </div>
+                ))}
+                {Object.values(elements.shapes).map(shape => (
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{shapeConfig(shape, bb)}
+                    </div>
                 ))}
                 \end{'{feynman}'}<br/>
             </Code>

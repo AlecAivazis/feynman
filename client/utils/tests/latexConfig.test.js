@@ -1,6 +1,6 @@
 // local imports
-import { latexConfig } from '../latexConfig'
-import { addAnchors, addPropagators } from 'actions/elements'
+import { latexConfig, shapeConfig } from '../latexConfig'
+import { addAnchors, addPropagators, addElements } from 'actions/elements'
 import { createStore } from 'store'
 
 describe('Utils', () => {
@@ -35,8 +35,32 @@ describe('Utils', () => {
             // the expected propagator string
             const propagatorConfig = "\\fermion[label=$l$]{0.00, 1.00}{1.00, 0.00}"
             const computed = latexConfig(store.getState().diagram.elements)
-            console.log(computed)
-            expect(computed.includes(propagatorConfig)).toBeTruthy()
+
+            expect(computed).toContain(propagatorConfig)
+        })
+
+        test('can compute the config for a parton', () => {
+            // a store to test with
+            const store = createStore()
+
+            // add a shape with known configuration
+            store.dispatch(addElements({
+                type: "shapes",
+                kind: "parton",
+                x: 50,
+                y: 50,
+                r: 50,
+            }))
+
+            // the expected configuration
+            const partonCofig = "\\parton[1.00,1.00]{1.00}"
+            const computed = latexConfig(store.getState().diagram.elements)
+
+            expect(computed).toContain(partonCofig)
+        })
+
+        test('can compute the config for a constrained propagator', () => {
+
         })
     })
 })
