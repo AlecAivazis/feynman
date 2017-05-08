@@ -46,7 +46,7 @@
 \DeclareStringOption{label}
 \DeclareStringOption[0.5]{labelDistance}
 \DeclareStringOption[0.5]{labelLocation}
-\DeclareBoolOption[false]{showArrow}
+\DeclareBoolOption[true]{showArrow}
 \DeclareBoolOption[false]{flip}
 
 
@@ -554,7 +554,6 @@
         \FPeval{\@temp@locX}{round(\@temp@x1 + \labelLocation * \dX, 5)}
         \FPeval{\@temp@locY}{round(\@temp@y1 + \labelLocation * \dY, 5)}
 
-
         % if the change in y is zero (infinite slope)
         \ifthenelse{\equal{\dY}{0}}{
             \FPeval{\labelX}{\@temp@locX}
@@ -608,13 +607,12 @@
                     \FPeval{\labelY}{\@temp@locY + \y}
                     \def\loc{right}
                 }
-
             }
         }
+
         % draw the label
         \draw[\loc] (\labelX,\labelY) node {\huge \style@label};
     }
-
 }
 
 %------------------------------------------------------------------------------
