@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { round as roundTo, elementsWithLocations } from 'utils'
+import { round as roundTo, elementsWithLocations, diagramBoundingBox } from 'utils'
 
 // round a number to the tenths place to show in latex (package assumes grid of 50)
 const round = n => (Math.round(n / 50 * 10) / 10).toFixed(2)
@@ -24,19 +24,26 @@ const valueMap = {
     labelLocation: val => round(parseFloat(val.slice(1, val.length-1))),
 }
 
+const transformCoords = ({x, y}, bb) => ({
+    // shift all x's to be relative to left of bb
+    x: round(x - bb.x1, 50),
+    // we need to raise the coordinate by the height of the bounding box
+    y: round(-y + bb.y2, 50),
+})
+
 export const propagatorConfig = ({
     info,
     id,
-    x1,
-    x2,
-    y1,
-    y2,
+    x1:propX1,
+    x2:propX2,
+    y1:propY1,
+    y2:propY2,
     anchor1,
     anchor2,
     kind,
     dispatch,
     ...propagator
-}) => {
+}, bb) => {
     // the configuration string
     const config = Object.keys(propagator).map(
         prop => {
@@ -51,9 +58,11 @@ export const propagatorConfig = ({
         }
     ).join(', ')
 
+    const {x: x1, y: y1} = transformCoords({x: propX1, y: propY1}, bb)
+    const {x: x2, y: y2} = transformCoords({x: propX2, y: propY2}, bb)
+
     // the position string
-    const position = `{${round(x1)}, ${round(y1)}}` +
-                     `{${round(x2)}, ${round(y2)}}`
+    const position = `{${x1}, ${y1}}{${x2}, ${y2}}`
 
     return `\\${kindMap[kind] || kind}[${config}]${position}`
 }
@@ -62,13 +71,17 @@ export const propagatorConfig = ({
 export const latexConfig = elements => {
     // make location more concrete
     const elementsWithLoc = elementsWithLocations(elements)
+
+    // compute a tight bounding box
+    const boundingBox = diagramBoundingBox(elements, 0)
+
     // the diagram as we know it
     let diagram = '\\begin{feynman}'
 
     // add the propagators
     for (const propagator of elementsWithLoc.propagators) {
         // add the diagram config
-        diagram += propagatorConfig(propagator)
+        diagram += propagatorConfig(propagator, boundingBox)
     }
 
     // close off the diagram

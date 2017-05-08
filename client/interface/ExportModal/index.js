@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // local imports
-import { elementsWithLocations } from 'utils'
+import { elementsWithLocations, diagramBoundingBox } from 'utils'
 import { Overlay, Code, Button } from 'components'
 import { toggleExportModal } from 'actions/info'
 import styles from './styles'
@@ -11,32 +11,35 @@ import LatexPropagator from './Propagator'
 // the link for the corresponding latex package
 const latexPackageLocation = 'https://storage.googleapis.com/aivazis-static-assets/feynman/feynman.sty'
 
-const ExportModal = ({elements, hideModal}) => (
-    <Overlay title="Export to LaTeX" hide={hideModal}  style={styles.container}>
-        Add this to your preamble
-        <Code>
-            \usepackage{'{feynman}'}
-        </Code>
-        Here's your diagram:
-        <Code>
-            \begin{'{feynman}'} <br/>
-            {elementsWithLocations(elements).propagators.map(propagator => (
-                <LatexPropagator {...propagator} key={propagator.id} />
-            ))}
-            \end{'{feynman}'}<br/>
-        </Code>
-        <div style={styles.buttonRow}>
-            <Button onClick={hideModal} style={styles.closeButton}>
-                Close
-            </Button>
-            <a href={latexPackageLocation}>
-                <Button>
-                    Download LaTeX package
+const ExportModal = ({elements, hideModal}) => {
+    const bb = diagramBoundingBox(elements)
+    return (
+        <Overlay title="Export to LaTeX" hide={hideModal}  style={styles.container}>
+            Add this to your preamble
+            <Code>
+                \usepackage{'{feynman}'}
+            </Code>
+            Here's your diagram:
+            <Code>
+                \begin{'{feynman}'} <br/>
+                {elementsWithLocations(elements).propagators.map(propagator => (
+                    <LatexPropagator {...propagator} bb={bb} key={propagator.id} />
+                ))}
+                \end{'{feynman}'}<br/>
+            </Code>
+            <div style={styles.buttonRow}>
+                <Button onClick={hideModal} style={styles.closeButton}>
+                    Close
                 </Button>
-            </a>
-        </div>
-    </Overlay>
-)
+                <a href={latexPackageLocation}>
+                    <Button>
+                        Download LaTeX package
+                    </Button>
+                </a>
+            </div>
+        </Overlay>
+    )
+}
 
 
 const mapDispatchToProps = dispatch => ({

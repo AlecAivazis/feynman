@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 // local imports
 import { propagatorConfig } from 'utils'
 
-const LatexPropagator = propagator => (
+const LatexPropagator = ({bb, ...propagator}) => (
     <div>
-        &nbsp;&nbsp;&nbsp;&nbsp;{propagatorConfig(propagator)}
+        &nbsp;&nbsp;&nbsp;&nbsp;{propagatorConfig(propagator, bb)}
     </div>
 )
 
