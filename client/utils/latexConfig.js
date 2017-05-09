@@ -72,7 +72,7 @@ const partonConfig = ({x, y, r = 25}, bb) => {
     const rel = transformCoords({x, y}, bb)
 
     // return the latex string
-    return `\\parton[${round(rel.x, 50)},${round(rel.y, 50)}]{${round(r, 50)}}`
+    return `\\parton[${rel.x},${rel.y}]{${round(r, 50)}}`
 }
 
 export const textConfig = ({x, y, value}, bb) => {
@@ -80,7 +80,7 @@ export const textConfig = ({x, y, value}, bb) => {
     const rel = transformCoords({x, y}, bb)
 
     // return the latex string
-    return `\\text[${round(rel.x, 50)},${round(rel.y, 50)}]{${value}}`
+    return `\\text[${rel.x},${rel.y}]{${value}}`
 }
 
 
