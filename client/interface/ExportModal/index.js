@@ -21,18 +21,18 @@ const ExportModal = ({elements, hideModal}) => {
             Here's your diagram:
             <Code>
                 \begin{'{feynman}'} <br/>
-                {elementsWithLocations(elements).propagators.map(propagator => (
-                    <div>
+                {elementsWithLocations(elements).propagators.map((propagator, i) => (
+                    <div key={i}>
                         &nbsp;&nbsp;&nbsp;&nbsp;{propagatorConfig(propagator, bb)}
                     </div>
                 ))}
-                {Object.values(elements.shapes).map(shape => (
-                    <div>
+                {Object.values(elements.shapes).map((shape, i) => (
+                    <div key={i}>
                         &nbsp;&nbsp;&nbsp;&nbsp;{shapeConfig(shape, bb)}
                     </div>
                 ))}
-                {Object.values(elements.text).map(text => (
-                    <div>
+                {Object.values(elements.text).map((text, i) => (
+                    <div key={i}>
                         &nbsp;&nbsp;&nbsp;&nbsp;{textConfig(text, bb)}
                     </div>
                 ))}
