@@ -42,6 +42,7 @@ export const propagatorConfig = ({
     anchor2,
     kind,
     dispatch,
+    type,
     ...propagator
 }, bb) => {
     // the configuration string
@@ -72,7 +73,7 @@ const partonConfig = ({x, y, r = 25}, bb) => {
     const rel = transformCoords({x, y}, bb)
 
     // return the latex string
-    return `\\parton[${rel.x},${rel.y}]{${round(r, 50)}}`
+    return `\\parton{${rel.x},${rel.y}}{${round(r, 50)}}`
 }
 
 export const textConfig = ({x, y, value}, bb) => {
@@ -80,7 +81,7 @@ export const textConfig = ({x, y, value}, bb) => {
     const rel = transformCoords({x, y}, bb)
 
     // return the latex string
-    return `\\text[${rel.x},${rel.y}]{${value}}`
+    return `\\text{${rel.x},${rel.y}}{${value}}`
 }
 
 
