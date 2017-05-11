@@ -67,7 +67,7 @@ describe('Utils', () => {
             }))
 
             // the expected configuration
-            const partonCofig = "\\parton[0.00,0.00]{1.00}"
+            const partonCofig = "\\parton{0.00,1.00}{1.00}"
             const computed = latexConfig(store.getState().diagram.elements)
 
             expect(computed).toContain(partonCofig)
@@ -100,14 +100,10 @@ describe('Utils', () => {
             }))
 
             // the expected configuration
-            const partonCofig = "\\text[0.00,0.00]{hello!}"
+            const partonCofig = "\\text{0.00,1.00}{hello!}"
             const computed = latexConfig(store.getState().diagram.elements)
 
             expect(computed).toContain(partonCofig)
-        })
-
-        test('can compute the config for a constrained propagator', () => {
-
         })
     })
 })
