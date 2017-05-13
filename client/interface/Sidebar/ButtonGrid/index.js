@@ -8,7 +8,7 @@ import { toggleGrid, toggleAnchors, toggleExportModal } from 'actions/info'
 import { latexConfig } from 'utils'
 
 
-const exportUrl = elements => `/diagram?string=${latexConfig(elements)}`
+const exportUrl = elements => `/latex/diagram?string=${latexConfig(elements)}`
 
 const ButtonGrid = ({
     style,
