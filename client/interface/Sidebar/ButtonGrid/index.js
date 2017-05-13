@@ -5,12 +5,10 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import { ToggleButton, Button } from 'components'
 import { toggleGrid, toggleAnchors, toggleExportModal } from 'actions/info'
-import { exportDiagramImageEvent } from 'interface/Diagram'
+import { latexConfig } from 'utils'
 
-// the function to call to export the diagram as an image
-const exportDiagramAsImage = () => {
-    window.dispatchEvent(new Event(exportDiagramImageEvent))
-}
+
+const exportUrl = elements => `/diagram?string=${latexConfig(elements)}`
 
 const ButtonGrid = ({
     style,
@@ -18,6 +16,7 @@ const ButtonGrid = ({
     toggleGrid,
     toggleAnchors,
     openExportModal,
+    elements,
     ...unusedProps
 }) => (
     <div style={{...styles.container, ...style}}>
@@ -37,9 +36,11 @@ const ButtonGrid = ({
             />
         </div>
         <div style={styles.bottomRow}>
-            <Button style={styles.leftButton} onClick={exportDiagramAsImage}>
-                Export PNG
-            </Button>
+            <a href={exportUrl(elements)} target="_blank">
+                <Button style={styles.leftButton}>
+                    Export PNG
+                </Button>
+            </a>
             <Button onClick={openExportModal}>
                 LaTeX
             </Button>
@@ -47,7 +48,7 @@ const ButtonGrid = ({
     </div>
 )
 
-const selector = ({diagram: {info}}) => ({info})
+const selector = ({diagram: {info, elements}}) => ({info, elements})
 const mapDispatchToProps = dispatch => ({
     openExportModal: () => dispatch(toggleExportModal()),
     toggleAnchors: () => dispatch(toggleAnchors()),

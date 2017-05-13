@@ -1,7 +1,4 @@
-// the padding to give the diagram
-const padding = 10
-
-export default function diagramBoundingBox(elements) {
+export default function diagramBoundingBox(elements, padding=10) {
     // the object to return
     const bb = {}
 
@@ -11,7 +8,7 @@ export default function diagramBoundingBox(elements) {
         // or we haven't set a value yet
         if (!bb.x1 || x < bb.x1) {
             // this anchor defines the lower bound of the bounding box
-            bb.x1 = x 
+            bb.x1 = x
         }
         // and so on...
         if (!bb.x2 || x > bb.x2) {
@@ -22,7 +19,7 @@ export default function diagramBoundingBox(elements) {
         }
         if (!bb.y2 || y > bb.y2) {
             bb.y2 = y
-        } 
+        }
     }
 
     // add a padding to the bounding box

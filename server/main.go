@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"net/http"
+	"strconv"
 )
-
 
 func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
 	// look for a math mode query parameter
@@ -25,29 +24,34 @@ func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
 
 	// the config provided by the user
 	config := &RenderConfig{
-		String: r.URL.Query().Get("string"),
+		String:   r.URL.Query().Get("string"),
 		FontSize: fontSize,
 		BaseLine: baseLine,
-		Color: r.URL.Query().Get("color"),
+		Color:    r.URL.Query().Get("color"),
 		MathMode: mathMode,
 	}
 
-	// create the buffer with the image contents using the local disk for temp files
-	img, err := RenderLatex(config)
-	// if something went wrong
-	if err != nil {
-		// send the error to the user as text
-		w.Write([]byte(err.Error()))
-	}
+	// log our intentions
+	fmt.Println("Rendering string:", config.String)
 
-	// since we render the equation as a png, we need to set the appropriate headers
-	w.Header().Set("Content-Type", "image/png")
-	w.Header().Set("Content-Length", strconv.Itoa(len(img)))
-
-	// copy the equation to the response
-	w.Write(img)
+	// respond with the string template
+	writeLatex(w, stringTemplate, config, &BaseTemplateConfig{
+		ExtraConfig: "varwidth=true,",
+	})
 }
 
+func renderDiagramHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("rendering diagram")
+	w.Header().Set("Content-Disposition", "attachment; filename=diagram.png")
+
+	// the config provided by the user
+	config := &RenderConfig{
+		String: r.URL.Query().Get("string"),
+	}
+
+	// respond with the string template
+	writeLatex(w, diagramTemplate, config, &BaseTemplateConfig{})
+}
 
 func main() {
 	// where the server is listening on local host
@@ -55,6 +59,7 @@ func main() {
 
 	// set up the mux
 	http.HandleFunc("/", renderLatexHandler)
+	http.HandleFunc("/diagram", renderDiagramHandler)
 
 	// notify the user we're going to start the server
 	fmt.Println("listening on " + port)

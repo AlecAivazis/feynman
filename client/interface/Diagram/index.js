@@ -37,8 +37,6 @@ import { panDiagram as panDiagramAction, zoomIn as zoomInAction, zoomOut as zoom
 import PatternModal from '../PatternModal'
 import { undo, redo, withCommit, commit } from 'actions/history'
 
-export const exportDiagramImageEvent = 'export-diagram-image'
-
 class Diagram extends React.Component {
     // the diagram component keeps track of the placement of the user's selection rectangle
     // using 2 points
@@ -129,11 +127,6 @@ class Diagram extends React.Component {
                     {this._mouseUp}
                 </EventListener>
 
-                {/* when we need to export the diagram as an image */}
-                <EventListener event={exportDiagramImageEvent}>
-                    {this._exportDiagram}
-                </EventListener>
-
                 {/* track the state of the spacebar for panning and alt for element creation */}
                 <EventListener event="keydown">
                     {this._keyPress}
@@ -158,53 +151,8 @@ class Diagram extends React.Component {
                 .transformString
     }
 
-    @autobind
-    async _exportDiagram() {
-        // if we are testing and shouldn't actually produce an image
-        if (this.props.testingSpy) {
-            // call the spy
-            this.props.testingSpy()
-            // don't do anything else
-            return
-        }
+    get _exportUrl() {
 
-        // the svg node containing the diagram
-        const diagram = this.diagram.cloneNode(true)
-
-        // computing the bounding box for the diagram
-        const bb = diagramBoundingBox(this.props.elements)
-        // remove the grey coloring in the grid
-        diagram.style['backgroundColor'] = "rgba(0,0,0,0)"
-
-        // the elements to remove from the diagram
-        const removeTargets = [
-            ...diagram.getElementsByClassName("grid"),
-            ...diagram.getElementsByClassName("anchor"),
-            ...diagram.getElementsByClassName("selectionRectangle"),
-        ]
-
-        // visit each target
-        for (const target of removeTargets) {
-            // remove it from the exported image
-            target.parentNode.removeChild(target)
-        }
-
-        // add the dimensional attribtues to the diagram so the resulting image
-        // has the correct size
-        diagram.setAttribute('x1', bb.x1)
-        diagram.setAttribute('y1', bb.y1)
-        diagram.setAttribute('width', bb.width)
-        diagram.setAttribute('height', bb.height)
-
-        // move the actual diagram into the viewport of the image
-        diagram.getElementsByClassName('diagram')[0]
-               .setAttribute('transform', `translate(-${bb.x1}, -${bb.y1})`)
-
-        // export the diagram as a png
-        const dataUrl = await svgToDataURL(diagram, "image/png")
-
-        // save the data url as a png
-        saveAs(dataUrlToBlob(dataUrl), "diagram.png")
     }
 
     @autobind
