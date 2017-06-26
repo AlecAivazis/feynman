@@ -6,7 +6,6 @@ import autobind from 'autobind-decorator'
 import { saveAs } from 'file-saver'
 import SvgMatrix from 'svg-matrix'
 // local imports
-import { brightBlue } from 'colors'
 import styles from './styles'
 import Grid from './Grid'
 import Propagator from './Propagator'
@@ -36,16 +35,19 @@ import {
 import { panDiagram as panDiagramAction, zoomIn as zoomInAction, zoomOut as zoomOutAction } from 'actions/info'
 import PatternModal from '../PatternModal'
 import { undo, redo, withCommit, commit } from 'actions/history'
+import DiagramPatterns from './Patterns'
 
 class Diagram extends React.Component {
-    // the diagram component keeps track of the placement of the user's selection rectangle
-    // using 2 points
     state = {
-        point1: null,
-        point2: null,
-        newElement: false,
-        spacebarPressed: false,
+        // the points we've created during mouse interactions ( a list of {id, location} )
+        points: [],
+
+        // the location of the mouse during drag
         origin: null,
+
+        // keyboard trackers
+        spacebarPressed: false,
+        altPressed: false,
     }
 
     render() {
@@ -64,26 +66,11 @@ class Diagram extends React.Component {
                 style={{...elementStyle, ...style}}
                 onMouseDown={this._mouseDown}
             >
-                {/* patterns used in the application */}
-                <pattern x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse" id="pattern-parton-lines" viewBox="0 0 10 10">
-                    <path
-                        d="M10-5-10,15M15,0,0,15M0-5-20,15"
-                        fill="none"
-                        stroke="#b8b8b8"
-                        style={{strokeWidth: 2}}
-                    />
-                </pattern>
-                <pattern x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse" id="pattern-parton-lines-selected" viewBox="0 0 10 10">
-                    <path
-                        d="M10-5-10,15M15,0,0,15M0-5-20,15"
-                        fill="none"
-                        stroke={brightBlue}
-                        style={{strokeWidth: 2}}
-                    />
-                </pattern>
+                <DiagramPatterns />
 
-                {/* wrap the whole diagram in a group so we can transform the diagram when exporting */}
-                <g className="diagram" transform={this.transformString}>
+                {/* wrap the whole diagram in a group so we can apply the diagram pan and zoom */}
+                <g transform={this.transformString}>
+
                     {/* order matters here (last shows up on top) */}
                     {info.showGrid && info.gridSize > 0 && <Grid/>}
                     {Object.values(elements.text).map(element => (
@@ -114,8 +101,12 @@ class Diagram extends React.Component {
                         />
                     ))}
 
-                    { this.state.point1 && this.state.point2 && !this.state.newElement && (
-                        <SelectionRectangle {...this.state}/>
+                    {/* only show the selection rectangle when we have 2 points and we didn't make a new one */}
+                    {this.state.points.length === 2 && !this.state.points[0].id && (
+                        <SelectionRectangle
+                            point1={relativePosition(this.state.origin, this.props.info)}
+                            point2={this.state.points[1].location}
+                        />
                     )}
                 </g>
 
@@ -151,10 +142,6 @@ class Diagram extends React.Component {
                 .transformString
     }
 
-    get _exportUrl() {
-
-    }
-
     @autobind
     _mouseDown(event) {
         // only fire for clicks originating on the diagram
@@ -162,65 +149,48 @@ class Diagram extends React.Component {
             return
         }
 
-        // used props
-        const { elements, info, addPropagators, addAnchors } = this.props
+        // remove the previous selection
+        this.props.clearSelection()
 
         // figure out where we clicked in the diagram
         const loc = relativePosition({
             x: event.clientX,
             y: event.clientY,
         }, this.props.info)
+        // fix the location to the grid
+        const location = fixPositionToGrid(loc, this.props.info.gridSize)
 
-        // remove the previous selection
-        this.props.clearSelection()
-        // start the selection rectangle
+        // the id we would assign to a point if we make one here
+        let id = null
+
+        // if the alt key is down
+        if (this.state.altPressed) {
+            // we need to make an anchor at the first location
+
+            // grab the used props
+            const { elements, info, addPropagators, addAnchors } = this.props
+
+            // generate an id for the new anchor
+            id = generateElementId(elements.anchors)
+
+            // add the actual anchor where we clicked
+            addAnchors(
+                {
+                    id,
+                    ...location,
+                },
+            )
+        }
+
+        // save the coordinates of where the mouse down occured
         this.setState({
-            point1: loc,
+            points: [ {id, location} ],
+            // make sure drag delta start from this location
             origin: {
                 x: event.clientX,
                 y: event.clientY,
             }
         })
-
-        // if the alt key was being held down
-        if (event.altKey) {
-            // we'll need two anchor ids
-            const [clickAnchor, dragAnchor] = generateElementId(elements.anchors, 2)
-            // and a propagator id
-            const propagatorId = generateElementId(elements.propagators)
-
-            // fix the location to the grid
-            const fixed = fixPositionToGrid(loc, info.gridSize)
-
-            // create two anchors where we click
-            addAnchors(
-                {
-                    id: clickAnchor,
-                    ...fixed,
-                },
-                {
-                    id: dragAnchor,
-                    ...fixed,
-                },
-            )
-
-            // and an anchor connecting the two
-            addPropagators(
-                {
-                    kind: 'fermion',
-                    id: propagatorId,
-                    anchor1: clickAnchor,
-                    anchor2: dragAnchor,
-                }
-            )
-
-            this.props.commit("added element to diagram")
-
-            // make sure we move the element
-            this.setState({
-                newElement: dragAnchor
-            })
-        }
     }
 
     @autobind
@@ -229,7 +199,7 @@ class Diagram extends React.Component {
         const { setElementAttrs, info } = this.props
 
         // only continue if we started dragging on this element
-        if (!this.state.point1) {
+        if (this.state.points.length === 0) {
             return
         }
 
@@ -239,19 +209,30 @@ class Diagram extends React.Component {
         }
         // otherwise just create the selection rectangle like normal
         else {
-            this._drawRectangle(event)
+            this._handleMove(event)
         }
     }
 
+
     @autobind
     _mouseUp(event) {
+        // pull out used state
+        const { points } = this.state
+
         // only continue if we started dragging on this element
-        if (this.state.point1) {
-            // clear the rectangle the selection rectangle
+        if (points.length > 0) {
+            // if we created any new elements we need to commit the new state
+            if (points[0].id) {
+                // the kind of object we added
+                let kind = ["none", "anchor", "propagator"][points.length]
+
+                // perform the commit
+                this.props.commit(`added ${kind} to diagram`)
+            }
+
+            // clear the trackers assciated with drag interactions
             this.setState({
-                point1: null,
-                point2: null,
-                newElement: null,
+                points: [],
                 origin: null,
             })
         }
@@ -260,13 +241,23 @@ class Diagram extends React.Component {
     @autobind
     _keyPress(event) {
         // if the key that was pressed was the spacebar, we haven't pressed teh spacebar yet, and we aren't dragging something
-        if (event.which === 32 && !this.state.spacebarPressed && !this.state.point1){
+        if (event.which === 32 && !this.state.spacebarPressed && !this.state.points.length > 0){
             event.preventDefault()
             this.setState({
                 spacebarPressed: true
             })
+        }
+
+        // if the alt key was pressed before we have created any other points
+        else if (event.which === 18 && !this.state.altPressed && !this.state.points.length > 0) {
+            event.preventDefault()
+            this.setState({
+                altPressed: true
+            })
+        }
+
         // if the user pressed the backspace or the delete key respectively
-        } else if ([8,46].includes(event.which)) {
+        else if ([8,46].includes(event.which)) {
             event.preventDefault()
             // if we have any elements selected
             if(Object.values(this.props.selection).filter(arr => arr.length > 0).length > 0) {
@@ -274,8 +265,9 @@ class Diagram extends React.Component {
                 this.props.withCommit(deleteSelection(), 'removed selected elements')
             }
         }
+
         // if the user pressed ctrl+z
-        if (event.ctrlKey && event.which === 90) {
+        else if (event.ctrlKey && event.which === 90) {
             event.preventDefault()
             // if they actually pressed shift + ctrl + z
             if (event.shiftKey) {
@@ -284,46 +276,87 @@ class Diagram extends React.Component {
             } else {
                 this.props.undo()
             }
-
         }
     }
 
     @autobind
     _keyUp(event) {
         this.setState({
-            spacebarPressed: false
+            spacebarPressed: false,
+            altPressed: false,
         })
     }
 
     @autobind
-    _drawRectangle(event) {
-        // compute the relative position of the mouse
-        const point2 = relativePosition({
-            x: event.clientX,
-            y: event.clientY,
-        }, this.props.info)
+    _handleMove(event) {
+        // the points we've added so far
+        let points = [ ...this.state.points ]
+        // set the location of the second
+        points[1] = {
+            id: points[1] ? points[1].id : null,
+            location: relativePosition({
+                x: event.clientX,
+                y: event.clientY,
+            }, this.props.info)
+        }
 
+        // if we created an anchor on the first click and we haven't made a matching on yet
+        if (this.state.points.length === 1 && points[0].id) {
+            // grab used props
+            const { elements, addAnchors, addPropagators } = this.props
+
+            // generate an id for the new anchor
+            const id = generateElementId(elements.anchors)
+            const { location } = points[1]
+
+            // create the actual anchor element
+            addAnchors(
+                {
+                    id,
+                    ...location,
+                },
+            )
+
+            // generate an id for the new propagator
+            const propagatorId = generateElementId(elements.propagators)
+
+            // and a propagator to join the two
+            addPropagators(
+                {
+                    kind: 'fermion',
+                    id: propagatorId,
+                    anchor1: points[0].id,
+                    anchor2: id,
+                }
+            )
+
+            // save the propagator id for next time
+            points[1].id = id
+        }
 
         // save the second point
-        this.setState({point2}, () => {
-            // if we are not creating a new element
-            if (!this.state.newElement) {
+        this.setState({ points }, () => {
+            // if we are dragging the selection rectangle
+            if (!points[0].id) {
                 // select the elements in the region
                 this.props.selectElements(
                     ...elementsInRegion({
                         elements: this.props.elements,
-                        region: this.state
+                        region: {
+                            point1: relativePosition(this.state.origin, this.props.info),
+                            point2: points[1].location,
+                        }
                     })
                 )
+            }
+
             // otherwise we are creating a new element
-            } else {
-                // move the drag anchor to match the mouse
+            else {
+                // move the new anchor to match the mouse
                 this.props.setElementAttrs({
                     type: 'anchors',
-                    id: this.state.newElement,
-                    ...fixPositionToGrid(
-                        this.state.point2, this.props.info.gridSize
-                    )
+                    id: points[1].id,
+                    ...fixPositionToGrid(points[1].location, this.props.info.gridSize)
                 })
             }
         })

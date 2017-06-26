@@ -21,7 +21,7 @@ const Grid = ({ style, browser, info }) => {
     // className is used to remove it during png export
     return (
         <g {...{...styles.container, ...style}} className="grid">
-            {range(nVertical).map(i => {
+            {range(nVertical + 1).map(i => {
                 // the shared x coordinate of the vertical lines
                 const x = round(leftEdge + i * info.gridSize, info.gridSize)
                 // render the line
@@ -32,7 +32,7 @@ const Grid = ({ style, browser, info }) => {
                         d={`M ${x} ${bottomEdge} L ${x} ${topEdge}`}
                     />
             )})}
-            {range(nHorizontal).map(i => {
+            {range(nHorizontal + 1).map(i => {
                 // the shared y coordinate of the horizontal lines
                 const y = round(bottomEdge + i * info.gridSize, info.gridSize)
                 // render the line
