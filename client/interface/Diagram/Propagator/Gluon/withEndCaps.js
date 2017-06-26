@@ -4,7 +4,7 @@ import React from 'react'
 import Align from '../Align'
 
 
-const GluonWithoutEndcaps = ({
+const GluonWithEndcaps = ({
     x1, y1, x2, y2, direction,
     // pulled out to prevent cascade
     arrow, anchor1, anchor2,
@@ -84,4 +84,4 @@ const GluonWithoutEndcaps = ({
     )
 }
 
-export default GluonWithoutEndcaps
+export default GluonWithEndcaps
