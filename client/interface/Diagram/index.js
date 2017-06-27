@@ -69,7 +69,7 @@ class Diagram extends React.Component {
                 <DiagramPatterns />
 
                 {/* wrap the whole diagram in a group so we can apply the diagram pan and zoom */}
-                <g transform={this.transformString}>
+                <g transform={this.transformString} className="diagram">
 
                     {/* order matters here (last shows up on top) */}
                     {info.showGrid && info.gridSize > 0 && <Grid/>}
