@@ -10,7 +10,7 @@ const ElectroWeak = ({
     arrow, anchor1, anchor2,
     ...unusedProps
 }) => {
-    // the width of the pattern
+    // the width of the pattern (half-period)
     const scale = 20
     // the height of the pattern
     const amplitude = 3 * scale / 2
