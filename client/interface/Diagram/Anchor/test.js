@@ -8,7 +8,7 @@ import Diagram from 'interface/Diagram'
 import { createStore } from 'store'
 import { addAnchors, selectElements } from 'actions/elements'
 import { relativePosition, fixPositionToGrid } from 'utils'
-import ConnectedAnchor, { Anchor } from '..'
+import ConnectedAnchor, { Anchor } from '.'
 
 // a test component
 const Test = (props) =>(

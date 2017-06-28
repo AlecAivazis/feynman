@@ -16,33 +16,10 @@ const shapeMap = {
 export const Shape = ({kind, dispatch, elements, ...element}) => {
     const Component = shapeMap[kind]
     return (
-        <Splittable
-            type="shapes"
-            id={element.id}
-            split={split({
-                dispatch,
-                element: {...element, kind},
-                elements
-            })}
-        >
+        <Splittable type="shapes" element={{...element, kind}}>
             <Component {...element}/>
         </Splittable>
     )
-}
-
-const split = ({dispatch, element, elements}) => ({id, x, y}) => {
-    // the id of the anchor to select at the end
-    const anchorId = generateElementId(elements.anchors)
-    // split the shape attached to the anchor
-    dispatch(splitElement({
-        element,
-        location: {x, y},
-        connectTo: anchorId,
-    }))
-    return {
-        type: 'anchors',
-        id: anchorId
-    }
 }
 
 Shape.propTypes = {

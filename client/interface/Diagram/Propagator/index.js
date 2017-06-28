@@ -63,17 +63,7 @@ export const Propagator = ({
                     {label}
                 </Label>
             )}
-            <Splittable
-                type="propagators"
-                id={id}
-                split={split({
-                    addAnchor,
-                    addPropagator,
-                    setElementAttrs,
-                    info,
-                    elements,
-                })}
-            >
+            <Splittable element={{...element, id}} type="propagators">
                 <Component
                     selected={selected}
                     {...element}
@@ -95,60 +85,6 @@ export const defaultProps = {
 }
 
 Propagator.defaultProps = defaultProps
-
-export const split = ({info, elements, addAnchor, addPropagator, setElementAttrs}) => ({id, x, y}) => {
-    // we need two unique ids for the split and the branch
-    const [splitAnchorId, branchAnchorId] = generateElementId(elements.anchors, 2)
-
-    // get the anchors assocaited with the propagator we need to snap
-    const {anchor1, anchor2} = elements.propagators[id]
-
-    // create both anchors on the mouses current location
-    addAnchor(
-        {
-            id: splitAnchorId,
-            x,
-            y,
-        },
-        {
-            id: branchAnchorId,
-            x,
-            y,
-        }
-    )
-
-    // the old line will go between the split and anchor1
-    setElementAttrs({
-        id,
-        type: 'propagators',
-        anchor1,
-        anchor2: splitAnchorId,
-    })
-
-    // similarly, we need two ids of propagators
-    const [newPropagatorId, branchPropagatorId] = generateElementId(elements.propagators, 2)
-
-    // create a new propagator between the split and anchor2, and the split and the branching one
-    addPropagator(
-        {
-            id: newPropagatorId,
-            kind: 'fermion',
-            anchor1: splitAnchorId,
-            anchor2,
-        },
-        {
-            id: branchPropagatorId,
-            kind: 'fermion',
-            anchor1: splitAnchorId,
-            anchor2: branchAnchorId,
-        }
-    )
-
-    return {
-        type: 'anchors',
-        id: branchAnchorId
-    }
-}
 
 const selector = ({diagram: {elements, info}}) => ({elements, info})
 const mapDispatchToProps = dispatch => ({
