@@ -4,7 +4,6 @@ import { select, put } from 'redux-saga/effects'
 import { addElements } from 'actions/elements'
 import { constrainLocationToShape, generateElementId } from 'utils'
 
-
 export default function* splitShape({element, location, connectTo}) {
     // the current state
     const state = (yield select(state => state.diagram.elements)) || {
