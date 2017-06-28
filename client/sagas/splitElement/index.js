@@ -3,20 +3,23 @@ import { takeEvery } from 'redux-saga'
 import { put } from 'redux-saga/effects'
 // local imports
 import { SPLIT_ELEMENT } from 'actions/elements'
-import splitShape from './splitShape'
+import shape from './shape'
+import propagator from './propagator'
 
 // a map of element type to the split function
 const splitMap = {
-    shapes: splitShape,
+    shapes: shape,
+    propagators: propagator,
 }
 
-export function* splitElementWorker({type, payload: {element, location, connectTo}}) {
+export function* splitElementWorker({type, payload: {type: elementType, element, location}}) {
     // try to get the appropriate handler for the element type
-    const splitFn = splitMap[element.type]
+    const splitFn = splitMap[elementType]
+
     // if there is a function to call
     if(splitFn) {
-        // padd the element and location along
-        yield* splitFn({element, location, connectTo})
+        // pass the element and location to the appropriate function
+        yield* splitFn({element, location})
     }
 }
 

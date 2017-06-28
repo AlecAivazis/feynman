@@ -32,14 +32,7 @@ export const Anchor = ({
     return (
         <Splittable
             type="anchors"
-            id={id}
-            split={splitAnchor({
-                selectAnchor,
-                info,
-                elements,
-                addAnchor,
-                addPropagator
-            })}
+            element={{x, y, id}}
         >
             <circle
                 className="anchor" // used to remove the elements during export

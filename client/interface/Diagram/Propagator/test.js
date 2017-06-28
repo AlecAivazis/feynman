@@ -158,7 +158,7 @@ describe('Interface Components', () => {
             )
 
             // click on the propagator
-            wrapper.find(Fermion).simulate('mousedown')
+            wrapper.find(Fermion).simulate('mouseDown')
 
             expect(store.getState().diagram.elements.selection.propagators).toEqual([1])
         })

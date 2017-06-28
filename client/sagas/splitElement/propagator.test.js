@@ -2,7 +2,7 @@
 import { select, put } from 'redux-saga/effects'
 // local imports
 import { constrainLocationToShape } from 'utils'
-import { splitElement, ADD_ANCHORS, ADD_PROPAGATOR, UPDATE_ELEMENT } from 'actions/elements'
+import { splitElement, ADD_ANCHORS, ADD_PROPAGATORS, SET_ELEMENT_ATTRS, SELECT_ELEMENTS } from 'actions/elements'
 import { splitElementWorker } from '.'
 
 describe('Sagas', () => {
@@ -22,14 +22,15 @@ describe('Sagas', () => {
                 x: 75,
                 y: 75,
             }
+            // create the generator that splits the propagators
+            const gen = splitElementWorker(
+                splitElement({element, location, type: "propagators"})
+            )
 
             // *sigh* tightly couple this test to internal access to store state
             expect(gen.next().value).toBeDefined()
 
-            // create the generator that splits the propagators
-            const gen = splitElementWorker(splitElement({element, location}))
-
-            // the first thing w ehave to do is create two anchors at the split points
+            // the first thing we have to do is create two anchors at the split points
 
             // grab the first action dispatched
             const anchorCreateAction = gen.next().value
@@ -45,7 +46,8 @@ describe('Sagas', () => {
             expect(newAnchors).toHaveLength(2)
             // and they're both located at the split location
             for (const anchor of newAnchors) {
-                expect(anchor).toEqual(location)
+                expect(anchor.x).toEqual(location.x)
+                expect(anchor.y).toEqual(location.y)
             }
 
             // label the anchors for cleaner references
@@ -63,14 +65,14 @@ describe('Sagas', () => {
             const {type: type2, payload: propUpdate} = updatePropAction.PUT.action
 
             // make sure the action updates a prop
-            expect(type2).toEqual(UPDATE_ELEMENT)
+            expect(type2).toEqual(SET_ELEMENT_ATTRS)
             // the propagator needs to update the original element
-            expect(propUpdate).toEqual({
+            expect(propUpdate).toEqual([{
                 id: element.id,
                 type: 'propagators',
                 anchor1: element.anchor1,
                 anchor2: middleAnchor.id,
-            })
+            }])
 
             // we then need to create a propagator between the two anchors
             const propagatorCreateAction = gen.next().value
@@ -81,19 +83,29 @@ describe('Sagas', () => {
             const { type: type3, payload: newProps } = propagatorCreateAction.PUT.action
 
             // make sure we are trying to create a propagator
-            expect(type3).toEqual(ADD_PROPAGATOR)
+            expect(type3).toEqual(ADD_PROPAGATORS)
             // we should be making two propagators
             expect(newProps).toHaveLength(2)
 
             // one should be connecting the two anchors we just made
             expect(
-                newProps.find(prop => prop.anchor1 === middleAnchor.id && prop.anchor2 === dragAnchor.id)
+                newProps.filter(prop => prop.anchor1 === middleAnchor.id && prop.anchor2 === dragAnchor.id)
             ).toHaveLength(1)
 
             // and the other should connect the original anchor2 and the new anchor in the middle
             expect(
-                newProps.find(prop => prop.anchor1 === element.anchor2 && prop.anchor2 === middleAnchor.id)
+                newProps.filter(prop => prop.anchor2 === element.anchor2 && prop.anchor1 === middleAnchor.id)
             ).toHaveLength(1)
+
+            // we should then have selected the drag anchor
+            const selectAction = gen.next().value
+            // sanity check
+            expect(selectAction.PUT).toBeDefined()
+
+            // make sure we selected the right anchor
+            const { type: selectType, payload: selectPayload } = selectAction.PUT.action
+            expect(selectType).toEqual(SELECT_ELEMENTS)
+            expect(selectPayload).toEqual([{type: 'anchors', id: dragAnchor.id}])
 
             // make sure we're done
             expect(gen.next().done).toBeTruthy()

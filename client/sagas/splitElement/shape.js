@@ -1,10 +1,10 @@
 // external imports
 import { select, put } from 'redux-saga/effects'
 // local imports
-import { addElements } from 'actions/elements'
+import { addElements, selectElements } from 'actions/elements'
 import { constrainLocationToShape, generateElementId } from 'utils'
 
-export default function* splitShape({element, location, connectTo}) {
+export default function* splitShape({element, location}) {
     // the current state
     const state = (yield select(state => state.diagram.elements)) || {
         anchors: {},
@@ -15,8 +15,7 @@ export default function* splitShape({element, location, connectTo}) {
     const constrained = constrainLocationToShape({shape: element, location})
 
     // generate 2 anchor ids
-    const [ anchor1, second ] = generateElementId(state.anchors, 2)
-    const anchor2 = connectTo || second
+    const [ anchor1, anchor2 ] = generateElementId(state.anchors, 2)
 
     // and a propagator id
     const propagator = generateElementId(state.propagators)
@@ -51,4 +50,7 @@ export default function* splitShape({element, location, connectTo}) {
             anchor2,
         }
     ))
+
+    // when we're done, select the anchor we split off of the shape
+    yield put(selectElements({ type: "anchors", id: anchor2}))
 }

@@ -2,7 +2,7 @@
 import { select, put } from 'redux-saga/effects'
 // local imports
 import { constrainLocationToShape } from 'utils'
-import { splitElement, ADD_ANCHORS, ADD_PROPAGATOR, UPDATE_ELEMENT } from 'actions/elements'
+import { splitElement, ADD_ANCHORS, ADD_PROPAGATOR, UPDATE_ELEMENT, SELECT_ELEMENTS } from 'actions/elements'
 import { splitElementWorker } from '.'
 
 describe('Sagas', () => {
@@ -10,7 +10,6 @@ describe('Sagas', () => {
         test('can split a shape', () => {
             // the element to split
             const element = {
-                type: 'shapes',
                 kind: 'parton',
                 id: 1,
                 x: 50,
@@ -25,7 +24,7 @@ describe('Sagas', () => {
             }
 
             // create the generator responding to the action
-            const gen = splitElementWorker(splitElement({element, location}))
+            const gen = splitElementWorker(splitElement({element, location, type: "shapes"}))
 
             // *sigh* tightly couple this test to internal access to store state
             expect(gen.next().value).toBeDefined()
@@ -59,6 +58,19 @@ describe('Sagas', () => {
             expect(propagator.anchor1).not.toEqual(propagator.anchor2)
             expect(ids.includes(propagator.anchor1)).toBeTruthy()
             expect(ids.includes(propagator.anchor2)).toBeTruthy()
+
+            // and we leave with the anchor we created selected
+            const selectAction = gen.next().value
+            // sanity check
+            expect(selectAction.PUT).toBeDefined()
+
+            // make sure we selected the right anchor
+            const { type: selectType, payload: selectPayload } = selectAction.PUT.action
+            expect(selectType).toEqual(SELECT_ELEMENTS)
+            expect(selectPayload).toEqual([{
+                type: 'anchors',
+                id: propagator.anchor2,
+            }])
 
             // make sure we're done
             expect(gen.next().done).toBeTruthy()
