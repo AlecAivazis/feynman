@@ -17,11 +17,6 @@ export const Propagator = ({
     kind,
     selected,
     id,
-    info,
-    elements,
-    dispatch,
-    addAnchor,
-    addPropagator,
     setElementAttrs,
     labelDistance,
     labelLocation,
@@ -86,10 +81,4 @@ export const defaultProps = {
 
 Propagator.defaultProps = defaultProps
 
-const selector = ({diagram: {elements, info}}) => ({elements, info})
-const mapDispatchToProps = dispatch => ({
-    addAnchor: (...anchors) => dispatch(addAnchors(...anchors)),
-    addPropagator: (...propagators) => dispatch(addPropagators(...propagators)),
-    setElementAttrs: (...attrs) => dispatch(setElementAttrs(...attrs))
-})
-export default connect(selector, mapDispatchToProps)(Propagator)
+export default Propagator

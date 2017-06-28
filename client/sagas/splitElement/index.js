@@ -5,11 +5,13 @@ import { put } from 'redux-saga/effects'
 import { SPLIT_ELEMENT } from 'actions/elements'
 import shape from './shape'
 import propagator from './propagator'
+import anchor from './anchor'
 
 // a map of element type to the split function
 const splitMap = {
     shapes: shape,
     propagators: propagator,
+    anchors: anchor,
 }
 
 export function* splitElementWorker({type, payload: {type: elementType, element, location}}) {
