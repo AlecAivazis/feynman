@@ -7,7 +7,7 @@ import { splitElementWorker } from '.'
 
 describe('Sagas', () => {
     describe('Split Element', () => {
-        test('can split a straight propagator', () => {
+        test('straight propagator', () => {
             // the element to split
             const element = {
                 type: 'propagator',
@@ -45,10 +45,7 @@ describe('Sagas', () => {
             // make sure we made two anchors
             expect(newAnchors).toHaveLength(2)
             // and they're both located at the split location
-            for (const anchor of newAnchors) {
-                expect(anchor.x).toEqual(location.x)
-                expect(anchor.y).toEqual(location.y)
-            }
+            for (const anchor of newAnchors) expect(anchor).toMatchObject(location)
 
             // label the anchors for cleaner references
             const middleAnchor = newAnchors[0]
