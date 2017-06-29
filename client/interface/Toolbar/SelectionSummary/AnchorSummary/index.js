@@ -109,12 +109,17 @@ const mapDispatchToProps = (dispatch, {anchors}) => ({
         ))
     ),
     deleteAnchors: () => (
-        dispatch(withCommit(deleteElements(
-            ...anchors.map(id => ({type: 'anchors', id}))
-        ), 'removed anchors from diagram'))
+        dispatch(withCommit(
+            deleteElements(
+                ...anchors.map(id => ({type: 'anchors', id}))
+            ),
+            'removed anchors from diagram'))
     ),
     alignAnchors: dir => () => (
-        dispatch(alignSelectedAnchors(dir))
+        dispatch(withCommit(
+            alignSelectedAnchors(dir),
+            `aligned anchors ${dir}`
+        ))
     ),
 })
 
