@@ -1,19 +1,16 @@
 // external imports
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // local imports
 import { Splittable } from 'components'
-import { splitElement } from 'actions/elements'
 import Parton from './Parton'
-import { generateElementId } from 'utils'
 
 // a mapping of shape type to component to render
 const shapeMap = {
     parton: Parton
 }
 
-export const Shape = ({kind, dispatch, elements, ...element}) => {
+export const Shape = ({kind, dispatch, ...element}) => {
     const Component = shapeMap[kind]
     return (
         <Splittable type="shapes" element={{...element, kind}}>
@@ -34,5 +31,4 @@ Shape.defaultProps = {
     r: 25,
 }
 
-const selector = ({diagram: {elements} }) => ({elements})
-export default connect(selector)(Shape)
+export default Shape

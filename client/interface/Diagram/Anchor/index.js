@@ -1,12 +1,7 @@
 // external imports
 import React from 'react'
-import { connect } from 'react-redux'
-import _ from 'lodash'
 // local imports
 import { Splittable } from 'components'
-import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
-import { sidebarWidth } from 'interface/Sidebar/styles'
-import { addAnchors, addPropagators, setElementAttrs } from 'actions/elements'
 import styles from './styles'
 
 export const Anchor = ({

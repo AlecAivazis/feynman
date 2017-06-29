@@ -1,15 +1,12 @@
 // external imports
 import React from 'react'
-import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import Gluon from './Gluon'
 import Dashed from './Dashed'
-import { EventListener, Splittable, Text } from 'components'
-import { fixPositionToGrid, generateElementId } from 'utils'
-import { setElementAttrs, addAnchors, addPropagators } from 'actions/elements'
+import { Splittable } from 'components'
 import locationForLabel from './locationForLabel'
 import Label from './Label'
 
@@ -17,7 +14,6 @@ export const Propagator = ({
     kind,
     selected,
     id,
-    setElementAttrs,
     labelDistance,
     labelLocation,
     label,
