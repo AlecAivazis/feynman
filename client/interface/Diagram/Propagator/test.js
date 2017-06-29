@@ -10,10 +10,9 @@ import Propagator, {Propagator as CoreProp} from '.'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import Gluon from './Gluon'
-import locationForLabel from './locationForLabel'
-import { elementsWithLocations } from 'utils'
 import { Text } from 'components'
-import relLocForLabel from './relLocForLabel'
+import Label from './Label'
+import { defaultProps } from '.'
 
 describe('Interface Components', () => {
     describe('Diagram Element', () => {
@@ -163,43 +162,6 @@ describe('Interface Components', () => {
             expect(store.getState().diagram.elements.selection.propagators).toEqual([1])
         })
 
-        test('can compute the location for a label for a propagator', () => {
-            // a store to start out with
-            const store = createStore()
-            // create some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 200
-                }
-            ))
-
-            // add a propagator connecting the anchors
-            store.dispatch(addPropagators({
-                id: 1,
-                kind: 'fermion',
-                anchor1: 1,
-                anchor2: 2,
-                label: 'a'
-            }))
-
-            // we grab the location from a propgator with dereferenced anchors
-            const propagator = elementsWithLocations(store.getState().diagram.elements).propagators[0]
-
-            // get the location for the label
-            const location = locationForLabel(propagator)
-
-            // make sure its a valid location
-            expect(location.x).toBeDefined()
-            expect(location.y).toBeDefined()
-        })
-
         test('doesn\'t render a propagator if there is no distance to draw', function() {// a store to start out with
             const store = createStore()
             // create some anchors
@@ -236,44 +198,6 @@ describe('Interface Components', () => {
             expect(wrapper.find(Text)).toHaveLength(0)
         })
 
-        test('can compute the relative coordinates for a label given diagram coordiantes', () => {
-
-            // a store to start out with
-            const store = createStore()
-            // create some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 200
-                }
-            ))
-
-            // add a propagator connecting the anchors
-            store.dispatch(addPropagators({
-                id: 1,
-                kind: 'fermion',
-                anchor1: 1,
-                anchor2: 2,
-                label: 'a'
-            }))
-
-            // we grab the location from a propgator with dereferenced anchors
-            const propagator = elementsWithLocations(store.getState().diagram.elements).propagators[0]
-
-            // get the location for the label
-            const location = relLocForLabel({x: 75, y: 150}, propagator)
-
-            // make sure its a valid location
-            expect(location.labelDistance).toBeDefined()
-            expect(location.labelLocation).toBeDefined()
-        })
-
         test('shows a label for the element if there is a value', () => {
             // a store to start out with
             const store = createStore()
@@ -308,23 +232,57 @@ describe('Interface Components', () => {
             )
 
             // find the label
-            const label = wrapper.find(Text)
+            const label = wrapper.find(Label)
 
             // sanity check
             expect(label).toHaveLength(1)
 
-            // we grab the location from a propgator with dereferenced anchors
-            const propagator = elementsWithLocations(store.getState().diagram.elements).propagators[0]
-            // the expected location for the label
-            const labelLocation = locationForLabel(propagator)
-
             // the props we passed the label
             const labelProps = label.props()
+            expect(label.props()).toMatchObject({
+                distance: defaultProps.labelDistance,
+                location: defaultProps.labelLocation,
+                children: 'a'
+            })
+        })
 
-            // make sure it was passed the right props
-            expect(labelProps.x).toEqual(labelLocation.x)
-            expect(labelProps.y).toEqual(labelLocation.y)
-            expect(labelProps.children).toEqual('a')
+        test('does not show a label if there isn\'t one', () => {
+            // a store to start out with
+            const store = createStore()
+            // create some anchors
+            store.dispatch(addAnchors(
+                {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                },
+                {
+                    id: 2,
+                    x: 100,
+                    y: 200
+                }
+            ))
+
+            // add a propagator connecting the anchors
+            store.dispatch(addPropagators({
+                id: 1,
+                kind: 'fermion',
+                anchor1: 1,
+                anchor2: 2,
+            }))
+
+            // render a fermion through the diagram element
+            const wrapper = mount(
+                <Provider store={store}>
+                    <Diagram />
+                </Provider>
+            )
+
+            // find the label
+            const label = wrapper.find(Label)
+
+            // sanity check
+            expect(label).toHaveLength(0)
         })
     })
 })

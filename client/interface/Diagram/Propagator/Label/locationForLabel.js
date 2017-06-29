@@ -1,13 +1,13 @@
 // local imports
-import { defaultProps } from '.'
+import { defaultProps } from '..'
 
 export default function locationForLabel({
     x1,
     x2,
     y1,
     y2,
-    labelDistance:r = defaultProps.labelDistance,
-    labelLocation:s = defaultProps.labelLocation,
+    distance:r = defaultProps.labelDistance,
+    location:s = defaultProps.labelLocation,
     label
 }) {
     // the midpoint
