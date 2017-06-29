@@ -118,7 +118,7 @@ const mapDispatchToProps = (dispatch, {anchors}) => ({
     alignAnchors: dir => () => (
         dispatch(withCommit(
             alignSelectedAnchors(dir),
-            `aligned anchors ${dir}`
+            `aligned anchors ${dir}ly`
         ))
     ),
 })
