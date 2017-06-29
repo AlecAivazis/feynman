@@ -2,6 +2,7 @@
 import reducer from '.'
 import {
     moveSelectedElements,
+    snapSelectedElements,
     addAnchors,
     addPropagators,
     selectElements,
@@ -357,6 +358,94 @@ describe('Reducers', () => {
                 // make sure the selected anchors were moved
                 expect(movedState.elements.shapes[1].x).toEqual(shape.x + move.x)
                 expect(movedState.elements.shapes[1].y).toEqual(shape.y)
+            })
+        })
+
+        describe('Snap elements', () => {
+            test('snap anchors', () => {
+                // start off with some anchors
+                const anchorState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 75,
+                        y: 75,
+                    }
+                ))
+
+                // select the anchor we just made
+                const selectedState = reducer(anchorState, selectElements({id: 1, type: 'anchors'}))
+
+                // snap the selected anchor to the grid
+                const snappedState = reducer(selectedState, snapSelectedElements())
+
+                // make sure we moved the anchor
+                expect(snappedState.elements.anchors[1]).toMatchObject({
+                    x: 100,
+                    y: 100,
+                })
+            })
+
+            test('snap propagators', () => {
+                // start off with some anchors
+                const anchorState = reducer(undefined, addAnchors(
+                    {
+                        id: 1,
+                        x: 25,
+                        y: 25,
+                    },
+                    {
+                        id: 2,
+                        x: 112,
+                        y: 112,
+                    }
+                ))
+
+                // and a propagator joining them
+                const propState = reducer(anchorState, addPropagators({
+                    id: 1,
+                    kind: 'fermion',
+                    anchor1: 1,
+                    anchor2: 2,
+                }))
+
+                // select the propagator we just made
+                const selectedState = reducer(propState, selectElements({id: 1, type: 'propagators'}))
+
+                // snap the selected anchor to the grid
+                const snappedState = reducer(selectedState, snapSelectedElements())
+
+                // make sure we moved both anchors
+                expect(snappedState.elements.anchors[1]).toMatchObject({
+                    x: 50,
+                    y: 50,
+                })
+                expect(snappedState.elements.anchors[2]).toMatchObject({
+                    x: 100,
+                    y: 100,
+                })
+            })
+
+            test('snap shapes', () => {
+                // start off with a shape that's off-grid
+                const shapeState = reducer(undefined, addElements({
+                    id: 1,
+                    type: "shapes",
+                    kind: "parton",
+                    x: 50,
+                    y: 60,
+                }))
+
+                // select the shape we just made
+                const selectedState = reducer(shapeState, selectElements({id: 1, type: 'shapes'}))
+
+                // snap the selected anchor to the grid
+                const snappedState = reducer(selectedState, snapSelectedElements())
+
+                // make sure the shape actually moved
+                expect(snappedState.elements.shapes[1]).toMatchObject({
+                    x: 50,
+                    y: 50,
+                })
             })
         })
     })

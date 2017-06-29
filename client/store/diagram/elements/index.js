@@ -11,8 +11,9 @@ import {
     CLEAR_ELEMENTS,
     DELETE_SELECTION,
     ADD_ELEMENTS,
+    SNAP_SELECTED_ELEMENTS,
 } from 'actions/elements'
-import { flatMap } from 'utils'
+import { flatMap, fixPositionToGrid } from 'utils'
 import withHistory from '../../history'
 
 // the initial state of elements
@@ -176,6 +177,43 @@ export default withHistory((state = initialState, {type, payload}) => {
             local[type][id] = {
                 ...target,
                 ...attrs
+            }
+        }
+
+        // return the local copy
+        return local
+    }
+
+    // if we need to snap the selected elements to the grid
+    if (type === SNAP_SELECTED_ELEMENTS) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // make a flat list of the full selection
+        const selection = _.flatMap(Object.keys(local.selection),
+            type => (
+                local.selection[type].map(id => ({id, type}))
+            )
+        )
+
+        // go over every selected element
+        for (const {type, id} of selection) {
+            console.log(type, id)
+            // if the element is a propagator
+            if (type === 'propagators') {
+
+            }
+            // otherwise all other elements get snapped the same
+            else {
+                // update the particular element to match the grid
+                const newLoc = fixPositionToGrid({
+                    x: local[type][id].x,
+                    y: local[type][id].y,
+                }, local.info.gridSize)
+
+                // update the element to match the new location
+                local[type][id].x = newLoc.x
+                local[type][id].y = newLoc.y
             }
         }
 

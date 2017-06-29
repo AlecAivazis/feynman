@@ -3,8 +3,8 @@ import _ from 'lodash'
 // local imports
 import infoReducer from './info'
 import elementsReducer from './elements'
-import { MOVE_SELECTED_ELEMENTS } from 'actions/elements'
-import { round } from 'utils'
+import { MOVE_SELECTED_ELEMENTS, SNAP_SELECTED_ELEMENTS } from 'actions/elements'
+import { round, fixPositionToGrid } from 'utils'
 
 const initialState = {}
 
@@ -64,6 +64,59 @@ export default (state = initialState, {type, payload}) => {
             ...state,
             elements: local
         }
+    }
+
+    // if we need to snap the selected elements to the grid
+    if (type === SNAP_SELECTED_ELEMENTS) {
+        // create a copy we can play with
+        const local = _.cloneDeep(state)
+
+        // make a flat list of the full selection with type label
+        const selection = _.flatMap(Object.keys(local.elements.selection),
+            type => (
+                local.elements.selection[type].map(id => ({id, type}))
+            )
+        )
+
+        // go over every selected element
+        for (const {type, id} of selection) {
+            // if the element is a propagator
+            if (type === 'propagators') {
+                // we have to snap both anchors of a propagator
+                const { anchor1, anchor2 } = local.elements[type][id]
+
+                // check if the anchor is fixed
+                for (const id of [anchor1, anchor2]) {
+                    // the actual anchor object
+                    const anchor = local.elements.anchors[id]
+
+                    // if the anchor is fixed dont do anything else
+                    if (anchor.fixed) continue
+
+                    // calculate the snapped location for the anchor
+                    const newLoc = fixPositionToGrid(anchor, local.info.gridSize)
+
+                    // update the anchor to match the new location
+                    local.elements.anchors[id].x = newLoc.x
+                    local.elements.anchors[id].y = newLoc.y
+                }
+            }
+            // otherwise all other elements get snapped the same
+            else {
+                // update the particular element to match the grid
+                const newLoc = fixPositionToGrid({
+                    x: local.elements[type][id].x,
+                    y: local.elements[type][id].y,
+                }, local.info.gridSize)
+
+                // update the element to match the new location
+                local.elements[type][id].x = newLoc.x
+                local.elements[type][id].y = newLoc.y
+            }
+        }
+
+        // return the local copy
+        return local
     }
 
     return {

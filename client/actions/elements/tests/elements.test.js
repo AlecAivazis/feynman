@@ -12,6 +12,7 @@ import {
     loadPattern,          LOAD_PATTERN,
     addElements,          ADD_ELEMENTS,
     splitElement,         SPLIT_ELEMENT,
+    snapSelectedElements, SNAP_SELECTED_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', () => {
@@ -90,6 +91,13 @@ describe('Action Creators', () => {
                         source: 1,
                         select: false,
                     }
+                })
+            })
+
+            test('snap selected elements', () => {
+                // just check the type of the action
+                expect(snapSelectedElements()).toEqual({
+                    type: SNAP_SELECTED_ELEMENTS,
                 })
             })
 
