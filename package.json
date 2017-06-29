@@ -1,7 +1,7 @@
 {
   "name": "feynman",
   "description": "A tool for drawing feynamn diagrams.",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "private": true,
   "homepage": "https://github.com/AlecAivazis/feynamn#readme",
   "repository": {
