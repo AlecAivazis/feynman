@@ -37,6 +37,7 @@ class PropagatorLabel extends React.Component {
         this.props.setAttrs(labelLoc)
     }
 }
+
 const selector = ({diagram: {info}}) => ({info})
 const mapDispatchToProps = (dispatch, {element}) => ({
     setAttrs: attrs => dispatch(setElementAttrs({
@@ -45,4 +46,5 @@ const mapDispatchToProps = (dispatch, {element}) => ({
         ...attrs
     }))
 })
+
 export default connect(selector, mapDispatchToProps)(PropagatorLabel)
