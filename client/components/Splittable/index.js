@@ -5,11 +5,17 @@ import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 // local imports
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
-import { mergeElements, moveSelectedElements, setElementAttrs, splitElement as split, selectElements as select } from 'actions/elements'
+import {
+    mergeElements,
+    moveSelectedElements,
+    setElementAttrs,
+    splitElement as split,
+    selectElements as select,
+    snapSelectedElements as snap,
+} from 'actions/elements'
 import { commit } from 'actions/history'
 import { throttle, fixDeltaToGrid, round } from 'utils'
 import { EventListener } from 'components'
-import { snapElement, snapPropagator } from './snap'
 
 class Splittable extends React.Component {
 
@@ -27,7 +33,8 @@ class Splittable extends React.Component {
     state = {
         origin: null,
         moveTarget: null,
-        moveType: null
+        moveType: null,
+        snapped: false, // to make sure we only snap the element the first time
     }
 
     @autobind
@@ -87,18 +94,17 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // get the used props
-        const { type, info, elements, element, setElementAttrs, moveSelectedElements } = this.props
+        const { type, info, elements, element, setElementAttrs, moveSelectedElements, snapSelectedElements } = this.props
         const { origin, moveTarget, moveType } = this.state
         // if the mouse is down
         if (origin) {
-
-            // the mapping of type to snap utils
-            const snap = {
-                'propagators': snapPropagator,
-            }[moveType] || snapElement
-
-            // make sure the element starts from the grid
-            snap({id: element.id, elements,  info, setElementAttrs, type: moveType})
+            // if we haven't snapped the element already
+            if (!this.state.snapped) {
+                // make sure the element starts from the gridq
+                snapSelectedElements()
+                // make sure we don't do it another time
+                this.setState({snapped: true})
+            }
 
             // the location of the mouse in the diagram's coordinate space
             const mouse = {
@@ -146,6 +152,8 @@ class Splittable extends React.Component {
         this.setState({
             // we are no longer holding the mouse down
             origin: false,
+            // and we will need to snap again
+            snapped: false,
         })
     }
 
@@ -179,6 +187,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     selectElements: (...args) => dispatch(select(...args)),
     // dispatch actions with a commit message
     commitWithMessage: msg => dispatch(commit(msg)),
+    // snap the element we are dragging to the grid
+    snapSelectedElements: () => dispatch(snap()),
 
 })
 export default connect(selector, mapDispatchToProps)(Splittable)

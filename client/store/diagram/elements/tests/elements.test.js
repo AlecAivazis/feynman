@@ -12,6 +12,7 @@ import {
     clearElements,
     deleteSelection,
     addElements,
+    snapSelectedElements,
 } from 'actions/elements'
 import { setGridSize } from 'actions/info'
 import {initialState as intialSelection} from '../selection'
