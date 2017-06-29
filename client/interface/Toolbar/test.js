@@ -6,9 +6,9 @@ import { Provider } from 'react-redux'
 import { createStore } from 'store'
 import { addAnchors, selectElements } from 'actions/elements'
 import { Button } from 'components'
-import Toolbar from '..'
-import SelectionSummary from '../SelectionSummary'
-import ItemPalette from '../ItemPalette'
+import Toolbar from '.'
+import SelectionSummary from './SelectionSummary'
+import ItemPalette from './ItemPalette'
 
 describe('Interface Components', () => {
     describe('Toolbar', () => {
