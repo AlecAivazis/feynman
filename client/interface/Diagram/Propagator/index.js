@@ -7,7 +7,6 @@ import ElectroWeak from './ElectroWeak'
 import Gluon from './Gluon'
 import Dashed from './Dashed'
 import { Splittable } from 'components'
-import locationForLabel from './locationForLabel'
 import Label from './Label'
 
 export const Propagator = ({
@@ -48,7 +47,8 @@ export const Propagator = ({
         <g>
             {label && (
                 <Label
-                    {...locationForLabel({...element, labelLocation, labelDistance})}
+                    location={labelLocation}
+                    distance={labelDistance}
                     element={{...element, id}}
                 >
                     {label}
