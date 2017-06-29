@@ -4,9 +4,18 @@ import PropTypes from 'prop-types'
 import queryString from 'query-string'
 
 const Text = ({math, children, x, y, color, ...unused}) => {
+    // the text for the label
+    const string = children.trim()
+
+    // if there is an empty string to render
+    if (!string) {
+        // dont render anything
+        return null
+    }
+
     // the url with the rendered image
     const imgUrl = `/latex?${queryString.stringify({
-       string: children,
+       string,
        mathMode: JSON.stringify(math),
        color,
     })}`
