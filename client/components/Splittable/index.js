@@ -72,7 +72,26 @@ class Splittable extends React.Component {
                 // we created a new element
                 action = 'create'
             } else {
-                selectElements({id: element.id, type})
+                // the current element
+                const current = {id: element.id, type}
+
+                // if the user is holding down shift
+                if (event.shiftKey) {
+                    // the list of selected elements
+                    const selection = _.flatMap(Object.keys(elements.selection),
+                        eType => (
+                            elements.selection[eType].map(id => ({id, type: eType}))
+                        )
+                    )
+
+                    // add the element to the current selection
+                    selectElements(...selection, current)
+                }
+                // the user is not holding shift
+                else {
+                    // only select the clicked element
+                    selectElements(current)
+                }
             }
         }
 
