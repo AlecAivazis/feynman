@@ -321,6 +321,9 @@ class Diagram extends React.Component {
                 },
             )
 
+            // select the anchor we are dragging
+            selectElements({id, type: "anchors"})
+
             // generate an id for the new propagator
             const propagatorId = generateElementId(elements.propagators)
 
