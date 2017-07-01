@@ -83,7 +83,6 @@ class Splittable extends React.Component {
                             elements.selection[eType].map(id => ({id, type: eType}))
                         )
                     )
-
                     // add the element to the current selection
                     selectElements(...selection, current)
                 }
@@ -119,7 +118,7 @@ class Splittable extends React.Component {
         if (origin) {
             // if we haven't snapped the element already
             if (!this.state.snapped) {
-                // make sure the element starts from the gridq
+                // make sure the element starts from the grid
                 snapSelectedElements()
                 // make sure we don't do it another time
                 this.setState({snapped: true})
