@@ -218,14 +218,27 @@ class Diagram extends React.Component {
     @autobind
     _mouseUp(event) {
         // pull out used state
-        const { points } = this.state
+        let { points } = this.state
+        const { info } = this.props
 
         // only continue if we started dragging on this element
         if (points.length > 0) {
             // if we created any new elements we need to commit the new state
             if (points[0].id) {
-                // the kind of object we added
-                let kind = ["none", "anchor", "propagator"][points.length]
+                // the kind of object we created
+                let kind = 'propagator'
+
+                // fix the location of each point to the grid so we can compare
+                points = points.map(pt => ({...pt, location: fixPositionToGrid(pt.location, info.gridSize)}))
+
+                // if there is only one point or two that will be merged
+                if (points.length === 1 || (
+                    points.length === 2 && points[0].location.x === points[1].location.x
+                                        && points[0].location.y === points[1].location.y
+                )) {
+                    // then we made a single anchor
+                    kind = 'anchor'
+                }
 
                 // perform the commit
                 this.props.commit(`added ${kind} to diagram`)
