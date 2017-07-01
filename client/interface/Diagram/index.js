@@ -31,6 +31,7 @@ import {
     addPropagators,
     setElementAttrs as setAttrs,
     deleteSelection,
+    mergeElements,
 } from 'actions/elements'
 import { panDiagram as panDiagramAction, zoomIn as zoomInAction, zoomOut as zoomOutAction } from 'actions/info'
 import PatternModal from '../PatternModal'
@@ -228,6 +229,9 @@ class Diagram extends React.Component {
 
                 // perform the commit
                 this.props.commit(`added ${kind} to diagram`)
+
+                // clean up anything we left behind
+                this.props.merge()
             }
 
             // clear the trackers assciated with drag interactions
@@ -303,7 +307,7 @@ class Diagram extends React.Component {
         // if we created an anchor on the first click and we haven't made a matching on yet
         if (this.state.points.length === 1 && points[0].id) {
             // grab used props
-            const { elements, addAnchors, addPropagators } = this.props
+            const { elements, addAnchors, addPropagators, selectElements } = this.props
 
             // generate an id for the new anchor
             const id = generateElementId(elements.anchors)
@@ -424,5 +428,6 @@ const mapDispatchToProps = dispatch => ({
     undo: () => dispatch(undo()),
     commit: msg => dispatch(commit(msg)),
     withCommit: (action, msg) => dispatch(withCommit(action, msg)),
+    merge: () => dispatch(mergeElements()),
 })
 export default connect(selector, mapDispatchToProps)(Diagram)
