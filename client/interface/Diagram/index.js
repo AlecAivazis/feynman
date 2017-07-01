@@ -43,7 +43,7 @@ class Diagram extends React.Component {
         // the points we've created during mouse interactions ( a list of {id, location} )
         points: [],
 
-        // the location of the mouse during drag
+        // the last known mouse location during drag
         origin: null,
 
         // keyboard trackers
