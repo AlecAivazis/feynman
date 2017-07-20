@@ -18,14 +18,15 @@ const kindMap = {
     em: 'electroweak'
 }
 
-const numericValue = val => round(parseFloat(val.slice(1, val.length-1)));
+// extract the $'s from a value
+const numericValue = val => parseFloat(val.slice(1, val.length-1))
 
 // a mapping of keys to transformations when turning the values to their latex equivalent
 const valueMap = {
     stroke: val => val.slice(2, val.length-1),
-    labelDistance: numericValue,
-    labelLocation: numericValue,
-    strokeWidth: val => parseFloat(val.slice(1, val.length-1)),
+    labelDistance: val => round(numericValue(val)),
+    labelLocation: val => numericValue(val).toFixed(2),
+    strokeWidth: numericValue,
 }
 
 const transformCoords = ({x, y}, bb) => ({
