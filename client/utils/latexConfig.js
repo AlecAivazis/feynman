@@ -9,7 +9,8 @@ const round = n => (Math.round(n / 50 * 10) / 10).toFixed(2)
 
 // a mapping of internal props to config options used by the latex library
 const configMap = {
-    stroke: 'color'
+    stroke: 'color',
+    strokeWidth: 'lineWidth',
 }
 
 // a mapping of propagator kinds to their equivalent in the latex library
