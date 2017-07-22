@@ -6,11 +6,13 @@ import { round as roundTo, elementsWithLocations, diagramBoundingBox } from 'uti
 
 // round a number to the tenths place to show in latex (package assumes grid of 50)
 const round = n => (Math.round(n / 50 * 10) / 10).toFixed(2)
+const strip = val => val.slice(1, val.length-1)
 
 // a mapping of internal props to config options used by the latex library
 const configMap = {
     stroke: 'color',
     strokeWidth: 'lineWidth',
+    arrow: 'showArrow',
 }
 
 // a mapping of propagator kinds to their equivalent in the latex library
@@ -19,7 +21,7 @@ const kindMap = {
 }
 
 // extract the $'s from a value
-const numericValue = val => parseFloat(val.slice(1, val.length-1))
+const numericValue = val => parseFloat(strip(val))
 
 // a mapping of keys to transformations when turning the values to their latex equivalent
 const valueMap = {
@@ -27,6 +29,7 @@ const valueMap = {
     labelDistance: val => round(numericValue(val)),
     labelLocation: val => numericValue(val).toFixed(2),
     strokeWidth: numericValue,
+    arrow: val => JSON.stringify(Boolean(parseFloat(strip(val)))),
 }
 
 const transformCoords = ({x, y}, bb) => ({
