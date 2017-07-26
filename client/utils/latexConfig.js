@@ -29,7 +29,14 @@ const valueMap = {
     labelDistance: val => round(numericValue(val)),
     labelLocation: val => numericValue(val).toFixed(2),
     strokeWidth: numericValue,
-    arrow: val => JSON.stringify(Boolean(parseFloat(strip(val)))),
+    arrow: val => parseInt(strip(val)),
+}
+
+// a map of functions that add additional values for the config
+const extraValues = {
+    arrow: val => (
+        val === 0 ? 'showArrow=false' : `showArrow=true, flip=${JSON.stringify(val === -1)}`
+    ),
 }
 
 const transformCoords = ({x, y}, bb) => ({
@@ -62,8 +69,8 @@ export const propagatorConfig = ({
             let value = `$${propagator[prop]}$`
             value = valueMap[prop] ? valueMap[prop](value) : value
 
-            // join them in the appropriate manner
-            return `${key}=${value}`
+            // join them in the appropriate manner, allowing for the pure mapping
+            return extraValues[prop] ? extraValues[prop](value) : `${key}=${value}`
         }
     ).join(', ')
 
