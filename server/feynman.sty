@@ -153,34 +153,15 @@
 
 % define the arrow style
 \tikzset{
-  % style to apply some styles to each segment of a path
-  on each segment/.style={
-    decorate,
-    decoration={
-      show path construction,
-      moveto code={},
-      lineto code={
-        \path [#1]
-        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
-      },
-      curveto code={
-        \path [#1] (\tikzinputsegmentfirst)
-        .. controls
-        (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb)
-        ..
-        (\tikzinputsegmentlast);
-      },
-      closepath code={
-        \path [#1]
-        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
-      },
-    },
-  },
-  % style to add an arrow in the middle of a path
-  mid arrow/.style={postaction={decorate,decoration={
-        markings,
-        mark=at position .5 with {\arrow[#1, scale=1.5]{stealth}}
-      }}},
+    arrow/.style={
+        decoration={
+            markings,
+            mark=at position .5 with {
+                \arrow[scale=1.5]{latex}
+            }
+        },
+        postaction={decorate},
+    }
 }
 
 
@@ -218,7 +199,7 @@
         % if they asked to draw the arrow
         \ifstyle@showArrow
              % draw the line with an arrow
-            \draw[color=lineColor, line width = \style@lineWidth, postaction={on each segment={mid arrow=lineColor}}] (#2) -- (#3);
+            \draw[color=lineColor, line width = \style@lineWidth, arrow] (#2) -- (#3);
         % otherwise they did not ask to draw the arrow
         \else
              % draw the line
@@ -547,8 +528,8 @@
         \FPeval{startY}{round(\pgfmath@tonumber{\pgf@ya}/72.27, 5)}
 
         % store local copies of the target position
-        \FPeval{\labelLocation}{\style@labelLocation}
-        \FPeval{\labelDistance}{0+\style@labelDistance}
+        \FPeval{labelLocation}{\style@labelLocation}
+        \FPeval{labelDistance}{0+\style@labelDistance}
 
         % compute the location along the line where we belong
         \FPeval{@temp@locX}{round(\startX + \labelLocation * {\dX}, 5)}
