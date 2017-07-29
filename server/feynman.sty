@@ -536,43 +536,43 @@
         \pgf@xa=\pgf@x
         \pgf@ya=\pgf@y
         % cast the deltas in the appropriate unit system
-        \FPeval\dX{\pgfmath@tonumber{\pgf@xa}/72.27}
-        \FPeval\dY{\pgfmath@tonumber{\pgf@ya}/72.27}
+        \FPeval{dX}{\pgfmath@tonumber{\pgf@xa}/72.27}
+        \FPeval{dY}{\pgfmath@tonumber{\pgf@ya}/72.27}
 
         % compute the location of the starting coordinate
         \pgfpointanchor{start}{center}
         \pgf@xa=\pgf@x
         \pgf@ya=\pgf@y
-        \FPeval{\@temp@x1}{round(\pgfmath@tonumber{\pgf@xa}/72.27, 5)}
-        \FPeval{\@temp@y1}{round(\pgfmath@tonumber{\pgf@ya}/72.27, 5)}
+        \FPeval{startX}{round(\pgfmath@tonumber{\pgf@xa}/72.27, 5)}
+        \FPeval{startY}{round(\pgfmath@tonumber{\pgf@ya}/72.27, 5)}
 
         % store local copies of the target position
         \FPeval{\labelLocation}{\style@labelLocation}
         \FPeval{\labelDistance}{0+\style@labelDistance}
 
         % compute the location along the line where we belong
-        \FPeval{\@temp@locX}{round(\@temp@x1 + \labelLocation * \dX, 5)}
-        \FPeval{\@temp@locY}{round(\@temp@y1 + \labelLocation * \dY, 5)}
+        \FPeval{@temp@locX}{round(\startX + \labelLocation * {\dX}, 5)}
+        \FPeval{@temp@locY}{round(\startY + \labelLocation * \dY, 5)}
 
         % if the change in y is zero (infinite slope)
         \ifthenelse{\equal{\dY}{0}}{
-            \FPeval{\labelX}{\@temp@locX}
-            \FPeval{\labelY}{\@temp@locY+\labelDistance}
-            \def\loc{right}
+            \FPeval{labelX}{\@temp@locX}
+            \FPeval{labelY}{\@temp@locY+\labelDistance}
         % otherwise we are safe to compute the slope
         }{
             % compute the slope of the perpendicular line
-            \FPeval{\perpSlope}{0 - \dX/\dY}
+            \FPeval{perpSlope}{0 - {\dX}/\dY}
 
             % the points that are perpedicular to the line a distance r away satisfy
             % y = mx
             % x^2 + y^2 = r
 
             % compute the x that satisfies this equation
+            % note: macro can start with \ because it can never be negative
             \FPeval{\x2}{(0+\labelDistance) * (0+\labelDistance) / (1 + (\perpSlope * \perpSlope))}
             \FProot{\x}{\x2}{2}
             % compute the y that satisfies this equation
-            \FPeval{\y}{\x * \perpSlope}
+            \FPeval{y}{\x * \perpSlope}
 
             \newdimen \distance
             \distance = \labelDistance pt
@@ -583,32 +583,31 @@
             \ifthenelse{\slope > 0 pt \OR \slope = 0 pt}{
                 % if they are a positive distance away
                 \ifthenelse{\distance > 0 pt}{
-                    \FPeval{\labelX}{\@temp@locX + \x}
-                    \FPeval{\labelY}{\@temp@locY + \y}
-                    \def\loc{right}
+                    \FPeval{labelX}{@temp@locX + \x}
+                    \FPeval{labelY}{@temp@locY + \y}
                 % otherwise they are a negative distance away
                 }{
-                    \FPeval{\labelX}{\@temp@locX - \x}
-                    \FPeval{\labelY}{\@temp@locY - \y}
-                    \def\loc{right}
+                    \FPeval{labelX}{@temp@locX - \x}
+                    \FPeval{labelY}{@temp@locY - \y}
                 }
             % otherwise the perpendicular line as negative slope
             }{
                 % if the label is a positive distance away
                 \ifthenelse{\distance > 0 pt}{
-                    \FPeval{\labelX}{\@temp@locX - \x}
+                    \FPeval{labelX}{\@temp@locX - \x}
                     % note: the y is negative so we subtract even though we want to add
-                    \FPeval{\labelY}{\@temp@locY - \y}
-                    \def\loc{right}
+                    \FPeval{labelY}{\@temp@locY - \y}
                 % otherwise the label is a negative distance from the line
                 }{
-                    \FPeval{\labelX}{\@temp@locX + \x}
+                    \FPeval{labelX}{\@temp@locX + \x}
                     % note: the y is negative so we add even though we want to subtract
-                    \FPeval{\labelY}{\@temp@locY + \y}
-                    \def\loc{right}
+                    \FPeval{labelY}{\@temp@locY + \y}
                 }
             }
         }
+
+        % place the label on the right of the coordinates
+        \def\loc{right}
 
         % draw the label
         \draw[\loc] (\labelX,\labelY) node {\huge \style@label};
