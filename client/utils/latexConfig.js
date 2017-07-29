@@ -13,6 +13,7 @@ const configMap = {
     stroke: 'color',
     strokeWidth: 'lineWidth',
     arrow: 'showArrow',
+    direction: 'flip',
 }
 
 // a mapping of propagator kinds to their equivalent in the latex library
@@ -30,12 +31,16 @@ const valueMap = {
     labelLocation: val => numericValue(val).toFixed(2),
     strokeWidth: numericValue,
     arrow: val => parseInt(strip(val)),
+    endcaps: strip,
 }
 
 // a map of functions that add additional values for the config
 const extraValues = {
     arrow: val => (
         val === 0 ? 'showArrow=false' : `showArrow=true, flip=${JSON.stringify(val === -1)}`
+    ),
+    direction: val => (
+        val === '$1$' ? '' : 'flip=true'
     ),
 }
 
@@ -60,6 +65,12 @@ export const propagatorConfig = ({
     type,
     ...propagator
 }, bb) => {
+    // mix in the default arguments with the configuration
+    const params = {
+        ...propagator,
+
+    }
+
     // the configuration string
     const config = Object.keys(propagator).map(
         prop => {
@@ -72,7 +83,7 @@ export const propagatorConfig = ({
             // join them in the appropriate manner, allowing for the pure mapping
             return extraValues[prop] ? extraValues[prop](value) : `${key}=${value}`
         }
-    ).join(', ')
+    ).filter(val => val).join(', ')
 
     const {x: x1, y: y1} = transformCoords({x: propX1, y: propY1}, bb)
     const {x: x2, y: y2} = transformCoords({x: propX2, y: propY2}, bb)
