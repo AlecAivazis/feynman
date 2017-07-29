@@ -299,14 +299,14 @@
             \ifstyle@endcaps
                 % if they asked to flip the loops
                 \ifstyle@flip
-                    % set the maximum value to be negative
-                    \FPeval{\ymax}{0-\halfWidth}
-                    \FPeval{\ymin}{\halfWidth}
-                % otherwise draw the loops right side up
-                \else
                     % set the maximum value to be positive
                     \FPeval{\ymax}{\halfWidth}
                     \FPeval{\ymin}{0-\halfWidth}
+                % otherwise draw the loops right side up
+                \else
+                    % set the maximum value to be negative
+                    \FPeval{\ymax}{0-\halfWidth}
+                    \FPeval{\ymin}{\halfWidth}
                 \fi
 
                 % style the opening end cap
