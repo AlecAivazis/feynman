@@ -163,6 +163,17 @@
         postaction={decorate},
     }
 }
+\tikzset{
+    arrow flipped/.style={
+        decoration={
+            markings,
+            mark=at position .5 with {
+                \arrow[#1, scale=1.5]{latex reversed}
+            }
+        },
+        postaction={decorate},
+    }
+}
 
 
 % define a light gray to be used as a fill color for partons
@@ -198,8 +209,13 @@
 
         % if they asked to draw the arrow
         \ifstyle@showArrow
-             % draw the line with an arrow
-            \draw[color=lineColor, line width = \style@lineWidth, arrow] (#2) -- (#3);
+            \ifstyle@flip
+                % draw the line with an arrow
+                \draw[color=lineColor, line width = \style@lineWidth, arrow flipped] (#2) -- (#3);
+            \else
+                % draw the line with an arrow
+                \draw[color=lineColor, line width = \style@lineWidth, arrow] (#2) -- (#3);
+            \fi
         % otherwise they did not ask to draw the arrow
         \else
              % draw the line
@@ -224,8 +240,15 @@
 
         % if they asked to draw the arrow
         \ifstyle@showArrow
+            \ifstyle@flip
+                % draw the line with an arrow
+                \draw[dashed, color=lineColor, line width = \style@lineWidth, arrow=lineColor] (#2) -- (#3);
+            \else
+                % draw the line with an arrow
+            \draw[dashed, color=lineColor, line width = \style@lineWidth, arrow flipped=lineColor] (#2) -- (#3);
+            \fi
              % draw the line with an arrow
-            \draw[dashed, color=lineColor, line width = \style@lineWidth, postaction={on each segment={mid arrow=lineColor}}] (#2) -- (#3);
+            \draw[dashed, color=lineColor, line width = \style@lineWidth, arrow=lineColor] (#2) -- (#3);
         % otherwise they did not ask to draw the arrow
         \else
              % draw the line
