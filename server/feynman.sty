@@ -354,10 +354,10 @@
                 % if they asked for the gluons to be flipped
                 \ifstyle@flip
                     % store a value for the height of the gluon loop
-                    \FPeval{\height}{0-\gluonWidth}
+                    \FPeval{height}{0-\gluonWidth}
                 \else
                     % store a value for the height of the gluon loop
-                    \FPeval{\height}{\gluonWidth}
+                    \FPeval{height}{\gluonWidth}
                 \fi
 
                 % for each loop that we have to draw
@@ -425,11 +425,20 @@
         % we fit at least one loop between the two points
         }{
             % store the amplitude of the curve
-            \FPeval{\amplitude}{\period * 3 / 2}
-            % save the maximum height of the curve
-            \FPeval{\ymax}{\amplitude}
-            % save the minimum value of the curve
-            \FPeval{\ymin}{0-\amplitude}
+            \FPeval{amplitude}{\period * 3 / 2}
+
+            % if they asked for the gluons to be flipped
+            \ifstyle@flip
+                % save the maximum height of the curve
+                \FPeval{ymax}{\amplitude}
+                % save the minimum value of the curve
+                \FPeval{ymin}{0-\amplitude}
+            \else
+                % save the maximum height of the curve
+                \FPeval{ymax}{0-\amplitude}
+                % save the minimum value of the curve
+                \FPeval{ymin}{\amplitude}
+            \fi
 
             % store the minimum height
             % for each period that we have to draw
