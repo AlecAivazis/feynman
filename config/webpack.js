@@ -5,9 +5,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 // local imports
 var projectPaths = require('./projectPaths')
 
-// default to using development configuration
-var devtool = ''
-
 var entry = [projectPaths.clientEntry]
 
 // the initial set of plugins
@@ -21,35 +18,7 @@ var plugins = [
     }),
 ]
 // if we are building for production
-if (process.env.NODE_ENV === 'production') {
-    // use production plugins
-    plugins.push(
-        new webpack.LoaderOptionsPlugin({
-            minimize: true,
-            debug: false,
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                screw_ie8: true,
-                conditionals: true,
-                unused: true,
-                comparisons: true,
-                sequences: true,
-                dead_code: true,
-                evaluate: true,
-                if_return: true,
-                join_vars: true,
-            },
-            output: {
-                comments: false,
-            },
-        })
-    )
-} else {
-    // use source maps
-    devtool = 'inline-source-map'
-
+if (process.env.NODE_ENV !== 'production') {
     // add the webpack dev server config
     entry = ['webpack-dev-server/client?http://0.0.0.0:8080', 'webpack/hot/only-dev-server'].concat(entry)
 }
@@ -84,7 +53,7 @@ module.exports = {
         modules: [projectPaths.sourceDir, projectPaths.rootDir, 'node_modules'],
     },
     plugins: plugins,
-    devtool: devtool,
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devServer: {
         proxy: {
             '/latex': {
