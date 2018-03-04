@@ -11,6 +11,7 @@ var entry = [projectPaths.clientEntry]
 var plugins = [
     new HtmlWebpackPlugin({
         template: 'client/index.html',
+        hash: true,
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.EnvironmentPlugin({
