@@ -10,7 +10,7 @@ const TextElement = ({ x, y, value, id, selected }) => {
     const style = styles.notSelected
 
     return (
-        <Splittable type="text" id={id}>
+        <Splittable type="text" id={id} element={{ x, y, id }}>
             <Text x={x} y={y} {...style} math>
                 {value}
             </Text>

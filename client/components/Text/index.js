@@ -10,7 +10,7 @@ class Text extends React.Component {
         img.src = this._imgUrl
         img.onload = () => {
             this.setState({
-                width: img.height,
+                width: img.width,
                 height: img.height,
             })
         }
