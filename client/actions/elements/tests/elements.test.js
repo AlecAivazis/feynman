@@ -1,18 +1,31 @@
 // local imports
 import {
-    selectElements,       SELECT_ELEMENTS,
-    clearSelection,       CLEAR_SELECTION,
-    mergeElements,        MERGE_ELEMENTS,
-    setElementAttrs,      SET_ELEMENT_ATTRS,
-    deleteElements,       DELETE_ELEMENTS,
-    moveSelectedElements, MOVE_SELECTED_ELEMENTS,
-    clearElements,        CLEAR_ELEMENTS,
-    deleteSelection,      DELETE_SELECTION,
-    placeElement,         PLACE_ELEMENTS,
-    loadPattern,          LOAD_PATTERN,
-    addElements,          ADD_ELEMENTS,
-    splitElement,         SPLIT_ELEMENT,
-    snapSelectedElements, SNAP_SELECTED_ELEMENTS,
+    selectElements,
+    SELECT_ELEMENTS,
+    clearSelection,
+    CLEAR_SELECTION,
+    mergeElements,
+    MERGE_ELEMENTS,
+    setElementAttrs,
+    SET_ELEMENT_ATTRS,
+    deleteElements,
+    DELETE_ELEMENTS,
+    moveSelectedElements,
+    MOVE_SELECTED_ELEMENTS,
+    clearElements,
+    CLEAR_ELEMENTS,
+    deleteSelection,
+    DELETE_SELECTION,
+    placeElement,
+    PLACE_ELEMENTS,
+    loadPattern,
+    LOAD_PATTERN,
+    addElements,
+    ADD_ELEMENTS,
+    splitElement,
+    SPLIT_ELEMENT,
+    snapSelectedElements,
+    SNAP_SELECTED_ELEMENTS,
 } from 'actions/elements'
 
 describe('Action Creators', () => {
@@ -28,7 +41,7 @@ describe('Action Creators', () => {
                 // check the structure of the selection anction
                 expect(selectElements(selection)).toEqual({
                     type: SELECT_ELEMENTS,
-                    payload: [selection]
+                    payload: [selection],
                 })
             })
 
@@ -42,13 +55,13 @@ describe('Action Creators', () => {
                     {
                         type: 'anchor',
                         id: 2,
-                    }
+                    },
                 ]
 
                 // check the structure of the selection anction
                 expect(selectElements(...selection)).toEqual({
                     type: SELECT_ELEMENTS,
-                    payload: selection
+                    payload: selection,
                 })
             })
 
@@ -70,7 +83,7 @@ describe('Action Creators', () => {
         describe('Add elements', () => {
             test('is structured appropriately', () => {
                 // the elements to add
-                const elements = [{type: "anchors", x: 50, y: 100}, {type: "propagators", x: 70, y:100}]
+                const elements = [{ type: 'anchors', x: 50, y: 100 }, { type: 'propagators', x: 70, y: 100 }]
                 expect(addElements(...elements)).toEqual({
                     type: ADD_ELEMENTS,
                     payload: elements,
@@ -78,7 +91,7 @@ describe('Action Creators', () => {
             })
 
             test('throws an error if adding an element without a type', () => {
-                expect(() => addElements({x: 50})).toThrow(Error)
+                expect(() => addElements({ x: 50 })).toThrow(Error)
             })
         })
 
@@ -90,7 +103,7 @@ describe('Action Creators', () => {
                     payload: {
                         source: 1,
                         select: false,
-                    }
+                    },
                 })
             })
 
@@ -104,18 +117,18 @@ describe('Action Creators', () => {
             test('clear elements', () => {
                 // just check the type of the action
                 expect(clearElements()).toEqual({
-                    type: CLEAR_ELEMENTS
+                    type: CLEAR_ELEMENTS,
                 })
             })
 
             test('split element', () => {
-                const element = {id: 1, x: 50, y: 50}
-                const location = {x: 50, y: 50}
+                const element = { id: 1, x: 50, y: 50 }
+                const location = { x: 50, y: 50 }
 
                 // just check the type of the action
-                expect(splitElement({element, location})).toEqual({
+                expect(splitElement({ element, location })).toEqual({
                     type: SPLIT_ELEMENT,
-                    payload: {element, location}
+                    payload: { element, location },
                 })
             })
 
@@ -126,26 +139,26 @@ describe('Action Creators', () => {
                     payload: {
                         source: 1,
                         select: true,
-                    }
+                    },
                 })
             })
 
             test('place element', () => {
-                expect(placeElement({hello:'world'})).toEqual({
+                expect(placeElement({ hello: 'world' })).toEqual({
                     type: PLACE_ELEMENTS,
                     payload: {
-                        hello: "world"
-                    }
+                        hello: 'world',
+                    },
                 })
             })
 
             test('load pattern', () => {
                 // a pattern fixture
-                const pattern = {name:"hello"}
+                const pattern = { name: 'hello' }
                 // check the structure of the action
                 expect(loadPattern(pattern)).toEqual({
                     type: LOAD_PATTERN,
-                    payload: pattern
+                    payload: pattern,
                 })
             })
 
@@ -159,7 +172,7 @@ describe('Action Creators', () => {
                 // check the structure of the set action
                 expect(setElementAttrs(attr)).toEqual({
                     type: SET_ELEMENT_ATTRS,
-                    payload: [attr]
+                    payload: [attr],
                 })
             })
 
@@ -173,36 +186,33 @@ describe('Action Creators', () => {
                     {
                         id: 2,
                         x: 50,
-                    }
+                    },
                 ]
 
                 // check the structure of the set action
                 expect(setElementAttrs(...attrs)).toEqual({
                     type: SET_ELEMENT_ATTRS,
-                    payload: attrs
+                    payload: attrs,
                 })
             })
 
             test('can delete single element', () => {
                 // the delete payload
-                const del = {type: 'anchors', id: 1}
+                const del = { type: 'anchors', id: 1 }
                 // test the structure of the action
                 expect(deleteElements(del)).toEqual({
                     type: DELETE_ELEMENTS,
-                    payload: [del]
+                    payload: [del],
                 })
             })
 
             test('can delete multiple elements', () => {
                 // the delete payload
-                const del = [
-                    {type: 'anchors', id: 1},
-                    {type: 'anchors', id: 2},
-                ]
+                const del = [{ type: 'anchors', id: 1 }, { type: 'anchors', id: 2 }]
                 // test the structure of the action
                 expect(deleteElements(...del)).toEqual({
                     type: DELETE_ELEMENTS,
-                    payload: del
+                    payload: del,
                 })
             })
 
@@ -210,7 +220,7 @@ describe('Action Creators', () => {
                 // the move order
                 const move = {
                     x: 50,
-                    y: 50
+                    y: 50,
                 }
 
                 expect(moveSelectedElements(move)).toEqual({

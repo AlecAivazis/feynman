@@ -10,5 +10,5 @@ export default {
         borderRadius: 3,
         textIndent: 10,
         fontSize: 12,
-    }
+    },
 }

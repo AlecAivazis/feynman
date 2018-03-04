@@ -13,5 +13,5 @@ export default {
         cursor: 'pointer',
         fontWeight: 'bold',
         boxShadow: '0px 1px 5px 0px rgba(50,50,50,0.24)',
-    }
+    },
 }

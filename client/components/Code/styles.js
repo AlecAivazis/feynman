@@ -5,5 +5,5 @@ export default {
         borderRadius: 6,
         fontFamily: 'monaco, Consolas, Lucida Console, monospace',
         padding: 10,
-    }
+    },
 }

@@ -22,5 +22,5 @@ export default {
     },
     labelLabel: {
         padding: '0 15px 0 0',
-    }
+    },
 }

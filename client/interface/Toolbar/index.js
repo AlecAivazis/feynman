@@ -14,7 +14,7 @@ import {
     selectElements,
     deleteElements,
     clearSelection,
-    moveSelectedElements ,
+    moveSelectedElements,
     mergeElements,
 } from 'actions/elements'
 import { commit } from 'actions/history'
@@ -28,7 +28,7 @@ import { anchorsInSpec } from './utils'
 class Toolbar extends React.Component {
     // the initial state
     state = {
-        shadow: {show: false, image: null},
+        shadow: { show: false, image: null },
         mouseOrigin: null,
         elementDragConfig: null,
         dragElement: null,
@@ -39,11 +39,12 @@ class Toolbar extends React.Component {
         const { style, selection, togglePatterns, ...unusedProps } = this.props
 
         return (
-            <div style={{...styles.container, ...style}}>
-                {Object.values(selection).some(({length}) => length > 0)
-                    ? <SelectionSummary selection={selection}/>
-                    : <ItemPalette onMouseDown={this._mouseDown}/>
-                }
+            <div style={{ ...styles.container, ...style }}>
+                {Object.values(selection).some(({ length }) => length > 0) ? (
+                    <SelectionSummary selection={selection} />
+                ) : (
+                    <ItemPalette onMouseDown={this._mouseDown} />
+                )}
                 <Footer />
 
                 {/* the image to show while dragging (and over the toolbar) */}
@@ -51,24 +52,20 @@ class Toolbar extends React.Component {
                     <img
                         src={this.state.shadow.image}
                         style={{
-                            ...{top: this.state.mouseOrigin.y, left: this.state.mouseOrigin.x},
+                            ...{ top: this.state.mouseOrigin.y, left: this.state.mouseOrigin.x },
                             ...styles.shadow,
                         }}
                     />
                 )}
 
-                <EventListener event="mousemove">
-                    {this._mouseMove}
-                </EventListener>
-                <EventListener event="mouseup">
-                    {this._mouseUp}
-                </EventListener>
+                <EventListener event="mousemove">{this._mouseMove}</EventListener>
+                <EventListener event="mouseup">{this._mouseUp}</EventListener>
             </div>
         )
     }
 
     @autobind
-    _mouseDown({event, image, config}) {
+    _mouseDown({ event, image, config }) {
         this.setState({
             shadow: {
                 show: true,
@@ -90,15 +87,13 @@ class Toolbar extends React.Component {
             this.props.mergeAnchors()
 
             // commit the state
-            this.props.commitWithMessage(
-                `placed ${this.state.elementDragConfig.type} from item palette.`
-            )
+            this.props.commitWithMessage(`placed ${this.state.elementDragConfig.type} from item palette.`)
         }
 
         // clear any references we made while dragging
         this.setState({
             mouseOrigin: null,
-            shadow: {show: false, image: null},
+            shadow: { show: false, image: null },
             elementDragConfig: null,
             dragElement: null,
         })
@@ -114,7 +109,7 @@ class Toolbar extends React.Component {
             // compute the location of the mouse
             let pos = {
                 x: event.clientX,
-                y: event.clientY
+                y: event.clientY,
             }
 
             // hide the shadow if the mouse is still over the toolbar
@@ -133,14 +128,14 @@ class Toolbar extends React.Component {
 
                     // make sure its a valid type
                     if (!elements[type]) {
-                        throw new Error("Encounted unknown type " + type)
+                        throw new Error('Encounted unknown type ' + type)
                     }
 
                     // find the spec for the element
                     let spec = specMap[type] || specMap.element
 
                     // track that we have created an element
-                    dragElement = spec({...relativePosition(pos, info), info, elements, config, type})
+                    dragElement = spec({ ...relativePosition(pos, info), info, elements, config, type })
                     // create one with the appropriate spec
                     this.props.placeElement(dragElement.element)
                     // select the element we just created
@@ -151,7 +146,7 @@ class Toolbar extends React.Component {
                 const fixed = fixDeltaToGrid({
                     origin,
                     next: pos,
-                    info: this.props.info
+                    info: this.props.info,
                 })
                 // the distance to move
                 const fixedDelta = {
@@ -162,14 +157,13 @@ class Toolbar extends React.Component {
                 // if there is a non-zero distance to move
                 if (Math.abs(fixedDelta.x) > 0 || Math.abs(fixedDelta.y) > 0) {
                     // move the selected anchors
-                     this.props.moveSelectedElements(fixedDelta)
+                    this.props.moveSelectedElements(fixedDelta)
                 }
 
                 // make sure we measure relative to the fixed location
                 pos = fixed
-            }
-            // otherwise we are showing the shadow
-            else {
+            } else {
+                // otherwise we are showing the shadow
                 // if we still have an element attached
                 if (this.state.dragElement) {
                     // clear the current selection
@@ -190,13 +184,13 @@ class Toolbar extends React.Component {
                     ...this.state.shadow,
                     show: showShadow,
                 },
-                dragElement
+                dragElement,
             })
         }
     }
 }
 
-const selector = ({diagram: {elements, info}}) => ({elements, info, selection: elements.selection})
+const selector = ({ diagram: { elements, info } }) => ({ elements, info, selection: elements.selection })
 const mapDispatchToProps = dispatch => ({
     placeElement: element => dispatch(placeElement(element)),
     selectElement: element => dispatch(selectElements(element)),

@@ -2,11 +2,11 @@
 import image from './image.png'
 
 export default {
-    name: "Blank",
+    name: 'Blank',
     image,
     elements: {
-        type: "pattern",
+        type: 'pattern',
         anchors: [],
-        propagators: []
-    }
+        propagators: [],
+    },
 }

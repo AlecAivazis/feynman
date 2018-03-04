@@ -4,7 +4,7 @@
 // local imports
 import { generateElementId, ceil, round } from 'utils'
 
-export const propagators = ({x, y, info, elements, config}) => {
+export const propagators = ({ x, y, info, elements, config }) => {
     // compute two anchor ids to use
     const [anchor1, anchor2] = generateElementId(elements.anchors, 2)
     // compute a propagator id to use
@@ -18,14 +18,14 @@ export const propagators = ({x, y, info, elements, config}) => {
 
     const lower = {
         x: upper.x - info.gridSize,
-        y: upper.y - info.gridSize
+        y: upper.y - info.gridSize,
     }
 
     // return the element spec
     return {
         // the element saga to create the propagator
         element: {
-            type: "propagators",
+            type: 'propagators',
             id: propagatorId,
             ...config,
             anchor1: {
@@ -37,7 +37,7 @@ export const propagators = ({x, y, info, elements, config}) => {
                 id: anchor2,
                 x: upper.x,
                 y: lower.y,
-            }
+            },
         },
         // select the propagator we created when we're done
         select: {
@@ -47,24 +47,24 @@ export const propagators = ({x, y, info, elements, config}) => {
         // remove the anchors to undo the action
         remove: [
             {
-                type: "anchors",
+                type: 'anchors',
                 id: anchor1,
             },
             {
-                type: "anchors",
+                type: 'anchors',
                 id: anchor2,
-            }
-        ]
+            },
+        ],
     }
 }
 
 // the default spec used for single elements that are positioned at one location
-export const element = ({x, y, info, elements, config, type}) => ({
+export const element = ({ x, y, info, elements, config, type }) => ({
     element: {
         id: generateElementId(elements[type]),
         type,
         ...config,
         x: round(x, info.gridSize),
         y: round(y, info.gridSize),
-    }
+    },
 })

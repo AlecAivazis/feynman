@@ -15,14 +15,12 @@ import {
     snapSelectedElements,
 } from 'actions/elements'
 import { setGridSize } from 'actions/info'
-import {initialState as intialSelection} from '../selection'
-import {initialState as initialReducerState} from '..'
-
+import { initialState as intialSelection } from '../selection'
+import { initialState as initialReducerState } from '..'
 
 describe('Reducers', () => {
     describe('Elements reducer', () => {
         describe('Merging', () => {
-
             test('merges anchors that are located at the same location', () => {
                 // the location of the conflict
                 const coords = {
@@ -30,24 +28,27 @@ describe('Reducers', () => {
                     y: 50,
                 }
                 // start off with some anchors
-                const anchorState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        ...coords,
-                    },
-                    {
-                        id: 2,
-                        ...coords,
-                    },
-                    {
-                        id: 3,
-                        x: 300,
-                        y: 500,
-                    }
-                ))
+                const anchorState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            ...coords,
+                        },
+                        {
+                            id: 2,
+                            ...coords,
+                        },
+                        {
+                            id: 3,
+                            x: 300,
+                            y: 500,
+                        }
+                    )
+                )
 
                 // tell the reducer to merge itself
-                const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}))
+                const mergedState = reducer(anchorState, mergeElements({ type: 'anchors', id: 1 }))
 
                 // make sure there are only two anchors left
                 expect(Object.values(mergedState.anchors)).toHaveLength(2)
@@ -73,31 +74,35 @@ describe('Reducers', () => {
                 }
 
                 // start off with some anchors
-                const anchorState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        ...coords,
-                    },
-                    {
-                        id: 2,
-                        ...coords,
-                    },
-                    {
-                        id: 3,
-                        x: 300,
-                        y: 500,
-                    }
-                ))
+                const anchorState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            ...coords,
+                        },
+                        {
+                            id: 2,
+                            ...coords,
+                        },
+                        {
+                            id: 3,
+                            x: 300,
+                            y: 500,
+                        }
+                    )
+                )
 
                 // add a propagator
-                const propagatorState = reducer(anchorState, addPropagators(
-                    {
+                const propagatorState = reducer(
+                    anchorState,
+                    addPropagators({
                         kind: 'fermion',
                         id: 1,
                         anchor1: 2,
-                        anchor2: 3
-                    }
-                ))
+                        anchor2: 3,
+                    })
+                )
 
                 // tell the store to merge elements onto anchor 1
                 const mergedState = reducer(propagatorState, mergeElements())
@@ -114,19 +119,22 @@ describe('Reducers', () => {
                 }
 
                 // start off with some anchors
-                const anchorState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        ...coords,
-                    },
-                    {
-                        id: 2,
-                        ...coords,
-                    },
-                ))
+                const anchorState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            ...coords,
+                        },
+                        {
+                            id: 2,
+                            ...coords,
+                        }
+                    )
+                )
 
                 // tell the reducer to merge itself
-                const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}, true))
+                const mergedState = reducer(anchorState, mergeElements({ type: 'anchors', id: 1 }, true))
 
                 // make sure the resulting selection contains just the target
                 expect(mergedState.selection.anchors).toEqual([1])
@@ -139,34 +147,37 @@ describe('Reducers', () => {
                     y: 50,
                 }
                 // start off with some anchors
-                const anchorState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        ...coords,
-                    },
-                    {
-                        id: 2,
-                        ...coords,
-                    },
-                    {
-                        id: 3,
-                        x: 300,
-                        y: 500,
-                    },
-                    {
-                        id: 4,
-                        x: 500,
-                        y: 500,
-                    },
-                    {
-                        id: 5,
-                        x: 500,
-                        y: 500,
-                    },
-                ))
+                const anchorState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            ...coords,
+                        },
+                        {
+                            id: 2,
+                            ...coords,
+                        },
+                        {
+                            id: 3,
+                            x: 300,
+                            y: 500,
+                        },
+                        {
+                            id: 4,
+                            x: 500,
+                            y: 500,
+                        },
+                        {
+                            id: 5,
+                            x: 500,
+                            y: 500,
+                        }
+                    )
+                )
 
                 // tell the reducer to merge itself
-                const mergedState = reducer(anchorState, mergeElements({type: "anchors", id: 1}))
+                const mergedState = reducer(anchorState, mergeElements({ type: 'anchors', id: 1 }))
 
                 // make sure the first entry is still around
                 expect(mergedState.anchors[1].x).toEqual(coords.x)
@@ -185,28 +196,30 @@ describe('Reducers', () => {
 
             test('applies constraints if there is an overlap between an anchor and parton', () => {
                 // start off with some anchors
-                const anchorState = reducer(undefined, addAnchors(
-                    {
+                const anchorState = reducer(
+                    undefined,
+                    addAnchors({
                         id: 1,
                         x: 50,
                         y: 50,
-                    }
-                ))
+                    })
+                )
 
                 // add a propagator
-                const constraintShape = reducer(anchorState, addElements(
-                    {
+                const constraintShape = reducer(
+                    anchorState,
+                    addElements({
                         type: 'shapes',
-                        kind: "parton",
+                        kind: 'parton',
                         id: 1,
                         r: 50,
                         x: 75,
                         y: 50,
-                    }
-                ))
+                    })
+                )
 
                 // tell the store to merge elements onto anchor 1
-                const mergedState = reducer(constraintShape, mergeElements({type: "anchors", id: 1}))
+                const mergedState = reducer(constraintShape, mergeElements({ type: 'anchors', id: 1 }))
 
                 // make sure the appropriate anchor got the constraints
                 expect(mergedState.anchors[1].constraint).toEqual(1)
@@ -217,40 +230,42 @@ describe('Reducers', () => {
             })
 
             test('barfs if merging onto a non-existant id', () => {
-                expect(() => reducer(undefined, mergeElements({type: "anchors"}, true))).toThrow(Error)
+                expect(() => reducer(undefined, mergeElements({ type: 'anchors' }, true))).toThrow(Error)
             })
         })
-
 
         describe('Misc', () => {
             test('has a default value', () => {
                 // pass an undefined current state
-                const val = reducer(undefined, {type: "init"})
+                const val = reducer(undefined, { type: 'init' })
                 // expect the default initial state
                 expect(val).toBeDefined()
             })
 
             test('has the history enhancer', () => {
                 // pass an undefined current state
-                const val = reducer(undefined, {type: "init"})
+                const val = reducer(undefined, { type: 'init' })
                 // expect the default initial state
                 expect(val.history).toBeDefined()
             })
 
             test('can clear all elements', () => {
                 // add some anchors to a store
-                const initialState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                const initialState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // clear all elements
                 const clearedState = reducer(initialState, clearElements())
@@ -264,17 +279,17 @@ describe('Reducers', () => {
                 // the anchors to add
                 const anchors = {
                     1: {
-                        type: "anchors",
+                        type: 'anchors',
                         id: 1,
                         x: 50,
                         y: 100,
                     },
                     2: {
-                        type: "anchors",
+                        type: 'anchors',
                         id: 2,
                         x: 50,
                         y: 100,
-                    }
+                    },
                 }
                 const initialState = reducer(undefined, addElements(...Object.values(anchors)))
                 // make sure the anchors were added appropriately
@@ -283,28 +298,33 @@ describe('Reducers', () => {
         })
 
         describe('Update Elements', () => {
-
             test('responds to the SET_ELEMENT_ATTRS action', () => {
                 // add some anchors to a store
-                const initialState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                const initialState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // the action to update the initial state
-                const updatedState = reducer(initialState, setElementAttrs({
-                    type: 'anchors',
-                    id: 1,
-                    x: 100
-                }))
+                const updatedState = reducer(
+                    initialState,
+                    setElementAttrs({
+                        type: 'anchors',
+                        id: 1,
+                        x: 100,
+                    })
+                )
 
                 // make sure the appropriate anchor was updated
                 expect(updatedState.anchors[1].x).toEqual(100)
@@ -314,7 +334,7 @@ describe('Reducers', () => {
                 // the invalid action
                 const action = setElementAttrs({
                     type: 'foo',
-                    x: 5
+                    x: 5,
                 })
                 // make sure it throw an error
                 expect(() => reducer(undefined, action)).toThrow(Error)
@@ -324,7 +344,7 @@ describe('Reducers', () => {
                 // the invalid action
                 const action = setElementAttrs({
                     id: 1,
-                    x: 5
+                    x: 5,
                 })
                 // make sure it throw an error
                 expect(() => reducer(undefined, action)).toThrow(Error)
@@ -335,7 +355,7 @@ describe('Reducers', () => {
                 const action = setElementAttrs({
                     type: 'foo',
                     id: 1,
-                    x: 5
+                    x: 5,
                 })
                 // make sure it throw an error
                 expect(() => reducer(undefined, action)).toThrow(Error)
@@ -345,30 +365,36 @@ describe('Reducers', () => {
         describe('Delete', () => {
             test('can delete elements', () => {
                 // add some anchors to a store
-                const initialState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                const initialState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // delete one of those anchors
-                const deletedState = reducer(initialState, deleteElements({
-                    type: 'anchors',
-                    id: 1,
-                }))
+                const deletedState = reducer(
+                    initialState,
+                    deleteElements({
+                        type: 'anchors',
+                        id: 1,
+                    })
+                )
 
                 // make sure anchor 1 doesn't exist
                 expect(deletedState.anchors[1]).not.toBeDefined()
             })
 
-            test('throws an error when removing an element that doesn\'t exist', () => {
+            test("throws an error when removing an element that doesn't exist", () => {
                 // the action to delete elements
                 const action = deleteElements({
                     type: 'anchors',
@@ -381,50 +407,59 @@ describe('Reducers', () => {
 
             test('removes associated propagators when removing an anchor', () => {
                 // add some anchors to a store
-                const initialState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    },
-                    {
-                        id: 3,
-                        x: 100,
-                        y: 100,
-                    },
-                    {
-                        id: 4,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                const initialState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        },
+                        {
+                            id: 3,
+                            x: 100,
+                            y: 100,
+                        },
+                        {
+                            id: 4,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // and a propagator between the two anchors
-                const propagatorState = reducer(initialState, addPropagators(
-                    {
-                        kind: 'fermion',
-                        id: 1,
-                        anchor1: 1,
-                        anchor2: 2,
-                    },
-                    {
-                        kind: 'em',
-                        id: 2,
-                        anchor1: 3,
-                        anchor2: 4,
-                    }
-                ))
+                const propagatorState = reducer(
+                    initialState,
+                    addPropagators(
+                        {
+                            kind: 'fermion',
+                            id: 1,
+                            anchor1: 1,
+                            anchor2: 2,
+                        },
+                        {
+                            kind: 'em',
+                            id: 2,
+                            anchor1: 3,
+                            anchor2: 4,
+                        }
+                    )
+                )
 
                 // delete one of those anchors
-                const deletedState = reducer(propagatorState, deleteElements({
-                    type: 'anchors',
-                    id: 1,
-                }))
+                const deletedState = reducer(
+                    propagatorState,
+                    deleteElements({
+                        type: 'anchors',
+                        id: 1,
+                    })
+                )
 
                 // make sure there are no propagators left
                 expect(Object.keys(deletedState.propagators)).toHaveLength(1)
@@ -432,36 +467,38 @@ describe('Reducers', () => {
 
             test('deleting a selcted object deselects it', () => {
                 // add some anchors to a store to start
-                const initialState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 200,
-                    },
-                ))
+                const initialState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 200,
+                        }
+                    )
+                )
 
                 // select the element
-                const selectedState = reducer(initialState, selectElements(
-                    {type: 'anchors', id: 1},
-                    {type: 'anchors', id: 2},
-                ))
+                const selectedState = reducer(
+                    initialState,
+                    selectElements({ type: 'anchors', id: 1 }, { type: 'anchors', id: 2 })
+                )
 
                 // sanity check
                 expect(selectedState.selection.anchors).toHaveLength(2)
 
                 // delete the element
-                const deletedState = reducer(selectedState, deleteElements({type: 'anchors', id: 1}))
+                const deletedState = reducer(selectedState, deleteElements({ type: 'anchors', id: 1 }))
 
                 // make sure there that there one element selected
                 expect(deletedState.selection.anchors).toEqual([2])
             })
         })
-
 
         describe('Selection', () => {
             test('responds to the SELECT_ELEMENTS action', () => {
@@ -484,12 +521,12 @@ describe('Reducers', () => {
                 const selection = [
                     {
                         type: 'anchors',
-                        id: 1
+                        id: 1,
                     },
                     {
                         type: 'anchors',
-                        id: 2
-                    }
+                        id: 2,
+                    },
                 ]
                 // create an action to fire
                 const selectAction = selectElements(...selection)
@@ -498,15 +535,15 @@ describe('Reducers', () => {
                 const val = reducer(state, selectAction)
 
                 // make sure the selection is present
-                expect(val.selection.anchors).toEqual(selection.map(({id}) => id))
+                expect(val.selection.anchors).toEqual(selection.map(({ id }) => id))
             })
 
-            test('throws an error if selecting an anchor that doesn\'t exist', () => {
+            test("throws an error if selecting an anchor that doesn't exist", () => {
                 // the selection
                 const selection = [
                     {
                         type: 'anchors',
-                        id: 1
+                        id: 1,
                     },
                 ]
                 // the action to throw
@@ -524,12 +561,10 @@ describe('Reducers', () => {
                 })
                 const withAnchors = reducer(undefined, addAction)
                 // add some anchors
-                const selectAction = selectElements(
-                    {
-                        type: 'anchors',
-                        id: 1,
-                    }
-                )
+                const selectAction = selectElements({
+                    type: 'anchors',
+                    id: 1,
+                })
                 const selected = reducer(withAnchors, selectAction)
                 // sanity check
                 expect(selected.selection.anchors).toHaveLength(1)
@@ -550,12 +585,10 @@ describe('Reducers', () => {
                 })
                 const withAnchors = reducer(undefined, addAction)
                 // select some anchors
-                const selectAction = selectElements(
-                    {
-                        type: 'anchors',
-                        id: 1,
-                    }
-                )
+                const selectAction = selectElements({
+                    type: 'anchors',
+                    id: 1,
+                })
                 const selected = reducer(withAnchors, selectAction)
                 // sanity check
                 expect(selected.selection.anchors).toHaveLength(1)
@@ -571,21 +604,25 @@ describe('Reducers', () => {
 
             test('removes selected text elements when deleting selection', () => {
                 // start off with a text element
-                const withText = reducer(undefined, addElements({
-                    type: 'text',
-                    value: 'hello',
-                    x: 50,
-                    y: 50,
-                    id: 1,
-                }))
+                const withText = reducer(
+                    undefined,
+                    addElements({
+                        type: 'text',
+                        value: 'hello',
+                        x: 50,
+                        y: 50,
+                        id: 1,
+                    })
+                )
 
                 // select the text
-                const selected = reducer(withText, selectElements(
-                    {
+                const selected = reducer(
+                    withText,
+                    selectElements({
                         type: 'text',
                         id: 1,
-                    }
-                ))
+                    })
+                )
                 // sanity check
                 expect(selected.selection.text).toHaveLength(1)
 
@@ -600,21 +637,25 @@ describe('Reducers', () => {
 
             test('removes selected shapes elements when deleting selection', () => {
                 // start off with a text element
-                const withShapes = reducer(undefined, addElements({
-                    type: 'shapes',
-                    kind: 'parton',
-                    x: 50,
-                    y: 50,
-                    id: 1,
-                }))
+                const withShapes = reducer(
+                    undefined,
+                    addElements({
+                        type: 'shapes',
+                        kind: 'parton',
+                        x: 50,
+                        y: 50,
+                        id: 1,
+                    })
+                )
 
                 // select the shapes
-                const selected = reducer(withShapes, selectElements(
-                    {
+                const selected = reducer(
+                    withShapes,
+                    selectElements({
                         type: 'shapes',
                         id: 1,
-                    }
-                ))
+                    })
+                )
                 // sanity check
                 expect(selected.selection.shapes).toHaveLength(1)
 
@@ -625,33 +666,34 @@ describe('Reducers', () => {
                 expect(deleted.selection.shapes).toHaveLength(0)
                 // make sure that the element was actually removed
                 expect(deleted.shapes[1]).not.toBeDefined()
-
             })
 
             test('deleting a constraint removes any references', () => {
                 // add some anchors to a store to start
-                const initialState = reducer(undefined, addAnchors(
-                    {
+                const initialState = reducer(
+                    undefined,
+                    addAnchors({
                         id: 1,
                         x: 50,
                         y: 100,
                         constraint: 1,
-                    },
-                ))
+                    })
+                )
 
                 // add the constraint
-                const withConstraint = reducer(initialState, addElements({
-                    type: 'shapes',
-                    kind: 'parton',
-                    x: 50,
-                    y: 50,
-                    id: 1,
-                }))
+                const withConstraint = reducer(
+                    initialState,
+                    addElements({
+                        type: 'shapes',
+                        kind: 'parton',
+                        x: 50,
+                        y: 50,
+                        id: 1,
+                    })
+                )
 
                 // select the element
-                const selectedState = reducer(withConstraint, selectElements(
-                    {type: 'shapes', id: 1},
-                ))
+                const selectedState = reducer(withConstraint, selectElements({ type: 'shapes', id: 1 }))
 
                 // sanity check
                 expect(selectedState.selection.shapes).toHaveLength(1)
@@ -661,39 +703,43 @@ describe('Reducers', () => {
 
                 // make sure there that there one element selected
                 expect(deletedState.anchors[1].constraint).not.toBeDefined()
-
             })
 
             test('removes associated propagators when removing a selected anchor', () => {
                 // add some anchors
-                const withAnchors = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 200
-                    }
-                ))
+                const withAnchors = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 200,
+                        }
+                    )
+                )
                 // add a propagator between the anchors
-                const withPropagators = reducer(withAnchors, addPropagators(
-                    {
+                const withPropagators = reducer(
+                    withAnchors,
+                    addPropagators({
                         id: 1,
                         anchor1: 1,
                         anchor2: 2,
                         kind: 'fermion',
-                    }
-                ))
+                    })
+                )
                 // select some anchors
-                const selected = reducer(withPropagators, selectElements(
-                    {
+                const selected = reducer(
+                    withPropagators,
+                    selectElements({
                         type: 'anchors',
                         id: 1,
-                    }
-                ))
+                    })
+                )
                 // sanity check
                 expect(selected.selection.anchors).toHaveLength(1)
 

@@ -12,8 +12,8 @@ const button = {
 
 export default {
     container: {
-       display: 'flex',
-       flexDirection: 'row', 
+        display: 'flex',
+        flexDirection: 'row',
     },
     hideButton: {
         ...button,
@@ -25,6 +25,6 @@ export default {
         ...button,
     },
     showButton: {
-        ...button, 
-    }
+        ...button,
+    },
 }

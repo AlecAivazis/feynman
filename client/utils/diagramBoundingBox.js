@@ -1,9 +1,9 @@
-export default function diagramBoundingBox(elements, padding=10) {
+export default function diagramBoundingBox(elements, padding = 10) {
     // the object to return
     const bb = {}
 
     // diagram bounding boxes are primarily defined by the anchors
-    for (const {x, y} of Object.values(elements.anchors)) {
+    for (const { x, y } of Object.values(elements.anchors)) {
         // if the anchor is less than the lowest value of the bounding boxes
         // or we haven't set a value yet
         if (!bb.x1 || x < bb.x1) {
@@ -31,6 +31,6 @@ export default function diagramBoundingBox(elements, padding=10) {
     return {
         ...bb,
         width: Math.abs(bb.x2 - bb.x1),
-        height: Math.abs(bb.y2 - bb.y1)
+        height: Math.abs(bb.y2 - bb.y1),
     }
 }

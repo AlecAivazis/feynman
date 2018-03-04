@@ -8,13 +8,12 @@ import { createStore } from 'store'
 import { setDiagramTitle } from 'actions/info'
 
 describe('Interface Components', () => {
-
     describe('Title Component', () => {
         test('shows the title of the diagram', () => {
             // create a store to test with
             const store = createStore()
             // the title of the diagram
-            const title = "test title"
+            const title = 'test title'
 
             // set the title of the store
             store.dispatch(setDiagramTitle(title))
@@ -22,16 +21,12 @@ describe('Interface Components', () => {
             // render the component
             const wrapper = mount(
                 <Provider store={store}>
-                    <Title/>
+                    <Title />
                 </Provider>
             )
 
             // make sure there is a title element with the correct text
-            expect(wrapper.containsMatchingElement(
-                <h1>
-                    {title}
-                </h1>
-            )).toBeTruthy()
+            expect(wrapper.containsMatchingElement(<h1>{title}</h1>)).toBeTruthy()
         })
     })
 })

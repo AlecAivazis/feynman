@@ -1,8 +1,7 @@
 // local imports
 import { round as roundTo } from 'utils'
 
-export default function computeFixedDelta({origin, next, round=true, info: { zoomLevel, gridSize }}) {
-
+export default function computeFixedDelta({ origin, next, round = true, info: { zoomLevel, gridSize } }) {
     // if there is no grid or we aren't supposed to round
     if (gridSize === 0 || !round) {
         // just move along
@@ -19,7 +18,7 @@ export default function computeFixedDelta({origin, next, round=true, info: { zoo
     }
 
     // the location to move to
-    const fixed = {...origin}
+    const fixed = { ...origin }
 
     // round the delta to match the grid
     fixed.x += roundTo(delta.x, spacing)

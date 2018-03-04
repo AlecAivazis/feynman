@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { SELECT_ELEMENTS, CLEAR_SELECTION, DELETE_SELECTION } from 'actions/elements'
 import { flatMap } from 'utils'
 
-export const noIdErr = "cannot set location of anchor without explicit id"
+export const noIdErr = 'cannot set location of anchor without explicit id'
 
 export const initialState = {
     anchors: [],
@@ -15,13 +15,11 @@ export const initialState = {
 
 // the reducer slice that manages just the selection state but has reference
 // to the entire element state reducer (must return just the propagator slice)
-export default (state=initialState, {type, payload}) => {
-
+export default (state = initialState, { type, payload }) => {
     // if the payload represents a new selection
     if (type === SELECT_ELEMENTS) {
         // the payload is a list of objects with id and type fields
-        return (
-            _.chain(payload)
+        return _.chain(payload)
             .cloneDeep()
             .map(selected => {
                 // if there is no element by that type and id
@@ -32,9 +30,8 @@ export default (state=initialState, {type, payload}) => {
                 return selected
             })
             .groupBy('type')
-            .mapValues(val => val.map(({id}) => id))
+            .mapValues(val => val.map(({ id }) => id))
             .value()
-        )
     }
 
     // if the action indicates we need to clear the selection

@@ -4,7 +4,7 @@ import _ from 'lodash'
 import flatMap from './flatMap'
 
 // this function returns a reference to the elements within a region
-const elementsInRegion = ({elements, region:{point1, point2}}) => {
+const elementsInRegion = ({ elements, region: { point1, point2 } }) => {
     // save a reference to the anchors
     const anchors = elements.anchors
 
@@ -19,44 +19,47 @@ const elementsInRegion = ({elements, region:{point1, point2}}) => {
     upperRight.y = point1.y > point2.y ? point1.y : point2.y
 
     // return each type of element
-    const res =  flatMap(Object.keys(_.omit(elements, 'history')),
+    const res = flatMap(
+        Object.keys(_.omit(elements, 'history')),
         // mapped to a list of elements of that type that are inside that region (will be flattened)
-        type => Object.values(elements[type]).reduce((prev, {id, ...rest}) => {
-            // the summary of the element
-            const element = {id, type}
+        type =>
+            Object.values(elements[type]).reduce((prev, { id, ...rest }) => {
+                // the summary of the element
+                const element = { id, type }
 
-            // if we are looking at an anchor or a text, just compare to their coordinates
-            if(['anchors', 'text'].includes(type)) {
-                // for the anchor to be selected, its coordinates must fall within the region
-                if (rest.x > lowerLeft.x && rest.x < upperRight.x
-                        && rest.y > lowerLeft.y && rest.y < upperRight.y) {
-                    // add the element to the list
-                    prev.push(element)
+                // if we are looking at an anchor or a text, just compare to their coordinates
+                if (['anchors', 'text'].includes(type)) {
+                    // for the anchor to be selected, its coordinates must fall within the region
+                    if (
+                        rest.x > lowerLeft.x &&
+                        rest.x < upperRight.x &&
+                        rest.y > lowerLeft.y &&
+                        rest.y < upperRight.y
+                    ) {
+                        // add the element to the list
+                        prev.push(element)
+                    }
+                } else if (type === 'propagators') {
+                    // otherwise we could be looking at a propagator
+                    // the anchors associated with the element
+                    const anchor1 = elements.anchors[rest.anchor1]
+                    const anchor2 = elements.anchors[rest.anchor2]
+
+                    // the mid point
+                    const mid = {
+                        x: (anchor1.x + anchor2.x) / 2,
+                        y: (anchor1.y + anchor2.y) / 2,
+                    }
+                    // if the mid point is contained in the rectangle
+                    if (mid.x > lowerLeft.x && mid.y > lowerLeft.y && mid.x < upperRight.x && mid.y < upperRight.y) {
+                        // add the element to the list
+                        prev.push(element)
+                    }
                 }
-            }
 
-            // otherwise we could be looking at a propagator
-            else if (type === 'propagators') {
-                // the anchors associated with the element
-                const anchor1 = elements.anchors[rest.anchor1]
-                const anchor2 = elements.anchors[rest.anchor2]
-
-                // the mid point
-                const mid = {
-                    x: (anchor1.x + anchor2.x) / 2,
-                    y: (anchor1.y + anchor2.y) / 2,
-                }
-                // if the mid point is contained in the rectangle
-                if (mid.x > lowerLeft.x && mid.y > lowerLeft.y
-                        && mid.x < upperRight.x && mid.y < upperRight.y ) {
-                    // add the element to the list
-                    prev.push(element)
-                }
-            }
-
-            // return the previous list
-            return prev
-        }, [])
+                // return the previous list
+                return prev
+            }, [])
     ).filter(id => id)
 
     return res

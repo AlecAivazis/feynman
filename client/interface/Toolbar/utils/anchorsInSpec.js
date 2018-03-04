@@ -12,9 +12,8 @@ export default function anchorsInSpec(doc) {
     if (type === 'propagators') {
         // there are two anchors in a propagator labeled anchor1 and anchor2
         return [spec.anchor1, spec.anchor2]
-    }
-    // otherwise its a type we don't recognize
-    else {
+    } else {
+        // otherwise its a type we don't recognize
         return []
     }
 }

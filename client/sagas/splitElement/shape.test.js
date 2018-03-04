@@ -24,7 +24,7 @@ describe('Sagas', () => {
             }
 
             // create the generator responding to the action
-            const gen = splitElementWorker(splitElement({element, location, type: "shapes"}))
+            const gen = splitElementWorker(splitElement({ element, location, type: 'shapes' }))
 
             // *sigh* tightly couple this test to internal access to store state
             expect(gen.next().value).toBeDefined()
@@ -41,9 +41,9 @@ describe('Sagas', () => {
             expect(anchors).toHaveLength(2)
 
             // one of them should be constrained
-            expect(anchors.filter(({constraint}) => constraint === element.id)).toHaveLength(1)
+            expect(anchors.filter(({ constraint }) => constraint === element.id)).toHaveLength(1)
             // the ids of the anchors
-            const ids = anchors.map(({id}) => id)
+            const ids = anchors.map(({ id }) => id)
 
             // we then need to create a propagator between the two anchors
             const propagatorCreateAction = gen.next().value
@@ -67,10 +67,12 @@ describe('Sagas', () => {
             // make sure we selected the right anchor
             const { type: selectType, payload: selectPayload } = selectAction.PUT.action
             expect(selectType).toEqual(SELECT_ELEMENTS)
-            expect(selectPayload).toEqual([{
-                type: 'anchors',
-                id: propagator.anchor2,
-            }])
+            expect(selectPayload).toEqual([
+                {
+                    type: 'anchors',
+                    id: propagator.anchor2,
+                },
+            ])
 
             // make sure we're done
             expect(gen.next().done).toBeTruthy()

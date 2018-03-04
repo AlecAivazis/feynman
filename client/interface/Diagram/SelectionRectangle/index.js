@@ -6,8 +6,8 @@ import styles from './styles'
 
 const SelectionRectangle = ({ point1, point2 }) => {
     // compute the dimentions of the rectangle
-    const width = Math.abs(point2.x-point1.x)
-    const height = Math.abs(point2.y-point1.y)
+    const width = Math.abs(point2.x - point1.x)
+    const height = Math.abs(point2.y - point1.y)
 
     // figure out the transform to align the rectangle with the user's mouse
     const transform = [1, 0, 0, 1, 0, 0]
@@ -36,5 +36,5 @@ const SelectionRectangle = ({ point1, point2 }) => {
     )
 }
 
-const selector = ({info}) => ({info})
+const selector = ({ info }) => ({ info })
 export default SelectionRectangle

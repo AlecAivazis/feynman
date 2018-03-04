@@ -12,12 +12,19 @@ import { setElementAttrs, deleteElements } from 'actions/elements'
 import { withCommit } from 'actions/history'
 import styles from './styles'
 
-const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, showDelete=true, ...unusedProps}) => {
+const PropagatorSummary = ({
+    propagators,
+    setAttrs,
+    elements,
+    deletePropagators,
+    showDelete = true,
+    ...unusedProps
+}) => {
     // figure out if the entity needs to be pluralized
     const propagator = propagators.length > 1 ? 'propagators' : 'propagator'
     // grab the first values of the group properties
-    const strokeWidth = firstValue({propagators, param: 'strokeWidth', elements})
-    const stroke = firstValue({propagators, param: 'stroke', elements})
+    const strokeWidth = firstValue({ propagators, param: 'strokeWidth', elements })
+    const stroke = firstValue({ propagators, param: 'stroke', elements })
     // assume that there is only one propagator and grab the appropriate summary component
     const head = elements.propagators[propagators[0]]
     // get the appropriate summary for the head
@@ -31,18 +38,14 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
     // render the component
     return (
         <Container {...unusedProps}>
-            <Header>
-                {`${propagators.length} ${propagator} selected`}
-            </Header>
+            <Header>{`${propagators.length} ${propagator} selected`}</Header>
             {propagators.length === 1 && (
                 <ButtonRow>
                     <Label style={styles.labelLabel}>label:</Label>
                     <Input
                         style={styles.labelInput}
                         value={head.label || ''}
-                        onChange={evt =>
-                            setAttrs({label: evt.target.value})
-                        }
+                        onChange={evt => setAttrs({ label: evt.target.value })}
                     />
                 </ButtonRow>
             )}
@@ -51,23 +54,23 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
                 <ColorPicker
                     style={styles.colorPicker}
                     color={stroke || Propagator.defaultProps.stroke}
-                    onChange={stroke => setAttrs({stroke})}
+                    onChange={stroke => setAttrs({ stroke })}
                 />
             </Row>
             <SliderRow
                 label="size"
                 value={strokeWidth || Propagator.defaultProps.strokeWidth}
-                onChange={strokeWidth => setAttrs({strokeWidth})}
+                onChange={strokeWidth => setAttrs({ strokeWidth })}
                 min={1}
                 max={10}
                 step={1}
             />
             {propagators.length === 1 && (
-                <MultiRow style={{marginBottom: 0}}>
+                <MultiRow style={{ marginBottom: 0 }}>
                     <ButtonRow>
                         <Select
                             value={head.kind}
-                            onChange={(event) => setAttrs({kind: event.target.value})}
+                            onChange={event => setAttrs({ kind: event.target.value })}
                             style={styles.select}
                         >
                             <Option value="fermion">fermion</Option>
@@ -76,7 +79,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
                             <Option value="gluon">gluon</Option>
                         </Select>
                     </ButtonRow>
-                    {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head}/>}
+                    {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head} />}
                 </MultiRow>
             )}
             {showDelete && (
@@ -89,7 +92,7 @@ const PropagatorSummary = ({propagators, setAttrs, elements, deletePropagators, 
         </Container>
     )
 }
-const firstValue = ({propagators, param, elements}) => {
+const firstValue = ({ propagators, param, elements }) => {
     // go over every propagator
     for (const id of propagators) {
         // the fill of the propagator
@@ -102,17 +105,15 @@ const firstValue = ({propagators, param, elements}) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, {propagators}) => ({
-    setAttrs: (attrs) => (
-        dispatch(setElementAttrs(
-            ...propagators.map(id => ({type: 'propagators', id, ...attrs}))
-        ))
-    ),
-    deletePropagators: () => (
-        dispatch(withCommit(deleteElements(
-            ...propagators.map(id => ({type: 'propagators', id}))
-        ), 'removed propagators from diagram'))
-    ),
+const mapDispatchToProps = (dispatch, { propagators }) => ({
+    setAttrs: attrs => dispatch(setElementAttrs(...propagators.map(id => ({ type: 'propagators', id, ...attrs })))),
+    deletePropagators: () =>
+        dispatch(
+            withCommit(
+                deleteElements(...propagators.map(id => ({ type: 'propagators', id }))),
+                'removed propagators from diagram'
+            )
+        ),
 })
-const selector = ({diagram: {elements}}) => ({elements})
+const selector = ({ diagram: { elements } }) => ({ elements })
 export default connect(selector, mapDispatchToProps)(PropagatorSummary)

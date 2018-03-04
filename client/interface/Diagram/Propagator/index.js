@@ -9,15 +9,7 @@ import Dashed from './Dashed'
 import { Splittable } from 'components'
 import Label from './Label'
 
-export const Propagator = ({
-    kind,
-    selected,
-    id,
-    labelDistance,
-    labelLocation,
-    label,
-    ...element
-}) => {
+export const Propagator = ({ kind, selected, id, labelDistance, labelLocation, label, ...element }) => {
     // a mapping of element kind to component
     const Component = {
         fermion: Fermion,
@@ -36,7 +28,7 @@ export const Propagator = ({
     // compute the distance for the label
     const dx = element.x1 - element.x2
     const dy = element.y1 - element.y2
-    const distance = Math.sqrt((dx*dx) + (dy*dy))
+    const distance = Math.sqrt(dx * dx + dy * dy)
     // if the distance is too small to show anything meaninful
     if (distance < 5) {
         // don't render anything
@@ -46,21 +38,12 @@ export const Propagator = ({
     return (
         <g>
             {label && (
-                <Label
-                    location={labelLocation}
-                    distance={labelDistance}
-                    element={{...element, id}}
-                >
+                <Label location={labelLocation} distance={labelDistance} element={{ ...element, id }}>
                     {label}
                 </Label>
             )}
-            <Splittable element={{...element, id}} type="propagators">
-                <Component
-                    selected={selected}
-                    {...element}
-                    {...styling}
-                    selected={selected}
-                />
+            <Splittable element={{ ...element, id }} type="propagators">
+                <Component selected={selected} {...element} {...styling} selected={selected} />
             </Splittable>
         </g>
     )
@@ -68,11 +51,11 @@ export const Propagator = ({
 
 export const defaultProps = {
     strokeWidth: 2,
-    stroke: "black",
+    stroke: 'black',
     selected: false,
     labelDistance: 30,
     labelLocation: 0.5,
-    label: "",
+    label: '',
 }
 
 Propagator.defaultProps = defaultProps

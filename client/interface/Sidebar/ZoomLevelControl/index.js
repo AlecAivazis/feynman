@@ -14,32 +14,24 @@ class SliderHandle extends React.Component {
 
         // render the component
         return (
-            <span style={{...styles.slider, left: `${offset}%`}}>
+            <span style={{ ...styles.slider, left: `${offset}%` }}>
                 <span style={styles.innerSlider} />
             </span>
         )
     }
 }
 
-const ZoomLevelControl = ({info, dispatch, style, ...unusedProps}) => (
-    <div style={{...styles.container, ...style}} {...unusedProps}>
+const ZoomLevelControl = ({ info, dispatch, style, ...unusedProps }) => (
+    <div style={{ ...styles.container, ...style }} {...unusedProps}>
         <div style={styles.header}>
             <Label>zoom</Label>
-            <span style={styles.levelIndicator}>
-                {info.zoomLevel.toFixed(1)}
-            </span>
+            <span style={styles.levelIndicator}>{info.zoomLevel.toFixed(1)}</span>
         </div>
         <div style={styles.sliderContainer}>
-            <Slider
-                step={.1}
-                min={0.5}
-                max={2}
-                value={info.zoomLevel}
-                onChange={value => dispatch(setZoom(value))}
-            />
+            <Slider step={0.1} min={0.5} max={2} value={info.zoomLevel} onChange={value => dispatch(setZoom(value))} />
         </div>
     </div>
 )
 
-const selector = ({diagram: {info}}) => ({info})
+const selector = ({ diagram: { info } }) => ({ info })
 export default connect(selector)(ZoomLevelControl)

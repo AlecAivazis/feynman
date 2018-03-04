@@ -1,5 +1,5 @@
 // external imports
-import {combineReducers, createStore} from 'redux'
+import { combineReducers, createStore } from 'redux'
 // local imports
 import reducer, { initialState } from '../info'
 import {
@@ -16,13 +16,13 @@ import {
     zoomOut,
     toggleHistory,
     TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so
-} from 'actions/info'           // import the type directly
+} from 'actions/info' // import the type directly
 
 describe('Reducers', () => {
     describe('Info reducer', () => {
         test('has a reasonable default', () => {
             // pass an undefined current state
-            const val = reducer(undefined, {type: "init"})
+            const val = reducer(undefined, { type: 'init' })
             // expect the default initial state
             expect(val).toEqual(initialState)
         })
@@ -113,14 +113,14 @@ describe('Reducers', () => {
         describe('panning', () => {
             test('incrementally pans', () => {
                 // get the state of the reducer after panning
-                const state = reducer(undefined, panDiagram({x: 10, y: 5}))
+                const state = reducer(undefined, panDiagram({ x: 10, y: 5 }))
                 // make sure the state updated as expected
-                expect(state.pan).toEqual({x: 10, y: 5})
+                expect(state.pan).toEqual({ x: 10, y: 5 })
 
                 // pan again
-                const secondPan = reducer(state, panDiagram({x: -10, y: -5}))
+                const secondPan = reducer(state, panDiagram({ x: -10, y: -5 }))
                 // make sure we added teh results
-                expect(secondPan.pan).toEqual({x: 0, y: 0})
+                expect(secondPan.pan).toEqual({ x: 0, y: 0 })
             })
         })
 
@@ -140,7 +140,7 @@ describe('Reducers', () => {
                 // zoom in again
                 const zoomed2 = reducer(zoomed, zoomIn())
                 // make sure we incremented the zoom level correctly
-                expect(zoomed2.zoomLevel.toFixed(1)).toEqual(1.2.toFixed(1))
+                expect(zoomed2.zoomLevel.toFixed(1)).toEqual((1.2).toFixed(1))
             })
 
             test('responds to the ZOOM_OUT action', () => {
@@ -179,7 +179,7 @@ describe('Reducers', () => {
                 const zoomed11 = reducer(zoomed10, zoomIn())
 
                 // make sure we didn't go above 2
-                expect(zoomed11.zoomLevel.toFixed(1)).toEqual(2.0.toFixed(1))
+                expect(zoomed11.zoomLevel.toFixed(1)).toEqual((2.0).toFixed(1))
             })
 
             test('does not zoom out past 0.5', () => {
@@ -198,7 +198,7 @@ describe('Reducers', () => {
                 const zoomed11 = reducer(zoomed10, zoomOut())
 
                 // make sure we didn't go above 2
-                expect(zoomed11.zoomLevel.toFixed(1)).toEqual(0.5.toFixed(1))
+                expect(zoomed11.zoomLevel.toFixed(1)).toEqual((0.5).toFixed(1))
             })
         })
     })

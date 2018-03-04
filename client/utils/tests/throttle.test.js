@@ -13,7 +13,7 @@ describe('Utils', () => {
                 @throttle(1000)
                 decorated() {
                     // call the spy
-                     spy()
+                    spy()
                 }
             }
 

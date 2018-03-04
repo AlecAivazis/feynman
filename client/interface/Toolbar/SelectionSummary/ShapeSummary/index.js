@@ -8,7 +8,7 @@ import { setElementAttrs } from 'actions/elements'
 import { Container, Label, Header, Row, SliderRow } from '..'
 import styles from './styles'
 
-const ShapeSummary = ({shapes, elements, setAttrs}) => {
+const ShapeSummary = ({ shapes, elements, setAttrs }) => {
     // a potentially pluralized version of the type
     const shapePlural = shapes.length > 1 ? 'shapes' : 'shape'
 
@@ -17,15 +17,13 @@ const ShapeSummary = ({shapes, elements, setAttrs}) => {
 
     return (
         <Container>
-            <Header>
-                {`${shapes.length} ${shapePlural} selected`}
-            </Header>
+            <Header>{`${shapes.length} ${shapePlural} selected`}</Header>
             <Row>
                 <Label>color:</Label>
                 <ColorPicker
-                    color={head.color|| Shape.defaultProps.color }
+                    color={head.color || Shape.defaultProps.color}
                     style={styles.colorPicker}
-                    onChange={color => setAttrs({color})}
+                    onChange={color => setAttrs({ color })}
                 />
             </Row>
             <SliderRow
@@ -34,19 +32,15 @@ const ShapeSummary = ({shapes, elements, setAttrs}) => {
                 min={5}
                 max={50}
                 step={5}
-                onChange={r => setAttrs({r})}
+                onChange={r => setAttrs({ r })}
             />
         </Container>
     )
 }
 
-const selector = ({diagram: {elements}}) => ({elements})
-const mapDispatchToProps = (dispatch, {shapes}) => ({
+const selector = ({ diagram: { elements } }) => ({ elements })
+const mapDispatchToProps = (dispatch, { shapes }) => ({
     // to update the attributes of each anchor that is selected
-    setAttrs: attrs => (
-        dispatch(setElementAttrs(
-            ...shapes.map(id => ({type: 'shapes', id, ...attrs}))
-        ))
-    ),
+    setAttrs: attrs => dispatch(setElementAttrs(...shapes.map(id => ({ type: 'shapes', id, ...attrs })))),
 })
 export default connect(selector, mapDispatchToProps)(ShapeSummary)

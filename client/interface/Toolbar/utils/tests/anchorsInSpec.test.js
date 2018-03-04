@@ -29,14 +29,14 @@ describe('Utils', () => {
 
         test('handles text types', () => {
             // the spec for text
-            const spec = {element: {type: 'text', value: 'hello', x: 50, y: 1000}}
+            const spec = { element: { type: 'text', value: 'hello', x: 50, y: 1000 } }
             // there are no anchors in text
             expect(anchorsInSpec(spec)).toHaveLength(0)
         })
 
         test('handles shapes types', () => {
             // the spec for text
-            const spec = {element: {type: 'shapes', kind: 'parton', x: 50, y: 1000}}
+            const spec = { element: { type: 'shapes', kind: 'parton', x: 50, y: 1000 } }
             // there are no anchors in text
             expect(anchorsInSpec(spec)).toHaveLength(0)
         })

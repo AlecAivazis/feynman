@@ -11,12 +11,10 @@ const container = {
 export default {
     containerWithGrid: {
         ...container,
-        backgroundColor: "rgb(245, 245, 245)",
+        backgroundColor: 'rgb(245, 245, 245)',
     },
     containerWithoutGrid: {
         ...container,
     },
-    canvas: {
-
-    }
+    canvas: {},
 }

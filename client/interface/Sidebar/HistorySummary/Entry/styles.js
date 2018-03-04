@@ -1,10 +1,10 @@
 import { lightBlue } from 'colors'
 
 const container = {
-   fontSize: 12,
-   display: 'flex',
-   flexDirection: 'row',
-   cursor: 'pointer',
+    fontSize: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    cursor: 'pointer',
 }
 
 export default {

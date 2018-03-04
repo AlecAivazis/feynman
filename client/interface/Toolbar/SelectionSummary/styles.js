@@ -6,5 +6,5 @@ export default {
     },
     deleteButton: {
         width: '100%',
-    }
+    },
 }

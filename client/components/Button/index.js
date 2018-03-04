@@ -4,7 +4,7 @@ import React from 'react'
 import styles from './styles'
 
 const Button = ({ style, children, ...unusedProps }) => (
-    <button style={{...styles.container, ...style}} {...unusedProps} >
+    <button style={{ ...styles.container, ...style }} {...unusedProps}>
         {children}
     </button>
 )

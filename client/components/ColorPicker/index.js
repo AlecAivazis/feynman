@@ -6,7 +6,7 @@ import liftC, { toggleState } from 'react-liftc'
 import styles from './styles'
 
 // the color options
-export const colors =  [
+export const colors = [
     '#ff6900',
     '#fcb900',
     '#7bdcb5',
@@ -16,21 +16,12 @@ export const colors =  [
     '#abb8C3',
     '#eb144c',
     '#f78da7',
-    '#9900ef'
+    '#9900ef',
 ]
 
-const ColorPicker = ({
-    style, color,
-    onChange,
-    state:active,
-    toggle,
-    ...unusedProps }) => (
-    <div style={{...styles.container, ...style}} {...unusedProps}>
-        <div
-            className="colorThumbnail"
-            onClick={toggle}
-            style={{...styles.thumbnail, backgroundColor: color}}
-        />
+const ColorPicker = ({ style, color, onChange, state: active, toggle, ...unusedProps }) => (
+    <div style={{ ...styles.container, ...style }} {...unusedProps}>
+        <div className="colorThumbnail" onClick={toggle} style={{ ...styles.thumbnail, backgroundColor: color }} />
         {active && (
             <div style={styles.pickerContainer}>
                 <TwitterPicker
@@ -38,7 +29,7 @@ const ColorPicker = ({
                     color={color}
                     colors={colors}
                     triangle="top-right"
-                    onChange={({hex}) => onChange(hex)}
+                    onChange={({ hex }) => onChange(hex)}
                     onChangeComplete={toggle}
                 />
             </div>

@@ -5,7 +5,7 @@ import With from './withEndCaps'
 import Without from './withoutEndcaps'
 
 // which gluon we show depends on wether there are end caps or not
-const Gluon = ({endcaps, ...unusedProps}) => endcaps ? <With {...unusedProps} /> : <Without {...unusedProps} />
+const Gluon = ({ endcaps, ...unusedProps }) => (endcaps ? <With {...unusedProps} /> : <Without {...unusedProps} />)
 
 Gluon.defaultProps = {
     endcaps: true,

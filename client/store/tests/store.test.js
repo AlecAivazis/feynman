@@ -1,7 +1,6 @@
 // local imports
 import store, { createStore } from '..'
 
-
 describe('Application store', () => {
     test('is a valid redux store', () => {
         const store = createStore()

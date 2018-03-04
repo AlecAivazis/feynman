@@ -8,8 +8,7 @@ import { round, fixPositionToGrid } from 'utils'
 
 const initialState = {}
 
-export default (state = initialState, {type, payload}) => {
-
+export default (state = initialState, { type, payload }) => {
     if (type === MOVE_SELECTED_ELEMENTS) {
         // create a copy of the element state we can play with
         const local = _.cloneDeep(state.elements)
@@ -51,7 +50,7 @@ export default (state = initialState, {type, payload}) => {
         }
 
         // if there are any shapes to move
-        if(local.selection.shapes) {
+        if (local.selection.shapes) {
             // go over every shapes element
             for (const id of local.selection.shapes) {
                 // add the move to the element
@@ -62,7 +61,7 @@ export default (state = initialState, {type, payload}) => {
 
         return {
             ...state,
-            elements: local
+            elements: local,
         }
     }
 
@@ -72,14 +71,12 @@ export default (state = initialState, {type, payload}) => {
         const local = _.cloneDeep(state)
 
         // make a flat list of the full selection with type label
-        const selection = _.flatMap(Object.keys(local.elements.selection),
-            type => (
-                local.elements.selection[type].map(id => ({id, type}))
-            )
+        const selection = _.flatMap(Object.keys(local.elements.selection), type =>
+            local.elements.selection[type].map(id => ({ id, type }))
         )
 
         // go over every selected element
-        for (const {type, id} of selection) {
+        for (const { type, id } of selection) {
             // if the element is a propagator
             if (type === 'propagators') {
                 // we have to snap both anchors of a propagator
@@ -100,14 +97,16 @@ export default (state = initialState, {type, payload}) => {
                     local.elements.anchors[id].x = newLoc.x
                     local.elements.anchors[id].y = newLoc.y
                 }
-            }
-            // otherwise all other elements get snapped the same
-            else {
+            } else {
+                // otherwise all other elements get snapped the same
                 // update the particular element to match the grid
-                const newLoc = fixPositionToGrid({
-                    x: local.elements[type][id].x,
-                    y: local.elements[type][id].y,
-                }, local.info.gridSize)
+                const newLoc = fixPositionToGrid(
+                    {
+                        x: local.elements[type][id].x,
+                        y: local.elements[type][id].y,
+                    },
+                    local.info.gridSize
+                )
 
                 // update the element to match the new location
                 local.elements[type][id].x = newLoc.x
@@ -121,7 +120,7 @@ export default (state = initialState, {type, payload}) => {
 
     return {
         ...state,
-        elements: elementsReducer(state.elements, {type, payload}),
-        info: infoReducer(state.info, {type, payload})
+        elements: elementsReducer(state.elements, { type, payload }),
+        info: infoReducer(state.info, { type, payload }),
     }
 }

@@ -5,10 +5,5 @@ import withCommit from './withCommit'
 import splitElement from './splitElement'
 
 export default function* rootSaga() {
-    yield [
-        placeElements(),
-        loadPattern(),
-        withCommit(),
-        splitElement(),
-    ]
+    yield [placeElements(), loadPattern(), withCommit(), splitElement()]
 }

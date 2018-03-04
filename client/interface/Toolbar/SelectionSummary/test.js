@@ -20,52 +20,55 @@ describe('Interface Components', () => {
                 const store = createStore()
 
                 // add some anchors
-                store.dispatch(addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                store.dispatch(
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // and a propagator
-                store.dispatch(addPropagators({
-                    id: 1,
-                    kind: 'fermion',
-                    anchor1: 1,
-                    anchor2: 2
-                }))
+                store.dispatch(
+                    addPropagators({
+                        id: 1,
+                        kind: 'fermion',
+                        anchor1: 1,
+                        anchor2: 2,
+                    })
+                )
 
                 // select an anchor and a propagator
-                store.dispatch(selectElements(
-                    {
-                        type: 'propagators',
-                        id: 1,
-                    },
-                    {
-                        type: 'anchors',
-                        id: 1
-                    }
-                ))
+                store.dispatch(
+                    selectElements(
+                        {
+                            type: 'propagators',
+                            id: 1,
+                        },
+                        {
+                            type: 'anchors',
+                            id: 1,
+                        }
+                    )
+                )
 
                 // mount the summary with the given selection
                 const wrapper = mount(
                     <Provider store={store}>
-                        <SelectionSummary
-                            selection={store.getState().diagram.elements.selection}
-                        />
+                        <SelectionSummary selection={store.getState().diagram.elements.selection} />
                     </Provider>
                 )
 
                 const anchorSummary = wrapper.find(AnchorSummary)
                 // make sure the showDelete props is false
                 expect(anchorSummary.props().showDelete).not.toBeTruthy()
-
 
                 const propagatorSummary = wrapper.find(PropagatorSummary)
                 // make sure there is an anchor summary preset
@@ -82,53 +85,56 @@ describe('Interface Components', () => {
                 const store = createStore()
 
                 // add some anchors
-                store.dispatch(addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                store.dispatch(
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // and a propagator
-                store.dispatch(addElements({
-                    id: 1,
-                    type: 'text',
-                    value: "hello",
-                    x: 50,
-                    y: 50
-                }))
+                store.dispatch(
+                    addElements({
+                        id: 1,
+                        type: 'text',
+                        value: 'hello',
+                        x: 50,
+                        y: 50,
+                    })
+                )
 
                 // select an anchor and a propagator
-                store.dispatch(selectElements(
-                    {
-                        type: 'text',
-                        id: 1,
-                    },
-                    {
-                        type: 'anchors',
-                        id: 1
-                    }
-                ))
+                store.dispatch(
+                    selectElements(
+                        {
+                            type: 'text',
+                            id: 1,
+                        },
+                        {
+                            type: 'anchors',
+                            id: 1,
+                        }
+                    )
+                )
 
                 // mount the summary with the given selection
                 const wrapper = mount(
                     <Provider store={store}>
-                        <SelectionSummary
-                            selection={store.getState().diagram.elements.selection}
-                        />
+                        <SelectionSummary selection={store.getState().diagram.elements.selection} />
                     </Provider>
                 )
 
                 const anchorSummary = wrapper.find(AnchorSummary)
                 // make sure the showDelete props is false
                 expect(anchorSummary.props().showDelete).not.toBeTruthy()
-
 
                 const textSummary = wrapper.find(TextSummary)
                 // make sure the showDelete props is false
@@ -143,33 +149,33 @@ describe('Interface Components', () => {
                 const store = createStore()
 
                 // add some anchors
-                store.dispatch(addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                store.dispatch(
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // select an anchor and a propagator
-                store.dispatch(selectElements(
-                    {
+                store.dispatch(
+                    selectElements({
                         type: 'anchors',
-                        id: 1
-                    }
-                ))
+                        id: 1,
+                    })
+                )
 
                 // mount the summary with the given selection
                 const wrapper = mount(
                     <Provider store={store}>
-                        <SelectionSummary
-                            selection={store.getState().diagram.elements.selection}
-                        />
+                        <SelectionSummary selection={store.getState().diagram.elements.selection} />
                     </Provider>
                 )
 
@@ -183,41 +189,43 @@ describe('Interface Components', () => {
                 const store = createStore()
 
                 // add some anchors
-                store.dispatch(addAnchors(
-                    {
-                        id: 1,
-                        x: 50,
-                        y: 100,
-                    },
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    }
-                ))
+                store.dispatch(
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 50,
+                            y: 100,
+                        },
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        }
+                    )
+                )
 
                 // and a propagator
-                store.dispatch(addPropagators({
-                    id: 1,
-                    kind: 'fermion',
-                    anchor1: 1,
-                    anchor2: 2
-                }))
+                store.dispatch(
+                    addPropagators({
+                        id: 1,
+                        kind: 'fermion',
+                        anchor1: 1,
+                        anchor2: 2,
+                    })
+                )
 
                 // select an anchor and a propagator
-                store.dispatch(selectElements(
-                    {
+                store.dispatch(
+                    selectElements({
                         type: 'propagators',
                         id: 1,
-                    },
-                ))
+                    })
+                )
 
                 // mount the summary with the given selection
                 const wrapper = mount(
                     <Provider store={store}>
-                        <SelectionSummary
-                            selection={store.getState().diagram.elements.selection}
-                        />
+                        <SelectionSummary selection={store.getState().diagram.elements.selection} />
                     </Provider>
                 )
 
@@ -231,28 +239,28 @@ describe('Interface Components', () => {
                 const store = createStore()
 
                 // and a propagator
-                store.dispatch(addElements({
-                    type: 'text',
-                    value: 'fermion',
-                    x: 50,
-                    y: 100,
-                    id: 1,
-                }))
+                store.dispatch(
+                    addElements({
+                        type: 'text',
+                        value: 'fermion',
+                        x: 50,
+                        y: 100,
+                        id: 1,
+                    })
+                )
 
                 // select an anchor and a propagator
-                store.dispatch(selectElements(
-                    {
+                store.dispatch(
+                    selectElements({
                         type: 'text',
                         id: 1,
-                    },
-                ))
+                    })
+                )
 
                 // mount the summary with the given selection
                 const wrapper = mount(
                     <Provider store={store}>
-                        <SelectionSummary
-                            selection={store.getState().diagram.elements.selection}
-                        />
+                        <SelectionSummary selection={store.getState().diagram.elements.selection} />
                     </Provider>
                 )
 
@@ -266,28 +274,28 @@ describe('Interface Components', () => {
                 const store = createStore()
 
                 // and a propagator
-                store.dispatch(addElements({
-                    type: 'shapes',
-                    value: 'fermion',
-                    x: 50,
-                    y: 100,
-                    id: 1,
-                }))
+                store.dispatch(
+                    addElements({
+                        type: 'shapes',
+                        value: 'fermion',
+                        x: 50,
+                        y: 100,
+                        id: 1,
+                    })
+                )
 
                 // select an anchor and a propagator
-                store.dispatch(selectElements(
-                    {
+                store.dispatch(
+                    selectElements({
                         type: 'shapes',
                         id: 1,
-                    },
-                ))
+                    })
+                )
 
                 // mount the summary with the given selection
                 const wrapper = mount(
                     <Provider store={store}>
-                        <SelectionSummary
-                            selection={store.getState().diagram.elements.selection}
-                        />
+                        <SelectionSummary selection={store.getState().diagram.elements.selection} />
                     </Provider>
                 )
 

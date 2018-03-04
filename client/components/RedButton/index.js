@@ -4,11 +4,6 @@ import React from 'react'
 import Button from '../Button'
 import styles from './styles'
 
-const RedButton = ({ style, ...unusedProps }) => (
-    <Button
-        style={{...styles.container, ...style}}
-        {...unusedProps}
-    />
-)
+const RedButton = ({ style, ...unusedProps }) => <Button style={{ ...styles.container, ...style }} {...unusedProps} />
 
 export default RedButton

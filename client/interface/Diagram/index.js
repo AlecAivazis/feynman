@@ -53,7 +53,7 @@ class Diagram extends React.Component {
 
     render() {
         // grab the used props
-        const {info, elements, dispatch, selection, style} = this.props
+        const { info, elements, dispatch, selection, style } = this.props
         // figure out if we need to style to fit the grid or not
         const elementStyle = info.showGrid ? styles.containerWithGrid : styles.containerWithoutGrid
 
@@ -62,18 +62,13 @@ class Diagram extends React.Component {
 
         // render the various components of the diagram
         return (
-            <svg
-                ref={ele => this.diagram = ele}
-                style={{...elementStyle, ...style}}
-                onMouseDown={this._mouseDown}
-            >
+            <svg ref={ele => (this.diagram = ele)} style={{ ...elementStyle, ...style }} onMouseDown={this._mouseDown}>
                 <DiagramPatterns />
 
                 {/* wrap the whole diagram in a group so we can apply the diagram pan and zoom */}
                 <g transform={this.transformString} className="diagram">
-
                     {/* order matters here (last shows up on top) */}
-                    {info.showGrid && info.gridSize > 0 && <Grid/>}
+                    {info.showGrid && info.gridSize > 0 && <Grid />}
                     {Object.values(elements.text).map(element => (
                         <Text
                             {...element}
@@ -95,52 +90,44 @@ class Diagram extends React.Component {
                             selected={selection.propagators && selection.propagators.includes(element.id)}
                         />
                     ))}
-                    {info.showAnchors && anchors.map(anchor => (
-                        <Anchor {...anchor}
-                            selected={selection.anchors && selection.anchors.includes(anchor.id)}
-                            key={anchor.id}
-                        />
-                    ))}
+                    {info.showAnchors &&
+                        anchors.map(anchor => (
+                            <Anchor
+                                {...anchor}
+                                selected={selection.anchors && selection.anchors.includes(anchor.id)}
+                                key={anchor.id}
+                            />
+                        ))}
 
                     {/* only show the selection rectangle when we have 2 points and we didn't make a new one */}
-                    {this.state.points.length === 2 && !this.state.points[0].id && (
-                        <SelectionRectangle
-                            point1={relativePosition(this.state.origin, this.props.info)}
-                            point2={this.state.points[1].location}
-                        />
-                    )}
+                    {this.state.points.length === 2 &&
+                        !this.state.points[0].id && (
+                            <SelectionRectangle
+                                point1={relativePosition(this.state.origin, this.props.info)}
+                                point2={this.state.points[1].location}
+                            />
+                        )}
                 </g>
 
                 {/* mouse movement (selection rectangle and element creation) */}
-                <EventListener event="mousemove">
-                    {this._mouseMove}
-                </EventListener>
-                <EventListener event="mouseup">
-                    {this._mouseUp}
-                </EventListener>
+                <EventListener event="mousemove">{this._mouseMove}</EventListener>
+                <EventListener event="mouseup">{this._mouseUp}</EventListener>
 
                 {/* track the state of the spacebar for panning and alt for element creation */}
-                <EventListener event="keydown">
-                    {this._keyPress}
-                </EventListener>
-                <EventListener event="keyup">
-                    {this._keyUp}
-                </EventListener>
+                <EventListener event="keydown">{this._keyPress}</EventListener>
+                <EventListener event="keyup">{this._keyUp}</EventListener>
 
                 {/* when the user scrolls */}
-                <EventListener event="mousewheel">
-                    {this._mouseWheel}
-                </EventListener>
+                <EventListener event="mousewheel">{this._mouseWheel}</EventListener>
             </svg>
         )
     }
 
     get transformString() {
-        const {x , y} = this.props.info.pan
+        const { x, y } = this.props.info.pan
         return SvgMatrix()
-                .translate(x, y)
-                .scale(this.props.info.zoomLevel)
-                .transformString
+            .translate(x, y)
+            .scale(this.props.info.zoomLevel).transformString
     }
 
     @autobind
@@ -154,10 +141,13 @@ class Diagram extends React.Component {
         this.props.clearSelection()
 
         // figure out where we clicked in the diagram
-        const loc = relativePosition({
-            x: event.clientX,
-            y: event.clientY,
-        }, this.props.info)
+        const loc = relativePosition(
+            {
+                x: event.clientX,
+                y: event.clientY,
+            },
+            this.props.info
+        )
         // fix the location to the grid
         const location = fixPositionToGrid(loc, this.props.info.gridSize)
 
@@ -175,22 +165,20 @@ class Diagram extends React.Component {
             id = generateElementId(elements.anchors)
 
             // add the actual anchor where we clicked
-            addAnchors(
-                {
-                    id,
-                    ...location,
-                },
-            )
+            addAnchors({
+                id,
+                ...location,
+            })
         }
 
         // save the coordinates of where the mouse down occured
         this.setState({
-            points: [ {id, location} ],
+            points: [{ id, location }],
             // make sure drag delta start from this location
             origin: {
                 x: event.clientX,
                 y: event.clientY,
-            }
+            },
         })
     }
 
@@ -207,13 +195,11 @@ class Diagram extends React.Component {
         // if we are holding spacebar
         if (this.state.spacebarPressed) {
             this._panDiagram(event)
-        }
-        // otherwise just create the selection rectangle like normal
-        else {
+        } else {
+            // otherwise just create the selection rectangle like normal
             this._handleMove(event)
         }
     }
-
 
     @autobind
     _mouseUp(event) {
@@ -229,13 +215,15 @@ class Diagram extends React.Component {
                 let kind = 'propagator'
 
                 // fix the location of each point to the grid so we can compare
-                points = points.map(pt => ({...pt, location: fixPositionToGrid(pt.location, info.gridSize)}))
+                points = points.map(pt => ({ ...pt, location: fixPositionToGrid(pt.location, info.gridSize) }))
 
                 // if there is only one point or two that will be merged
-                if (points.length === 1 || (
-                    points.length === 2 && points[0].location.x === points[1].location.x
-                                        && points[0].location.y === points[1].location.y
-                )) {
+                if (
+                    points.length === 1 ||
+                    (points.length === 2 &&
+                        points[0].location.x === points[1].location.x &&
+                        points[0].location.y === points[1].location.y)
+                ) {
                     // then we made a single anchor
                     kind = 'anchor'
                 }
@@ -258,38 +246,32 @@ class Diagram extends React.Component {
     @autobind
     _keyPress(event) {
         // if the key that was pressed was the spacebar, we haven't pressed teh spacebar yet, and we aren't dragging something
-        if (event.which === 32 && !this.state.spacebarPressed && !this.state.points.length > 0){
+        if (event.which === 32 && !this.state.spacebarPressed && !this.state.points.length > 0) {
             event.preventDefault()
             this.setState({
-                spacebarPressed: true
+                spacebarPressed: true,
             })
-        }
-
-        // if the alt key was pressed before we have created any other points
-        else if (event.which === 18 && !this.state.altPressed && !this.state.points.length > 0) {
+        } else if (event.which === 18 && !this.state.altPressed && !this.state.points.length > 0) {
+            // if the alt key was pressed before we have created any other points
             event.preventDefault()
             this.setState({
-                altPressed: true
+                altPressed: true,
             })
-        }
-
-        // if the user pressed the backspace or the delete key respectively
-        else if ([8,46].includes(event.which)) {
+        } else if ([8, 46].includes(event.which)) {
+            // if the user pressed the backspace or the delete key respectively
             event.preventDefault()
             // if we have any elements selected
-            if(Object.values(this.props.selection).filter(arr => arr.length > 0).length > 0) {
+            if (Object.values(this.props.selection).filter(arr => arr.length > 0).length > 0) {
                 // delete the selected elements and commit the change
                 this.props.withCommit(deleteSelection(), 'removed selected elements')
             }
-        }
-
-        // if the user pressed ctrl+z
-        else if (event.ctrlKey && event.which === 90) {
+        } else if (event.ctrlKey && event.which === 90) {
+            // if the user pressed ctrl+z
             event.preventDefault()
             // if they actually pressed shift + ctrl + z
             if (event.shiftKey) {
                 this.props.redo()
-            // otherwise they just pressed ctrl + x
+                // otherwise they just pressed ctrl + x
             } else {
                 this.props.undo()
             }
@@ -307,14 +289,17 @@ class Diagram extends React.Component {
     @autobind
     _handleMove(event) {
         // the points we've added so far
-        let points = [ ...this.state.points ]
+        let points = [...this.state.points]
         // set the location of the second
         points[1] = {
             id: points[1] ? points[1].id : null,
-            location: relativePosition({
-                x: event.clientX,
-                y: event.clientY,
-            }, this.props.info)
+            location: relativePosition(
+                {
+                    x: event.clientX,
+                    y: event.clientY,
+                },
+                this.props.info
+            ),
         }
 
         // if we created an anchor on the first click and we haven't made a matching on yet
@@ -327,28 +312,24 @@ class Diagram extends React.Component {
             const { location } = points[1]
 
             // create the actual anchor element
-            addAnchors(
-                {
-                    id,
-                    ...location,
-                },
-            )
+            addAnchors({
+                id,
+                ...location,
+            })
 
             // select the anchor we are dragging
-            selectElements({id, type: "anchors"})
+            selectElements({ id, type: 'anchors' })
 
             // generate an id for the new propagator
             const propagatorId = generateElementId(elements.propagators)
 
             // and a propagator to join the two
-            addPropagators(
-                {
-                    kind: 'fermion',
-                    id: propagatorId,
-                    anchor1: points[0].id,
-                    anchor2: id,
-                }
-            )
+            addPropagators({
+                kind: 'fermion',
+                id: propagatorId,
+                anchor1: points[0].id,
+                anchor2: id,
+            })
 
             // save the propagator id for next time
             points[1].id = id
@@ -365,18 +346,16 @@ class Diagram extends React.Component {
                         region: {
                             point1: relativePosition(this.state.origin, this.props.info),
                             point2: points[1].location,
-                        }
+                        },
                     })
                 )
-            }
-
-            // otherwise we are creating a new element
-            else {
+            } else {
+                // otherwise we are creating a new element
                 // move the new anchor to match the mouse
                 this.props.setElementAttrs({
                     type: 'anchors',
                     id: points[1].id,
-                    ...fixPositionToGrid(points[1].location, this.props.info.gridSize)
+                    ...fixPositionToGrid(points[1].location, this.props.info.gridSize),
                 })
             }
         })
@@ -400,7 +379,7 @@ class Diagram extends React.Component {
         this.props.panDiagram(pan)
 
         // update the origin
-        this.setState({origin: point2})
+        this.setState({ origin: point2 })
     }
 
     @autobind
@@ -417,7 +396,7 @@ class Diagram extends React.Component {
         if (event.wheelDelta / 120 > 0) {
             // zoom in
             this.props.zoomIn()
-        // otherwise we scrolled down
+            // otherwise we scrolled down
         } else {
             // zoom the diagram out
             this.props.zoomOut()
@@ -425,7 +404,7 @@ class Diagram extends React.Component {
     }
 }
 
-const selector = ({diagram: { info, elements }}) => ({
+const selector = ({ diagram: { info, elements } }) => ({
     info,
     elements,
     selection: elements.selection,

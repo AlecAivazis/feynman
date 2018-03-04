@@ -20,5 +20,5 @@ export default {
         cursor: 'pointer',
         textTransform: 'capitalize',
         fontWeight: 'bold',
-    }
+    },
 }

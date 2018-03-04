@@ -17,13 +17,8 @@ const reducer = combineReducers({
 // the saga middleware
 const sagaMiddleware = createSagaMiddleware()
 
-export const createStore = () => createReduxStore(
-    reducer,
-    compose(
-        applyMiddleware(sagaMiddleware, thunk),
-        responsiveStoreEnhancer,
-    )
-)
+export const createStore = () =>
+    createReduxStore(reducer, compose(applyMiddleware(sagaMiddleware, thunk), responsiveStoreEnhancer))
 // create the store from the reducer
 const store = createStore()
 

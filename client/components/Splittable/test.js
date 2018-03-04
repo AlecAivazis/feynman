@@ -13,9 +13,7 @@ describe('"Reusable" Components', () => {
             const wrapper = mount(
                 <Provider store={createStore()}>
                     <Splittable>
-                        <div>
-                            hello
-                        </div>
+                        <div>hello</div>
                     </Splittable>
                 </Provider>
             )
@@ -26,18 +24,15 @@ describe('"Reusable" Components', () => {
 
         test('barfs if there are multiple children', () => {
             // render a splittable around two divs
-            const wrapper = () => mount(
-                <Provider store={createStore()}>
-                    <Splittable>
-                        <div>
-                            hello
-                        </div>
-                        <div>
-                            hello
-                        </div>
-                    </Splittable>
-                </Provider>
-            )
+            const wrapper = () =>
+                mount(
+                    <Provider store={createStore()}>
+                        <Splittable>
+                            <div>hello</div>
+                            <div>hello</div>
+                        </Splittable>
+                    </Provider>
+                )
 
             // make sure that fails
             expect(wrapper).toThrow(Error)

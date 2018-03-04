@@ -3,7 +3,7 @@ import React from 'react'
 // local imports
 import styles from './styles'
 
-const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, stroke, flip=false, selected, ...unusedProps}) => {
+const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, stroke, flip = false, selected, ...unusedProps }) => {
     // some points in space
     const x = (x1 + x2) / 2
     const y = (y1 + y2) / 2
@@ -21,10 +21,10 @@ const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, stroke, flip=false, selecte
     const halfBase = A * 3 / 4
 
     // the angle the line forces
-    let angle = Math.atan(dy/dx) * 180/Math.PI
+    let angle = Math.atan(dy / dx) * 180 / Math.PI
 
     // if we need to flip the arrow for consistency
-    if (dx >= 0 ) {
+    if (dx >= 0) {
         // then do so
         angle += 180
     }
@@ -47,7 +47,7 @@ const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, stroke, flip=false, selecte
             fill={stroke}
             {...unusedProps}
             {...styling}
-            points={`${x},${y-halfHeight} ${x+halfBase},${y+halfHeight} ${x-halfBase}, ${y+halfHeight}`}
+            points={`${x},${y - halfHeight} ${x + halfBase},${y + halfHeight} ${x - halfBase}, ${y + halfHeight}`}
         />
     )
 }

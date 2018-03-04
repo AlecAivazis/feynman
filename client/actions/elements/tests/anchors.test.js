@@ -5,8 +5,8 @@ import { ADD_ANCHORS, SET_ANCHOR_LOCATIONS, ALIGN_SELECTED_ANCHORS } from '../ty
 // a stub for an empty getState
 const emptyState = jest.fn().mockReturnValue({
     elements: {
-        anchors: []
-    }
+        anchors: [],
+    },
 })
 
 describe('Action Creators', () => {
@@ -17,13 +17,13 @@ describe('Action Creators', () => {
                 const anchor = {
                     id: 1,
                     x: 50,
-                    y: 100
+                    y: 100,
                 }
 
                 // make sure dispatch was called with the appropriate body
                 expect(addAnchors(anchor)).toEqual({
                     type: ADD_ANCHORS,
-                    payload: [anchor]
+                    payload: [anchor],
                 })
             })
 
@@ -33,19 +33,19 @@ describe('Action Creators', () => {
                     {
                         id: 1,
                         x: 50,
-                        y: 100
+                        y: 100,
                     },
                     {
                         id: 2,
                         x: 50,
-                        y: 100
-                    }
+                        y: 100,
+                    },
                 ]
 
                 // make sure dispatch was called with the appropriate body
                 expect(addAnchors(...anchors)).toEqual({
                     type: ADD_ANCHORS,
-                    payload: anchors
+                    payload: anchors,
                 })
             })
 
@@ -54,13 +54,13 @@ describe('Action Creators', () => {
                 const anchor = {
                     id: 1,
                     x: 50,
-                    y: 100
+                    y: 100,
                 }
 
                 // make sure dispatch was called with the appropriate body
                 expect(setAnchorLocations(anchor)).toEqual({
                     type: SET_ANCHOR_LOCATIONS,
-                    payload: [anchor]
+                    payload: [anchor],
                 })
             })
 
@@ -70,19 +70,19 @@ describe('Action Creators', () => {
                     {
                         id: 1,
                         x: 50,
-                        y: 100
+                        y: 100,
                     },
                     {
                         id: 2,
                         x: 50,
-                        y: 100
-                    }
+                        y: 100,
+                    },
                 ]
 
                 // make sure dispatch was called with the appropriate body
                 expect(setAnchorLocations(...anchors)).toEqual({
                     type: SET_ANCHOR_LOCATIONS,
-                    payload: anchors
+                    payload: anchors,
                 })
             })
 

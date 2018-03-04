@@ -6,9 +6,10 @@ import { addAnchors, addPropagators } from 'actions/elements'
 
 export default function* createPropagator(...propagators) {
     // figure out if there are any anchors to create
-    const anchors = flatMap(propagators, 
+    const anchors = flatMap(
+        propagators,
         // find the non-numeric anchors
-        ({anchor1, anchor2}) => [anchor1, anchor2].filter(anchor => !isFinite(anchor))
+        ({ anchor1, anchor2 }) => [anchor1, anchor2].filter(anchor => !isFinite(anchor))
     )
 
     // if there are anchors to create
@@ -18,9 +19,13 @@ export default function* createPropagator(...propagators) {
     }
 
     // next we have to create a propagator between the two anchors
-    yield put(addPropagators(...propagators.map(prop => ({
-        ...prop,
-        anchor1: prop.anchor1.id || prop.anchor1,
-        anchor2: prop.anchor2.id || prop.anchor2,
-    }))))
+    yield put(
+        addPropagators(
+            ...propagators.map(prop => ({
+                ...prop,
+                anchor1: prop.anchor1.id || prop.anchor1,
+                anchor2: prop.anchor2.id || prop.anchor2,
+            }))
+        )
+    )
 }

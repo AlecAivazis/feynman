@@ -34,21 +34,17 @@ describe('Sagas', () => {
                             id: 2,
                             kind: 'fermion',
                             anchor1: 1,
-                            anchor2: 2
-                        }
-                    ]
+                            anchor2: 2,
+                        },
+                    ],
                 }
 
                 // get the generator
-                const gen = placeElementWorker({type: 'hello', payload: desc})
+                const gen = placeElementWorker({ type: 'hello', payload: desc })
                 // first we have to create the anchors
-                expect(gen.next().value).toEqual(
-                    put(addAnchors(...desc.anchors))
-                )
+                expect(gen.next().value).toEqual(put(addAnchors(...desc.anchors)))
                 // then we have to add the propagators
-                expect(gen.next().value).toEqual(
-                    put(addPropagators(...desc.propagators))
-                )
+                expect(gen.next().value).toEqual(put(addPropagators(...desc.propagators)))
             })
 
             test('can place propagators with inline anchor defs', () => {
@@ -81,35 +77,35 @@ describe('Sagas', () => {
                             anchor2: {
                                 id: 3,
                                 x: 1000,
-                                y: 2000
-                            }
-                        }
-                    ]
+                                y: 2000,
+                            },
+                        },
+                    ],
                 }
 
                 // get the generator
-                const gen = placeElementWorker({type: 'hello', payload: desc})
+                const gen = placeElementWorker({ type: 'hello', payload: desc })
                 // first we have to create the anchors
-                expect(gen.next().value).toEqual(
-                    put(addAnchors(...desc.anchors, desc.propagators[1].anchor2))
-                )
+                expect(gen.next().value).toEqual(put(addAnchors(...desc.anchors, desc.propagators[1].anchor2)))
 
                 // then we have to add the propagators
                 expect(gen.next().value).toEqual(
-                    put(addPropagators(
-                        {
-                            id: 1,
-                            kind: 'fermion',
-                            anchor1: 1,
-                            anchor2: 2,
-                        },
-                        {
-                            id: 2,
-                            kind: 'fermion',
-                            anchor1: 1,
-                            anchor2: 3
-                        }
-                    ))
+                    put(
+                        addPropagators(
+                            {
+                                id: 1,
+                                kind: 'fermion',
+                                anchor1: 1,
+                                anchor2: 2,
+                            },
+                            {
+                                id: 2,
+                                kind: 'fermion',
+                                anchor1: 1,
+                                anchor2: 3,
+                            }
+                        )
+                    )
                 )
 
                 // make sure there isn't anything left
@@ -125,23 +121,23 @@ describe('Sagas', () => {
                             id: 1,
                             x: 50,
                             y: 50,
-                            value: "hello"
-                        }
-                    ]
+                            value: 'hello',
+                        },
+                    ],
                 }
 
                 // get the generator
-                const gen = placeElementWorker({type: 'hello', payload: desc})
+                const gen = placeElementWorker({ type: 'hello', payload: desc })
                 const { value } = gen.next()
 
                 // then we have to add the propagators
                 expect(value).toEqual(
-                    put(addElements(
-                        {
+                    put(
+                        addElements({
                             type: 'text',
-                            ...desc.text[0]
-                        },
-                    ))
+                            ...desc.text[0],
+                        })
+                    )
                 )
 
                 // make sure there isn't anything left
@@ -159,35 +155,33 @@ describe('Sagas', () => {
                             id: 1,
                             x: 50,
                             y: 60,
-                        }
+                        },
                     ],
                     shapes: [
                         {
                             id: 1,
                             x: 50,
                             y: 50,
-                            kind: "parton"
-                        }
-                    ]
+                            kind: 'parton',
+                        },
+                    ],
                 }
 
                 // get the generator
-                const gen = placeElementWorker({type: 'hello', payload: desc})
+                const gen = placeElementWorker({ type: 'hello', payload: desc })
 
                 // first make sure we added tests to avoid null constraint references
                 expect(gen.next().value).toEqual(
-                    put(addElements(
-                        {
+                    put(
+                        addElements({
                             type: 'shapes',
-                            ...desc.shapes[0]
-                        },
-                    ))
+                            ...desc.shapes[0],
+                        })
+                    )
                 )
 
                 // then we add the anchors
-                expect(gen.next().value).toEqual(
-                    put(addAnchors(...desc.anchors))
-                )
+                expect(gen.next().value).toEqual(put(addAnchors(...desc.anchors)))
 
                 // make sure there isn't anything left
                 expect(gen.next().done).toBeTruthy()

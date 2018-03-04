@@ -14,5 +14,5 @@ export default {
         color: lightestBlue,
         marginLeft: 5,
         textDecoration: 'none',
-    }
+    },
 }

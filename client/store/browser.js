@@ -6,7 +6,7 @@ const reducer = createResponsiveStateReducer(null, {
     extraFields: () => ({
         width: window.innerWidth,
         height: window.innerHeight,
-    })
+    }),
 })
 
 export default reducer

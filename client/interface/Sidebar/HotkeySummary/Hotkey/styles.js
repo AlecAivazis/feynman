@@ -2,8 +2,7 @@
 import { mediumGrey } from 'colors'
 
 export default {
-    container: {
-    },
+    container: {},
     action: {
         fontSize: 12,
         color: mediumGrey,
@@ -13,5 +12,5 @@ export default {
     trigger: {
         fontSize: 12,
         color: mediumGrey,
-    }
+    },
 }

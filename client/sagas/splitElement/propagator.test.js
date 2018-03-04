@@ -23,9 +23,7 @@ describe('Sagas', () => {
                 y: 75,
             }
             // create the generator that splits the propagators
-            const gen = splitElementWorker(
-                splitElement({element, location, type: "propagators"})
-            )
+            const gen = splitElementWorker(splitElement({ element, location, type: 'propagators' }))
 
             // *sigh* tightly couple this test to internal access to store state
             expect(gen.next().value).toBeDefined()
@@ -59,17 +57,19 @@ describe('Sagas', () => {
             expect(updatePropAction.PUT).toBeDefined()
 
             // the actual action dispatched
-            const {type: type2, payload: propUpdate} = updatePropAction.PUT.action
+            const { type: type2, payload: propUpdate } = updatePropAction.PUT.action
 
             // make sure the action updates a prop
             expect(type2).toEqual(SET_ELEMENT_ATTRS)
             // the propagator needs to update the original element
-            expect(propUpdate).toEqual([{
-                id: element.id,
-                type: 'propagators',
-                anchor1: element.anchor1,
-                anchor2: middleAnchor.id,
-            }])
+            expect(propUpdate).toEqual([
+                {
+                    id: element.id,
+                    type: 'propagators',
+                    anchor1: element.anchor1,
+                    anchor2: middleAnchor.id,
+                },
+            ])
 
             // we then need to create a propagator between the two anchors
             const propagatorCreateAction = gen.next().value
@@ -102,7 +102,7 @@ describe('Sagas', () => {
             // make sure we selected the right anchor
             const { type: selectType, payload: selectPayload } = selectAction.PUT.action
             expect(selectType).toEqual(SELECT_ELEMENTS)
-            expect(selectPayload).toEqual([{type: 'anchors', id: dragAnchor.id}])
+            expect(selectPayload).toEqual([{ type: 'anchors', id: dragAnchor.id }])
 
             // make sure we're done
             expect(gen.next().done).toBeTruthy()

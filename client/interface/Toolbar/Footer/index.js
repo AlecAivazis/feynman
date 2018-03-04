@@ -4,7 +4,7 @@ import React from 'react'
 import styles from './styles'
 
 const ToolbarFooter = ({ style, ...unusedProps }) => (
-    <div style={{...styles.container, ...style}} {...unusedProps}>
+    <div style={{ ...styles.container, ...style }} {...unusedProps}>
         <div style={styles.line}>
             by
             <a href="http://alec.aivazis.com" target="_blank" style={styles.link}>
@@ -12,7 +12,7 @@ const ToolbarFooter = ({ style, ...unusedProps }) => (
             </a>
         </div>
         <div style={styles.line}>
-            Found a bug? <br/>
+            Found a bug? <br />
             File an issue on
             <a href="https://github.com/AlecAivazis/feynman/issues" target="_blank" style={styles.link}>
                 GitHub

@@ -4,5 +4,5 @@ import { put } from 'redux-saga/effects'
 import { addElements } from 'actions/elements'
 
 export default function* createShapes(...shapes) {
-    yield put(addElements(...shapes.map(shape => ({type: "shapes", ...shape}))))
+    yield put(addElements(...shapes.map(shape => ({ type: 'shapes', ...shape }))))
 }

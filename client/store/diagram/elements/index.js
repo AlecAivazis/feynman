@@ -3,7 +3,7 @@ import _ from 'lodash'
 // local imports
 import propagatorsPartial from './propagators'
 import anchorsPartial from './anchors'
-import selectionPartial, {initialState as initialSelection} from './selection'
+import selectionPartial, { initialState as initialSelection } from './selection'
 import {
     MERGE_ELEMENTS,
     SET_ELEMENT_ATTRS,
@@ -25,13 +25,11 @@ export const initialState = {
     shapes: {},
 }
 import { Shape } from 'interface/Diagram/Shape'
-const { r:defaultR, kind:defaultKind } = Shape.defaultProps
+const { r: defaultR, kind: defaultKind } = Shape.defaultProps
 
-export default withHistory((state = initialState, {type, payload}) => {
-
+export default withHistory((state = initialState, { type, payload }) => {
     // if the action indicates we need to dedupe the elements
     if (type === MERGE_ELEMENTS) {
-
         // make a deep copy of the state that we can play with
         const local = _.cloneDeep(state)
 
@@ -45,14 +43,13 @@ export default withHistory((state = initialState, {type, payload}) => {
             // since an anchor is defined in this context by its location we
             // need to see if there is another anchor with the same location
             // in the unique list
-            const match = Object.values(uniqAnchors).find(({x, y}) => anchor.x === x && anchor.y === y)
+            const match = Object.values(uniqAnchors).find(({ x, y }) => anchor.x === x && anchor.y === y)
             // if there was a such match
             if (match) {
-               // then we have to replace references to this anchor with the unique one
-               anchorReplaceMap[anchor.id] = match.id
-            }
-            // otherwise there was no match
-            else {
+                // then we have to replace references to this anchor with the unique one
+                anchorReplaceMap[anchor.id] = match.id
+            } else {
+                // otherwise there was no match
                 // then add the anchor to the list
                 uniqAnchors[anchor.id] = anchor
             }
@@ -65,12 +62,12 @@ export default withHistory((state = initialState, {type, payload}) => {
         // so we can break when we find a shape
         for (const anchor of Object.values(local.anchors)) {
             // try to find a parton that overlaps
-            const shapeMatch = Object.values(local.shapes).find(({kind = defaultKind, x,  y, r = defaultR}) =>{
+            const shapeMatch = Object.values(local.shapes).find(({ kind = defaultKind, x, y, r = defaultR }) => {
                 // compute the distance between the anchor and the shape
                 const dx = anchor.x - x
                 const dy = anchor.y - y
                 // if we are looking at a parton and the point is within our radius
-                return kind === 'parton' && Math.sqrt(dx*dx + dy*dy) <= r
+                return kind === 'parton' && Math.sqrt(dx * dx + dy * dy) <= r
             })
             // if there is a match
             if (shapeMatch) {
@@ -94,14 +91,14 @@ export default withHistory((state = initialState, {type, payload}) => {
         }
 
         // // the payload is the id of the anchor we need to merge with
-        const {source:from, select=false} = payload
+        const { source: from, select = false } = payload
         if (select && from.type === 'anchors') {
             if (!from.id) {
-                throw new Error("Cannot select anchor after merging from an undefined element.")
+                throw new Error('Cannot select anchor after merging from an undefined element.')
             }
 
             // the element to select
-            const element = anchorReplaceMap[from.id]  || from.id
+            const element = anchorReplaceMap[from.id] || from.id
             // use the mergeTarget as the only selection
             local.selection.anchors = [element]
         }
@@ -124,23 +121,21 @@ export default withHistory((state = initialState, {type, payload}) => {
         const selectedShapes = local.selection.shapes || []
 
         // create labeled lists of selected elements
-        const anchors = selectedAnchors.map(id => ({id, type: 'anchors'}))
-        const propagators = selectedPropagators.map(id => ({id, type: 'propagators'}))
-        const text = selectedText.map(id => ({id, type: 'text'}))
-        const shapes = selectedShapes.map(id => ({id, type: "shapes"}))
+        const anchors = selectedAnchors.map(id => ({ id, type: 'anchors' }))
+        const propagators = selectedPropagators.map(id => ({ id, type: 'propagators' }))
+        const text = selectedText.map(id => ({ id, type: 'text' }))
+        const shapes = selectedShapes.map(id => ({ id, type: 'shapes' }))
 
         // the list of propagators we need to include because of related anchors
-        const relatedProps = flatMap(selectedAnchors,
-            id => (
-                // the list of propagators with this id
-                (Object.values(local.propagators) || [])
-                       .filter(({anchor1, anchor2}) => [anchor1, anchor2].includes(id))
-                       .map(({id}) => ({id, type: 'propagators'}))
-            )
+        const relatedProps = flatMap(selectedAnchors, id =>
+            // the list of propagators with this id
+            (Object.values(local.propagators) || [])
+                .filter(({ anchor1, anchor2 }) => [anchor1, anchor2].includes(id))
+                .map(({ id }) => ({ id, type: 'propagators' }))
         )
 
         // for each element we have to delete
-        for (const {type, id} of [...anchors, ...propagators, ...relatedProps, ...text, ...shapes]) {
+        for (const { type, id } of [...anchors, ...propagators, ...relatedProps, ...text, ...shapes]) {
             // if that element still exists
             if (local[type][id]) {
                 // remove the element
@@ -170,13 +165,13 @@ export default withHistory((state = initialState, {type, payload}) => {
         // create a copy we can play with
         const local = _.cloneDeep(state)
         // go through each mutation
-        for (const {type, id, ...attrs} of payload) {
+        for (const { type, id, ...attrs } of payload) {
             // save a reference to the entry we are going to update
             const target = local[type][id]
             // update the appropriate element with the new attrs
             local[type][id] = {
                 ...target,
-                ...attrs
+                ...attrs,
             }
         }
 
@@ -190,26 +185,25 @@ export default withHistory((state = initialState, {type, payload}) => {
         const local = _.cloneDeep(state)
 
         // make a flat list of the full selection
-        const selection = _.flatMap(Object.keys(local.selection),
-            type => (
-                local.selection[type].map(id => ({id, type}))
-            )
+        const selection = _.flatMap(Object.keys(local.selection), type =>
+            local.selection[type].map(id => ({ id, type }))
         )
 
         // go over every selected element
-        for (const {type, id} of selection) {
+        for (const { type, id } of selection) {
             console.log(type, id)
             // if the element is a propagator
             if (type === 'propagators') {
-
-            }
-            // otherwise all other elements get snapped the same
-            else {
+            } else {
+                // otherwise all other elements get snapped the same
                 // update the particular element to match the grid
-                const newLoc = fixPositionToGrid({
-                    x: local[type][id].x,
-                    y: local[type][id].y,
-                }, local.info.gridSize)
+                const newLoc = fixPositionToGrid(
+                    {
+                        x: local[type][id].x,
+                        y: local[type][id].y,
+                    },
+                    local.info.gridSize
+                )
 
                 // update the element to match the new location
                 local[type][id].x = newLoc.x
@@ -232,8 +226,7 @@ export default withHistory((state = initialState, {type, payload}) => {
         // create a copy we can play with
         const local = _.cloneDeep(state)
         // go over every delete order
-        for (const {id, type} of payload) {
-
+        for (const { id, type } of payload) {
             // if there is an element with that id
             if (!local[type] || !local[type][id]) {
                 throw new Error(`Can't find ${type} with id ${id}`)
@@ -251,8 +244,9 @@ export default withHistory((state = initialState, {type, payload}) => {
             // if the element is an anchor
             if (type === 'anchors') {
                 // only save keep the propagators that don't refer to the anchor
-                local.propagators = _.pickBy(local.propagators,
-                    ({anchor1, anchor2}) => anchor1 !== id && anchor2 !== id
+                local.propagators = _.pickBy(
+                    local.propagators,
+                    ({ anchor1, anchor2 }) => anchor1 !== id && anchor2 !== id
                 )
             }
         }
@@ -267,7 +261,7 @@ export default withHistory((state = initialState, {type, payload}) => {
         const local = _.cloneDeep(state)
 
         // pull the type of the element out of each entry
-        for (const {type, ...element} of payload) {
+        for (const { type, ...element } of payload) {
             // add the element to the store
             local[type][element.id] = {
                 ...element,
@@ -282,8 +276,8 @@ export default withHistory((state = initialState, {type, payload}) => {
     // return the updated state
     return {
         ...state,
-        anchors: anchorsPartial(state, {type, payload}),
-        propagators: propagatorsPartial(state, {type, payload}),
-        selection: selectionPartial(state, {type, payload}),
+        anchors: anchorsPartial(state, { type, payload }),
+        propagators: propagatorsPartial(state, { type, payload }),
+        selection: selectionPartial(state, { type, payload }),
     }
 })

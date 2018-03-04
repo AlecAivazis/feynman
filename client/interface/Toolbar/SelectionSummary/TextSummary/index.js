@@ -8,15 +8,13 @@ import { withCommit } from 'actions/history'
 import { ButtonRow, Row, Label, Header, Container } from '..'
 import { Input, RedButton } from 'components'
 
-const TextSummary = ({text, deleteElement, elements, setValue, showDelete, ...unused}) => {
+const TextSummary = ({ text, deleteElement, elements, setValue, showDelete, ...unused }) => {
     // a potentially pluralized version of the type
     const textPlural = text.length > 1 ? 'texts' : 'text'
 
     return (
         <Container {...unused}>
-            <Header>
-                {`${text.length} ${textPlural} selected`}
-            </Header>
+            <Header>{`${text.length} ${textPlural} selected`}</Header>
             {text.map(id => {
                 // grab the value from the appropriate element
                 const { value } = elements.text[id]
@@ -35,20 +33,16 @@ const TextSummary = ({text, deleteElement, elements, setValue, showDelete, ...un
             })}
             {showDelete && (
                 <ButtonRow>
-                    <RedButton onClick={deleteElement}>
-                        {`Delete ${textPlural}`}
-                    </RedButton>
+                    <RedButton onClick={deleteElement}>{`Delete ${textPlural}`}</RedButton>
                 </ButtonRow>
             )}
         </Container>
     )
 }
 
-const selector = ({diagram: {elements}}) => ({elements})
+const selector = ({ diagram: { elements } }) => ({ elements })
 const mapDispatchToProps = dispatch => ({
-    setValue: (id, value) => dispatch(
-        setElementAttrs({type: 'text', id, value})
-    ),
+    setValue: (id, value) => dispatch(setElementAttrs({ type: 'text', id, value })),
     deleteElement: () => dispatch(withCommit(deleteSelection(), 'removed text from diagram')),
 })
 

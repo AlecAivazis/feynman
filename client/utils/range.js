@@ -9,7 +9,7 @@ const range = n => {
     }
 
     // the usual recursive implementation
-    const value = n > 1 ? range(n-1).concat([n-1]) : [0]
+    const value = n > 1 ? range(n - 1).concat([n - 1]) : [0]
     // save the memoized value
     memo[n] = value
 

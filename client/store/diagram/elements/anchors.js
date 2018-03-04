@@ -1,13 +1,13 @@
 // exteranl imports
 import _ from 'lodash'
 // local imports
-import { ADD_ANCHORS, ALIGN_SELECTED_ANCHORS  } from 'actions/elements'
+import { ADD_ANCHORS, ALIGN_SELECTED_ANCHORS } from 'actions/elements'
 
-export const noIdErr = "cannot set location of anchor without explicit id"
+export const noIdErr = 'cannot set location of anchor without explicit id'
 
 // the reducer that manages just the anchor state but has reference
 // to the entire element state reducer (must return just the propagator slice)
-export default (state, {type, payload}) => {
+export default (state, { type, payload }) => {
     // if the payload corresponds to a new propagator
     if (type === ADD_ANCHORS) {
         // a local copy of the state to mutate
@@ -26,13 +26,11 @@ export default (state, {type, payload}) => {
 
         // return the mutated state
         return local
-    }
-
-    // if the action indicates we need to align the selected anchors
-    else if (type === ALIGN_SELECTED_ANCHORS) {
-        const selection = state.selection.anchors 
+    } else if (type === ALIGN_SELECTED_ANCHORS) {
+        // if the action indicates we need to align the selected anchors
+        const selection = state.selection.anchors
         // if there are no selected anchors
-        if (selection.length === 0 ) {
+        if (selection.length === 0) {
             // don't do anything
             return state.anchors
         }
@@ -40,7 +38,7 @@ export default (state, {type, payload}) => {
         // get the lense appropriate for the direction
         const lense = {
             horizontal: 'y',
-            vertical: 'x'
+            vertical: 'x',
         }[payload]
 
         // if we were given an invalid direction
@@ -53,18 +51,17 @@ export default (state, {type, payload}) => {
         const local = _.cloneDeep(state.anchors)
 
         // the average value of the appropriate attribute
-        const average = selection
-                             // first we need a reference to each selected anchor entity
-                             .map(selected => state.anchors[selected])
-                             // grab the appropriate attribute
-                             .map(anch => anch[lense])
-                             // add up the total and divide by the length to compute the avg
-                             .reduce((a,b) => a + b, 0) / selection.length
+        const average =
+            selection
+                // first we need a reference to each selected anchor entity
+                .map(selected => state.anchors[selected])
+                // grab the appropriate attribute
+                .map(anch => anch[lense])
+                // add up the total and divide by the length to compute the avg
+                .reduce((a, b) => a + b, 0) / selection.length
 
         // return the local copy
-        return _.mapValues(local, 
-            val => selection.includes(val.id) ? {...val, [lense]: average} : val
-        )
+        return _.mapValues(local, val => (selection.includes(val.id) ? { ...val, [lense]: average } : val))
     }
 
     return state.anchors

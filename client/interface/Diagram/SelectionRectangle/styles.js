@@ -6,5 +6,5 @@ export default {
         stroke: brightBlue,
         strokeWidth: 1,
         strokeDasharray: 10,
-    }
+    },
 }

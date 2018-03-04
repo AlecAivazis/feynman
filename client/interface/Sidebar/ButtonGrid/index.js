@@ -7,19 +7,10 @@ import { ToggleButton, Button } from 'components'
 import { toggleGrid, toggleAnchors, toggleExportModal } from 'actions/info'
 import { latexConfig } from 'utils'
 
-
 const exportUrl = elements => `/latex/diagram?string=${latexConfig(elements)}`
 
-const ButtonGrid = ({
-    style,
-    info,
-    toggleGrid,
-    toggleAnchors,
-    openExportModal,
-    elements,
-    ...unusedProps
-}) => (
-    <div style={{...styles.container, ...style}}>
+const ButtonGrid = ({ style, info, toggleGrid, toggleAnchors, openExportModal, elements, ...unusedProps }) => (
+    <div style={{ ...styles.container, ...style }}>
         <div style={styles.buttonRow}>
             <ToggleButton
                 style={styles.leftButton}
@@ -37,18 +28,14 @@ const ButtonGrid = ({
         </div>
         <div style={styles.bottomRow}>
             <a href={exportUrl(elements)} target="_blank">
-                <Button style={styles.leftButton}>
-                    Export PNG
-                </Button>
+                <Button style={styles.leftButton}>Export PNG</Button>
             </a>
-            <Button onClick={openExportModal}>
-                LaTeX
-            </Button>
+            <Button onClick={openExportModal}>LaTeX</Button>
         </div>
     </div>
 )
 
-const selector = ({diagram: {info, elements}}) => ({info, elements})
+const selector = ({ diagram: { info, elements } }) => ({ info, elements })
 const mapDispatchToProps = dispatch => ({
     openExportModal: () => dispatch(toggleExportModal()),
     toggleAnchors: () => dispatch(toggleAnchors()),

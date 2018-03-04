@@ -6,5 +6,5 @@ export default (action, message) => ({
     payload: {
         action,
         message,
-    }
+    },
 })

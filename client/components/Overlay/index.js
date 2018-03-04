@@ -5,17 +5,15 @@ import PropTypes from 'prop-types'
 import styles from './styles'
 import Header from './Header'
 
-const preventBubble = (event) => event && event.stopPropagation()
+const preventBubble = event => event && event.stopPropagation()
 
-const Overlay = ({addon, title, children, hide, onClick, style, ...unusedProps}) => (
+const Overlay = ({ addon, title, children, hide, onClick, style, ...unusedProps }) => (
     <aside style={styles.container} {...unusedProps} onClick={hide}>
-        <section  style={styles.contentWrapper} onClick={preventBubble}>
+        <section style={styles.contentWrapper} onClick={preventBubble}>
             <Header addon={addon} hide={hide}>
                 {title}
             </Header>
-            <div style={{...styles.content, ...style}}>
-                {children}
-            </div>
+            <div style={{ ...styles.content, ...style }}>{children}</div>
         </section>
     </aside>
 )

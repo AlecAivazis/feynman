@@ -4,10 +4,8 @@ export default {
     selected: {
         fill: brightBlue,
     },
-    notSelected: {
-
-    },
+    notSelected: {},
     fixed: {
         fill: idkGrey,
-    }
+    },
 }

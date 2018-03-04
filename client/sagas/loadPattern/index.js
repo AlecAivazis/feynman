@@ -5,14 +5,13 @@ import { put } from 'redux-saga/effects'
 import { placeElement, clearElements } from 'actions/elements'
 import { LOAD_PATTERN } from 'actions/elements/types'
 
-export function* loadPatternWorker({type, payload:{elements}}) {
+export function* loadPatternWorker({ type, payload: { elements } }) {
     // first thing to do is clear the current diagram
     yield put(clearElements())
 
     // load the element
     yield put(placeElement(elements))
 }
-
 
 // this saga loads a particular pattern
 export default function* loadPattern() {

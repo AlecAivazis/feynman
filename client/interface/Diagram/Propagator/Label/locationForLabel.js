@@ -6,9 +6,9 @@ export default function locationForLabel({
     x2,
     y1,
     y2,
-    distance:r = defaultProps.labelDistance,
-    location:s = defaultProps.labelLocation,
-    label
+    distance: r = defaultProps.labelDistance,
+    location: s = defaultProps.labelLocation,
+    label,
 }) {
     // the midpoint
     const midx = x1 + s * (x2 - x1)
@@ -16,7 +16,7 @@ export default function locationForLabel({
 
     // the slope of the perpendicular line
     // m` = -1 / m
-    const m = -(x1-x2)/(y1-y2)
+    const m = -(x1 - x2) / (y1 - y2)
 
     // the points that are perpedicular to the line a distance r away satisfy
     // the following system of equations:
@@ -24,8 +24,8 @@ export default function locationForLabel({
     //     y = mx
     //     x^2 + y^2 = r
     //
-    const x = Math.sqrt(r * r / (1 + (m * m)))
-    const y = m*x
+    const x = Math.sqrt(r * r / (1 + m * m))
+    const y = m * x
 
     // the multiplier for distance away from line
     const rSign = r > 0 ? 1 : -1
@@ -33,8 +33,8 @@ export default function locationForLabel({
 
     // add these values to the mid points to displace the label
     // WARNING: these signs take into account the possible minus sign from midx/y calculation
-    const labelx = midx - (mSign * rSign * x)
-    let labely = midy - (mSign * rSign * y)
+    const labelx = midx - mSign * rSign * x
+    let labely = midy - mSign * rSign * y
 
     // check against horizontal lines
     if (isNaN(labely)) {
@@ -44,6 +44,6 @@ export default function locationForLabel({
     // return the label coordinates
     return {
         x: labelx,
-        y: labely
+        y: labely,
     }
 }

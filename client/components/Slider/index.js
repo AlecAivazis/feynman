@@ -14,7 +14,7 @@ class SliderHandle extends React.Component {
 
         // render the component
         return (
-            <span style={{...styles.slider, left: `${offset}%`}}>
+            <span style={{ ...styles.slider, left: `${offset}%` }}>
                 <span style={styles.innerSlider} />
             </span>
         )
@@ -22,13 +22,7 @@ class SliderHandle extends React.Component {
 }
 
 const Slider = ({ min, max, step, style, ...unusedProps }) => (
-    <RcSlider
-        min={min}
-        max={max}
-        step={step}
-        handle={<SliderHandle />}
-        { ...unusedProps }
-    />
+    <RcSlider min={min} max={max} step={step} handle={<SliderHandle />} {...unusedProps} />
 )
 
 export default Slider

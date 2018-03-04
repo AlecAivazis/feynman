@@ -20,7 +20,7 @@ const Grid = ({ style, browser, info }) => {
 
     // className is used to remove it during png export
     return (
-        <g {...{...styles.container, ...style}} className="grid">
+        <g {...{ ...styles.container, ...style }} className="grid">
             {range(nVertical + 1).map(i => {
                 // the shared x coordinate of the vertical lines
                 const x = round(leftEdge + i * info.gridSize, info.gridSize)
@@ -28,10 +28,11 @@ const Grid = ({ style, browser, info }) => {
                 return (
                     <path
                         {...styles.gridLine}
-                        key={`${x} ${bottomEdge} - ${ i }`}
+                        key={`${x} ${bottomEdge} - ${i}`}
                         d={`M ${x} ${bottomEdge} L ${x} ${topEdge}`}
                     />
-            )})}
+                )
+            })}
             {range(nHorizontal + 1).map(i => {
                 // the shared y coordinate of the horizontal lines
                 const y = round(bottomEdge + i * info.gridSize, info.gridSize)
@@ -42,10 +43,11 @@ const Grid = ({ style, browser, info }) => {
                         key={`${leftEdge} ${y} - ${i}`}
                         d={`M ${leftEdge} ${y}  L ${rightEdge} ${y} `}
                     />
-            )})}
+                )
+            })}
         </g>
     )
 }
 
-const selector = ({diagram: {info}, browser}) => ({info, browser})
+const selector = ({ diagram: { info }, browser }) => ({ info, browser })
 export default connect(selector)(Grid)

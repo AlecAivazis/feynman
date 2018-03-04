@@ -50,7 +50,6 @@ describe('Utils', () => {
 
             // make sure we have the correct number of unique ids
             expect(ids.size).toEqual(nIds)
-
         })
     })
 })

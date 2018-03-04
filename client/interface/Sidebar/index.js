@@ -11,11 +11,11 @@ import HotkeySummary from './HotkeySummary'
 import HistorySummary from './HistorySummary'
 import ButtonGrid from './ButtonGrid'
 
-const Sidebar = ({style, dispatch, info}) => (
-    <aside style={{...styles.container, ...style}}>
+const Sidebar = ({ style, dispatch, info }) => (
+    <aside style={{ ...styles.container, ...style }}>
         <TitleControl style={styles.element} />
-        <GridSizeControl style={styles.element}/>
-        <ZoomLevelControl style={styles.element}/>
+        <GridSizeControl style={styles.element} />
+        <ZoomLevelControl style={styles.element} />
         <ButtonGrid style={styles.elementWithBorder} />
         <HistorySummary style={styles.elementWithBorder} />
         <HotkeySummary style={styles.element} />

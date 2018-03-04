@@ -18,5 +18,5 @@ export default {
         position: 'absolute',
         right: 30,
         marginTop: 25,
-    }
+    },
 }

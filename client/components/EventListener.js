@@ -2,7 +2,6 @@
 import React from 'react'
 
 class EventHandler extends React.Component {
-
     componentDidMount() {
         window.addEventListener(this.props.event, this.props.children)
     }

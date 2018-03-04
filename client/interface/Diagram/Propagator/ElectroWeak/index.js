@@ -5,9 +5,15 @@ import range from 'utils/range'
 import Align from '../Align'
 
 const ElectroWeak = ({
-    x1, y1, x2, y2, direction,
+    x1,
+    y1,
+    x2,
+    y2,
+    direction,
     // pulled out to prevent cascade
-    arrow, anchor1, anchor2,
+    arrow,
+    anchor1,
+    anchor2,
     ...unusedProps
 }) => {
     // the width of the pattern (half-period)
@@ -17,10 +23,10 @@ const ElectroWeak = ({
     // compute the length of the line
     const dx = x2 - x1
     const dy = y2 - y1
-    const length = Math.sqrt(dx*dx + dy*dy)
+    const length = Math.sqrt(dx * dx + dy * dy)
 
     // find the closest whole number of full periods
-    const nPeriods = Math.round(length/scale)
+    const nPeriods = Math.round(length / scale)
 
     // running totals to track the current location
     let cx = x1
@@ -32,14 +38,14 @@ const ElectroWeak = ({
 
     // start the path at the current (x, y) location
     let pathString = `M ${cx} ${cy} `
-    pathString += `C ${cx+scale/2} ${ymin} ${cx+scale/2} ${ymax} ${cx+scale} ${cy} `
+    pathString += `C ${cx + scale / 2} ${ymin} ${cx + scale / 2} ${ymax} ${cx + scale} ${cy} `
 
     // for each period we have to render (correct for zero indexing)
-    for (const _ of range(nPeriods-1)) {
+    for (const _ of range(nPeriods - 1)) {
         // increment the running counter
         cx += scale
         // add the period
-        pathString += `S ${cx+scale/2} ${ymax} ${cx+scale} ${cy} `
+        pathString += `S ${cx + scale / 2} ${ymax} ${cx + scale} ${cy} `
     }
 
     // render the actual path
@@ -53,10 +59,7 @@ const ElectroWeak = ({
             degrade={nPeriods === 1}
             element={{ x1, x2, y1, y2, direction, arrow, anchor1, anchor2, ...unusedProps }}
         >
-            <path
-                {...unusedProps}
-                fill="none"
-                d={pathString}/>
+            <path {...unusedProps} fill="none" d={pathString} />
         </Align>
     )
 }
