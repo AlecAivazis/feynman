@@ -20,7 +20,7 @@ describe('Sagas', () => {
             }
 
             // create the generator responding to the action
-            const gen = splitElementWorker(splitElement({element, location}))
+            const gen = splitElementWorker(splitElement({ element, location }))
 
             // make sure we're done
             expect(gen.next().done).toBeTruthy()

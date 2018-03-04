@@ -6,5 +6,5 @@ export default {
         color: 'white',
         textTransform: 'capitalize',
         marginBottom: 5,
-    }
+    },
 }

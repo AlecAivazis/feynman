@@ -7,14 +7,14 @@ import Parton from './Parton'
 
 // a mapping of shape type to component to render
 const shapeMap = {
-    parton: Parton
+    parton: Parton,
 }
 
-export const Shape = ({kind, dispatch, ...element}) => {
+export const Shape = ({ kind, dispatch, ...element }) => {
     const Component = shapeMap[kind]
     return (
-        <Splittable type="shapes" element={{...element, kind}}>
-            <Component {...element}/>
+        <Splittable type="shapes" element={{ ...element, kind }}>
+            <Component {...element} />
         </Splittable>
     )
 }
@@ -26,8 +26,8 @@ Shape.propTypes = {
 }
 
 Shape.defaultProps = {
-    kind: "parton",
-    color: "black",
+    kind: 'parton',
+    color: 'black',
     r: 25,
 }
 

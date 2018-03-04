@@ -12,5 +12,5 @@ export default {
     inactive: {
         ...button,
         color: red,
-    }
+    },
 }

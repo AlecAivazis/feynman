@@ -18,35 +18,37 @@ describe('Interface Components', () => {
             // create a store to test
             const store = createStore()
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 150,
-                },
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 150,
+                    }
+                )
+            )
             // connect them with propagators
-            store.dispatch(addPropagators(
-                {
+            store.dispatch(
+                addPropagators({
                     id: 1,
                     anchor1: 1,
                     anchor2: 2,
                     kind: 'fermion',
-                }
-            ))
+                })
+            )
 
             // select the propagator
-            store.dispatch(selectElements({type: 'propagators', id: 1}))
+            store.dispatch(selectElements({ type: 'propagators', id: 1 }))
 
             // mount the propagator summary
             const wrapper = mount(
                 <Provider store={store}>
-                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators}/>
+                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators} />
                 </Provider>
             )
 
@@ -58,35 +60,37 @@ describe('Interface Components', () => {
             // create a store to test
             const store = createStore()
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 150,
-                },
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 150,
+                    }
+                )
+            )
             // connect them with propagators
-            store.dispatch(addPropagators(
-                {
+            store.dispatch(
+                addPropagators({
                     id: 1,
                     anchor1: 1,
                     anchor2: 2,
                     kind: 'em',
-                }
-            ))
+                })
+            )
 
             // select the propagator
-            store.dispatch(selectElements({type: 'propagators', id: 1}))
+            store.dispatch(selectElements({ type: 'propagators', id: 1 }))
 
             // mount the propagator summary
             const wrapper = mount(
                 <Provider store={store}>
-                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators}/>
+                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators} />
                 </Provider>
             )
 
@@ -98,35 +102,37 @@ describe('Interface Components', () => {
             // create a store to test
             const store = createStore()
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 150,
-                },
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 150,
+                    }
+                )
+            )
             // connect them with propagators
-            store.dispatch(addPropagators(
-                {
+            store.dispatch(
+                addPropagators({
                     id: 1,
                     anchor1: 1,
                     anchor2: 2,
                     kind: 'gluon',
-                }
-            ))
+                })
+            )
 
             // select the propagator
-            store.dispatch(selectElements({type: 'propagators', id: 1}))
+            store.dispatch(selectElements({ type: 'propagators', id: 1 }))
 
             // mount the propagator summary
             const wrapper = mount(
                 <Provider store={store}>
-                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators}/>
+                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators} />
                 </Provider>
             )
 
@@ -138,56 +144,57 @@ describe('Interface Components', () => {
             // create a store to test
             const store = createStore()
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 150,
-                },
-                {
-                    id: 3,
-                    x: 150,
-                    y: 200,
-                },
-                {
-                    id: 4,
-                    x: 300,
-                    y: 450,
-                },
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 150,
+                    },
+                    {
+                        id: 3,
+                        x: 150,
+                        y: 200,
+                    },
+                    {
+                        id: 4,
+                        x: 300,
+                        y: 450,
+                    }
+                )
+            )
             // connect them with propagators
-            store.dispatch(addPropagators(
-                {
-                    id: 1,
-                    anchor1: 1,
-                    anchor2: 2,
-                    kind: 'gluon',
-                    label: 'g'
-                },
-                {
-                    id: 2,
-                    anchor1: 3,
-                    anchor2: 4,
-                    kind: 'gluon',
-                    label: 'g'
-                }
-            ))
+            store.dispatch(
+                addPropagators(
+                    {
+                        id: 1,
+                        anchor1: 1,
+                        anchor2: 2,
+                        kind: 'gluon',
+                        label: 'g',
+                    },
+                    {
+                        id: 2,
+                        anchor1: 3,
+                        anchor2: 4,
+                        kind: 'gluon',
+                        label: 'g',
+                    }
+                )
+            )
 
             // select the propagator
-            store.dispatch(selectElements(
-                {type: 'propagators', id: 1},
-                {type: 'propagators', id: 2}
-            ))
+            store.dispatch(selectElements({ type: 'propagators', id: 1 }, { type: 'propagators', id: 2 }))
 
             // mount the propagator summary
             const wrapper = mount(
                 <Provider store={store}>
-                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators}/>
+                    <PropagatorSummary propagators={store.getState().diagram.elements.selection.propagators} />
                 </Provider>
             )
 

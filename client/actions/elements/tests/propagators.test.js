@@ -1,7 +1,6 @@
 // local imports
 import { addPropagators, ADD_PROPAGATORS } from '..'
 
-
 describe('Action Creators', () => {
     describe('Elements', () => {
         describe('Propagators', () => {
@@ -29,7 +28,7 @@ describe('Action Creators', () => {
                     {
                         anchor1: 1,
                         anchor2: 2,
-                    }
+                    },
                 ]
 
                 // make sure the action reflects the expectation

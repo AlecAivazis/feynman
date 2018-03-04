@@ -16,19 +16,21 @@ const dispatch = {
     shapes: placeShapes,
 }
 
-export function* placeElementWorker({type:action, payload: {type, ...element}}) {
+export function* placeElementWorker({ type: action, payload: { type, ...element } }) {
     // if we are rendering a single element
-    if (type !== "pattern") {
+    if (type !== 'pattern') {
         // create the element
         yield* dispatch[type](element)
-    }
-    // otherwise we are rendering more than one element
-    else {
+    } else {
+        // otherwise we are rendering more than one element
         // get the anchors we have to create from any propagator specs
-        const associatedAnchors = element.propagators ? flatMap(element.propagators,
-            // turn the list of propagators into a list of their non-number anchors
-            propagator => [propagator.anchor1, propagator.anchor2].filter(anchor => !isFinite(anchor))
-        ) : []
+        const associatedAnchors = element.propagators
+            ? flatMap(
+                  element.propagators,
+                  // turn the list of propagators into a list of their non-number anchors
+                  propagator => [propagator.anchor1, propagator.anchor2].filter(anchor => !isFinite(anchor))
+              )
+            : []
 
         // the anchors to add
         const anchors = element.anchors ? [...element.anchors, ...associatedAnchors] : associatedAnchors
@@ -51,12 +53,14 @@ export function* placeElementWorker({type:action, payload: {type, ...element}}) 
         // if there are propagators
         if (element.propagators) {
             // and the propagators
-            yield* dispatch.propagators(...element.propagators.map(prop => ({
-                ...prop,
-                // make sure we only pass the ids into the next factory so that we don't duplicate
-                anchor1: prop.anchor1.id || prop.anchor1,
-                anchor2: prop.anchor2.id || prop.anchor2,
-            })))
+            yield* dispatch.propagators(
+                ...element.propagators.map(prop => ({
+                    ...prop,
+                    // make sure we only pass the ids into the next factory so that we don't duplicate
+                    anchor1: prop.anchor1.id || prop.anchor1,
+                    anchor2: prop.anchor2.id || prop.anchor2,
+                }))
+            )
         }
 
         // if there are text elements to add

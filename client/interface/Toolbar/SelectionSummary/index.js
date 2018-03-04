@@ -19,16 +19,16 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
     const hideDelete = Object.values(selection).filter(ids => ids.length > 0).length > 1
 
     return (
-        <div style={{...styles.container, ...style}} {...unusedProps}>
-            {(selection.anchors || []).length > 0
-                && <AnchorSummary anchors={selection.anchors} showDelete={!hideDelete}/>}
-            {(selection.propagators || []).length > 0
-                && <PropagatorSummary propagators={selection.propagators} showDelete={!hideDelete}/>}
-            {(selection.text || []).length > 0
-                && <TextSummary text={selection.text} showDelete={!hideDelete}/>}
-            {(selection.shapes || []).length > 0
-                && <ShapeSummary shapes={selection.shapes} showDelete={!hideDelete}/>}
-            {hideDelete &&  (
+        <div style={{ ...styles.container, ...style }} {...unusedProps}>
+            {(selection.anchors || []).length > 0 && (
+                <AnchorSummary anchors={selection.anchors} showDelete={!hideDelete} />
+            )}
+            {(selection.propagators || []).length > 0 && (
+                <PropagatorSummary propagators={selection.propagators} showDelete={!hideDelete} />
+            )}
+            {(selection.text || []).length > 0 && <TextSummary text={selection.text} showDelete={!hideDelete} />}
+            {(selection.shapes || []).length > 0 && <ShapeSummary shapes={selection.shapes} showDelete={!hideDelete} />}
+            {hideDelete && (
                 <ButtonRow>
                     <RedButton onClick={deleteElements} style={styles.deleteButton}>
                         Delete Elements
@@ -39,8 +39,8 @@ const SelectionSummary = ({ style, selection, deleteElements, ...unusedProps }) 
     )
 }
 
-const mapDispatchToProps = (dispatch, {selection}) => ({
-    deleteElements: () => dispatch(withCommit(deleteSelection(), "removed selected elements from diagram"))
+const mapDispatchToProps = (dispatch, { selection }) => ({
+    deleteElements: () => dispatch(withCommit(deleteSelection(), 'removed selected elements from diagram')),
 })
 
 export default connect(null, mapDispatchToProps)(SelectionSummary)

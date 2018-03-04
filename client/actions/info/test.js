@@ -1,25 +1,38 @@
 import 'babel-polyfill'
 // local imports
 import {
-    setDiagramTitle,              SET_TITLE,
-    toggleGrid,                   TOGGLE_GRID,
-    setGridSize,                  SET_GRID_SIZE,
-    toggleHotkeys,                TOGGLE_HOTKEYS,
-    toggleAnchors,                TOGGLE_ANCHORS,
-    selectElements,               SELECT_ELEMENTS,
-    togglePatternModal,           TOGGLE_PATTERN_MODAL,
-    toggleHistory,                TOGGLE_HISTORY,
-    togglePatternModalInitialVis, TOGGLE_PATTERN_INITIAL_VIS,
-    toggleExportModal,            TOGGLE_EXPORT_MODAL,
-    panDiagram,                   PAN_DIAGRAM,
-    setZoom,                      SET_ZOOM,
-    zoomIn,                       ZOOM_IN,
-    zoomOut,                      ZOOM_OUT,
+    setDiagramTitle,
+    SET_TITLE,
+    toggleGrid,
+    TOGGLE_GRID,
+    setGridSize,
+    SET_GRID_SIZE,
+    toggleHotkeys,
+    TOGGLE_HOTKEYS,
+    toggleAnchors,
+    TOGGLE_ANCHORS,
+    selectElements,
+    SELECT_ELEMENTS,
+    togglePatternModal,
+    TOGGLE_PATTERN_MODAL,
+    toggleHistory,
+    TOGGLE_HISTORY,
+    togglePatternModalInitialVis,
+    TOGGLE_PATTERN_INITIAL_VIS,
+    toggleExportModal,
+    TOGGLE_EXPORT_MODAL,
+    panDiagram,
+    PAN_DIAGRAM,
+    setZoom,
+    SET_ZOOM,
+    zoomIn,
+    ZOOM_IN,
+    zoomOut,
+    ZOOM_OUT,
 } from 'actions/info'
 import { fieldName } from './creators/togglePatternModalInitialVis'
 import LocalStorageMock from './storage.js'
 import { createStore } from 'store'
-
 
 describe('Action Creators', () => {
     describe('Info', () => {
@@ -36,7 +49,7 @@ describe('Action Creators', () => {
 
         test('pan diagram', () => {
             // the pan for the diagram
-            const pan = {x: 10}
+            const pan = { x: 10 }
 
             // make sure the action is expected
             expect(panDiagram(pan)).toEqual({
@@ -73,7 +86,7 @@ describe('Action Creators', () => {
             // all we care about is the type
             expect(setGridSize(size)).toEqual({
                 type: SET_GRID_SIZE,
-                payload: size
+                payload: size,
             })
         })
 
@@ -118,7 +131,6 @@ describe('Action Creators', () => {
         })
 
         describe('Toggle Pattern Initial Visibility Thunk', () => {
-
             // some mocks, fixtures, and spies
             let store, storage, thunk, dispatch
             beforeEach(function() {
@@ -147,9 +159,7 @@ describe('Action Creators', () => {
                 thunk(dispatch, store.getState)
 
                 // make sure dispatch was called with the correct action
-                expect(storage.getItem(fieldName)).toEqual(
-                    !store.getState().diagram.info.patternModalInitalVis
-                )
+                expect(storage.getItem(fieldName)).toEqual(!store.getState().diagram.info.patternModalInitalVis)
             })
         })
     })

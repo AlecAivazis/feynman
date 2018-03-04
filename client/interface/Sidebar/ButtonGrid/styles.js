@@ -17,6 +17,6 @@ export default {
     bottomRow: {
         ...buttonRow,
         marginTop: 10,
-        justifyContent: "center",
-    }
+        justifyContent: 'center',
+    },
 }

@@ -12,5 +12,5 @@ export default {
         fontSize: 25,
         fontWeight: 400,
         zIndex: 5,
-    }
+    },
 }

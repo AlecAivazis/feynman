@@ -7,10 +7,10 @@ import styles from './styles'
 import { Diagram, Sidebar, Title, Toolbar, PatternModal, ExportModal } from '..'
 
 // App must be a class-based component because it will recieve a ref
-const App = ({info}) => (
+const App = ({ info }) => (
     <main style={styles.container}>
-        <Title style={styles.overlay}/>
-        <Toolbar style={styles.overlay}/>
+        <Title style={styles.overlay} />
+        <Toolbar style={styles.overlay} />
         <Sidebar />
         <Diagram />
         {info.showPatternModal && <PatternModal />}
@@ -18,5 +18,5 @@ const App = ({info}) => (
     </main>
 )
 
-const selector = ({diagram: {info}}) => ({info})
+const selector = ({ diagram: { info } }) => ({ info })
 export default connect(selector)(App)

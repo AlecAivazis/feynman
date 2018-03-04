@@ -3,10 +3,10 @@ import image from './image.png'
 import { blue } from 'colors'
 
 export default {
-    name: "Drell-Yan",
+    name: 'Drell-Yan',
     image,
     elements: {
-        type: "pattern",
+        type: 'pattern',
         anchors: [
             {
                 id: 1,
@@ -16,12 +16,12 @@ export default {
             {
                 id: 2,
                 x: 150,
-                y: 200
+                y: 200,
             },
             {
                 id: 3,
                 x: 50,
-                y: 300
+                y: 300,
             },
             {
                 id: 4,
@@ -36,8 +36,8 @@ export default {
             {
                 id: 6,
                 x: 400,
-                y: 300
-            }
+                y: 300,
+            },
         ],
         propagators: [
             {
@@ -75,7 +75,7 @@ export default {
                 label: '\\anti{l}',
                 anchor1: 5,
                 anchor2: 6,
-            }
-        ]
-    }
+            },
+        ],
+    },
 }

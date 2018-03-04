@@ -16,18 +16,15 @@ import Anchor from './Anchor'
 import Text from './Text'
 import { Shape } from './Shape'
 
-
 // a diagram wrapped in the right context
-const Test = (props) => (
-     <Provider {...props}>
-        <Diagram/>
+const Test = props => (
+    <Provider {...props}>
+        <Diagram />
     </Provider>
 )
 
 describe('Interface Components', () => {
-
     describe('Diagram', () => {
-
         test('shows the grid when the store says so', () => {
             // create a verion of the store
             const store = createStore()
@@ -40,7 +37,7 @@ describe('Interface Components', () => {
             // render the diagram in the wrapper
             const wrapper = mount(
                 <Provider store={store}>
-                    <Diagram/>
+                    <Diagram />
                 </Provider>
             )
 
@@ -60,7 +57,7 @@ describe('Interface Components', () => {
             // render the diagram in the wrapper
             const wrapper = mount(
                 <Provider store={store}>
-                    <Diagram/>
+                    <Diagram />
                 </Provider>
             )
 
@@ -83,7 +80,7 @@ describe('Interface Components', () => {
             // render the diagram in the wrapper
             const wrapper = mount(
                 <Provider store={store}>
-                    <Diagram/>
+                    <Diagram />
                 </Provider>
             )
 
@@ -96,37 +93,41 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 50,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 1000,
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 50,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 1000,
+                    }
+                )
+            )
 
             // add an element to the store
-            store.dispatch(addPropagators(
-                {
-                    kind: 'invalid1',
-                    id: 1,
-                    anchor1: 1,
-                    anchor2: 2,
-                },
-                {
-                    kind: 'invalid2',
-                    id: 2,
-                    anchor1: 1,
-                    anchor2: 2,
-                }
-            ))
+            store.dispatch(
+                addPropagators(
+                    {
+                        kind: 'invalid1',
+                        id: 1,
+                        anchor1: 1,
+                        anchor2: 2,
+                    },
+                    {
+                        kind: 'invalid2',
+                        id: 2,
+                        anchor1: 1,
+                        anchor2: 2,
+                    }
+                )
+            )
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
             // the expected number of propagators
             const expected = Object.values(initialState.propagators).length + 2
 
@@ -144,21 +145,23 @@ describe('Interface Components', () => {
             }
 
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 50,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 1000,
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 50,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 1000,
+                    }
+                )
+            )
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
 
             // make sure there are two Anchors in the diagram
             expect(wrapper.find(Anchor)).toHaveLength(2)
@@ -169,24 +172,26 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 50,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 1000,
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 50,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 1000,
+                    }
+                )
+            )
 
             // select the element
-            store.dispatch(selectElements({type: 'anchors', id:1}))
+            store.dispatch(selectElements({ type: 'anchors', id: 1 }))
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
 
             // click on the diagram
             wrapper.find(Diagram).simulate('mouseDown')
@@ -200,19 +205,19 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // add some anchors
-            store.dispatch(addAnchors(
-                {
+            store.dispatch(
+                addAnchors({
                     id: 1,
                     x: 50,
                     y: 50,
-                },
-            ))
+                })
+            )
 
             // select the element
-            store.dispatch(selectElements({type: 'anchors', id:1}))
+            store.dispatch(selectElements({ type: 'anchors', id: 1 }))
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
             // make sure the anchor was told to render selected
             expect(wrapper.find(Anchor).props().selected).toBeTruthy()
         })
@@ -222,34 +227,36 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // add some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 50,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 1000,
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 50,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 1000,
+                    }
+                )
+            )
 
             // and some propagators
-            store.dispatch(addPropagators(
-                {
+            store.dispatch(
+                addPropagators({
                     id: 1,
                     kind: 'fermion',
                     anchor1: 1,
                     anchor2: 2,
-                }
-            ))
+                })
+            )
 
             // select the element
-            store.dispatch(selectElements({type: 'propagators', id:1}))
+            store.dispatch(selectElements({ type: 'propagators', id: 1 }))
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
 
             // find the anchor corresponding to the selected element
             const anchor = wrapper.find(Propagator)
@@ -266,21 +273,21 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // add some anchors
-            store.dispatch(addElements(
-                {
+            store.dispatch(
+                addElements({
                     id: 1,
                     type: 'text',
                     value: 'hello',
                     x: 50,
-                    y: 50
-                },
-            ))
+                    y: 50,
+                })
+            )
 
             // select the element
-            store.dispatch(selectElements({type: 'text', id:1}))
+            store.dispatch(selectElements({ type: 'text', id: 1 }))
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
 
             // find the anchor corresponding to the selected element
             const anchor = wrapper.find(Text)
@@ -297,18 +304,16 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // pan the diagram in the postive x direction
-            store.dispatch(panDiagram({x: 10}))
+            store.dispatch(panDiagram({ x: 10 }))
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
 
             // find the svg element
             const svg = wrapper.find('g.diagram')
 
             // make sure the svg element has the transform prop to match the pan
-            expect(svg.props().transform).toEqual(
-               SvgMatrix().translate(10).transformString
-            )
+            expect(svg.props().transform).toEqual(SvgMatrix().translate(10).transformString)
         })
 
         test('renders text elements for each entry in the store', () => {
@@ -316,25 +321,27 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // add some anchors
-            store.dispatch(addElements(
-                {
-                    type: 'text',
-                    value: 'hello',
-                    id: 1,
-                    x: 50,
-                    y: 50,
-                },
-                {
-                    type: 'text',
-                    value: 'goodbye',
-                    id: 2,
-                    x: 500,
-                    y: 50,
-                }
-            ))
+            store.dispatch(
+                addElements(
+                    {
+                        type: 'text',
+                        value: 'hello',
+                        id: 1,
+                        x: 50,
+                        y: 50,
+                    },
+                    {
+                        type: 'text',
+                        value: 'goodbye',
+                        id: 2,
+                        x: 500,
+                        y: 50,
+                    }
+                )
+            )
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
 
             // make sure there are two text elements
             expect(wrapper.find(Text)).toHaveLength(2)
@@ -345,29 +352,30 @@ describe('Interface Components', () => {
             const store = createStore()
 
             // add some anchors
-            store.dispatch(addElements(
-                {
-                    type: 'shapes',
-                    id: 1,
-                    x: 50,
-                    y: 50,
-                    r: 10,
-                },
-                {
-                    type: 'shapes',
-                    id: 2,
-                    x: 500,
-                    y: 50,
-                    r: 10,
-                }
-            ))
+            store.dispatch(
+                addElements(
+                    {
+                        type: 'shapes',
+                        id: 1,
+                        x: 50,
+                        y: 50,
+                        r: 10,
+                    },
+                    {
+                        type: 'shapes',
+                        id: 2,
+                        x: 500,
+                        y: 50,
+                        r: 10,
+                    }
+                )
+            )
 
             // render the diagram in the wrapper
-            const wrapper = mount(<Test store={store}/>)
+            const wrapper = mount(<Test store={store} />)
 
             // make sure there are two text elements
             expect(wrapper.find(Shape)).toHaveLength(2)
-
         })
     })
 })

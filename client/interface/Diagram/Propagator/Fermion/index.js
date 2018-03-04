@@ -13,16 +13,18 @@ const Fermion = ({ x1, y1, x2, y2, stroke, anchor1, anchor2, strokeWidth, select
             strokeWidth={strokeWidth}
             d={`M ${x1} ${y1} L ${x2} ${y2}`}
         />
-        {arrow != 0 && <Arrow
-            x1={x1}
-            y1={y1}
-            x2={x2}
-            y2={y2}
-            stroke={stroke}
-            selected={selected}
-            strokeWidth={strokeWidth}
-            flip={arrow == -1}
-        />}
+        {arrow != 0 && (
+            <Arrow
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke={stroke}
+                selected={selected}
+                strokeWidth={strokeWidth}
+                flip={arrow == -1}
+            />
+        )}
     </g>
 )
 

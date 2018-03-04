@@ -2,10 +2,8 @@
 import { selected } from '../styles'
 
 export default {
-    container: {
-
-    },
+    container: {},
     selected: {
-       fill: selected.stroke, 
-    }
+        fill: selected.stroke,
+    },
 }

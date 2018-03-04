@@ -10,26 +10,30 @@ describe('Utils', () => {
             const store = createStore()
 
             // add some anchors to the store
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 100
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 100,
+                    }
+                )
+            )
 
             // add a propagator that links the two
-            store.dispatch(addPropagators({
-                kind: 'em',
-                id: 1,
-                anchor1: 1,
-                anchor2: 2,
-            }))
+            store.dispatch(
+                addPropagators({
+                    kind: 'em',
+                    id: 1,
+                    anchor1: 1,
+                    anchor2: 2,
+                })
+            )
 
             expect(elementsWithLocations(store.getState().diagram.elements)).toEqual({
                 anchors: [
@@ -54,8 +58,8 @@ describe('Utils', () => {
                         y1: 100,
                         x2: 100,
                         y2: 100,
-                    }
-                ]
+                    },
+                ],
             })
         })
 
@@ -64,22 +68,26 @@ describe('Utils', () => {
             const store = createStore()
 
             // add a shape to constrain the anchor
-            store.dispatch(addElements({
-                type: 'shapes',
-                id: 1,
-                kind: 'parton',
-                x: 50,
-                y: 50,
-                r: 50
-            }))
+            store.dispatch(
+                addElements({
+                    type: 'shapes',
+                    id: 1,
+                    kind: 'parton',
+                    x: 50,
+                    y: 50,
+                    r: 50,
+                })
+            )
 
             // add an anchor that will b e constrained to the shape
-            store.dispatch(addAnchors({
-                id: 1,
-                x: 50,
-                y: 110,
-                constraint: 1,
-            }))
+            store.dispatch(
+                addAnchors({
+                    id: 1,
+                    x: 50,
+                    y: 110,
+                    constraint: 1,
+                })
+            )
 
             expect(elementsWithLocations(store.getState().diagram.elements)).toEqual({
                 anchors: [
@@ -93,6 +101,5 @@ describe('Utils', () => {
                 propagators: [],
             })
         })
-
     })
 })

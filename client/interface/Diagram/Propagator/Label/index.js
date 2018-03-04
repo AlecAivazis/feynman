@@ -12,10 +12,10 @@ import locationForLabel from './locationForLabel'
 class PropagatorLabel extends React.Component {
     render() {
         // grab the used props
-        const {children, id, location, distance, element} = this.props
+        const { children, id, location, distance, element } = this.props
 
         // compute the location for the labels
-        const { x, y } = locationForLabel({...element, location, distance})
+        const { x, y } = locationForLabel({ ...element, location, distance })
 
         return (
             <MouseMove move={this._mouseMove} round={false}>
@@ -27,7 +27,7 @@ class PropagatorLabel extends React.Component {
     }
 
     @autobind
-    _mouseMove({next}){
+    _mouseMove({ next }) {
         // this is called whenever the label is being dragged
         // we need to convert the mouse's location in diagram space
         const mouse = relativePosition(next, this.props.info)
@@ -38,13 +38,16 @@ class PropagatorLabel extends React.Component {
     }
 }
 
-const selector = ({diagram: {info}}) => ({info})
-const mapDispatchToProps = (dispatch, {element}) => ({
-    setAttrs: attrs => dispatch(setElementAttrs({
-        type: 'propagators',
-        id: element.id,
-        ...attrs
-    }))
+const selector = ({ diagram: { info } }) => ({ info })
+const mapDispatchToProps = (dispatch, { element }) => ({
+    setAttrs: attrs =>
+        dispatch(
+            setElementAttrs({
+                type: 'propagators',
+                id: element.id,
+                ...attrs,
+            })
+        ),
 })
 
 export default connect(selector, mapDispatchToProps)(PropagatorLabel)

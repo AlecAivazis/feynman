@@ -6,5 +6,5 @@ export default {
         display: 'flex',
         justifyContent: 'center',
         marginBottom: 5,
-    }
+    },
 }

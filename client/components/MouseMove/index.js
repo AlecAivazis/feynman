@@ -8,7 +8,6 @@ import { EventListener } from 'components'
 import { fixDeltaToGrid } from 'utils'
 
 class MouseMove extends React.Component {
-
     static propTypes = {
         down: PropTypes.func,
         up: PropTypes.func,
@@ -29,12 +28,8 @@ class MouseMove extends React.Component {
     render() {
         return (
             <g>
-                <EventListener event="mousemove">
-                    {this._move}
-                </EventListener>
-                <EventListener event="mouseup">
-                    {this._up}
-                </EventListener>
+                <EventListener event="mousemove">{this._move}</EventListener>
+                <EventListener event="mouseup">{this._up}</EventListener>
                 {React.cloneElement(this.props.children, {
                     onMouseDown: this._down,
                 })}
@@ -44,12 +39,15 @@ class MouseMove extends React.Component {
 
     @autobind
     _down(event) {
-        this.setState({
-            origin: {
-                x: event.clientX,
-                y: event.clientY,
-            }
-        }, this.props.down)
+        this.setState(
+            {
+                origin: {
+                    x: event.clientX,
+                    y: event.clientY,
+                },
+            },
+            this.props.down
+        )
     }
 
     @autobind
@@ -57,7 +55,7 @@ class MouseMove extends React.Component {
         // if we're holding the mouse down
         if (this.state.origin) {
             // clear the origin
-            this.setState({origin: null}, this.props.up)
+            this.setState({ origin: null }, this.props.up)
         }
     }
 
@@ -74,22 +72,22 @@ class MouseMove extends React.Component {
             }
 
             // grab the required meta data
-            const { info, round }  = this.props
+            const { info, round } = this.props
             // the location to move to
-            const next = fixDeltaToGrid({origin, next: mouse, info, round})
+            const next = fixDeltaToGrid({ origin, next: mouse, info, round })
             const delta = {
                 x: (next.x - origin.x) / info.zoomLevel,
-                y: (next.y - origin.y ) / info.zoomLevel,
+                y: (next.y - origin.y) / info.zoomLevel,
             }
 
             // call the callback
             this.props.move({ origin, next, delta })
 
             // update the place we're dragging from
-            this.setState({origin: next})
+            this.setState({ origin: next })
         }
     }
 }
 
-const selector = ({diagram: {info}}) => ({info})
+const selector = ({ diagram: { info } }) => ({ info })
 export default connect(selector)(MouseMove)

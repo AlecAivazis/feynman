@@ -14,17 +14,16 @@ const splitMap = {
     anchors: anchor,
 }
 
-export function* splitElementWorker({type, payload: {type: elementType, element, location}}) {
+export function* splitElementWorker({ type, payload: { type: elementType, element, location } }) {
     // try to get the appropriate handler for the element type
     const splitFn = splitMap[elementType]
 
     // if there is a function to call
-    if(splitFn) {
+    if (splitFn) {
         // pass the element and location to the appropriate function
-        yield* splitFn({element, location})
+        yield* splitFn({ element, location })
     }
 }
-
 
 // this saga loads a particular pattern
 export default function* splitElement() {

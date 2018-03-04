@@ -9,8 +9,8 @@ const ToggleButton = ({ style, active, activeText, inactiveText, ...unusedProps 
     const buttonStyle = active ? styles.inactive : styles.active
 
     return (
-        <Button style={{...buttonStyle, ...style}} {...unusedProps}>
-            { active ? activeText : inactiveText }
+        <Button style={{ ...buttonStyle, ...style }} {...unusedProps}>
+            {active ? activeText : inactiveText}
         </Button>
     )
 }

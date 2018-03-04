@@ -7,5 +7,5 @@ export default {
         padding: '0 15px',
         minHeight: 30,
         marginBottom: 10,
-    }
+    },
 }

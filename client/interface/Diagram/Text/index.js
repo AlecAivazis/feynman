@@ -4,8 +4,7 @@ import React from 'react'
 import { Text, Splittable } from 'components'
 import styles from './styles'
 
-const TextElement = ({x, y, value, id, selected}) => {
-
+const TextElement = ({ x, y, value, id, selected }) => {
     // the style to apply to the text (disabled  because we render slowly)
     // const style = selected ? styles.selected : styles.notSelected
     const style = styles.notSelected

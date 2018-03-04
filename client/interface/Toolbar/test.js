@@ -16,18 +16,18 @@ describe('Interface Components', () => {
             // a store to test with
             const store = createStore()
             // add an anchor
-            store.dispatch(addAnchors(
-                {
+            store.dispatch(
+                addAnchors({
                     id: 1,
                     x: 50,
-                    y: 50
-                }
-            ))
+                    y: 50,
+                })
+            )
 
             // render the toolbar
             const wrapper = mount(
                 <Provider store={store}>
-                    <Toolbar/>
+                    <Toolbar />
                 </Provider>
             )
 
@@ -35,10 +35,12 @@ describe('Interface Components', () => {
             expect(wrapper.find(SelectionSummary)).toHaveLength(0)
 
             // select the anchors
-            store.dispatch(selectElements({
-                type: 'anchors',
-                id: 1
-            }))
+            store.dispatch(
+                selectElements({
+                    type: 'anchors',
+                    id: 1,
+                })
+            )
 
             // expect there to be an anchor summary
             expect(wrapper.find(SelectionSummary)).toHaveLength(1)
@@ -50,7 +52,7 @@ describe('Interface Components', () => {
             // render the toolbar
             const wrapper = mount(
                 <Provider store={store}>
-                    <Toolbar/>
+                    <Toolbar />
                 </Provider>
             )
 
@@ -66,7 +68,7 @@ describe('Interface Components', () => {
             // render the toolbar
             const wrapper = mount(
                 <Provider store={store}>
-                    <Toolbar/>
+                    <Toolbar />
                 </Provider>
             )
 

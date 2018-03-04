@@ -5,9 +5,7 @@ import { addAnchors, setAnchorLocations, selectElements, alignSelectedAnchors } 
 import { noIdErr } from '../anchors'
 
 describe('Reducers', () => {
-
     describe('Elements reducer', () => {
-
         describe('Anchors', () => {
             // a store to test with
             let store
@@ -15,7 +13,7 @@ describe('Reducers', () => {
             const initialAnchor = {
                 id: 1,
                 x: 50,
-                y: 50
+                y: 50,
             }
 
             beforeEach(function() {
@@ -28,7 +26,7 @@ describe('Reducers', () => {
             test('responds to the ADD_ANCHOR reducer', () => {
                 // make sure the state matches expectation
                 expect(store.getState().diagram.elements.anchors).toEqual({
-                    [initialAnchor.id]: initialAnchor
+                    [initialAnchor.id]: initialAnchor,
                 })
             })
 
@@ -43,8 +41,8 @@ describe('Reducers', () => {
                     {
                         id: 3,
                         x: 100,
-                        y: 100
-                    }
+                        y: 100,
+                    },
                 ]
 
                 // add the propagator to the store
@@ -59,13 +57,15 @@ describe('Reducers', () => {
             })
 
             test('barfs if there is an anchor id conflict', () => {
-
                 // the action to add the id-conflicting anchor
-                const action = () => store.dispatch(addAnchors({
-                    id: 1,
-                    x: 100,
-                    y: 100,
-                }))
+                const action = () =>
+                    store.dispatch(
+                        addAnchors({
+                            id: 1,
+                            x: 100,
+                            y: 100,
+                        })
+                    )
 
                 // make sure the id-conflicting action throws an error
                 expect(action).toThrow(Error)
@@ -73,16 +73,16 @@ describe('Reducers', () => {
 
             test('can vertically align selected anchors', () => {
                 // add the propagator to the store
-                store.dispatch(addAnchors(
-                    {
+                store.dispatch(
+                    addAnchors({
                         id: 2,
                         x: 100,
                         y: 100,
-                    }
-                ))
+                    })
+                )
 
                 // select anchors 1 and 2
-                store.dispatch(selectElements({type: 'anchors', id: 1}, {type: 'anchors', id: 2}))
+                store.dispatch(selectElements({ type: 'anchors', id: 1 }, { type: 'anchors', id: 2 }))
 
                 // vertically align the selected anchors
                 store.dispatch(alignSelectedAnchors('vertical'))
@@ -100,21 +100,23 @@ describe('Reducers', () => {
 
             test('can horizontally align selected anchors', () => {
                 // add the propagator to the store
-                store.dispatch(addAnchors(
-                    {
-                        id: 2,
-                        x: 100,
-                        y: 100,
-                    },
-                    {
-                        id: 3,
-                        x: 500,
-                        y: 500,
-                    }
-                ))
+                store.dispatch(
+                    addAnchors(
+                        {
+                            id: 2,
+                            x: 100,
+                            y: 100,
+                        },
+                        {
+                            id: 3,
+                            x: 500,
+                            y: 500,
+                        }
+                    )
+                )
 
                 // select anchors 1 and 2
-                store.dispatch(selectElements({type: 'anchors', id: 1}, {type: 'anchors', id: 2}))
+                store.dispatch(selectElements({ type: 'anchors', id: 1 }, { type: 'anchors', id: 2 }))
 
                 // vertically align the selected anchors
                 store.dispatch(alignSelectedAnchors('horizontal'))
@@ -135,7 +137,6 @@ describe('Reducers', () => {
             test('barfs if aligning in an invalid direction', () => {
                 expect(() => store.dispatch(alignSelectedAnchors('foo'))).toThrow(Error)
             })
-
         })
     })
 })

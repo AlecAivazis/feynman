@@ -18,5 +18,5 @@ export default {
     shadow: {
         ...image,
         position: 'fixed',
-    }
+    },
 }

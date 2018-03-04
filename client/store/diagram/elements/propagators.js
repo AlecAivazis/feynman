@@ -5,7 +5,7 @@ import { ADD_PROPAGATORS } from 'actions/elements'
 
 // the reducer that manages just the propagator state but has reference
 // to the entire element state reducer (must return just the propagator slice)
-export default (state, {type, payload}) => {
+export default (state, { type, payload }) => {
     // if the payload corresponds to a new propagator
     if (type === ADD_PROPAGATORS) {
         // make a local copy to mess with
@@ -17,8 +17,8 @@ export default (state, {type, payload}) => {
         // loop over every propagator we are supposed to add
         for (const propagator of payload) {
             // if there is no type
-            if(!propagator.kind) {
-                throw new Error("Could not add propagator without type")
+            if (!propagator.kind) {
+                throw new Error('Could not add propagator without type')
             }
 
             // if there is no anchor matching anchor1
@@ -33,7 +33,7 @@ export default (state, {type, payload}) => {
 
             // there is no id
             if (!propagator.id) {
-                throw new Error("Cannot add propagator to store withour an id")
+                throw new Error('Cannot add propagator to store withour an id')
             }
 
             // if there is already a propagator with that id

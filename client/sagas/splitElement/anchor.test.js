@@ -21,9 +21,7 @@ describe('Sagas', () => {
                 y: 50,
             }
             // create the generator that splits the propagators
-            const gen = splitElementWorker(
-                splitElement({element, location, type: "anchors"})
-            )
+            const gen = splitElementWorker(splitElement({ element, location, type: 'anchors' }))
 
             // *sigh* tightly couple this test to internal access to store state
             expect(gen.next().value).toBeDefined()
@@ -63,10 +61,12 @@ describe('Sagas', () => {
             // make sure we selected the right anchor
             const { type: selectType, payload: selection } = selectAnchorAction.PUT.action
             expect(selectType).toEqual(SELECT_ELEMENTS)
-            expect(selection).toEqual([{
-                id: newAnchor[0].id,
-                type: 'anchors',
-            }])
+            expect(selection).toEqual([
+                {
+                    id: newAnchor[0].id,
+                    type: 'anchors',
+                },
+            ])
 
             // then we're done
             expect(gen.next().done).toBeTruthy()

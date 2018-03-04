@@ -15,7 +15,7 @@ const generateElementId = anchors => {
     return candidate
 }
 
-const generateMultipleElementIds = (anchors, n=1) => {
+const generateMultipleElementIds = (anchors, n = 1) => {
     // the list of ids
     const ids = []
 

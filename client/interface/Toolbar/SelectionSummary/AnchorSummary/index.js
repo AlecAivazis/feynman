@@ -15,43 +15,30 @@ const AnchorSummary = ({
     elements,
     deleteAnchors,
     alignAnchors,
-    showDelete=true,
+    showDelete = true,
     ...unusedProps
 }) => {
     // figure out if anchor needs to be pluralized
     const anchor = anchors.length > 1 ? 'anchors' : 'anchor'
 
     // the values to show in the summary
-    const fill = firstValue({param: 'fill', anchors, elements})
-    const r = firstValue({param: 'r', anchors, elements})
-    const fixed = firstValue({param: 'fixed', anchors, elements})
+    const fill = firstValue({ param: 'fill', anchors, elements })
+    const r = firstValue({ param: 'r', anchors, elements })
+    const fixed = firstValue({ param: 'fixed', anchors, elements })
 
     return (
         <Container {...unusedProps}>
-            <Header>
-                {`${anchors.length} ${anchor} selected`}
-            </Header>
+            <Header>{`${anchors.length} ${anchor} selected`}</Header>
             <Row>
                 <Label>color:</Label>
-                <ColorPicker
-                    style={styles.colorPicker}
-                    color={fill || 'black'}
-                    onChange={fill => setAttrs({fill})}
-                />
+                <ColorPicker style={styles.colorPicker} color={fill || 'black'} onChange={fill => setAttrs({ fill })} />
             </Row>
-            <SliderRow
-                label="size"
-                value={r}
-                onChange={r => setAttrs({r})}
-                min={1}
-                max={10}
-                step={1}
-            />
+            <SliderRow label="size" value={r} onChange={r => setAttrs({ r })} min={1} max={10} step={1} />
 
             {anchors.length === 1 && (
                 <ButtonRow>
                     <ToggleButton
-                        onClick={() => setAttrs({fixed: !fixed})}
+                        onClick={() => setAttrs({ fixed: !fixed })}
                         style={styles.fixButton}
                         active={fixed}
                         inactiveText={`Pin ${anchor}`}
@@ -61,7 +48,7 @@ const AnchorSummary = ({
             )}
 
             {anchors.length > 1 && (
-                <div style={{width: '100%', display: 'flex', flexDirection: 'column',}}>
+                <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                     <ButtonRow>
                         <Button onClick={alignAnchors('horizontal')} style={styles.alignButton}>
                             Align horizontally
@@ -87,7 +74,7 @@ const AnchorSummary = ({
     )
 }
 
-const firstValue = ({anchors, param, elements}) => {
+const firstValue = ({ anchors, param, elements }) => {
     // go over every anchor
     for (const id of anchors) {
         // the fill of the anchor
@@ -101,28 +88,16 @@ const firstValue = ({anchors, param, elements}) => {
 }
 
 // the anchor summary needs
-const mapDispatchToProps = (dispatch, {anchors}) => ({
+const mapDispatchToProps = (dispatch, { anchors }) => ({
     // to update the attributes of each anchor that is selected
-    setAttrs: attrs => (
-        dispatch(setElementAttrs(
-            ...anchors.map(id => ({type: 'anchors', id, ...attrs}))
-        ))
-    ),
-    deleteAnchors: () => (
-        dispatch(withCommit(
-            deleteElements(
-                ...anchors.map(id => ({type: 'anchors', id}))
-            ),
-            'removed anchors from diagram'))
-    ),
-    alignAnchors: dir => () => (
-        dispatch(withCommit(
-            alignSelectedAnchors(dir),
-            `aligned anchors ${dir}ly`
-        ))
-    ),
+    setAttrs: attrs => dispatch(setElementAttrs(...anchors.map(id => ({ type: 'anchors', id, ...attrs })))),
+    deleteAnchors: () =>
+        dispatch(
+            withCommit(deleteElements(...anchors.map(id => ({ type: 'anchors', id }))), 'removed anchors from diagram')
+        ),
+    alignAnchors: dir => () => dispatch(withCommit(alignSelectedAnchors(dir), `aligned anchors ${dir}ly`)),
 })
 
 // the anchor summary needs the elements object
-const selector = ({diagram: { elements }}) => ({ elements })
+const selector = ({ diagram: { elements } }) => ({ elements })
 export default connect(selector, mapDispatchToProps)(AnchorSummary)

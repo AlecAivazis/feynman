@@ -2,8 +2,7 @@
 import { mediumGrey } from 'colors'
 
 export default {
-    container: {
-    },
+    container: {},
     header: {
         display: 'flex',
         flexDirection: 'row',
@@ -13,10 +12,10 @@ export default {
     },
     sizeIndicator: {
         fontSize: 12,
-        color: mediumGrey
+        color: mediumGrey,
     },
     sliderContainer: {
         padding: '0 5px',
         marginBottom: 3,
-    }
+    },
 }

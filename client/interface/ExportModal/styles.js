@@ -1,10 +1,8 @@
 // local imports
 import { red } from 'colors'
 
-export default { 
-    container: {
-
-    },
+export default {
+    container: {},
     buttonRow: {
         display: 'flex',
         flexDirection: 'row',
@@ -13,5 +11,5 @@ export default {
     closeButton: {
         marginRight: 8,
         color: red,
-    }
+    },
 }

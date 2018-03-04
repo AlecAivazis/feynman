@@ -6,7 +6,7 @@ import { mount } from 'enzyme'
 import { addAnchors, addPropagators } from 'actions/elements'
 import { createStore } from 'store'
 import Diagram from 'interface/Diagram'
-import Propagator, {Propagator as CoreProp} from '.'
+import Propagator, { Propagator as CoreProp } from '.'
 import Fermion from './Fermion'
 import ElectroWeak from './ElectroWeak'
 import Gluon from './Gluon'
@@ -16,7 +16,6 @@ import { defaultProps } from '.'
 
 describe('Interface Components', () => {
     describe('Diagram Element', () => {
-
         test('renders an ElectroWeak', () => {
             const store = createStore()
 
@@ -54,7 +53,6 @@ describe('Interface Components', () => {
             )
             // make sure there is a fermion
             expect(wrapper.find(Gluon)).toHaveLength(1)
-
         })
 
         test('passes default config onto the rendered propagator', () => {
@@ -89,26 +87,30 @@ describe('Interface Components', () => {
             // a store to start out with
             const store = createStore()
             // create some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 200
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 200,
+                    }
+                )
+            )
 
             // add a propagator connecting the anchors
-            store.dispatch(addPropagators({
-                id: 1,
-                kind: 'fermion',
-                anchor1: 1,
-                anchor2: 2,
-            }))
+            store.dispatch(
+                addPropagators({
+                    id: 1,
+                    kind: 'fermion',
+                    anchor1: 1,
+                    anchor2: 2,
+                })
+            )
 
             // render a fermion through the diagram element
             const wrapper = mount(
@@ -128,26 +130,30 @@ describe('Interface Components', () => {
             // a store to start out with
             const store = createStore()
             // create some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 200
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 200,
+                    }
+                )
+            )
 
             // add a propagator connecting the anchors
-            store.dispatch(addPropagators({
-                id: 1,
-                kind: 'fermion',
-                anchor1: 1,
-                anchor2: 2,
-            }))
+            store.dispatch(
+                addPropagators({
+                    id: 1,
+                    kind: 'fermion',
+                    anchor1: 1,
+                    anchor2: 2,
+                })
+            )
 
             // render a fermion through the diagram element
             const wrapper = mount(
@@ -162,30 +168,35 @@ describe('Interface Components', () => {
             expect(store.getState().diagram.elements.selection.propagators).toEqual([1])
         })
 
-        test('doesn\'t render a propagator if there is no distance to draw', function() {// a store to start out with
+        test("doesn't render a propagator if there is no distance to draw", function() {
+            // a store to start out with
             const store = createStore()
             // create some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 50,
-                    y: 100,
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 50,
+                        y: 100,
+                    }
+                )
+            )
 
             // add a propagator connecting the anchors
-            store.dispatch(addPropagators({
-                id: 1,
-                kind: 'fermion',
-                anchor1: 1,
-                anchor2: 2,
-                label: 'a'
-            }))
+            store.dispatch(
+                addPropagators({
+                    id: 1,
+                    kind: 'fermion',
+                    anchor1: 1,
+                    anchor2: 2,
+                    label: 'a',
+                })
+            )
 
             // render a fermion through the diagram element
             const wrapper = mount(
@@ -202,27 +213,31 @@ describe('Interface Components', () => {
             // a store to start out with
             const store = createStore()
             // create some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 200
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 200,
+                    }
+                )
+            )
 
             // add a propagator connecting the anchors
-            store.dispatch(addPropagators({
-                id: 1,
-                kind: 'fermion',
-                anchor1: 1,
-                anchor2: 2,
-                label: 'a'
-            }))
+            store.dispatch(
+                addPropagators({
+                    id: 1,
+                    kind: 'fermion',
+                    anchor1: 1,
+                    anchor2: 2,
+                    label: 'a',
+                })
+            )
 
             // render a fermion through the diagram element
             const wrapper = mount(
@@ -242,34 +257,38 @@ describe('Interface Components', () => {
             expect(label.props()).toMatchObject({
                 distance: defaultProps.labelDistance,
                 location: defaultProps.labelLocation,
-                children: 'a'
+                children: 'a',
             })
         })
 
-        test('does not show a label if there isn\'t one', () => {
+        test("does not show a label if there isn't one", () => {
             // a store to start out with
             const store = createStore()
             // create some anchors
-            store.dispatch(addAnchors(
-                {
-                    id: 1,
-                    x: 50,
-                    y: 100,
-                },
-                {
-                    id: 2,
-                    x: 100,
-                    y: 200
-                }
-            ))
+            store.dispatch(
+                addAnchors(
+                    {
+                        id: 1,
+                        x: 50,
+                        y: 100,
+                    },
+                    {
+                        id: 2,
+                        x: 100,
+                        y: 200,
+                    }
+                )
+            )
 
             // add a propagator connecting the anchors
-            store.dispatch(addPropagators({
-                id: 1,
-                kind: 'fermion',
-                anchor1: 1,
-                anchor2: 2,
-            }))
+            store.dispatch(
+                addPropagators({
+                    id: 1,
+                    kind: 'fermion',
+                    anchor1: 1,
+                    anchor2: 2,
+                })
+            )
 
             // render a fermion through the diagram element
             const wrapper = mount(

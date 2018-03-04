@@ -8,10 +8,11 @@ import { commit, undo, redo, goto } from 'actions/history'
 describe('Reducers', () => {
     describe('History Store Enhancer', () => {
         // the initial state of our mock wrapped reducer
-        const reducerInitial = {innerState: 'world'}
+        const reducerInitial = { innerState: 'world' }
         // the reducer to wrap
-        const reducer = (state=reducerInitial, {type, payload}) => type === 'test' ? ({...state, innerState: payload}) : state
-        const reducerAction = payload => ({type: 'test', payload})
+        const reducer = (state = reducerInitial, { type, payload }) =>
+            type === 'test' ? { ...state, innerState: payload } : state
+        const reducerAction = payload => ({ type: 'test', payload })
         // wrap the reducer
         const wrapped = historyEnhancer(reducer)
 
@@ -42,12 +43,18 @@ describe('Reducers', () => {
             // make sure the head still points to the most recent value
             expect(history.get('head')).toEqual(0)
             // and that the rest of the log
-            expect(history.get('log').get(1).get('state')).toMatchObject(
-                _.omit(committed, 'history')
-            )
-            expect(history.get('log').get(0).get('state')).toMatchObject(
-                _.omit(state, 'history')
-            )
+            expect(
+                history
+                    .get('log')
+                    .get(1)
+                    .get('state')
+            ).toMatchObject(_.omit(committed, 'history'))
+            expect(
+                history
+                    .get('log')
+                    .get(0)
+                    .get('state')
+            ).toMatchObject(_.omit(state, 'history'))
         })
 
         test('undo bumps the head by one and mutates the state', () => {
@@ -59,7 +66,7 @@ describe('Reducers', () => {
             const mutated2 = wrapped(committed, reducerAction('moon2'))
             const committed2 = wrapped(mutated2, commit('test msg2'))
 
-            const {history, ...undoState} = wrapped(committed2, undo())
+            const { history, ...undoState } = wrapped(committed2, undo())
 
             // make sure we are back where we started
             expect(undoState).toEqual(_.omit(committed, 'history'))
@@ -78,7 +85,7 @@ describe('Reducers', () => {
             const committed2 = wrapped(mutated, commit('test msg'))
             const undoState = wrapped(committed2, undo())
 
-            const {history, ...redoState} = wrapped(undoState, redo())
+            const { history, ...redoState } = wrapped(undoState, redo())
 
             // make sure the head has been increased back to the most recent change
             expect(history.get('head')).toEqual(0)

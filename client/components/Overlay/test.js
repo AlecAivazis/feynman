@@ -12,11 +12,7 @@ describe('"Reusable" Components', () => {
             const spy = jest.fn()
 
             // mount the overlay
-            const wrapper = shallow(
-                <Overlay hide={spy}>
-                    foo
-                </Overlay>
-            )
+            const wrapper = shallow(<Overlay hide={spy}>foo</Overlay>)
 
             // click the root level element
             wrapper.find('aside').simulate('click')
@@ -30,11 +26,7 @@ describe('"Reusable" Components', () => {
             const spy = jest.fn()
 
             // mount the overlay
-            const wrapper = shallow(
-                <Overlay hide={spy}>
-                    foo
-                </Overlay>
-            )
+            const wrapper = shallow(<Overlay hide={spy}>foo</Overlay>)
 
             // click the content
             wrapper.find('section').simulate('click')
@@ -45,7 +37,7 @@ describe('"Reusable" Components', () => {
 
         test('places addon prop in the dom', () => {
             // the addon to the pass to the overlay
-            const Foo = () => <div/>
+            const Foo = () => <div />
             // we have to pass an instanstiated component
             const addon = <Foo />
 

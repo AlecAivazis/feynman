@@ -8,9 +8,7 @@ describe('"Reusable" Components', () => {
     describe('Color picker', () => {
         test('starts off hidden', () => {
             // render the color picker
-            const wrapper = mount(
-                <ColorPicker />
-            )
+            const wrapper = mount(<ColorPicker />)
 
             // make sure there is no Picker visible
             expect(wrapper.find(Picker)).toHaveLength(0)
@@ -18,9 +16,7 @@ describe('"Reusable" Components', () => {
 
         test('becomes visible when the user clicks on the thumbnail', () => {
             // render the color picker
-            const wrapper = mount(
-                <ColorPicker />
-            )
+            const wrapper = mount(<ColorPicker />)
 
             // click on the thumbnail
             wrapper.find('.colorThumbnail').simulate('click')
@@ -37,14 +33,15 @@ describe('"Reusable" Components', () => {
             const spy = jest.fn()
 
             // render the color picker
-            const wrapper = mount(
-                <ColorPicker onChange={spy}/>
-            )
+            const wrapper = mount(<ColorPicker onChange={spy} />)
 
             // click on the thumbnail to show the swatches
             wrapper.find('.colorThumbnail').simulate('click')
             // click on the first swatch to select its color
-            wrapper.find('Swatch').at(0).simulate('click')
+            wrapper
+                .find('Swatch')
+                .at(0)
+                .simulate('click')
 
             // make sure the spy was correctly called
             expect(spy).toHaveBeenCalledWith(color)

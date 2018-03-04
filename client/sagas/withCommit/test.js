@@ -8,7 +8,7 @@ describe('Sagas', () => {
     describe('With Commit', () => {
         test('dispatches the provided action and commits it with message', () => {
             // the action to dispatch
-            const action = {hello: 'world'}
+            const action = { hello: 'world' }
             // the message to commit with
             const msg = 'hello'
 

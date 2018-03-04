@@ -1,16 +1,11 @@
 // external imports
 import { Map, Stack, fromJS } from 'immutable'
 // local imports
-import {
-    COMMIT,
-    UNDO,
-    REDO,
-    GOTO,
-} from 'actions/history'
+import { COMMIT, UNDO, REDO, GOTO } from 'actions/history'
 
 // the default configuration
 const defaultConfig = {
-    initialMessage: ''
+    initialMessage: '',
 }
 
 // history is implemented as a store enhancer (higher-order reducer)
@@ -21,15 +16,15 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
     const initialState = {
         history: Map({
             head: 0,
-            log: Stack()
-        })
+            log: Stack(),
+        }),
     }
 
-    return ({history, ...state} = initialState, {type, payload}) => {
+    return ({ history, ...state } = initialState, { type, payload }) => {
         // the user's state
         const userState = Object.values(state).length > 0 ? state : undefined
         // the next state of the store
-        const next = reducer(userState, {type, payload})
+        const next = reducer(userState, { type, payload })
 
         // if we have to commit a new state to the log
         if (type === COMMIT) {
@@ -47,9 +42,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             // return the previous state with the current one appended to the log (head goes to 0)
             return {
                 ...next,
-                history: history
-                            .set('head', 0)
-                            .set('log', log)
+                history: history.set('head', 0).set('log', log),
             }
         }
 
@@ -66,7 +59,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             // return the appropriate state and decrement the head
             return {
                 ...state,
-                history: history.set('head', newHead)
+                history: history.set('head', newHead),
             }
         }
 
@@ -82,7 +75,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             if (!entry) {
                 return {
                     ...next,
-                    history
+                    history,
                 }
             }
 
@@ -92,7 +85,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             // return the appropriate state and decrement the head
             return {
                 ...state,
-                history: history.set('head', newHead)
+                history: history.set('head', newHead),
             }
         }
 
@@ -106,11 +99,9 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             // return the appropriate state and decrement the head
             return {
                 ...state,
-                history: history.set('head', payload)
+                history: history.set('head', payload),
             }
-
         }
-
 
         // we didn't change anything so just pass along whatever the wrapper reducer gave us
         return {

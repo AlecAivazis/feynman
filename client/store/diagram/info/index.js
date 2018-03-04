@@ -37,8 +37,7 @@ export const initialState = {
 }
 
 // return the diagram reducer
-export default (state = initialState, {type, payload}) => {
-
+export default (state = initialState, { type, payload }) => {
     // if the action means we should toggle the grid
     if (type === TOGGLE_GRID) {
         // invert the {showGrid} state variable
@@ -62,7 +61,7 @@ export default (state = initialState, {type, payload}) => {
         // change the grid size
         return {
             ...state,
-            gridSize: payload
+            gridSize: payload,
         }
     }
 
@@ -71,7 +70,7 @@ export default (state = initialState, {type, payload}) => {
         // change the hotkey visibility
         return {
             ...state,
-            showHotkeys: !state.showHotkeys
+            showHotkeys: !state.showHotkeys,
         }
     }
 
@@ -80,7 +79,7 @@ export default (state = initialState, {type, payload}) => {
         // change the history visibility
         return {
             ...state,
-            showHistory: !state.showHistory
+            showHistory: !state.showHistory,
         }
     }
 
@@ -107,7 +106,7 @@ export default (state = initialState, {type, payload}) => {
         // invert the internal state
         return {
             ...state,
-            patternModalInitalVis: !state.patternModalInitalVis
+            patternModalInitalVis: !state.patternModalInitalVis,
         }
     }
 
@@ -128,33 +127,33 @@ export default (state = initialState, {type, payload}) => {
             pan: {
                 x: state.pan.x + (payload.x || 0),
                 y: state.pan.y + (payload.y || 0),
-            }
+            },
         }
     }
 
     // if the action specifies the zoom level
-    if(type === SET_ZOOM) {
+    if (type === SET_ZOOM) {
         return {
             ...state,
             // make sure we save what we got
-            zoomLevel: payload
+            zoomLevel: payload,
         }
     }
 
     // if the action designates we need to zoom in
-    if(type === ZOOM_IN) {
+    if (type === ZOOM_IN) {
         return {
             ...state,
             // make sure we don't go past the max
-            zoomLevel: Math.min(state.zoomLevel + .1, maxZoom)
+            zoomLevel: Math.min(state.zoomLevel + 0.1, maxZoom),
         }
     }
 
     // if the action designates we need to zoom out
-    if(type === ZOOM_OUT) {
+    if (type === ZOOM_OUT) {
         return {
             ...state,
-            zoomLevel: Math.max(state.zoomLevel - .1, minZoom)
+            zoomLevel: Math.max(state.zoomLevel - 0.1, minZoom),
         }
     }
 

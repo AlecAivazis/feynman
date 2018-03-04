@@ -14,30 +14,24 @@ class SliderHandle extends React.Component {
 
         // render the component
         return (
-            <span style={{...styles.slider, left: `${offset}%`}}>
+            <span style={{ ...styles.slider, left: `${offset}%` }}>
                 <span style={styles.innerSlider} />
             </span>
         )
     }
 }
 
-const GridSizeControl = ({info, dispatch, style, ...unusedProps}) => (
-    <div style={{...styles.container, ...style}} {...unusedProps}>
+const GridSizeControl = ({ info, dispatch, style, ...unusedProps }) => (
+    <div style={{ ...styles.container, ...style }} {...unusedProps}>
         <div style={styles.header}>
             <Label>grid</Label>
-            <span style={styles.sizeIndicator}>
-                {info.gridSize}
-            </span>
+            <span style={styles.sizeIndicator}>{info.gridSize}</span>
         </div>
         <div style={styles.sliderContainer}>
-            <Slider
-                step={10}
-                value={info.gridSize}
-                onChange={value => dispatch(setGridSize(value))}
-            />
+            <Slider step={10} value={info.gridSize} onChange={value => dispatch(setGridSize(value))} />
         </div>
     </div>
 )
 
-const selector = ({diagram: {info}}) => ({info})
+const selector = ({ diagram: { info } }) => ({ info })
 export default connect(selector)(GridSizeControl)

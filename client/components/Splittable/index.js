@@ -18,16 +18,15 @@ import { throttle, fixDeltaToGrid, round } from 'utils'
 import { EventListener } from 'components'
 
 class Splittable extends React.Component {
-
     static propsTypes = {
         element: PropTypes.string.isRequired,
         split: PropTypes.func.isRequired,
-        type: PropTypes.string.isRequired
+        type: PropTypes.string.isRequired,
     }
 
     static defaultProps = {
         split: id => id, // default, don't split anything
-        snap: () => {}
+        snap: () => {},
     }
 
     state = {
@@ -43,15 +42,7 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // grab the used props
-        let {
-            elements,
-            element,
-            type,
-            selectElements,
-            splitElement,
-            id,
-            info,
-        } = this.props
+        let { elements, element, type, selectElements, splitElement, id, info } = this.props
 
         // save a reference to the selected elements
         const selected = elements.selection[type]
@@ -64,30 +55,27 @@ class Splittable extends React.Component {
         }
 
         // if the element is not already part of the selector
-        if (!(selected && selected.indexOf(element.id) > -1 )) {
+        if (!(selected && selected.indexOf(element.id) > -1)) {
             // if the altkey was held when the drag started
             if (event.altKey) {
                 // let the user do what they want (they will return the id to follow)
-                splitElement({element, type, location: relativePosition(origin, info)})
+                splitElement({ element, type, location: relativePosition(origin, info) })
                 // we created a new element
                 action = 'create'
             } else {
                 // the current element
-                const current = {id: element.id, type}
+                const current = { id: element.id, type }
 
                 // if the user is holding down shift
                 if (event.shiftKey) {
                     // the list of selected elements
-                    const selection = _.flatMap(Object.keys(elements.selection),
-                        eType => (
-                            elements.selection[eType].map(id => ({id, type: eType}))
-                        )
+                    const selection = _.flatMap(Object.keys(elements.selection), eType =>
+                        elements.selection[eType].map(id => ({ id, type: eType }))
                     )
                     // add the element to the current selection
                     selectElements(...selection, current)
-                }
-                // the user is not holding shift
-                else {
+                } else {
+                    // the user is not holding shift
                     // only select the clicked element
                     selectElements(current)
                 }
@@ -112,7 +100,15 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // get the used props
-        const { type, info, elements, element, setElementAttrs, moveSelectedElements, snapSelectedElements } = this.props
+        const {
+            type,
+            info,
+            elements,
+            element,
+            setElementAttrs,
+            moveSelectedElements,
+            snapSelectedElements,
+        } = this.props
         const { origin, moveTarget, moveType } = this.state
         // if the mouse is down
         if (origin) {
@@ -121,7 +117,7 @@ class Splittable extends React.Component {
                 // make sure the element starts from the grid
                 snapSelectedElements()
                 // make sure we don't do it another time
-                this.setState({snapped: true})
+                this.setState({ snapped: true })
             }
 
             // the location of the mouse in the diagram's coordinate space
@@ -131,10 +127,10 @@ class Splittable extends React.Component {
             }
 
             // the location to move to
-            const fixed = fixDeltaToGrid({origin, next: mouse, info})
+            const fixed = fixDeltaToGrid({ origin, next: mouse, info })
             const delta = {
                 x: (fixed.x - origin.x) / info.zoomLevel,
-                y: (fixed.y - origin.y ) / info.zoomLevel,
+                y: (fixed.y - origin.y) / info.zoomLevel,
             }
 
             // move the selected anchors
@@ -142,7 +138,7 @@ class Splittable extends React.Component {
             // save the current location for the next time we move the element
             this.setState({
                 origin: fixed,
-                action: this.state.action !== 'create' ? 'move' : 'create'
+                action: this.state.action !== 'create' ? 'move' : 'create',
             })
         }
     }
@@ -176,23 +172,19 @@ class Splittable extends React.Component {
     }
 
     render() {
-        const { children:child, ...unusedProps } = this.props
+        const { children: child, ...unusedProps } = this.props
 
         return (
             <g onMouseDown={this._mouseDown}>
-                <EventListener event="mousemove">
-                    {this._mouseMove}
-                </EventListener>
-                <EventListener event="mouseup">
-                    {this._mouseUp}
-                </EventListener>
+                <EventListener event="mousemove">{this._mouseMove}</EventListener>
+                <EventListener event="mouseup">{this._mouseUp}</EventListener>
                 {React.Children.only(child)}
             </g>
         )
     }
 }
 
-const selector = ({diagram: {elements, info}}) => ({elements, info})
+const selector = ({ diagram: { elements, info } }) => ({ elements, info })
 const mapDispatchToProps = (dispatch, props) => ({
     moveSelectedElements: move => dispatch(moveSelectedElements(move)),
     // tell the store to merge overlapping elements
@@ -207,6 +199,5 @@ const mapDispatchToProps = (dispatch, props) => ({
     commitWithMessage: msg => dispatch(commit(msg)),
     // snap the element we are dragging to the grid
     snapSelectedElements: () => dispatch(snap()),
-
 })
 export default connect(selector, mapDispatchToProps)(Splittable)

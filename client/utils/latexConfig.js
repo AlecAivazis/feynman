@@ -6,7 +6,7 @@ import { round as roundTo, elementsWithLocations, diagramBoundingBox } from 'uti
 
 // round a number to the tenths place to show in latex (package assumes grid of 50)
 const round = n => (Math.round(n / 50 * 10) / 10).toFixed(2)
-const strip = val => val.slice(1, val.length-1)
+const strip = val => val.slice(1, val.length - 1)
 
 // a mapping of internal props to config options used by the latex library
 const configMap = {
@@ -18,7 +18,7 @@ const configMap = {
 
 // a mapping of propagator kinds to their equivalent in the latex library
 const kindMap = {
-    em: 'electroweak'
+    em: 'electroweak',
 }
 
 // extract the $'s from a value
@@ -26,7 +26,7 @@ const numericValue = val => parseFloat(strip(val))
 
 // a mapping of keys to transformations when turning the values to their latex equivalent
 const valueMap = {
-    stroke: val => val.slice(2, val.length-1),
+    stroke: val => val.slice(2, val.length - 1),
     labelDistance: val => round(numericValue(val)),
     labelLocation: val => numericValue(val).toFixed(2),
     strokeWidth: numericValue,
@@ -36,44 +36,29 @@ const valueMap = {
 
 // a map of functions that add additional values for the config
 const extraValues = {
-    arrow: val => (
-        val === 0 ? 'showArrow=false' : `showArrow=true, flip=${JSON.stringify(val === -1)}`
-    ),
-    direction: val => (
-        val === '$1$' ? '' : 'flip=true'
-    ),
+    arrow: val => (val === 0 ? 'showArrow=false' : `showArrow=true, flip=${JSON.stringify(val === -1)}`),
+    direction: val => (val === '$1$' ? '' : 'flip=true'),
 }
 
-const transformCoords = ({x, y}, bb) => ({
+const transformCoords = ({ x, y }, bb) => ({
     // shift all x's to be relative to left of bb
     x: round(x - bb.x1, 50),
     // we need to raise the coordinate by the height of the bounding box
     y: round(-y + bb.y2, 50),
 })
 
-export const propagatorConfig = ({
-    info,
-    id,
-    x1:propX1,
-    x2:propX2,
-    y1:propY1,
-    y2:propY2,
-    anchor1,
-    anchor2,
-    kind,
-    dispatch,
-    type,
-    ...propagator
-}, bb) => {
+export const propagatorConfig = (
+    { info, id, x1: propX1, x2: propX2, y1: propY1, y2: propY2, anchor1, anchor2, kind, dispatch, type, ...propagator },
+    bb
+) => {
     // mix in the default arguments with the configuration
     const params = {
         ...propagator,
-
     }
 
     // the configuration string
-    const config = Object.keys(propagator).map(
-        prop => {
+    const config = Object.keys(propagator)
+        .map(prop => {
             // use the entry in the config map if it exists
             const key = configMap[prop] || prop
             // make sure to transform the value appropriately if we have to
@@ -82,11 +67,12 @@ export const propagatorConfig = ({
 
             // join them in the appropriate manner, allowing for the pure mapping
             return extraValues[prop] ? extraValues[prop](value) : `${key}=${value}`
-        }
-    ).filter(val => val).join(', ')
+        })
+        .filter(val => val)
+        .join(', ')
 
-    const {x: x1, y: y1} = transformCoords({x: propX1, y: propY1}, bb)
-    const {x: x2, y: y2} = transformCoords({x: propX2, y: propY2}, bb)
+    const { x: x1, y: y1 } = transformCoords({ x: propX1, y: propY1 }, bb)
+    const { x: x2, y: y2 } = transformCoords({ x: propX2, y: propY2 }, bb)
 
     // the position string
     const position = `{${x1}, ${y1}}{${x2}, ${y2}}`
@@ -94,26 +80,26 @@ export const propagatorConfig = ({
     return `\\${kindMap[kind] || kind}[${config}]${position}`
 }
 
-const partonConfig = ({x, y, r = 25}, bb) => {
+const partonConfig = ({ x, y, r = 25 }, bb) => {
     // get the right coordinates in latex space
-    const rel = transformCoords({x, y}, bb)
+    const rel = transformCoords({ x, y }, bb)
 
     // return the latex string
     return `\\parton{${rel.x},${rel.y}}{${round(r, 50)}}`
 }
 
-export const textConfig = ({x, y, value}, bb) => {
+export const textConfig = ({ x, y, value }, bb) => {
     // get the right coordinates in latex space
-    const rel = transformCoords({x, y}, bb)
+    const rel = transformCoords({ x, y }, bb)
 
     // return the latex string
     return `\\text{${rel.x},${rel.y}}{${value}}`
 }
 
-
-export const shapeConfig = ({kind, ...shape}, bb) => ({
-   parton: partonConfig,
-})[kind](shape, bb)
+export const shapeConfig = ({ kind, ...shape }, bb) =>
+    ({
+        parton: partonConfig,
+    }[kind](shape, bb))
 
 // latexConfig returns the string for the diagram object
 export const latexConfig = elements => {

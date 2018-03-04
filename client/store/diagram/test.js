@@ -21,7 +21,7 @@ describe('Reducers', () => {
         const initialAnchor = {
             id: 1,
             x: 50,
-            y: 50
+            y: 50,
         }
 
         beforeEach(function() {
@@ -38,7 +38,6 @@ describe('Reducers', () => {
         })
 
         describe('Moving elements', () => {
-
             test('can move selected anchors', () => {
                 // the anchors we are going to start off with
                 const anchors = [
@@ -55,24 +54,27 @@ describe('Reducers', () => {
                     {
                         id: 3,
                         x: 500,
-                        y: 100
-                    }
+                        y: 100,
+                    },
                 ]
 
                 // start off with some anchors
                 const initialState = reducer(undefined, addAnchors(...anchors))
 
                 // select a subset of the anchors
-                const selectedState = reducer(initialState, selectElements(
-                    {
-                        type: 'anchors',
-                        id: 1,
-                    },
-                    {
-                        type: 'anchors',
-                        id: 2,
-                    }
-                ))
+                const selectedState = reducer(
+                    initialState,
+                    selectElements(
+                        {
+                            type: 'anchors',
+                            id: 1,
+                        },
+                        {
+                            type: 'anchors',
+                            id: 2,
+                        }
+                    )
+                )
 
                 // the move to issue on the selected anchors
                 const move = {
@@ -109,30 +111,32 @@ describe('Reducers', () => {
                     {
                         id: 3,
                         x: 500,
-                        y: 100
-                    }
+                        y: 100,
+                    },
                 ]
 
                 // start off with some anchors
                 const initialState = reducer(undefined, addAnchors(...anchors))
 
                 // add a propagator connecting the two
-                const propagatorState = reducer(initialState, addPropagators(
-                    {
+                const propagatorState = reducer(
+                    initialState,
+                    addPropagators({
                         id: 1,
                         kind: 'fermion',
                         anchor1: 1,
                         anchor2: 2,
-                    }
-                ))
+                    })
+                )
 
                 // select the propagator
-                const selectedState = reducer(propagatorState, selectElements(
-                    {
+                const selectedState = reducer(
+                    propagatorState,
+                    selectElements({
                         type: 'propagators',
                         id: 1,
-                    }
-                ))
+                    })
+                )
 
                 // the amount of move the propagator
                 const move = {
@@ -160,19 +164,20 @@ describe('Reducers', () => {
                         id: 1,
                         x: 50,
                         y: 100,
-                    }
+                    },
                 ]
 
                 // start off with some anchors
                 const initialState = reducer(undefined, addAnchors(...anchors))
 
                 // select a subset of the anchors
-                const selectedState = reducer(initialState, selectElements(
-                    {
+                const selectedState = reducer(
+                    initialState,
+                    selectElements({
                         type: 'anchors',
                         id: 1,
-                    },
-                ))
+                    })
+                )
 
                 // the move to issue on the selected anchors
                 const move = {
@@ -194,21 +199,22 @@ describe('Reducers', () => {
                         id: 1,
                         x: 50,
                         y: 100,
-                    }
+                    },
                 ]
 
                 // start off with some anchors
                 const initialState = reducer(undefined, addAnchors(...anchors))
                 // pin the anchor we just created
-                const pinnedState = reducer(initialState, setElementAttrs({type: 'anchors', id: 1, fixed: true}))
+                const pinnedState = reducer(initialState, setElementAttrs({ type: 'anchors', id: 1, fixed: true }))
 
                 // select a subset of the anchors
-                const selectedState = reducer(pinnedState, selectElements(
-                    {
+                const selectedState = reducer(
+                    pinnedState,
+                    selectElements({
                         type: 'anchors',
                         id: 1,
-                    },
-                ))
+                    })
+                )
 
                 // the move to issue on the selected anchors
                 const move = {
@@ -230,19 +236,20 @@ describe('Reducers', () => {
                         id: 1,
                         x: 50,
                         y: 100,
-                    }
+                    },
                 ]
 
                 // start off with some anchors
                 const initialState = reducer(undefined, addAnchors(...anchors))
 
                 // select a subset of the anchors
-                const selectedState = reducer(initialState, selectElements(
-                    {
+                const selectedState = reducer(
+                    initialState,
+                    selectElements({
                         type: 'anchors',
                         id: 1,
-                    },
-                ))
+                    })
+                )
 
                 // the move to issue on the selected anchors
                 const move = {
@@ -267,19 +274,20 @@ describe('Reducers', () => {
                         id: 1,
                         x: 50,
                         y: 100,
-                    }
+                    },
                 ]
 
                 // add some anchors
                 const anchorState = reducer(diagram, addAnchors(...anchors))
 
                 // select a subset of the anchors
-                const selectedState = reducer(anchorState, selectElements(
-                    {
+                const selectedState = reducer(
+                    anchorState,
+                    selectElements({
                         type: 'anchors',
                         id: 1,
-                    },
-                ))
+                    })
+                )
 
                 // set the grid size to zero
 
@@ -302,19 +310,20 @@ describe('Reducers', () => {
                     id: 1,
                     x: 50,
                     y: 100,
-                    value: "hello world",
+                    value: 'hello world',
                 }
 
                 // add the text element
-                const elementState = reducer(undefined, addElements({type: 'text', ...text}))
+                const elementState = reducer(undefined, addElements({ type: 'text', ...text }))
 
                 // select a subset of the anchors
-                const selectedState = reducer(elementState, selectElements(
-                    {
+                const selectedState = reducer(
+                    elementState,
+                    selectElements({
                         type: 'text',
                         id: text.id,
-                    },
-                ))
+                    })
+                )
 
                 // the move to issue on the selected anchors
                 const move = {
@@ -334,19 +343,20 @@ describe('Reducers', () => {
                     id: 1,
                     x: 50,
                     y: 100,
-                    kind: "parton",
+                    kind: 'parton',
                 }
 
                 // add the shape element
-                const elementState = reducer(undefined, addElements({type: 'shapes', ...shape}))
+                const elementState = reducer(undefined, addElements({ type: 'shapes', ...shape }))
 
                 // select a subset of the anchors
-                const selectedState = reducer(elementState, selectElements(
-                    {
+                const selectedState = reducer(
+                    elementState,
+                    selectElements({
                         type: 'shapes',
                         id: shape.id,
-                    },
-                ))
+                    })
+                )
 
                 // the move to issue on the selected anchors
                 const move = {
@@ -364,16 +374,17 @@ describe('Reducers', () => {
         describe('Snap elements', () => {
             test('snap anchors', () => {
                 // start off with some anchors
-                const anchorState = reducer(undefined, addAnchors(
-                    {
+                const anchorState = reducer(
+                    undefined,
+                    addAnchors({
                         id: 1,
                         x: 75,
                         y: 75,
-                    }
-                ))
+                    })
+                )
 
                 // select the anchor we just made
-                const selectedState = reducer(anchorState, selectElements({id: 1, type: 'anchors'}))
+                const selectedState = reducer(anchorState, selectElements({ id: 1, type: 'anchors' }))
 
                 // snap the selected anchor to the grid
                 const snappedState = reducer(selectedState, snapSelectedElements())
@@ -387,29 +398,35 @@ describe('Reducers', () => {
 
             test('snap propagators', () => {
                 // start off with some anchors
-                const anchorState = reducer(undefined, addAnchors(
-                    {
-                        id: 1,
-                        x: 25,
-                        y: 25,
-                    },
-                    {
-                        id: 2,
-                        x: 112,
-                        y: 112,
-                    }
-                ))
+                const anchorState = reducer(
+                    undefined,
+                    addAnchors(
+                        {
+                            id: 1,
+                            x: 25,
+                            y: 25,
+                        },
+                        {
+                            id: 2,
+                            x: 112,
+                            y: 112,
+                        }
+                    )
+                )
 
                 // and a propagator joining them
-                const propState = reducer(anchorState, addPropagators({
-                    id: 1,
-                    kind: 'fermion',
-                    anchor1: 1,
-                    anchor2: 2,
-                }))
+                const propState = reducer(
+                    anchorState,
+                    addPropagators({
+                        id: 1,
+                        kind: 'fermion',
+                        anchor1: 1,
+                        anchor2: 2,
+                    })
+                )
 
                 // select the propagator we just made
-                const selectedState = reducer(propState, selectElements({id: 1, type: 'propagators'}))
+                const selectedState = reducer(propState, selectElements({ id: 1, type: 'propagators' }))
 
                 // snap the selected anchor to the grid
                 const snappedState = reducer(selectedState, snapSelectedElements())
@@ -427,16 +444,19 @@ describe('Reducers', () => {
 
             test('snap shapes', () => {
                 // start off with a shape that's off-grid
-                const shapeState = reducer(undefined, addElements({
-                    id: 1,
-                    type: "shapes",
-                    kind: "parton",
-                    x: 50,
-                    y: 60,
-                }))
+                const shapeState = reducer(
+                    undefined,
+                    addElements({
+                        id: 1,
+                        type: 'shapes',
+                        kind: 'parton',
+                        x: 50,
+                        y: 60,
+                    })
+                )
 
                 // select the shape we just made
-                const selectedState = reducer(shapeState, selectElements({id: 1, type: 'shapes'}))
+                const selectedState = reducer(shapeState, selectElements({ id: 1, type: 'shapes' }))
 
                 // snap the selected anchor to the grid
                 const snappedState = reducer(selectedState, snapSelectedElements())

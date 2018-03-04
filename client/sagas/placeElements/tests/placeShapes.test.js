@@ -13,17 +13,19 @@ describe('Sagas', () => {
                     id: 1,
                     x: 75,
                     y: 80,
-                    kind: "parton",
+                    kind: 'parton',
                 }
 
                 // get the generator
                 const gen = placeShapes(desc)
                 // the only thing we have to do is create the anchor
                 expect(gen.next().value).toEqual(
-                    put(addElements({
-                        type: 'shapes',
-                        ...desc,
-                    }))
+                    put(
+                        addElements({
+                            type: 'shapes',
+                            ...desc,
+                        })
+                    )
                 )
 
                 // make sure there isn't anything left

@@ -4,7 +4,7 @@ import React from 'react'
 import styles from './styles'
 
 const SelectionSummaryLabel = ({ style, children, ...unusedProps }) => (
-    <div style={{...styles.container, ...style}} {...unusedProps}>
+    <div style={{ ...styles.container, ...style }} {...unusedProps}>
         {children}
     </div>
 )

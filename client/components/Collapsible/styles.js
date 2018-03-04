@@ -18,5 +18,5 @@ export default {
         fontWeight: 'bold',
         color: blue,
         textTransform: 'capitalize',
-    }
+    },
 }

@@ -3,10 +3,10 @@ import React from 'react'
 // local imports
 import styles from './styles'
 
-const Input = ({style, onKeyDown, ...unusedProps}) => (
+const Input = ({ style, onKeyDown, ...unusedProps }) => (
     <input
-        style={{...styles.input, ...style}}
-        onKeyDown={evt =>{
+        style={{ ...styles.input, ...style }}
+        onKeyDown={evt => {
             evt.stopPropagation()
         }}
         {...unusedProps}
@@ -14,7 +14,7 @@ const Input = ({style, onKeyDown, ...unusedProps}) => (
 )
 
 Input.defaultProps = {
-    onKeyDown: () => {}
+    onKeyDown: () => {},
 }
 
 export default Input

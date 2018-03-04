@@ -4,5 +4,5 @@ export default {
     container: {},
     gridLine: {
         stroke: sighGrey,
-    }
+    },
 }

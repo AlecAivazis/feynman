@@ -25,5 +25,5 @@ export default {
     elementWithBorder: {
         padding: elementSpacing,
         borderBottom: `1px solid ${yagLGrey}`,
-    }
+    },
 }

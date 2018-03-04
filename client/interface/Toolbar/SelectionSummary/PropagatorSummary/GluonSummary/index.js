@@ -8,17 +8,17 @@ import Gluon from 'interface/Diagram/Propagator/Gluon'
 
 const defaults = Gluon.defaultProps
 
-const GluonSummary = ({setAttrs, endcaps=defaults.endcaps, direction=defaults.direction, ...unusedProps}) => (
+const GluonSummary = ({ setAttrs, endcaps = defaults.endcaps, direction = defaults.direction, ...unusedProps }) => (
     <MultiRow>
         <ButtonRow>
-            <Button style={styles.button} onClick={() => setAttrs({direction: -direction})}>
+            <Button style={styles.button} onClick={() => setAttrs({ direction: -direction })}>
                 Invert Loop Direction
             </Button>
         </ButtonRow>
         <ButtonRow>
             <ToggleButton
                 style={styles.button}
-                onClick={() => setAttrs({endcaps: !endcaps})}
+                onClick={() => setAttrs({ endcaps: !endcaps })}
                 active={endcaps}
                 activeText="Hide End Caps"
                 inactiveText="Draw End Caps"

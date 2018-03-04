@@ -24,5 +24,5 @@ export default {
     },
     contentWrapper: {
         width: '70%',
-    }
+    },
 }

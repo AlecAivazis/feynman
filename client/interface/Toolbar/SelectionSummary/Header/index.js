@@ -4,8 +4,8 @@ import React from 'react'
 import styles from './styles'
 
 const SelectionSummaryHeader = ({ style, children, ...unusedProps }) => (
-    <div style={{...styles.container, ...style}} {...unusedProps}>
-        { children }
+    <div style={{ ...styles.container, ...style }} {...unusedProps}>
+        {children}
     </div>
 )
 

@@ -4,7 +4,5 @@ export default {
         height: 24,
         fontSize: 12,
     },
-    option: {
-
-    }
+    option: {},
 }
