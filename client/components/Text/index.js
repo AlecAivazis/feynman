@@ -7,9 +7,12 @@ class Text extends React.Component {
     componentDidMount() {
         // create a browser image we can use to find the height and width
         var img = new Image()
-        img.src = logoUrl
+        img.src = this._imgUrl
         img.onload = () => {
-            console.log(img.width, img.height)
+            this.setState({
+                width: img.height,
+                height: img.height,
+            })
         }
     }
 
@@ -18,12 +21,13 @@ class Text extends React.Component {
         height: 0,
     }
 
-    _imgUrl = () =>
-        `/latex?${queryString.stringify({
+    get _imgUrl() {
+        return `/latex?${queryString.stringify({
             string: this.props.children.trim(),
             mathMode: JSON.stringify(this.props.math),
             color: this.props.color,
         })}`
+    }
 
     render() {
         const { math, children, x, y, color, ...unused } = this.props
@@ -38,7 +42,17 @@ class Text extends React.Component {
         }
 
         // return the image primitive that will be embedded an an svg
-        return <image x={x} y={y} href={this._imgUrl} xlinkHref={this._imgUrl} {...unused} />
+        return (
+            <image
+                x={x}
+                y={y}
+                width={this.state.width}
+                height={this.state.height}
+                href={this._imgUrl}
+                xlinkHref={this._imgUrl}
+                {...unused}
+            />
+        )
     }
 }
 
