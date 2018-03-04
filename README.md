@@ -14,5 +14,5 @@ the backend (responsible for rendering latex) was also rewritten from python to 
 The tests are written using jest:
 
 ```bash
-yarn && npm run test
+npm i && npm run test
 ```
