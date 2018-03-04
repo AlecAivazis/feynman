@@ -1,84 +1,95 @@
 {
-  "name": "feynman",
-  "description": "A tool for drawing feynamn diagrams.",
-  "version": "1.0.1",
-  "private": true,
-  "homepage": "https://github.com/AlecAivazis/feynamn#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AlecAivazis/feynamn.git"
-  },
-  "author": "Alec Aivazis",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AlecAivazis/feynamn/issues"
-  },
-  "scripts": {
-    "build": "webpack --config config/webpack.js",
-    "build:production": "NODE_ENV=production npm run build && cp config/_redirects build/",
-    "dev": "webpack-dev-server --inline --hot --config config/webpack.js --content-base build/",
-    "test": "NODE_ENV=test jest",
-    "test:watch": "npm run test -- --watch",
-    "test:coverage": "npm run test -- --coverage",
-    "test:coverage:report": "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
-  },
-  "jest": {
-    "modulePaths": [
-      "<rootDir>/client"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/config/__mocks__/styleMock.js"
+    "name": "feynman",
+    "description": "A tool for drawing feynamn diagrams.",
+    "version": "1.0.1",
+    "private": true,
+    "homepage": "https://github.com/AlecAivazis/feynamn#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AlecAivazis/feynamn.git"
     },
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils",
-      "<rootDir>/node_modules/fbjs"
-    ]
-  },
-  "dependencies": {
-    "autobind-decorator": "^1.3.4",
-    "babel-jest": "^19.0.0",
-    "file-saver": "^1.3.3",
-    "immutable": "^3.8.1",
-    "lodash": "^4.17.3",
-    "prop-types": "^15.5.4",
-    "query-string": "^4.3.2",
-    "rc-slider": "^5.4.0",
-    "react": "^15.4.1",
-    "react-color": "^2.11.1",
-    "react-dom": "^15.4.1",
-    "react-liftc": "^0.0.6",
-    "react-redux": "^5.0.1",
-    "redux": "^3.6.0",
-    "redux-responsive": "^4.1.1",
-    "redux-saga": "^0.14.3",
-    "redux-thunk": "^2.1.0",
-    "svg-matrix": "^0.0.8"
-  },
-  "devDependencies": {
-    "babel-core": "^6.7.6",
-    "babel-eslint": "^6.0.2",
-    "babel-loader": "^6.4.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-polyfill": "^6.20.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-0": "^6.16.0",
-    "coveralls": "^2.13.0",
-    "css-loader": "^0.28.0",
-    "enzyme": "^2.7.0",
-    "eslint-loader": "^1.6.1",
-    "eslint-plugin-babel": "^4.0.0",
-    "eslint-plugin-react": "^6.8.0",
-    "file-loader": "^0.8.5",
-    "html-webpack-plugin": "^2.24.1",
-    "jest-cli": "^19.0.2",
-    "react-addons-test-utils": "^15.4.1",
-    "style-loader": "^0.16.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^2.3.3",
-    "webpack-dev-server": "^2.4.2"
-  }
+    "author": "Alec Aivazis",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/AlecAivazis/feynamn/issues"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "printWidth": 120,
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "es5"
+    },
+    "scripts": {
+        "build": "webpack --config config/webpack.js",
+        "build:production": "NODE_ENV=production npm run build && cp config/_redirects build/",
+        "dev": "webpack-dev-server --inline --hot --config config/webpack.js --content-base build/",
+        "test": "NODE_ENV=test jest",
+        "test:watch": "npm run test -- --watch",
+        "test:coverage": "npm run test -- --coverage",
+        "test:coverage:report":
+            "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+        "__internal__prettier": "prettier 'client/**/!(__generated__)/*.js'",
+        "format": "npm run __internal__prettier -- --write",
+        "format:check": "npm run __internal__prettier -- --list-different"
+    },
+    "jest": {
+        "modulePaths": ["<rootDir>/client"],
+        "moduleNameMapper": {
+            "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+                "<rootDir>/config/__mocks__/fileMock.js",
+            "\\.(css|less)$": "<rootDir>/config/__mocks__/styleMock.js"
+        },
+        "unmockedModulePathPatterns": [
+            "<rootDir>/node_modules/react",
+            "<rootDir>/node_modules/react-dom",
+            "<rootDir>/node_modules/react-addons-test-utils",
+            "<rootDir>/node_modules/fbjs"
+        ]
+    },
+    "dependencies": {
+        "autobind-decorator": "^1.3.4",
+        "babel-jest": "^19.0.0",
+        "file-saver": "^1.3.3",
+        "immutable": "^3.8.1",
+        "lodash": "^4.17.3",
+        "prettier": "^1.11.1",
+        "prop-types": "^15.5.4",
+        "query-string": "^4.3.2",
+        "rc-slider": "^5.4.0",
+        "react": "^15.4.1",
+        "react-color": "^2.11.1",
+        "react-dom": "^15.4.1",
+        "react-liftc": "^0.0.6",
+        "react-redux": "^5.0.1",
+        "redux": "^3.6.0",
+        "redux-responsive": "^4.1.1",
+        "redux-saga": "^0.14.3",
+        "redux-thunk": "^2.1.0",
+        "svg-matrix": "^0.0.8"
+    },
+    "devDependencies": {
+        "babel-core": "^6.7.6",
+        "babel-eslint": "^6.0.2",
+        "babel-loader": "^6.4.1",
+        "babel-plugin-transform-decorators-legacy": "^1.3.4",
+        "babel-polyfill": "^6.20.0",
+        "babel-preset-es2015": "^6.18.0",
+        "babel-preset-react": "^6.16.0",
+        "babel-preset-stage-0": "^6.16.0",
+        "coveralls": "^2.13.0",
+        "css-loader": "^0.28.0",
+        "enzyme": "^2.7.0",
+        "eslint-loader": "^1.6.1",
+        "eslint-plugin-babel": "^4.0.0",
+        "eslint-plugin-react": "^6.8.0",
+        "file-loader": "^0.8.5",
+        "html-webpack-plugin": "^2.24.1",
+        "jest-cli": "^19.0.2",
+        "react-addons-test-utils": "^15.4.1",
+        "style-loader": "^0.16.1",
+        "url-loader": "^0.5.7",
+        "webpack": "^2.3.3",
+        "webpack-dev-server": "^2.4.2"
+    }
 }

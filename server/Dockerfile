@@ -4,22 +4,24 @@ FROM golang
 RUN apt update && \
     apt upgrade -y && \
     apt install -y \
-        imagemagick \
-        texlive-latex-recommended \
-        texlive-latex-extra \
-        texlive-science \
-        texlive-math-extra \
-        texlive-latex-extra \
-        texlive-fonts-recommended \
-        texlive-fonts-extra
+    imagemagick \
+    texlive-latex-recommended \
+    texlive-latex-extra \
+    texlive-science \
+    texlive-math-extra \
+    texlive-latex-extra \
+    texlive-fonts-recommended \
+    texlive-fonts-extra
+
+WORKDIR $GOPATH/src/github.com/AlecAivazis/feynman
 
 # copy server source over
-ADD . /go/src/github.com/alecaivazis/feynman
+ADD . .
+
 # install dependencies
-RUN go get github.com/alecaivazis/feynman/...
+RUN go get ./...
 
-WORKDIR $GOPATH/src/github.com/alecaivazis/feynman
-
+# build the server binary
 RUN go build .
 
 # run the server

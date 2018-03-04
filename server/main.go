@@ -63,6 +63,12 @@ func main() {
 
 	// notify the user we're going to start the server
 	fmt.Println("listening on " + port)
+
 	// start the server
-	http.ListenAndServe(port, nil)
+	err := http.ListenAndServe(port, nil)
+	// if something went wrong
+	if err != nil {
+		// yell loudly
+		panic(err)
+	}
 }
