@@ -4,7 +4,16 @@ import PropTypes from 'prop-types'
 import queryString from 'query-string'
 
 class Text extends React.Component {
-    componentDidMount() {
+    componentDidMount = () => this._updateImage()
+
+    componentWillReceiveProps = () => this._updateImage()
+
+    state = {
+        width: 0,
+        height: 0,
+    }
+
+    _updateImage = () => {
         // create a browser image we can use to find the height and width
         var img = new Image()
         img.src = this._imgUrl
@@ -14,11 +23,6 @@ class Text extends React.Component {
                 height: img.height,
             })
         }
-    }
-
-    state = {
-        width: 0,
-        height: 0,
     }
 
     get _imgUrl() {
