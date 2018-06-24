@@ -7,7 +7,7 @@ import styles from './styles'
 import { MultiRow, SliderRow, ButtonRow, Row, Label, Header, Container } from '..'
 import { ColorPicker, Button, ToggleButton, RedButton } from 'components'
 import { setElementAttrs, deleteElements, alignSelectedAnchors } from 'actions/elements'
-import { withCommit } from 'actions/history'
+import { commit } from 'actions/history'
 
 const AnchorSummary = ({
     anchors,
@@ -16,6 +16,7 @@ const AnchorSummary = ({
     deleteAnchors,
     alignAnchors,
     showDelete = true,
+    commit,
     ...unusedProps
 }) => {
     // figure out if anchor needs to be pluralized
@@ -31,9 +32,24 @@ const AnchorSummary = ({
             <Header>{`${anchors.length} ${anchor} selected`}</Header>
             <Row>
                 <Label>color:</Label>
-                <ColorPicker style={styles.colorPicker} color={fill || 'black'} onChange={fill => setAttrs({ fill })} />
+                <ColorPicker
+                    style={styles.colorPicker}
+                    color={fill || 'black'}
+                    onChange={fill => {
+                        setAttrs({ fill })
+                        commit(`set anchor color to ${fill}`)
+                    }}
+                />
             </Row>
-            <SliderRow label="size" value={r} onChange={r => setAttrs({ r })} min={1} max={10} step={1} />
+            <SliderRow
+                label="size"
+                value={r}
+                onChange={r => setAttrs({ r })}
+                min={1}
+                max={10}
+                step={1}
+                onAfterChange={val => commit(`set anchor size to ${val}`)}
+            />
 
             {anchors.length === 1 && (
                 <ButtonRow>
@@ -96,6 +112,8 @@ const mapDispatchToProps = (dispatch, { anchors }) => ({
             withCommit(deleteElements(...anchors.map(id => ({ type: 'anchors', id }))), 'removed anchors from diagram')
         ),
     alignAnchors: dir => () => dispatch(withCommit(alignSelectedAnchors(dir), `aligned anchors ${dir}ly`)),
+    // dispatch actions with a commit message
+    commit: msg => dispatch(commit(msg)),
 })
 
 // the anchor summary needs the elements object
