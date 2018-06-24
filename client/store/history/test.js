@@ -33,28 +33,18 @@ describe('Reducers', () => {
 
         test('committing appends the current state to the log', () => {
             // mutate the state and commit it
-            const middle = wrapped(initial, reducerAction('middle state'))
-            const committed = wrapped(middle, commit('test msg'))
+            const middle = wrapped(initial, reducerAction('first state'))
+            const firstCommit = wrapped(middle, commit('test msg'))
 
             // mutate the state and commit it
-            let final = wrapped(committed, reducerAction('final state'))
+            let final = wrapped(firstCommit, reducerAction('final state'))
             const { state, history } = wrapped(final, commit('test msg2'))
 
             // make sure the head still points to the most recent value
-            expect(history.get('head')).toEqual(0)
+            expect(history.head).toEqual(0)
             // and that the rest of the log
-            expect(
-                history
-                    .get('log')
-                    .get(1)
-                    .get('state')
-            ).toMatchObject(_.omit(committed, 'history'))
-            expect(
-                history
-                    .get('log')
-                    .get(0)
-                    .get('state')
-            ).toMatchObject(_.omit(state, 'history'))
+            expect(history.log[1].state).toMatchObject(_.omit(firstCommit, 'history'))
+            expect(history.log[0].state).toMatchObject(_.omit(state, 'history'))
         })
 
         test('undo bumps the head by one and mutates the state', () => {
@@ -72,7 +62,7 @@ describe('Reducers', () => {
             expect(undoState).toEqual(_.omit(committed, 'history'))
 
             // make sure the head has been increased (this wont exist so dont go further)
-            expect(history.get('head')).toEqual(1)
+            expect(history.head).toEqual(1)
         })
 
         test('redo reduces the head bumps the head by one and mutates the state', function() {
@@ -88,7 +78,7 @@ describe('Reducers', () => {
             const { history, ...redoState } = wrapped(undoState, redo())
 
             // make sure the head has been increased back to the most recent change
-            expect(history.get('head')).toEqual(0)
+            expect(history.head).toEqual(0)
             // make sure we are back where we belong
             expect(redoState).toEqual(_.omit(mutated, 'history'))
         })
@@ -107,7 +97,7 @@ describe('Reducers', () => {
             // go to the state 2 commits ago
             const gotoState = wrapped(committed3, goto(2))
             // the head of the log
-            const head = gotoState.history.get('head')
+            const head = gotoState.history.head
 
             // make sure the head has been set
             expect(head).toEqual(2)
@@ -121,13 +111,13 @@ describe('Reducers', () => {
             const undoState = wrapped(committed, undo())
 
             // stanity check
-            expect(undoState.history.get('head')).toEqual(0)
+            expect(undoState.history.head).toEqual(0)
 
             // one more undo, this is before the start of time
             const undoStateFinal = wrapped(undoState, undo())
 
             // make sure the head has been set
-            expect(undoStateFinal.history.get('head')).toEqual(0)
+            expect(undoStateFinal.history.head).toEqual(0)
         })
 
         test('gracefully handles redoing before the end of time', () => {
@@ -140,7 +130,7 @@ describe('Reducers', () => {
             const redoState2 = wrapped(redoState, redo())
 
             // make sure the head has been set
-            expect(redoState2.history.get('head')).toEqual(0)
+            expect(redoState2.history.head).toEqual(0)
         })
 
         test('committing removes the future log', () => {
@@ -163,9 +153,9 @@ describe('Reducers', () => {
             const { history } = wrapped(mutated4, commit('fourh msg'))
 
             // make sure there is only 2 commits in the log
-            expect(history.get('log').size).toEqual(2)
+            expect(history.log).toHaveLength(2)
             // and that we're still looking at the most recent
-            expect(history.get('head')).toEqual(0)
+            expect(history.head).toEqual(0)
         })
     })
 })
