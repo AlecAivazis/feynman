@@ -19,7 +19,7 @@ const SliderRow = ({ label, value, onChange, initial, max, min, step, ...unusedP
             />
         </Row>
         <Row style={styles.sliderRow}>
-            <Slider value={value} min={min} max={max} step={step} onChange={onChange} />
+            <Slider value={value} min={min} max={max} step={step} onChange={onChange} {...unusedProps} />
         </Row>
     </MultiRow>
 )

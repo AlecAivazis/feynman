@@ -9,7 +9,7 @@ import GluonSummary from './GluonSummary'
 import { ColorPicker, Select, Option, RedButton, Input } from 'components'
 import { Propagator } from 'interface/Diagram/Propagator'
 import { setElementAttrs, deleteElements } from 'actions/elements'
-import { withCommit } from 'actions/history'
+import { withCommit, commit } from 'actions/history'
 import styles from './styles'
 
 const PropagatorSummary = ({
@@ -18,6 +18,7 @@ const PropagatorSummary = ({
     elements,
     deletePropagators,
     showDelete = true,
+    commit,
     ...unusedProps
 }) => {
     // figure out if the entity needs to be pluralized
@@ -54,7 +55,7 @@ const PropagatorSummary = ({
                 <ColorPicker
                     style={styles.colorPicker}
                     color={stroke || Propagator.defaultProps.stroke}
-                    onChange={stroke => setAttrs({ stroke })}
+                    onChange={stroke => setAttrs({ stroke }, `changed propagator color to ${stroke}`)}
                 />
             </Row>
             <SliderRow
@@ -64,13 +65,19 @@ const PropagatorSummary = ({
                 min={1}
                 max={10}
                 step={1}
+                onAfterChange={val => commit(`set propagator size to ${val}`)}
             />
             {propagators.length === 1 && (
                 <MultiRow style={{ marginBottom: 0 }}>
                     <ButtonRow>
                         <Select
                             value={head.kind}
-                            onChange={event => setAttrs({ kind: event.target.value })}
+                            onChange={event =>
+                                setAttrs(
+                                    { kind: event.target.value },
+                                    `changed propagator kind to ${event.target.value}`
+                                )
+                            }
                             style={styles.select}
                         >
                             <Option value="fermion">fermion</Option>
@@ -79,7 +86,7 @@ const PropagatorSummary = ({
                             <Option value="gluon">gluon</Option>
                         </Select>
                     </ButtonRow>
-                    {ElementSummary && <ElementSummary setAttrs={setAttrs} {...head} />}
+                    {ElementSummary && <ElementSummary setAttrs={setAttrs} commit={commit} {...head} />}
                 </MultiRow>
             )}
             {showDelete && (
@@ -106,7 +113,14 @@ const firstValue = ({ propagators, param, elements }) => {
 }
 
 const mapDispatchToProps = (dispatch, { propagators }) => ({
-    setAttrs: attrs => dispatch(setElementAttrs(...propagators.map(id => ({ type: 'propagators', id, ...attrs })))),
+    setAttrs: (attrs, msg) => {
+        dispatch(setElementAttrs(...propagators.map(id => ({ type: 'propagators', id, ...attrs }))))
+        // if there is a message to commit the change with
+        if (msg) {
+            dispatch(commit(msg))
+        }
+    },
+    commit: msg => dispatch(commit(msg)),
     deletePropagators: () =>
         dispatch(
             withCommit(

@@ -7,9 +7,12 @@ import ElectroWeak from 'interface/Diagram/Propagator/ElectroWeak'
 
 const defaults = ElectroWeak.defaultProps
 
-const PropagatorSummary = ({ direction = defaults.direction, setAttrs, ...unusedProps }) => (
+const PropagatorSummary = ({ direction = defaults.direction, setAttrs, commit, ...unusedProps }) => (
     <ButtonRow>
-        <Button style={{ width: '100%' }} onClick={() => setAttrs({ direction: -direction })}>
+        <Button
+            style={{ width: '100%' }}
+            onClick={() => setAttrs({ direction: -direction }, 'inverted propagator amplitude')}
+        >
             Invert Amplitude
         </Button>
     </ButtonRow>
