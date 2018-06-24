@@ -15,7 +15,7 @@ const FermionArrow = ({ x1, y1, x2, y2, strokeWidth, stroke, flip = false, selec
         return null
     }
 
-    // compute some needed lengtghs
+    // compute some needed lengths
     const A = 6 * strokeWidth / 1.4 // a dimensionless quantity to scale the arrow by
     const halfHeight = A * Math.sqrt(3) / 2
     const halfBase = A * 3 / 4
