@@ -11,20 +11,17 @@ import Entry from './Entry'
 const HistorySummary = ({ info, history, toggle, goTo, style }) => (
     <Collapsible title="History" active={info.showHistory} style={style} toggle={toggle}>
         <div style={styles.container}>
-            {history
-                .get('log')
-                .toJS()
-                .map((entry, index) => (
-                    <Entry
-                        onClick={() => goTo(index)}
-                        active={index === history.get('head')}
-                        length={history.get('log').size}
-                        index={index}
-                        key={index}
-                    >
-                        {entry}
-                    </Entry>
-                ))}
+            {history.log.map((entry, index) => (
+                <Entry
+                    onClick={() => goTo(index)}
+                    active={index === history.head}
+                    length={history.log.length}
+                    index={index}
+                    key={index}
+                >
+                    {entry}
+                </Entry>
+            ))}
         </div>
     </Collapsible>
 )
