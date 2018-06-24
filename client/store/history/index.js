@@ -55,7 +55,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             // retrieve the appropriate entry in the log
             const entry = history.log[newHead]
             // get the state stored within
-            const state = entry.state
+            const state = _.cloneDeep(entry.state)
 
             // return the appropriate state and decrement the head
             return {
@@ -84,7 +84,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             }
 
             // get the state stored within
-            const state = entry.state
+            const state = _.cloneDeep(entry.state)
 
             // return the appropriate state and decrement the head
             return {
@@ -101,7 +101,7 @@ export default function historyEnhancer(reducer, config = defaultConfig) {
             // retrieve the appropriate entry in the log
             const entry = history.log[payload]
             // get the state stored within
-            const state = entry.state
+            const state = _.cloneDeep(entry.state)
 
             // return the appropriate state and decrement the head
             return {
