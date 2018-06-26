@@ -1,6 +1,7 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 // local imports
 import { Header, SliderRow, Row, Label, MultiRow, ButtonRow, Container } from '..'
 import FermionSummary from './FermionSummary'
@@ -47,6 +48,7 @@ const PropagatorSummary = ({
                         style={styles.labelInput}
                         value={head.label || ''}
                         onChange={evt => setAttrs({ label: evt.target.value })}
+                        onFinish={val => commit(`changed propagator label to ${val}`)}
                     />
                 </ButtonRow>
             )}
