@@ -32,7 +32,6 @@ class Splittable extends React.Component {
     state = {
         origin: null,
         moveTarget: null,
-        moveType: null,
         snapped: false, // to make sure we only snap the element the first time
     }
 
@@ -88,7 +87,6 @@ class Splittable extends React.Component {
             origin,
             // and the id of the element we are moving
             moveTarget: id,
-            moveType: type,
             // track our action
             action,
         })
@@ -109,7 +107,7 @@ class Splittable extends React.Component {
             moveSelectedElements,
             snapSelectedElements,
         } = this.props
-        const { origin, moveTarget, moveType } = this.state
+        const { origin, moveTarget } = this.state
         // if the mouse is down
         if (origin) {
             // if we haven't snapped the element already
@@ -149,16 +147,21 @@ class Splittable extends React.Component {
         event.stopPropagation()
 
         // used state
-        const { action, moveTarget, moveType, origin } = this.state
+        const { action, origin } = this.state
+        // used props
+        const { type } = this.props
         // if this component was being dragged
         if (origin && ['move', 'create'].includes(action)) {
             // clean up any overlaps we left
             this.props.mergeElements()
             // log the appropriate commit message
+
+            // if we moved the propagators
             if (action === 'move') {
-                this.props.commitWithMessage(`moved ${moveType}`)
+                this.props.commitWithMessage(`moved ${type}`)
             } else if (action === 'create') {
-                this.props.commitWithMessage(`added a branch to ${moveType}`)
+                // if we created a new element from the target we need a different
+                this.props.commitWithMessage(`added a branch to ${type}`)
             }
         }
 
