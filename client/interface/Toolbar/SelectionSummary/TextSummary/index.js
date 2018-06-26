@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 // local imports
 import styles from './styles'
 import { setElementAttrs, deleteSelection } from 'actions/elements'
-import { withCommit } from 'actions/history'
+import { withCommit, commit } from 'actions/history'
 import { ButtonRow, Row, Label, Header, Container } from '..'
 import { Input, RedButton } from 'components'
 
-const TextSummary = ({ text, deleteElement, elements, setValue, showDelete, ...unused }) => {
+const TextSummary = ({ text, deleteElement, elements, setValue, showDelete, commit, ...unused }) => {
     // a potentially pluralized version of the type
     const textPlural = text.length > 1 ? 'texts' : 'text'
 
@@ -27,6 +27,7 @@ const TextSummary = ({ text, deleteElement, elements, setValue, showDelete, ...u
                             onChange={evt => {
                                 setValue(id, evt.target.value)
                             }}
+                            onFinish={val => commit(`changed text value to ${val}`)}
                         />
                     </Row>
                 )
@@ -44,6 +45,7 @@ const selector = ({ diagram: { elements } }) => ({ elements })
 const mapDispatchToProps = dispatch => ({
     setValue: (id, value) => dispatch(setElementAttrs({ type: 'text', id, value })),
     deleteElement: () => dispatch(withCommit(deleteSelection(), 'removed text from diagram')),
+    commit: msg => dispatch(commit(msg)),
 })
 
 export default connect(selector, mapDispatchToProps)(TextSummary)
