@@ -18,7 +18,7 @@ class Input extends React.Component {
     }
 
     render() {
-        const { style, onKeyDown, onChange, ...unusedProps } = this.props
+        const { style, onKeyDown, onChange, onFinish, ...unusedProps } = this.props
 
         return (
             <input
@@ -29,7 +29,13 @@ class Input extends React.Component {
                 ref={e => (this._input = e)}
                 onBlur={evt => {
                     if (this.state.edited) {
-                        this.props.onFinish(this.props.value)
+                        // if there is a callback to invoke when we're done
+                        if (onFinish) {
+                            // do so
+                            onFinish(this.props.value)
+                        }
+
+                        // we haven't updated the state since we last had focus
                         this.setState({
                             edited: false,
                         })
