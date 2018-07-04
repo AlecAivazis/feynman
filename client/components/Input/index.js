@@ -10,7 +10,9 @@ class Input extends React.Component {
 
     componentWillUnmount() {
         if (this.state.edited) {
-            this.props.onFinish(this.props.value)
+            if (this.props.onFinish) {
+                this.props.onFinish(this.props.value)
+            }
             this.setState({
                 edited: false,
             })
