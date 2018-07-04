@@ -13,7 +13,7 @@ import (
 	"text/template"
 )
 
-// the configuration object for a given render
+// RenderConfig is the configuration object for a given render
 type RenderConfig struct {
 	FontSize float64
 	Color    string
@@ -22,6 +22,7 @@ type RenderConfig struct {
 	MathMode bool
 }
 
+// BaseTemplateConfig is the parameters used when rendering the base latex template
 type BaseTemplateConfig struct {
 	Content     string
 	ExtraConfig string
