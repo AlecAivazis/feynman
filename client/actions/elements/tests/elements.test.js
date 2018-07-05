@@ -30,6 +30,8 @@ import {
     snapSelectedElements,
     SNAP_SELECTED_ELEMENTS,
     saveDiagram,
+    LOAD_DIAGRAM,
+    loadDiagram,
 } from 'actions/elements'
 
 describe('Action Creators', () => {
@@ -285,6 +287,19 @@ describe('Action Creators', () => {
                         next()
                     }
                 }
+            })
+
+            test('load diagram', () => {
+                // the move order
+                const load = {
+                    x: 50,
+                    y: 50,
+                }
+
+                expect(loadDiagram(load)).toEqual({
+                    type: LOAD_DIAGRAM,
+                    payload: load,
+                })
             })
         })
     })
