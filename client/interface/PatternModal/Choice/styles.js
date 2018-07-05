@@ -28,7 +28,8 @@ export default {
     content: {
         display: 'flex',
     },
-    image: {
+    preview: {
         width: '100%',
+        padding: 15,
     },
 }
