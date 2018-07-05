@@ -2,7 +2,7 @@ import React from 'react'
 
 export default props => (
     <svg viewBox="0 0 350 200" {...props}>
-        <g transform="matrix(1, 0, 0, 1, 0, 0)" class="diagram">
+        <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>
                 <g>
                     <image
@@ -14,7 +14,7 @@ export default props => (
                         xlinkHref="/latex/string?color=black&mathMode=true&string=l"
                     />
                     <g>
-                        <path stroke="black" stroke-width="2" d="M 100 100 L 0 0" />
+                        <path stroke="black" strokeWidth="2" d="M 100 100 L 0 0" />
                         <polygon
                             transform="rotate(315, 50, 50)"
                             fill="black"
@@ -36,7 +36,7 @@ export default props => (
                 </g>
                 <g>
                     <g>
-                        <path stroke="black" stroke-width="2" d="M 0 200 L 100 100" />
+                        <path stroke="black" strokeWidth="2" d="M 0 200 L 100 100" />
                         <polygon
                             transform="rotate(45, 50, 150)"
                             fill="black"
@@ -60,7 +60,7 @@ export default props => (
                     <g transform="matrix(0.9375, 0, 0, 0.9375, 6.25, 6.25)">
                         <path
                             stroke="#2d89d3"
-                            stroke-width="2"
+                            strokeWidth="2"
                             fill="none"
                             d="M 100 100 C 110 70 110 130 120 100 S 130 130 140 100 S 150 130 160 100 S 170 130 180 100 S 190 130 200 100 S 210 130 220 100 S 230 130 240 100 S 250 130 260 100 "
                         />
@@ -80,7 +80,7 @@ export default props => (
                 </g>
                 <g>
                     <g>
-                        <path stroke="black" stroke-width="2" d="M 350 0 L 250 100" />
+                        <path stroke="black" strokeWidth="2" d="M 350 0 L 250 100" />
                         <polygon
                             transform="rotate(225, 300, 50)"
                             fill="black"
@@ -102,7 +102,7 @@ export default props => (
                 </g>
                 <g>
                     <g>
-                        <path stroke="black" stroke-width="2" d="M 250 100 L 350 200" />
+                        <path stroke="black" strokeWidth="2" d="M 250 100 L 350 200" />
                         <polygon
                             transform="rotate(135, 300, 150)"
                             fill="black"
