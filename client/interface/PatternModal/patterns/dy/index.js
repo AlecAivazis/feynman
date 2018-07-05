@@ -1,10 +1,10 @@
 // local imports
-import image from './image.png'
+import preview from './preview'
 import { blue } from 'colors'
 
 export default {
     name: 'Drell-Yan',
-    image,
+    preview,
     elements: {
         type: 'pattern',
         anchors: [

@@ -1,9 +1,9 @@
 // local imports
-import image from './image.png'
+import preview from './preview'
 
 export default {
     name: 'Blank',
-    image,
+    preview,
     elements: {
         type: 'pattern',
         anchors: [],

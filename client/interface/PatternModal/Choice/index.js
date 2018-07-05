@@ -7,7 +7,7 @@ import { loadPattern } from 'actions/elements'
 import { commit } from 'actions/history'
 import styles from './styles'
 
-const PatternChoice = ({ load, hideOverlay, name, elements, commitWithMsg, image }) => (
+const PatternChoice = ({ load, hideOverlay, name, elements, commitWithMsg, preview: Preview }) => (
     <BooleanState>
         {({ state, toggle }) => (
             <div
@@ -24,7 +24,7 @@ const PatternChoice = ({ load, hideOverlay, name, elements, commitWithMsg, image
                 }}
             >
                 <div style={styles.title}>{name}</div>
-                <img src={image} style={styles.image} />
+                <Preview style={styles.preview} />
             </div>
         )}
     </BooleanState>
@@ -35,4 +35,7 @@ const mapDispatchToProps = dispatch => ({
     commitWithMsg: msg => dispatch(commit(msg)),
 })
 
-export default connect(null, mapDispatchToProps)(PatternChoice)
+export default connect(
+    null,
+    mapDispatchToProps
+)(PatternChoice)
