@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: latex
-          image: gcr.io/lucky-essence-160522/latex:1
+          image: gcr.io/lucky-essence-160522/latex:2
           ports:
             - containerPort: 8081
