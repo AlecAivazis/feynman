@@ -9,4 +9,6 @@ server/server
 *~
 .tmp/
 coverage/
-server/diagram.*
+server/test/diagram.aux
+server/test/diagram.log
+server/test/diagram.pdf
