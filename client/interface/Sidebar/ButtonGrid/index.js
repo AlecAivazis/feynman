@@ -27,7 +27,7 @@ const ButtonGrid = ({ style, info, toggleGrid, toggleAnchors, openExportModal, e
             />
         </div>
         <div style={styles.bottomRow}>
-            <a href={exportUrl(elements)} target="_blank">
+            <a href={exportUrl(elements)} target="_blank" download={`${info.title || 'feynman'}.png`}>
                 <Button style={styles.leftButton}>Export PNG</Button>
             </a>
             <Button onClick={openExportModal}>LaTeX</Button>
