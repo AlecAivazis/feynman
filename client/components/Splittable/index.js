@@ -106,12 +106,13 @@ class Splittable extends React.Component {
             setElementAttrs,
             moveSelectedElements,
             snapSelectedElements,
+            snap,
         } = this.props
         const { origin, moveTarget } = this.state
         // if the mouse is down
         if (origin) {
             // if we haven't snapped the element already
-            if (!this.state.snapped) {
+            if (snap && !this.state.snapped) {
                 // make sure the element starts from the grid
                 snapSelectedElements()
                 // make sure we don't do it another time
@@ -203,4 +204,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     // snap the element we are dragging to the grid
     snapSelectedElements: () => dispatch(snap()),
 })
-export default connect(selector, mapDispatchToProps)(Splittable)
+export default connect(
+    selector,
+    mapDispatchToProps
+)(Splittable)

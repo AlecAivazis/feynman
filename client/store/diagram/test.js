@@ -157,6 +157,8 @@ describe('Reducers', () => {
                 expect(movedState.elements.anchors[3].y).toEqual(anchors[2].y)
             })
 
+            test('moving text does not snap to grid')
+
             test('can move with partial payload', () => {
                 // the anchors we are going to start off with
                 const anchors = [
