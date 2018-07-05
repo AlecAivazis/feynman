@@ -48,7 +48,8 @@
         ],
         "setupFiles": [
             "<rootDir>/config/setupJest"
-        ]
+        ],
+        "transformIgnorePatterns": ["/node_modules/(?!(quark-.*?\\.js$))"]
     },
     "dependencies": {
         "autobind-decorator": "^1.3.4",
