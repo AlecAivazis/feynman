@@ -12,7 +12,7 @@ import ItemPalette from './ItemPalette'
 
 describe('Interface Components', () => {
     describe('Toolbar', () => {
-        test('shows an SelectionSummary when there is an anchor selected', () => {
+        test('shows a SelectionSummary when there is an anchor selected', () => {
             // a store to test with
             const store = createStore()
             // add an anchor
@@ -42,6 +42,9 @@ describe('Interface Components', () => {
                 })
             )
 
+            // rerender the component since we updated redux
+            wrapper.update()
+
             // expect there to be an anchor summary
             expect(wrapper.find(SelectionSummary)).toHaveLength(1)
         })
@@ -64,7 +67,7 @@ describe('Interface Components', () => {
             // a store to test with
             const store = createStore()
             // save a reference to the default pattern modal state
-            const { info: { showPatternModal: defaulState } } = store.getState().diagram
+            const { info: { showPatternModal: defaultState } } = store.getState().diagram
             // render the toolbar
             const wrapper = mount(
                 <Provider store={store}>
@@ -82,7 +85,7 @@ describe('Interface Components', () => {
             button.simulate('click')
 
             // make sure the modal's visibilty has been inverted
-            expect(store.getState().diagram.info.showPatternModal).toEqual(!defaulState)
+            expect(store.getState().diagram.info.showPatternModal).toEqual(!defaultState)
         })
     })
 })
