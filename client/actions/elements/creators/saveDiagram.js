@@ -1,3 +1,5 @@
+// external imports
+import { saveAs } from 'file-saver'
 // local imports
 import { EXPORT_DIAGRAM } from 'actions/elements'
 

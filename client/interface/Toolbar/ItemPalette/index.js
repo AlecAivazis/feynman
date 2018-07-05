@@ -8,9 +8,9 @@ import PaletteItem from './paletteItem'
 import { Button } from 'components'
 import { circle, gluon, line, dashed, em, text } from './images'
 import { togglePatternModal } from 'actions/info'
-import { exportDiagram as exportD } from 'actions/elements'
+import { saveDiagram as save } from 'actions/elements'
 
-const ItemPalette = ({ togglePatterns, style, exportDiagram, onMouseDown, ...unusedProps }) => {
+const ItemPalette = ({ togglePatterns, style, saveDiagram, onMouseDown, ...unusedProps }) => {
     // a local component to dry up code
     const Item = ({ ...props }) => <PaletteItem onMouseDown={onMouseDown} {...props} />
 
@@ -32,8 +32,8 @@ const ItemPalette = ({ togglePatterns, style, exportDiagram, onMouseDown, ...unu
                 </Button>
             </div>
             <div style={styles.patternButtonContainer}>
-                <Button style={styles.patternButton} onClick={exportDiagram}>
-                    Export Diagram
+                <Button style={styles.patternButton} onClick={saveDiagram}>
+                    Save Diagram
                 </Button>
             </div>
             <div style={styles.patternButtonContainer}>
@@ -47,7 +47,7 @@ const ItemPalette = ({ togglePatterns, style, exportDiagram, onMouseDown, ...unu
 
 const mapDispatchToProps = dispatch => ({
     togglePatterns: () => dispatch(togglePatternModal()),
-    exportDiagram: () => dispatch(exportD()),
+    saveDiagram: () => dispatch(save()),
 })
 
 export default connect(
