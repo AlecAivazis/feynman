@@ -18,7 +18,7 @@ const Overlay = ({ addon, title, children, hide, onClick, style, ...unusedProps 
     </aside>
 )
 
-Overlay.PropTypes = {
+Overlay.propTypes = {
     hide: PropTypes.func.isRequired,
     addon: PropTypes.element,
     style: PropTypes.object,
