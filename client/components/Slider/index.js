@@ -22,7 +22,13 @@ class SliderHandle extends React.Component {
 }
 
 const Slider = ({ min, max, step, style, ...unusedProps }) => (
-    <RcSlider min={min} max={max} step={step} handle={<SliderHandle />} {...unusedProps} />
+    <RcSlider
+        min={min}
+        max={max}
+        step={step}
+        handle={({ offset }) => <SliderHandle offset={offset} />}
+        {...unusedProps}
+    />
 )
 
 export default Slider

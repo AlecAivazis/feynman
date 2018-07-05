@@ -1,6 +1,6 @@
 // external imports
 import React from 'react'
-import liftC, { toggleState } from 'react-liftc'
+import { BooleanState } from 'quark-web'
 // local imports
 import styles from './styles'
 import { Label } from 'components'
