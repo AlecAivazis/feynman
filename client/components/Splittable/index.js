@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
+import { EventListener } from 'quark-web'
 // local imports
 import { relativePosition, fixPositionToGrid, generateElementId } from 'utils'
 import {
@@ -15,7 +16,6 @@ import {
 } from 'actions/elements'
 import { commit } from 'actions/history'
 import { throttle, fixDeltaToGrid, round } from 'utils'
-import { EventListener } from 'components'
 
 class Splittable extends React.Component {
     static propsTypes = {

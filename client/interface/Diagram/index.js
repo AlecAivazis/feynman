@@ -5,6 +5,7 @@ import _ from 'lodash'
 import autobind from 'autobind-decorator'
 import { saveAs } from 'file-saver'
 import SvgMatrix from 'svg-matrix'
+import { EventListener } from 'quark-web'
 // local imports
 import styles from './styles'
 import Grid from './Grid'
@@ -23,7 +24,6 @@ import {
     dataUrlToBlob,
     svgToDataURL,
 } from 'utils'
-import { EventListener } from 'components'
 import {
     clearSelection,
     selectElements,

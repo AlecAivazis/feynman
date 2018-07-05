@@ -3,8 +3,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
+import { EventListener } from 'quark-web'
 // local imports
-import { EventListener } from 'components'
 import { fixDeltaToGrid } from 'utils'
 
 class MouseMove extends React.Component {
