@@ -12,8 +12,6 @@ export default () => (dispatch, getState) => {
         },
     } = getState()
 
-    // the stringified state
-    const state = JSON.stringify({ title, elements }, 4)
-
-    console.log(state)
+    // save the diagram as a json file
+    saveAs(new Blob([JSON.stringify({ title, elements })]), `${title}.json`)
 }

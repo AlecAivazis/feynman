@@ -1,3 +1,6 @@
+// external imports
+jest.mock('file-saver')
+import fs from 'file-saver'
 // local imports
 import {
     selectElements,
@@ -26,7 +29,7 @@ import {
     SPLIT_ELEMENT,
     snapSelectedElements,
     SNAP_SELECTED_ELEMENTS,
-    exportDiagram,
+    saveDiagram,
 } from 'actions/elements'
 
 describe('Action Creators', () => {
@@ -230,7 +233,7 @@ describe('Action Creators', () => {
                 })
             })
 
-            test('export diagram', () => {
+            test('save diagram', next => {
                 // mock some state out
                 const getState = () => ({
                     diagram: {
@@ -243,11 +246,45 @@ describe('Action Creators', () => {
                     },
                 })
 
+                // fs.saveAs.mockImplementation(console.log)
+
                 // and a mocked dispatch
                 const dispatch = jest.fn()
 
                 // invoke the thunked action
-                const thunk = exportDiagram()(dispatch, getState)
+                const thunk = saveDiagram()(dispatch, getState)
+
+                // make sure we only saved one file
+                expect(fs.saveAs.mock.calls).toHaveLength(1)
+
+                // grab the parameters we used when saving
+                const [call] = fs.saveAs.mock.calls
+                // make sure we saved the diagram as its name
+                expect(call[1]).toEqual('hello world.json')
+                // create a filereader that can take in the blob
+                const reader = new FileReader()
+                // start reading the blob
+                reader.readAsText(call[0])
+
+                // when we're done reading the blob
+                reader.onload = () => {
+                    // if the result is not what we expect
+                    if (
+                        reader.result !==
+                        JSON.stringify({
+                            title: 'hello world',
+                            elements: {
+                                anchors: {
+                                    1: { x: 50, y: 50 },
+                                },
+                            },
+                        })
+                    ) {
+                        next.fail('blob contents did not match expectation')
+                    } else {
+                        next()
+                    }
+                }
             })
         })
     })
