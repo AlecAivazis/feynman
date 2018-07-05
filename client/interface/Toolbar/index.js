@@ -2,12 +2,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import autobind from 'autobind-decorator'
+import { EventListener } from 'quark-web'
 // local imports
 import styles, { toolbarWidth } from './styles'
 import SelectionSummary from './SelectionSummary'
 import ItemPalette from './ItemPalette'
 import Footer from './Footer'
-import { EventListener } from 'components'
 import * as specMap from './specs'
 import {
     placeElement,
