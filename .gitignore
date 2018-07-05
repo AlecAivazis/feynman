@@ -12,3 +12,6 @@ coverage/
 server/test/diagram.aux
 server/test/diagram.log
 server/test/diagram.pdf
+server/test/diagram.fls
+server/test/diagram.synctex*
+server/test/diagram.fdb_latexmk
