@@ -1,0 +1,28 @@
+% this file describes the basic latex file that is used by the interpretter at alec.aivazis
+% author: alec aivazis
+
+\documentclass[border=1pt]{standalone}
+
+\usepackage{feynman}
+
+\begin{document}
+\fontsize{5}{6}
+\textcolor{black}{
+  \begin{feynman}
+    \fermion[label=$l$]{2.20, 10.20}{0.20, 12.20}
+    \fermion[label=$\anti{l}$]{0.20, 8.20}{2.20, 10.20}
+    \electroweak[color=2d89d3, label=$Z$]{2.20, 10.20}{5.20, 10.20}
+    \fermion[label=$l$]{7.20, 12.20}{5.20, 10.20}
+    \fermion[label=$\anti{l}$]{5.20, 10.20}{7.20, 8.20}
+    \fermion[]{3.20, 7.20}{4.20, 0.20}
+    \fermion[]{4.20, 0.20}{10.20, 4.20}
+    \fermion[]{2.20, 4.20}{3.20, 7.20}
+    \fermion[]{0.20, 8.20}{2.20, 4.20}
+    \fermion[]{3.20, 4.20}{3.20, 4.20}
+  \end{feynman}
+}
+
+\end{document}
+
+
+  % end of file
