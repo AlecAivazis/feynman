@@ -425,4 +425,7 @@ const mapDispatchToProps = dispatch => ({
     withCommit: (action, msg) => dispatch(withCommit(action, msg)),
     merge: () => dispatch(mergeElements()),
 })
-export default connect(selector, mapDispatchToProps)(Diagram)
+export default connect(
+    selector,
+    mapDispatchToProps
+)(Diagram)

@@ -157,7 +157,37 @@ describe('Reducers', () => {
                 expect(movedState.elements.anchors[3].y).toEqual(anchors[2].y)
             })
 
-            test('moving text does not snap to grid')
+            test('moving text does not snap to grid', () => {
+                // the text element to add to the store
+                const text = {
+                    id: 1,
+                    x: 50,
+                    y: 100,
+                    value: 'hello world',
+                }
+
+                // add the text element
+                const initialState = reducer(undefined, addElements({ type: 'text', ...text }))
+
+                // select the text element
+                const selectedState = reducer(
+                    initialState,
+                    selectElements({
+                        type: 'text',
+                        id: 1,
+                    })
+                )
+
+                const move = {
+                    x: 73,
+                }
+
+                // move the selected text
+                const movedState = reducer(selectedState, moveSelectedElements(move))
+
+                // make sure the selected anchors were moved
+                expect(movedState.elements.text[1].x).toEqual(text.x + move.x)
+            })
 
             test('can move with partial payload', () => {
                 // the anchors we are going to start off with

@@ -143,11 +143,14 @@ class Toolbar extends React.Component {
                 }
 
                 // the fixed target
-                const fixed = fixDeltaToGrid({
-                    origin,
-                    next: pos,
-                    info: this.props.info,
-                })
+                const fixed =
+                    dragElement.element.type === 'text'
+                        ? pos
+                        : fixDeltaToGrid({
+                              origin,
+                              next: pos,
+                              info: this.props.info,
+                          })
                 // the distance to move
                 const fixedDelta = {
                     x: (fixed.x - origin.x) / info.zoomLevel,
@@ -200,4 +203,7 @@ const mapDispatchToProps = dispatch => ({
     mergeAnchors: element => dispatch(mergeElements(element)),
     commitWithMessage: msg => dispatch(commit(msg)),
 })
-export default connect(selector, mapDispatchToProps)(Toolbar)
+export default connect(
+    selector,
+    mapDispatchToProps
+)(Toolbar)

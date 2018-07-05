@@ -191,7 +191,6 @@ export default withHistory((state = initialState, { type, payload }) => {
 
         // go over every selected element
         for (const { type, id } of selection) {
-            console.log(type, id)
             // if the element is a propagator
             if (type === 'propagators') {
             } else {
