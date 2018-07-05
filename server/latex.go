@@ -46,7 +46,7 @@ func renderLatex(template *template.Template, conf *RenderConfig, baseConf *Base
 	pdfFile := path.Join(tempDir, "equation.pdf")      // the pdf created along the way
 	pngFile := path.Join(tempDir, "equation.png")      // the final png
 
-	config, err := latexForConfig(template, conf, baseConf)
+	document, err := latexFromConfig(template, conf, baseConf)
 	// if something went wrong
 	if err != nil {
 		// bubble up
@@ -54,7 +54,7 @@ func renderLatex(template *template.Template, conf *RenderConfig, baseConf *Base
 	}
 
 	// write the equation to a file
-	err = ioutil.WriteFile(equationFile, config, 0777)
+	err = ioutil.WriteFile(equationFile, document, 0777)
 	// if something went wrong
 	if err != nil {
 		// bubble up
@@ -72,7 +72,7 @@ func renderLatex(template *template.Template, conf *RenderConfig, baseConf *Base
 			"convert",
 			"-density", "300",
 			pdfFile,
-			"-quality", "90",
+			"-quality", "300",
 			pngFile,
 		),
 	}
@@ -90,8 +90,8 @@ func renderLatex(template *template.Template, conf *RenderConfig, baseConf *Base
 	return ioutil.ReadFile(pngFile)
 }
 
-// LatexForConfig returns the latex document required to render the given equation
-func latexForConfig(template *template.Template, conf *RenderConfig, baseConfig *BaseTemplateConfig) ([]byte, error) {
+// latexFromConfig returns the latex document required to render the given equation
+func latexFromConfig(template *template.Template, conf *RenderConfig, baseConfig *BaseTemplateConfig) ([]byte, error) {
 	// if there is no fontSize for this render
 	if conf.FontSize == 0 {
 		// use the default
@@ -128,7 +128,6 @@ func latexForConfig(template *template.Template, conf *RenderConfig, baseConfig 
 		// the full document
 		var doc bytes.Buffer
 		baseTemplate.Execute(&doc, baseConfig)
-
 		// return the byte string template
 		return []byte(doc.String()), nil
 	}

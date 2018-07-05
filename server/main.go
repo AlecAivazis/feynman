@@ -34,7 +34,7 @@ func renderLatexHandler(w http.ResponseWriter, r *http.Request) {
 	// log our intentions
 	fmt.Println("Rendering string:", config.String)
 
-	// respond with the string template
+	// respond with the latex document
 	writeLatex(w, stringTemplate, config, &BaseTemplateConfig{
 		ExtraConfig: "varwidth=true,",
 	})
@@ -49,7 +49,7 @@ func renderDiagramHandler(w http.ResponseWriter, r *http.Request) {
 		String: r.URL.Query().Get("string"),
 	}
 
-	// respond with the string template
+	// respond with the latex document
 	writeLatex(w, diagramTemplate, config, &BaseTemplateConfig{})
 }
 
@@ -58,11 +58,11 @@ func main() {
 	port := ":8081"
 
 	// set up the mux
-	http.HandleFunc("/", renderLatexHandler)
+	http.HandleFunc("/string", renderLatexHandler)
 	http.HandleFunc("/diagram", renderDiagramHandler)
 
 	// notify the user we're going to start the server
-	fmt.Println("listening on " + port)
+	fmt.Println("🚀  listening on " + port)
 
 	// start the server
 	err := http.ListenAndServe(port, nil)

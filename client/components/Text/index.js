@@ -26,7 +26,7 @@ class Text extends React.Component {
     }
 
     get _imgUrl() {
-        return `/latex?${queryString.stringify({
+        return `/latex/string?${queryString.stringify({
             string: this.props.children.trim(),
             mathMode: JSON.stringify(this.props.math),
             color: this.props.color,

@@ -58,7 +58,10 @@ module.exports = {
     devServer: {
         proxy: {
             '/latex': {
-                target: 'http://localhost:8081/latex',
+                target: 'http://localhost:8081',
+                pathRewrite: {
+                    '^/latex': '',
+                },
             },
         },
     },
