@@ -1,14 +1,16 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
+import { FilePicker } from 'quark-web'
 // local imports
 import styles from './styles'
 import PaletteItem from './paletteItem'
 import { Button } from 'components'
 import { circle, gluon, line, dashed, em, text } from './images'
 import { togglePatternModal } from 'actions/info'
+import { exportDiagram as exportD } from 'actions/elements'
 
-const ItemPalette = ({ togglePatterns, style, onMouseDown, ...unusedProps }) => {
+const ItemPalette = ({ togglePatterns, style, exportDiagram, onMouseDown, ...unusedProps }) => {
     // a local component to dry up code
     const Item = ({ ...props }) => <PaletteItem onMouseDown={onMouseDown} {...props} />
 
@@ -29,12 +31,26 @@ const ItemPalette = ({ togglePatterns, style, onMouseDown, ...unusedProps }) => 
                     Show Patterns
                 </Button>
             </div>
+            <div style={styles.patternButtonContainer}>
+                <Button style={styles.patternButton} onClick={exportDiagram}>
+                    Export Diagram
+                </Button>
+            </div>
+            <div style={styles.patternButtonContainer}>
+                <FilePicker>
+                    <Button style={styles.patternButton}>Load Diagram</Button>
+                </FilePicker>
+            </div>
         </div>
     )
 }
 
 const mapDispatchToProps = dispatch => ({
     togglePatterns: () => dispatch(togglePatternModal()),
+    exportDiagram: () => dispatch(exportD()),
 })
 
-export default connect(null, mapDispatchToProps)(ItemPalette)
+export default connect(
+    null,
+    mapDispatchToProps
+)(ItemPalette)

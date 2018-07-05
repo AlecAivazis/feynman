@@ -26,6 +26,7 @@ import {
     SPLIT_ELEMENT,
     snapSelectedElements,
     SNAP_SELECTED_ELEMENTS,
+    exportDiagram,
 } from 'actions/elements'
 
 describe('Action Creators', () => {
@@ -227,6 +228,26 @@ describe('Action Creators', () => {
                     type: MOVE_SELECTED_ELEMENTS,
                     payload: move,
                 })
+            })
+
+            test('export diagram', () => {
+                // mock some state out
+                const getState = () => ({
+                    diagram: {
+                        info: { title: 'hello world' },
+                        elements: {
+                            anchors: {
+                                1: { x: 50, y: 50 },
+                            },
+                        },
+                    },
+                })
+
+                // and a mocked dispatch
+                const dispatch = jest.fn()
+
+                // invoke the thunked action
+                const thunk = exportDiagram()(dispatch, getState)
             })
         })
     })
