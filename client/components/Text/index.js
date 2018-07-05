@@ -48,8 +48,8 @@ class Text extends React.Component {
         // return the image primitive that will be embedded an an svg
         return (
             <image
-                x={x}
-                y={y}
+                x={x - this.state.width / 2}
+                y={y - this.state.height / 2}
                 width={this.state.width}
                 height={this.state.height}
                 href={this._imgUrl}
