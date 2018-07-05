@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: latex
+  labels:
+    app: latex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: latex
+  template:
+    metadata:
+      labels:
+        app: latex
+    spec:
+      containers:
+        - name: latex
+          image: gcr.io/lucky-essence-160522/latex:1
+          ports:
+            - containerPort: 8081

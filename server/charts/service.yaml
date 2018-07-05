@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: latex
+spec:
+  type: LoadBalancer
+  selector:
+    app: latex
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8081
