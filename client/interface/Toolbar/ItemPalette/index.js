@@ -9,8 +9,9 @@ import { Button } from 'components'
 import { circle, gluon, line, dashed, em, text } from './images'
 import { togglePatternModal } from 'actions/info'
 import { saveDiagram as save, loadDiagram as load } from 'actions/elements'
+import { commit as commitWithMsg } from 'actions/history'
 
-const ItemPalette = ({ togglePatterns, style, saveDiagram, loadDiagram, onMouseDown, ...unusedProps }) => {
+const ItemPalette = ({ togglePatterns, style, commit, saveDiagram, loadDiagram, onMouseDown, ...unusedProps }) => {
     // a local component to dry up code
     const Item = ({ ...props }) => <PaletteItem onMouseDown={onMouseDown} {...props} />
 
@@ -47,7 +48,12 @@ const ItemPalette = ({ togglePatterns, style, saveDiagram, loadDiagram, onMouseD
                         // create a new file reader
                         const reader = new FileReader()
                         reader.onloadend = () => {
-                            loadDiagram(JSON.parse(reader.result))
+                            // the result should be a valid json object
+                            const diagram = JSON.parse(reader.result)
+
+                            loadDiagram(diagram)
+
+                            commit(`loaded diagram: ${diagram.title}`)
                         }
 
                         // start reading the file
@@ -65,6 +71,7 @@ const mapDispatchToProps = dispatch => ({
     togglePatterns: () => dispatch(togglePatternModal()),
     saveDiagram: () => dispatch(save()),
     loadDiagram: payload => dispatch(load(payload)),
+    commit: msg => dispatch(commitWithMsg(msg)),
 })
 
 export default connect(

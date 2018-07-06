@@ -31,9 +31,6 @@ export function* loadDiagramWorker({ type, payload: { elements, title } }) {
 
     // set the diagram title to match
     yield put(setDiagramTitle(title))
-
-    // add a new entry to the commit log
-    yield put(commit(`loaded diagram: ${title}`))
 }
 
 // this saga loads a particular diagram
