@@ -1,14 +1,17 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
+import { FilePicker } from 'quark-web'
 // local imports
 import styles from './styles'
 import PaletteItem from './paletteItem'
 import { Button } from 'components'
 import { circle, gluon, line, dashed, em, text } from './images'
 import { togglePatternModal } from 'actions/info'
+import { saveDiagram as save, loadDiagram as load } from 'actions/elements'
+import { commit as commitWithMsg } from 'actions/history'
 
-const ItemPalette = ({ togglePatterns, style, onMouseDown, ...unusedProps }) => {
+const ItemPalette = ({ togglePatterns, style, commit, saveDiagram, loadDiagram, onMouseDown, ...unusedProps }) => {
     // a local component to dry up code
     const Item = ({ ...props }) => <PaletteItem onMouseDown={onMouseDown} {...props} />
 
@@ -37,4 +40,7 @@ const mapDispatchToProps = dispatch => ({
     togglePatterns: () => dispatch(togglePatternModal()),
 })
 
-export default connect(null, mapDispatchToProps)(ItemPalette)
+export default connect(
+    null,
+    mapDispatchToProps
+)(ItemPalette)

@@ -49,6 +49,7 @@ export default {
     image,
     patternButtonContainer: {
         width: '100%',
+        marginBottom: 10,
     },
     patternButton: {
         width: '100%',

@@ -20,6 +20,7 @@ type RenderConfig struct {
 	BaseLine float64
 	String   string
 	MathMode bool
+	Format   string
 }
 
 // BaseTemplateConfig is the parameters used when rendering the base latex template
@@ -40,6 +41,9 @@ func renderLatex(template *template.Template, conf *RenderConfig, baseConf *Base
 	}
 	// make sure we clean up when we're done
 	defer os.RemoveAll(tempDir)
+
+	// figure out if we're service an image or a pdf
+	servePDF := conf.Format == "pdf"
 
 	// filepaths used throughout the process
 	equationFile := path.Join(tempDir, "equation.tex") // holds the equation source
@@ -68,13 +72,18 @@ func renderLatex(template *template.Template, conf *RenderConfig, baseConf *Base
 			fmt.Sprintf("-output-directory=%s", tempDir),
 			equationFile,
 		),
-		exec.Command(
+	}
+
+	// if we are not rendering to pdf
+	if !servePDF {
+		// pipe the pdf file through imagemagick
+		pipeline = append(pipeline, exec.Command(
 			"convert",
 			"-density", "300",
 			pdfFile,
 			"-quality", "300",
 			pngFile,
-		),
+		))
 	}
 
 	// perform the commands in the pipeline
@@ -86,7 +95,13 @@ func renderLatex(template *template.Template, conf *RenderConfig, baseConf *Base
 		}
 	}
 
-	// return the contents of the resulting file
+	// if we are serving a pdf
+	if servePDF {
+		// return the contents of the pdf file
+		return ioutil.ReadFile(pdfFile)
+	}
+
+	// otherwise return the converted image
 	return ioutil.ReadFile(pngFile)
 }
 
@@ -144,8 +159,16 @@ func writeLatex(w http.ResponseWriter, template *template.Template, config *Rend
 		w.Write([]byte(err.Error()))
 	}
 
+	// the content-type depends on the file type
+	var contentType string
+	if config.Format == "pdf" {
+		contentType = "file/pdf"
+	} else {
+		contentType = "image/png"
+	}
+
 	// since we render the equation as a png, we need to set the appropriate headers
-	w.Header().Set("Content-Type", "image/png")
+	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Length", strconv.Itoa(len(img)))
 
 	// copy the equation to the response

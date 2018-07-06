@@ -15,8 +15,8 @@ import {
     zoomIn,
     zoomOut,
     toggleHistory,
-    TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so
-} from 'actions/info' // import the type directly
+    TOGGLE_PATTERN_INITIAL_VIS, // there is only a thunk for this action so import the type directly
+} from 'actions/info'
 
 describe('Reducers', () => {
     describe('Info reducer', () => {

@@ -52,6 +52,19 @@ func renderDiagramHandler(w http.ResponseWriter, r *http.Request) {
 	writeLatex(w, diagramTemplate, config, &BaseTemplateConfig{})
 }
 
+func renderPDFDiagramHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("rendering diagram")
+
+	// the config provided by the user
+	config := &RenderConfig{
+		String: r.URL.Query().Get("string"),
+		Format: "pdf",
+	}
+
+	// respond with the latex document
+	writeLatex(w, diagramTemplate, config, &BaseTemplateConfig{})
+}
+
 func main() {
 	// where the server is listening on local host
 	port := ":8081"
@@ -59,6 +72,7 @@ func main() {
 	// set up the mux
 	http.HandleFunc("/string", renderLatexHandler)
 	http.HandleFunc("/diagram", renderDiagramHandler)
+	http.HandleFunc("/pdf", renderPDFDiagramHandler)
 
 	// notify the user we're going to start the server
 	fmt.Println("🚀  listening on " + port)

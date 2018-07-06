@@ -15,7 +15,7 @@ export function* withCommitWorker({ type, payload }) {
 }
 
 // this saga loads a particular pattern
-export default function* loadPattern() {
+export default function* withCommit() {
     // whenever we want to load a pattern onto the diagram
     yield takeEvery(WITH_COMMIT, withCommitWorker)
 }
