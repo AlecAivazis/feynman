@@ -32,46 +32,12 @@ const ItemPalette = ({ togglePatterns, style, commit, saveDiagram, loadDiagram, 
                     Show Patterns
                 </Button>
             </div>
-            <div style={styles.patternButtonContainer}>
-                <Button style={styles.patternButton} onClick={saveDiagram}>
-                    Save Diagram
-                </Button>
-            </div>
-            <div style={styles.patternButtonContainer}>
-                <FilePicker
-                    extensions={['json']}
-                    onError={console.log}
-                    onChange={files => {
-                        // the file we are going to treat as the persisted diagram
-                        const file = files[0]
-
-                        // create a new file reader
-                        const reader = new FileReader()
-                        reader.onloadend = () => {
-                            // the result should be a valid json object
-                            const diagram = JSON.parse(reader.result)
-
-                            loadDiagram(diagram)
-
-                            commit(`loaded diagram: ${diagram.title}`)
-                        }
-
-                        // start reading the file
-                        reader.readAsText(file)
-                    }}
-                >
-                    <Button style={styles.patternButton}>Load Diagram</Button>
-                </FilePicker>
-            </div>
         </div>
     )
 }
 
 const mapDispatchToProps = dispatch => ({
     togglePatterns: () => dispatch(togglePatternModal()),
-    saveDiagram: () => dispatch(save()),
-    loadDiagram: payload => dispatch(load(payload)),
-    commit: msg => dispatch(commitWithMsg(msg)),
 })
 
 export default connect(
