@@ -8,9 +8,9 @@ import PaletteItem from './paletteItem'
 import { Button } from 'components'
 import { circle, gluon, line, dashed, em, text } from './images'
 import { togglePatternModal } from 'actions/info'
-import { saveDiagram as save } from 'actions/elements'
+import { saveDiagram as save, loadDiagram as load } from 'actions/elements'
 
-const ItemPalette = ({ togglePatterns, style, saveDiagram, onMouseDown, ...unusedProps }) => {
+const ItemPalette = ({ togglePatterns, style, saveDiagram, loadDiagram, onMouseDown, ...unusedProps }) => {
     // a local component to dry up code
     const Item = ({ ...props }) => <PaletteItem onMouseDown={onMouseDown} {...props} />
 
@@ -37,7 +37,23 @@ const ItemPalette = ({ togglePatterns, style, saveDiagram, onMouseDown, ...unuse
                 </Button>
             </div>
             <div style={styles.patternButtonContainer}>
-                <FilePicker>
+                <FilePicker
+                    extensions={['json']}
+                    onError={console.log}
+                    onChange={files => {
+                        // the file we are going to treat as the persisted diagram
+                        const file = files[0]
+
+                        // create a new file reader
+                        const reader = new FileReader()
+                        reader.onloadend = () => {
+                            loadDiagram(JSON.parse(reader.result))
+                        }
+
+                        // start reading the file
+                        reader.readAsText(file)
+                    }}
+                >
                     <Button style={styles.patternButton}>Load Diagram</Button>
                 </FilePicker>
             </div>
@@ -48,6 +64,7 @@ const ItemPalette = ({ togglePatterns, style, saveDiagram, onMouseDown, ...unuse
 const mapDispatchToProps = dispatch => ({
     togglePatterns: () => dispatch(togglePatternModal()),
     saveDiagram: () => dispatch(save()),
+    loadDiagram: payload => dispatch(load(payload)),
 })
 
 export default connect(

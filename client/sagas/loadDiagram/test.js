@@ -23,6 +23,9 @@ describe('Sagas', () => {
             // then we need to set the title of the diagram
             expect(gen.next().value).toEqual(put(setDiagramTitle(desc.title)))
 
+            // should add a commit of the new state
+            expect(gen.next().value).toEqual(put(commit('loaded diagram: hello')))
+
             // we should be finished
             expect(gen.next().done).toBeTruthy()
         })

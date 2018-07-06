@@ -248,8 +248,6 @@ describe('Action Creators', () => {
                     },
                 })
 
-                // fs.saveAs.mockImplementation(console.log)
-
                 // and a mocked dispatch
                 const dispatch = jest.fn()
 
