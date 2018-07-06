@@ -1,6 +1,7 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
+import { AlertContainer } from 'quark-web'
 // local imports
 import './reset.css'
 import styles from './styles'
@@ -15,6 +16,7 @@ const App = ({ info }) => (
         <Diagram />
         {info.showPatternModal && <PatternModal />}
         {info.showExportModal && <ExportModal />}
+        <AlertContainer style={styles.alertContainer} />
     </main>
 )
 

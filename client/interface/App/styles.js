@@ -13,4 +13,11 @@ export default {
 
         fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
     },
+    alertContainer: {
+        position: 'fixed',
+        zIndex: 50,
+        right: 20,
+        width: 400,
+        bottom: 20,
+    },
 }

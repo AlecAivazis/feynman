@@ -1,7 +1,7 @@
 // external imports
 import React from 'react'
 import { connect } from 'react-redux'
-import { FilePicker } from 'quark-web'
+import { FilePicker, triggerAlert } from 'quark-web'
 // local imports
 import styles from './styles'
 import { ToggleButton, Button } from 'components'
@@ -57,7 +57,7 @@ const ButtonGrid = ({
             </Button>
             <FilePicker
                 extensions={['json']}
-                onError={console.log}
+                onError={err => triggerAlert({ message: err, type: 'warning' })}
                 onChange={files => {
                     // the file we are going to treat as the persisted diagram
                     const file = files[0]
