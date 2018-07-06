@@ -10,7 +10,11 @@ describe('Sagas', () => {
         test('loads elements over the current state', () => {
             // the description of the anchor to create
             const desc = {
-                elements: 'hello',
+                elements: {
+                    anchors: {
+                        1: 'hello',
+                    },
+                },
                 title: 'hello',
             }
 
@@ -18,13 +22,10 @@ describe('Sagas', () => {
             const gen = loadDiagramWorker(loadDiagram(desc))
 
             // the first thing to do is clear all visible elements
-            expect(gen.next().value).toEqual(put(loadPattern({ elements: desc.elements })))
+            expect(gen.next().value).toEqual(put(loadPattern({ elements: { type: 'pattern', anchors: ['hello'] } })))
 
             // then we need to set the title of the diagram
             expect(gen.next().value).toEqual(put(setDiagramTitle(desc.title)))
-
-            // should add a commit of the new state
-            expect(gen.next().value).toEqual(put(commit('loaded diagram: hello')))
 
             // we should be finished
             expect(gen.next().done).toBeTruthy()
