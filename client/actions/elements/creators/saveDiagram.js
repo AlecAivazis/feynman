@@ -1,5 +1,6 @@
 // external imports
 import { saveAs } from 'file-saver'
+import _ from 'lodash'
 // local imports
 import { EXPORT_DIAGRAM } from 'actions/elements'
 
