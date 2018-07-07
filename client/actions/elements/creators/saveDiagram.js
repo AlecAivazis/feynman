@@ -12,10 +12,20 @@ export default () => (dispatch, getState) => {
         },
     } = getState()
 
+    const diagramElements = _.cloneDeep(elements)
+
     // remove the history from the elements
-    Reflect.deleteProperty(elements, 'history')
-    Reflect.deleteProperty(elements, 'selection')
+    Reflect.deleteProperty(diagramElements, 'history')
+    Reflect.deleteProperty(diagramElements, 'selection')
 
     // save the diagram as a json file
-    saveAs(new Blob([JSON.stringify({ title, elements })]), `${title}.json`)
+    saveAs(
+        new Blob([
+            JSON.stringify({
+                title,
+                elements: diagramElements,
+            }),
+        ]),
+        `${title}.json`
+    )
 }
