@@ -14,6 +14,7 @@ export default () => (dispatch, getState) => {
 
     // remove the history from the elements
     Reflect.deleteProperty(elements, 'history')
+    Reflect.deleteProperty(elements, 'selection')
 
     // save the diagram as a json file
     saveAs(new Blob([JSON.stringify({ title, elements })]), `${title}.json`)
