@@ -7,7 +7,7 @@ import styles from './styles'
 import { MultiRow, SliderRow, ButtonRow, Row, Label, Header, Container } from '..'
 import { ColorPicker, Button, ToggleButton, RedButton } from 'components'
 import { setElementAttrs, deleteElements, alignSelectedAnchors } from 'actions/elements'
-import { commit } from 'actions/history'
+import { commit, withCommit } from 'actions/history'
 
 const AnchorSummary = ({
     anchors,
@@ -118,4 +118,7 @@ const mapDispatchToProps = (dispatch, { anchors }) => ({
 
 // the anchor summary needs the elements object
 const selector = ({ diagram: { elements } }) => ({ elements })
-export default connect(selector, mapDispatchToProps)(AnchorSummary)
+export default connect(
+    selector,
+    mapDispatchToProps
+)(AnchorSummary)
