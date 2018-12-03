@@ -558,11 +558,11 @@
         \FPeval{startY}{round(\pgfmath@tonumber{\pgf@ya}/72.27, 5)}
 
         % store local copies of the target position
-        \FPeval{labelLocation}{\style@labelLocation}
+        \FPeval{labelLocation}{0+\style@labelLocation}
         \FPeval{labelDistance}{0+\style@labelDistance}
 
         % compute the location along the line where we belong
-        \FPeval{@temp@locX}{round(\startX + \labelLocation * {\dX}, 5)}
+        \FPeval{@temp@locX}{round(\startX + \labelLocation * \dX, 5)}
         \FPeval{@temp@locY}{round(\startY + \labelLocation * \dY, 5)}
 
         % if the change in y is zero (infinite slope)
