@@ -11,7 +11,7 @@ import styles from './styles'
 const latexPackageLocation = 'https://storage.googleapis.com/aivazis-static-assets/feynman/feynman.sty'
 
 const ExportModal = ({ elements, hideModal }) => {
-    const bb = diagramBoundingBox(elements)
+    const bb = diagramBoundingBox(elements, 200)
     return (
         <Overlay title="Export to LaTeX" hide={hideModal} style={styles.container}>
             Add this to your preamble
@@ -47,4 +47,7 @@ const mapDispatchToProps = dispatch => ({
     hideModal: () => dispatch(toggleExportModal()),
 })
 const selector = ({ diagram: { elements } }) => ({ elements })
-export default connect(selector, mapDispatchToProps)(ExportModal)
+export default connect(
+    selector,
+    mapDispatchToProps
+)(ExportModal)

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { round as roundTo, elementsWithLocations, diagramBoundingBox } from 'utils'
 
 // round a number to the tenths place to show in latex (package assumes grid of 50)
-const round = n => (Math.round(n / 50 * 10) / 10).toFixed(2)
+const round = n => (Math.round((n / 50) * 10) / 10).toFixed(2)
 const strip = val => val.slice(1, val.length - 1)
 
 // a mapping of internal props to config options used by the latex library
@@ -107,7 +107,7 @@ export const latexConfig = elements => {
     const elementsWithLoc = elementsWithLocations(elements)
 
     // compute a tight bounding box
-    const boundingBox = diagramBoundingBox(elements, 0)
+    const boundingBox = diagramBoundingBox(elements, 200)
 
     // the diagram as we know it
     let diagram = '\\begin{feynman}'
