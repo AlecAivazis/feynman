@@ -228,6 +228,8 @@
     \endgroup
 }
 
+\newcommand{\fermionArray}[1]{\@ifnextchar\bgroup{\fermionContinue{#1}}{ }}
+\newcommand{\fermionContinue}[2]{\fermion[]{#1}{#2}\@ifnextchar\bgroup{\fermionContinue{#2}}{ }}
 
 % dashed propagators
 \newcommand*{\dashed}[3][]{
