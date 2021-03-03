@@ -34,6 +34,7 @@
 % define the diagram configuration settings family
 \SetupKeyvalOptions{family=diagram, prefix=diagram@}
 \DeclareStringOption[in]{unit}
+\DeclareStringOption{scale}
 \DeclareStringOption[An Example Feynman Diagram]{title}
 
 % define the propagator configuration settings family
@@ -61,7 +62,7 @@
     % load the diagram configuration settings
     \setkeys{diagram}{#1}
     % start the tikz environment
-    \begin{tikzpicture}[x=1\diagram@unit, y=1\diagram@unit]
+    \begin{tikzpicture}[x=1\diagram@unit, y=1\diagram@unit, scale=1\diagram@scale]
 }
 % after the content
 {
