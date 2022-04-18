@@ -8,7 +8,6 @@ RUN apt update && \
     texlive-latex-recommended \
     texlive-latex-extra \
     texlive-science \
-    texlive-math-extra \
     texlive-latex-extra \
     texlive-fonts-recommended \
     texlive-fonts-extra
