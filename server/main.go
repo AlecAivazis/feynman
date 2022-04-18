@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -67,7 +68,10 @@ func renderPDFDiagramHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// where the server is listening on local host
-	port := ":8081"
+	port, ok := os.LookupEnv("PORT")
+	if !ok { 
+		port = "8081"
+	}
 
 	// set up the mux
 	http.HandleFunc("/string", renderLatexHandler)
@@ -78,7 +82,7 @@ func main() {
 	fmt.Println("🚀  listening on " + port)
 
 	// start the server
-	err := http.ListenAndServe(port, nil)
+	err := http.ListenAndServe(":" + port, nil)
 	// if something went wrong
 	if err != nil {
 		// yell loudly
