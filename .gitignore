@@ -15,3 +15,4 @@ server/test/diagram.pdf
 server/test/diagram.fls
 server/test/diagram.synctex*
 server/test/diagram.fdb_latexmk
+server/feynman

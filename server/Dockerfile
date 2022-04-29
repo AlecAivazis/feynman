@@ -23,7 +23,5 @@ RUN go get ./...
 # build the server binary
 RUN go build .
 
-ENV PORT=8081
-
 # start the server at the exposed port
 CMD ["feynman"]
